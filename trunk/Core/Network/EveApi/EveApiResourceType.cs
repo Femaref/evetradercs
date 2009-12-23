@@ -20,6 +20,7 @@ namespace Core.Network.EveApi
         StarbaseDetail,
         WalletJournal,
         IndustryJobs,
-        WalletTransactions
+        WalletTransactions,
+        Standings
     }
 }

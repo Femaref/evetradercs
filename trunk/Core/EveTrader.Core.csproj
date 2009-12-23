@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{10BC146C-D8A9-4F72-993F-3E26B980FC73}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -57,12 +57,15 @@
     <Compile Include="DomainModel\Asset.cs" />
     <Compile Include="DomainModel\AssetStorageType.cs" />
     <Compile Include="DomainModel\CustomPrice.cs" />
+    <Compile Include="DomainModel\Standing.cs" />
     <Compile Include="Network\EveApi\Requests\AssetsRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\StandingRequest.cs" />
     <Compile Include="Updaters\CharacterAssetsUpdater.cs" />
     <Compile Include="Updaters\CharacterInfoUpdater.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Updaters\CharacterMarketOrdersUpdater.cs" />
+    <Compile Include="Updaters\CharacterStandingUpdater.cs" />
     <Compile Include="Updaters\CharacterUpdater.cs" />
     <Compile Include="Updaters\CharacterWalletTransactionsUpdater.cs">
       <SubType>Code</SubType>

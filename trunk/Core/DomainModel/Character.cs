@@ -30,6 +30,7 @@ namespace Core.DomainModel
         public DateTime NextWalletJournalUpdateTime { get; set; }
         public DateTime NextMarketOrdersUpdateTime { get; set; }
         public DateTime NextAssetsUpdateTime { get; set; }
+        public DateTime NextStandingUpdateTime { get; set; }
 
         public DateTime NextUpdateTime
         {
@@ -41,6 +42,7 @@ namespace Core.DomainModel
                 result = this.NextWalletJournalUpdateTime > result ? this.NextWalletJournalUpdateTime : result;
                 result = this.NextMarketOrdersUpdateTime > result ? this.NextMarketOrdersUpdateTime : result;
                 result = this.NextAssetsUpdateTime > result ? this.NextAssetsUpdateTime : result;
+                result = this.NextStandingUpdateTime > result ? this.NextStandingUpdateTime : result;
 
                 return result;
             }
