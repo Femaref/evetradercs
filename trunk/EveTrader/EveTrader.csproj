@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{348AB414-360D-44A4-BE56-D4F6709C99D9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EveTrader</RootNamespace>
+    <AssemblyName>EveTrader</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>6C2AED35A48A8F00E26D4C9619549322FDA7C07A</ManifestCertificateThumbprint>
+    <ManifestKeyFile>EveTraider_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <ApplicationIcon>Intelligence.ico</ApplicationIcon>
+    <PublishUrl>H:\EveTraderFiles\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://files.evetrader.ado.me.uk/</InstallUrl>
+    <SupportUrl>http://evetrader.ado.me.uk</SupportUrl>
+    <CreateWebPageOnPublish>false</CreateWebPageOnPublish>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>39</ApplicationRevision>
+    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DundasWinChart, Version=6.1.0.1726, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Dundas Software\Charting\WinControlVS2008\Bin\DundasWinChart.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\System.Web.Services\2.0.0.0__b03f5f7f11d50a3a\System.Web.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analysis\Data.cs" />
+    <Compile Include="Analysis\MarketOrders.cs" />
+    <Compile Include="Analysis\Products.cs" />
+    <Compile Include="Helpers\Singleton.cs" />
+    <Compile Include="Helpers\XmlSettingsFile.cs" />
+    <Compile Include="Helpers\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\ListViewColumnSorter.cs" />
+    <Compile Include="Helpers\SingleApplication.cs" />
+    <Compile Include="Main\Assets\AssetsTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Assets\AssetsTab.Designer.cs">
+      <DependentUpon>AssetsTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Characters\CharactersTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Characters\CharactersTab.Designer.cs">
+      <DependentUpon>CharactersTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\CrossRegionalMarket\CrossRegionalMarketTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\CrossRegionalMarket\CrossRegionalMarketTab.Designer.cs">
+      <DependentUpon>CrossRegionalMarketTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\CrossRegionalMarket\EveRegionalMarketView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\CrossRegionalMarket\EveRegionalMarketView.Designer.cs">
+      <DependentUpon>EveRegionalMarketView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\CustomPriceWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\CustomPriceWindow.Designer.cs">
+      <DependentUpon>CustomPriceWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Dashboard\DashboardSettings.cs" />
+    <Compile Include="Main\Dashboard\DashboardTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Dashboard\DashboardTab.Designer.cs">
+      <DependentUpon>DashboardTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\MarketOrders\MarketOrderListViewItem.cs" />
+    <Compile Include="Main\MarketOrders\MarketOrdersTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\MarketOrders\MarketOrdersTab.Designer.cs">
+      <DependentUpon>MarketOrdersTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Reports\ReportsTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Reports\ReportsTab.Designer.cs">
+      <DependentUpon>ReportsTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\StarMap\StarMapTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\StarMap\StarMapTab.Designer.cs">
+      <DependentUpon>StarMapTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\UserData\UserData.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\UserData\UserData.Designer.cs">
+      <DependentUpon>UserData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\WalletTransactions\WalletTransactionListViewItem.cs" />
+    <Compile Include="ManageCharacters\ExistingCharactersTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ManageCharacters\ExistingCharactersTab.Designer.cs">
+      <DependentUpon>ExistingCharactersTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageCharacters\ManageCharactersWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageCharacters\ManageCharactersWindow.Designer.cs">
+      <DependentUpon>ManageCharactersWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageCharacters\NewCharacterTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ManageCharacters\NewCharacterTab.Designer.cs">
+      <DependentUpon>NewCharacterTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Main\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <EmbeddedResource Include="Main\Assets\AssetsTab.resx">
+      <DependentUpon>AssetsTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Characters\CharactersTab.resx">
+      <DependentUpon>CharactersTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\CrossRegionalMarket\CrossRegionalMarketTab.resx">
+      <DependentUpon>CrossRegionalMarketTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\CrossRegionalMarket\EveRegionalMarketView.resx">
+      <DependentUpon>EveRegionalMarketView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\CustomPriceWindow.resx">
+      <DependentUpon>CustomPriceWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Dashboard\DashboardTab.resx">
+      <DependentUpon>DashboardTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\MarketOrders\MarketOrdersTab.resx">
+      <DependentUpon>MarketOrdersTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Reports\ReportsTab.resx">
+      <DependentUpon>ReportsTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\StarMap\StarMapTab.resx">
+      <DependentUpon>StarMapTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\UserData\UserData.resx">
+      <DependentUpon>UserData.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageCharacters\ExistingCharactersTab.resx">
+      <DependentUpon>ExistingCharactersTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageCharacters\ManageCharactersWindow.resx">
+      <DependentUpon>ManageCharactersWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageCharacters\NewCharacterTab.resx">
+      <DependentUpon>NewCharacterTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\WalletTransactions\ItemReport.resx">
+      <DependentUpon>ItemReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\WalletTransactions\WalletTransactionsTab.resx">
+      <DependentUpon>WalletTransactionsTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReleaseNotes\ReleaseNotesWindow.resx">
+      <DependentUpon>ReleaseNotesWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+      <LastGenOutput>ReleaseNotesWindow1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReleaseNotes\ReleaseNotesWindowResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReleaseNotesWindowResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RetrivingData\RetrivingDataWindow.resx">
+      <DependentUpon>RetrivingDataWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Main\WalletTransactions\ItemReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\WalletTransactions\ItemReport.Designer.cs">
+      <DependentUpon>ItemReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\WalletTransactions\WalletTransactionsTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\WalletTransactions\WalletTransactionsTab.Designer.cs">
+      <DependentUpon>WalletTransactionsTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseNotes\ReleaseNotesSettings.cs" />
+    <Compile Include="ReleaseNotes\ReleaseNotesWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReleaseNotes\ReleaseNotesWindow.Designer.cs">
+      <DependentUpon>ReleaseNotesWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseNotes\ReleaseNotesWindowResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReleaseNotesWindowResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RetrivingData\RetrivingDataWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RetrivingData\RetrivingDataWindow.Designer.cs">
+      <DependentUpon>RetrivingDataWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="UISettings.cs" />
+    <Compile Include="UserData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\EveTrader.Core.csproj">
+      <Project>{10BC146C-D8A9-4F72-993F-3E26B980FC73}</Project>
+      <Name>EveTrader.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveObjects\EveObjects.csproj">
+      <Project>{021616BA-A56D-427F-BB8C-24993DC1207E}</Project>
+      <Name>EveObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\updated.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\EveTrader.Resources.GlobalResources.datasource" />
+    <None Include="Resources\linkIcon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Intelligence.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Icons\" />
+    <Folder Include="Resources\ItemDatabase\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

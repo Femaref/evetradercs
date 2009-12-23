@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core", "Core\EveTrader.Core.csproj", "{10BC146C-D8A9-4F72-993F-3E26B980FC73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveObjects", "EveObjects\EveObjects.csproj", "{021616BA-A56D-427F-BB8C-24993DC1207E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader", "EveTrader\EveTrader.csproj", "{348AB414-360D-44A4-BE56-D4F6709C99D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10BC146C-D8A9-4F72-993F-3E26B980FC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BC146C-D8A9-4F72-993F-3E26B980FC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BC146C-D8A9-4F72-993F-3E26B980FC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BC146C-D8A9-4F72-993F-3E26B980FC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021616BA-A56D-427F-BB8C-24993DC1207E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021616BA-A56D-427F-BB8C-24993DC1207E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021616BA-A56D-427F-BB8C-24993DC1207E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021616BA-A56D-427F-BB8C-24993DC1207E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348AB414-360D-44A4-BE56-D4F6709C99D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348AB414-360D-44A4-BE56-D4F6709C99D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348AB414-360D-44A4-BE56-D4F6709C99D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348AB414-360D-44A4-BE56-D4F6709C99D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
