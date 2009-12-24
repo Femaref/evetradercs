@@ -33,6 +33,8 @@ namespace Core.DomainModel
         public DateTime NextAssetsUpdateTime { get; set; }
         public DateTime NextStandingUpdateTime { get; set; }
 
+        public int AccountingLevel { get; set; }
+
         public DateTime NextUpdateTime
         {
             get

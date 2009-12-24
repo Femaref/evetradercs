@@ -108,6 +108,36 @@ namespace EveTrader.ManageCharacters
             this.RenderCharactersList();
         }
 
-        
+        private void accountSet_Click(object sender, EventArgs e)
+        {
+            if (!this.CheckCharacterIsSelected())
+                return;
+
+            Character c = this.GetSelectedCharacter();
+
+            switch ((sender as ToolStripMenuItem).Name)
+            {
+                case "setAcc0":
+                    c.AccountingLevel = 0;
+                    break;
+                case "setAcc1":
+                    c.AccountingLevel = 1;
+                    break;
+                case "setAcc2":
+                    c.AccountingLevel = 2;
+                    break;
+                case "setAcc3":
+                    c.AccountingLevel = 3;
+                    break;
+                case "setAcc4":
+                    c.AccountingLevel = 4;
+                    break;
+                case "setAcc5":
+                    c.AccountingLevel = 5;
+                    break;
+            }
+        }
+
+
     }
 }
