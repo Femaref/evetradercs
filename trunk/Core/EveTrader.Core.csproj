@@ -58,6 +58,8 @@
     <Compile Include="DomainModel\Asset\AssetStorageType.cs" />
     <Compile Include="DomainModel\CustomPrice.cs" />
     <Compile Include="DomainModel\Standing\Standing.cs" />
+    <Compile Include="DomainModel\Standing\StandingTarget.cs" />
+    <Compile Include="DomainModel\Standing\StandingType.cs" />
     <Compile Include="Network\EveApi\Requests\AssetsRequest.cs" />
     <Compile Include="Network\EveApi\Requests\StandingRequest.cs" />
     <Compile Include="Updaters\CharacterAssetsUpdater.cs" />
