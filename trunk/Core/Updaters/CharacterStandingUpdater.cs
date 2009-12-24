@@ -19,6 +19,8 @@ namespace Core.Updaters
 
                 if (standingRequest.ErrorCode == 0)
                 {
+                    character.Standings = standings.OrderBy(s => s.Type).ToList();
+                    character.NextStandingUpdateTime.AddHours(3).AddMinutes(1);
                     return true;
                 }
             }

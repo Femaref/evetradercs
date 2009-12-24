@@ -25,6 +25,7 @@ namespace Core.DomainModel
         public List<MarketOrder> MarketOrders { get; set; }
         public List<Asset> Assets { get; set; }
         public List<CustomPrice> CustomBuyPrices { get; set; }
+        public List<Standing> Standings { get; set; }
 
         public DateTime NextWalletTransactionsUpdateTime { get; set; }
         public DateTime NextWalletJournalUpdateTime { get; set; }
