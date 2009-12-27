@@ -9,6 +9,7 @@ using System.Net;
 using System.IO;
 using System.Xml;
 using Core.Network.EveApi.Requests;
+using System.Linq;
 
 namespace Core.Updaters
 {
@@ -25,10 +26,10 @@ namespace Core.Updaters
             
                 if (walletTransactionsRequest.ErrorCode == 0)
                 {
+                    foreach (WalletTransaction wt in newWalletTransactions)
+                        wt.CalculateSalesTax(character.AccountingLevel);
+
                     character.WalletTransactions = character.WalletTransactions.Union(newWalletTransactions, walletTransactionComparer).OrderByDescending(p => p.TransactionID).ToList();
-
-                    character.WalletTransactions.ForEach(wt => wt.CalculateSalesTax(character.AccountingLevel));
-
                     character.NextWalletTransactionsUpdateTime = DateTime.Now.AddHours(1).AddMinutes(1);
                     return true;
                 }
