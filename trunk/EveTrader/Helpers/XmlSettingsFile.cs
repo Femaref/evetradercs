@@ -38,12 +38,22 @@ namespace EveTrader.Helpers
         }
         public void Save(string saveToFile)
         {
-            using (FileStream fileStream = new FileStream(saveToFile, FileMode.Create, FileAccess.Write))
+            string backup = File.ReadAllText(saveToFile);
+            try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                xmlSerializer.Serialize(fileStream, Instance);
-            }  
+                using (FileStream fileStream = new FileStream(saveToFile, FileMode.Create, FileAccess.Write))
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof (T));
+                    xmlSerializer.Serialize(fileStream, Instance);
+                }
+            }
+            catch (Exception)
+            {
+                File.WriteAllText(saveToFile, backup);
+                throw;
+            }
         }
+
         public void Load()
         {            
             try
