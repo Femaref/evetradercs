@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Core.DomainModel;
+using Dundas.Charting.WinControl;
 
 namespace EveTrader.Main.Reports
 {
@@ -43,7 +44,7 @@ namespace EveTrader.Main.Reports
             this.RenderMostProfitableProductsChart(mostProfitableProducts);
             this.RenderMostProfitableStationsChart(mostProfitableStations);
             this.RenderMostProfitableClientsChart(mostProfitableClients);
-            this.RenderBalanceHistory(this.BalanceHistoryList(Settings.Instance.Characters.First().BalanceHistory));
+            this.RenderBalanceHistory(this.BalanceHistoryList(Settings.Instance.Characters));
 
             this.Cursor = Cursors.Default;
         }
@@ -97,9 +98,18 @@ namespace EveTrader.Main.Reports
 
             this.MostProfitableClientsChart.ResetAutoValues();
         }
-        private void RenderBalanceHistory(IEnumerable<ReportChartItem> reportItems)
+        private void RenderBalanceHistory(IEnumerable<CharacterBalance> reportItems)
         {
-            this.BalanceHistory.Series[0].Points.DataBindXY(reportItems, "Label", reportItems, "Value1");
+            this.BalanceHistory.Series.Clear();
+            foreach(CharacterBalance er in reportItems)
+            {
+                Series s = this.BalanceHistory.Series.Add(er.Key);
+                s.Type = SeriesChartType.Line;
+                s.XValueType = ChartValueTypes.DateTime;
+                s.YValueType = ChartValueTypes.Double;
+                s.Points.DataBindXY(er.Values, "Key", er.Values, "Value"); 
+            }
+            
             this.BalanceHistory.ResetAutoValues();
         }
 
@@ -148,19 +158,37 @@ namespace EveTrader.Main.Reports
 
             return reportData.OrderByDescending(ri => ri.Value2).Take(15).OrderBy(ri => ri.Value2).ToList();
         }
-        private IEnumerable<ReportChartItem> BalanceHistoryList(IEnumerable<WalletHistory> history)
+        private IEnumerable<CharacterBalance> BalanceHistoryList(IEnumerable<Character> characters)
         {
-            IEnumerable<ReportChartItem> reportData =
-                (from wh in history
-                 orderby wh.Key
-                 select new ReportChartItem
-                            {
-                                Label = wh.Key.ToString(),
-                                Value1 = wh.Value,
-                                Value2 = 0
-                            });
-            return reportData.ToList();
-            
+            List<CharacterBalance> output = new List<CharacterBalance>();
+            foreach(Character c in characters)
+            {
+                CharacterBalance cb = new CharacterBalance();
+                cb.Key = c.Name;
+
+                cb.Values = (from wh in c.BalanceHistory
+                             where wh.Key > this.fromDate
+                             orderby wh.Key
+                             select new BalanceChartItem()
+                                        {
+                                            Key = wh.Key,
+                                            Value = wh.Value
+                                        }).ToList();
+                output.Add(cb);
+            }
+            return output;
+        }
+
+
+        private class BalanceChartItem
+        {
+            public DateTime Key { get; set; }
+            public double Value { get; set; }
+        }
+        private class CharacterBalance
+        {
+            public string Key { get; set; }
+            public List<BalanceChartItem> Values { get; set; }
         }
 
         private void ShowForLastWeek_Click(object sender, EventArgs e)
