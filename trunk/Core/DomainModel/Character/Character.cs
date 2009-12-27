@@ -22,6 +22,7 @@ namespace Core.DomainModel
         public List<Asset> Assets { get; set; }
         public List<CustomPrice> CustomBuyPrices { get; set; }
         public List<Standing> Standings { get; set; }
+        public List<WalletHistory> BalanceHistory { get; set; }
 
         public DateTime NextWalletTransactionsUpdateTime { get; set; }
         public DateTime NextWalletJournalUpdateTime { get; set; }
@@ -55,6 +56,7 @@ namespace Core.DomainModel
             this.MarketOrders = new List<MarketOrder>();
             this.CustomBuyPrices = new List<CustomPrice>();
             this.Assets = new List<Asset>();
+            this.BalanceHistory = new List<WalletHistory>();
 
             this.NextWalletTransactionsUpdateTime = DateTime.Now;
             this.NextWalletJournalUpdateTime = DateTime.Now;

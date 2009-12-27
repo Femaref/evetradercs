@@ -61,6 +61,8 @@
     <Compile Include="DomainModel\Standing\StandingComparer.cs" />
     <Compile Include="DomainModel\Standing\StandingTarget.cs" />
     <Compile Include="DomainModel\Standing\StandingType.cs" />
+    <Compile Include="DomainModel\WalletHistory\WalletHistory.cs" />
+    <Compile Include="DomainModel\WalletHistory\WalletHistoryComparer.cs" />
     <Compile Include="Network\EveApi\Requests\AssetsRequest.cs" />
     <Compile Include="Network\EveApi\Requests\StandingRequest.cs" />
     <Compile Include="Updaters\CharacterAssetsUpdater.cs" />

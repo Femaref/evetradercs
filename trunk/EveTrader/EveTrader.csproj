@@ -18,6 +18,7 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>false</SignManifests>
     <ApplicationIcon>Intelligence.ico</ApplicationIcon>
+    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
     <PublishUrl>H:\EveTraderFiles\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://files.evetrader.ado.me.uk/</InstallUrl>
     <SupportUrl>http://evetrader.ado.me.uk</SupportUrl>
-    <CreateWebPageOnPublish>false</CreateWebPageOnPublish>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>39</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
@@ -316,6 +316,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -331,6 +336,11 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
       <ProductName>Windows Installer 3.1</ProductName>
@@ -341,6 +351,7 @@
     <None Include="Resources\updated.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\DataSources\EveTrader.Resources.GlobalResources.datasource" />
     <None Include="Resources\linkIcon.gif" />
   </ItemGroup>
