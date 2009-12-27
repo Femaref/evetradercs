@@ -48,14 +48,20 @@
             this.ShowForLast3Month = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.ShowFor30Days = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.MostProfitableClientsChart = new Dundas.Charting.WinControl.Chart();
             this.MostProfitableStationsChart = new Dundas.Charting.WinControl.Chart();
             this.MostProfitableProductsChart = new Dundas.Charting.WinControl.Chart();
-            this.panel1.SuspendLayout();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tpProduct = new System.Windows.Forms.TabPage();
+            this.tpStation = new System.Windows.Forms.TabPage();
+            this.tpClients = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableClientsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tpProduct.SuspendLayout();
+            this.tpStation.SuspendLayout();
+            this.tpClients.SuspendLayout();
             this.SuspendLayout();
             // 
             // ShowForLastWeek
@@ -113,21 +119,6 @@
             this.ShowFor30Days.UseVisualStyleBackColor = true;
             this.ShowFor30Days.Click += new System.EventHandler(this.ShowFor30Days_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.MostProfitableClientsChart);
-            this.panel1.Controls.Add(this.MostProfitableStationsChart);
-            this.panel1.Controls.Add(this.MostProfitableProductsChart);
-            this.panel1.Location = new System.Drawing.Point(3, 42);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
-            this.panel1.Size = new System.Drawing.Size(828, 532);
-            this.panel1.TabIndex = 20;
-            // 
             // MostProfitableClientsChart
             // 
             this.MostProfitableClientsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -174,7 +165,7 @@
             legend1.Name = "Default";
             legend1.TextWrapThreshold = 50;
             this.MostProfitableClientsChart.Legends.Add(legend1);
-            this.MostProfitableClientsChart.Location = new System.Drawing.Point(-3, 1398);
+            this.MostProfitableClientsChart.Location = new System.Drawing.Point(0, 0);
             this.MostProfitableClientsChart.Margin = new System.Windows.Forms.Padding(0);
             this.MostProfitableClientsChart.Name = "MostProfitableClientsChart";
             this.MostProfitableClientsChart.Palette = Dundas.Charting.WinControl.ChartColorPalette.Dundas;
@@ -198,7 +189,7 @@
             series2.ShowLabelAsValue = true;
             this.MostProfitableClientsChart.Series.Add(series1);
             this.MostProfitableClientsChart.Series.Add(series2);
-            this.MostProfitableClientsChart.Size = new System.Drawing.Size(831, 700);
+            this.MostProfitableClientsChart.Size = new System.Drawing.Size(819, 518);
             this.MostProfitableClientsChart.TabIndex = 5;
             this.MostProfitableClientsChart.Text = "chart1";
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -255,7 +246,7 @@
             legend2.Name = "Default";
             legend2.TextWrapThreshold = 50;
             this.MostProfitableStationsChart.Legends.Add(legend2);
-            this.MostProfitableStationsChart.Location = new System.Drawing.Point(-3, 698);
+            this.MostProfitableStationsChart.Location = new System.Drawing.Point(0, 0);
             this.MostProfitableStationsChart.Margin = new System.Windows.Forms.Padding(0);
             this.MostProfitableStationsChart.Name = "MostProfitableStationsChart";
             this.MostProfitableStationsChart.Palette = Dundas.Charting.WinControl.ChartColorPalette.Dundas;
@@ -279,7 +270,7 @@
             series4.ShowLabelAsValue = true;
             this.MostProfitableStationsChart.Series.Add(series3);
             this.MostProfitableStationsChart.Series.Add(series4);
-            this.MostProfitableStationsChart.Size = new System.Drawing.Size(831, 700);
+            this.MostProfitableStationsChart.Size = new System.Drawing.Size(819, 518);
             this.MostProfitableStationsChart.TabIndex = 4;
             this.MostProfitableStationsChart.Text = "chart1";
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -336,7 +327,7 @@
             legend3.Name = "Default";
             legend3.TextWrapThreshold = 50;
             this.MostProfitableProductsChart.Legends.Add(legend3);
-            this.MostProfitableProductsChart.Location = new System.Drawing.Point(-3, -2);
+            this.MostProfitableProductsChart.Location = new System.Drawing.Point(0, 0);
             this.MostProfitableProductsChart.Margin = new System.Windows.Forms.Padding(0);
             this.MostProfitableProductsChart.Name = "MostProfitableProductsChart";
             this.MostProfitableProductsChart.Palette = Dundas.Charting.WinControl.ChartColorPalette.Dundas;
@@ -360,7 +351,7 @@
             series6.ShowLabelAsValue = true;
             this.MostProfitableProductsChart.Series.Add(series5);
             this.MostProfitableProductsChart.Series.Add(series6);
-            this.MostProfitableProductsChart.Size = new System.Drawing.Size(831, 700);
+            this.MostProfitableProductsChart.Size = new System.Drawing.Size(823, 522);
             this.MostProfitableProductsChart.TabIndex = 2;
             this.MostProfitableProductsChart.Text = "chart1";
             title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -371,12 +362,55 @@
             this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
             this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tpProduct);
+            this.tabControl1.Controls.Add(this.tpStation);
+            this.tabControl1.Controls.Add(this.tpClients);
+            this.tabControl1.Location = new System.Drawing.Point(3, 30);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(827, 544);
+            this.tabControl1.TabIndex = 21;
+            // 
+            // tpProduct
+            // 
+            this.tpProduct.Controls.Add(this.MostProfitableProductsChart);
+            this.tpProduct.Location = new System.Drawing.Point(4, 22);
+            this.tpProduct.Name = "tpProduct";
+            this.tpProduct.Padding = new System.Windows.Forms.Padding(3);
+            this.tpProduct.Size = new System.Drawing.Size(819, 518);
+            this.tpProduct.TabIndex = 0;
+            this.tpProduct.Text = "Products";
+            this.tpProduct.UseVisualStyleBackColor = true;
+            // 
+            // tpStation
+            // 
+            this.tpStation.Controls.Add(this.MostProfitableStationsChart);
+            this.tpStation.Location = new System.Drawing.Point(4, 22);
+            this.tpStation.Name = "tpStation";
+            this.tpStation.Padding = new System.Windows.Forms.Padding(3);
+            this.tpStation.Size = new System.Drawing.Size(819, 518);
+            this.tpStation.TabIndex = 1;
+            this.tpStation.Text = "Stations";
+            this.tpStation.UseVisualStyleBackColor = true;
+            // 
+            // tpClients
+            // 
+            this.tpClients.Controls.Add(this.MostProfitableClientsChart);
+            this.tpClients.Location = new System.Drawing.Point(4, 22);
+            this.tpClients.Name = "tpClients";
+            this.tpClients.Padding = new System.Windows.Forms.Padding(3);
+            this.tpClients.Size = new System.Drawing.Size(819, 518);
+            this.tpClients.TabIndex = 2;
+            this.tpClients.Text = "Clients";
+            this.tpClients.UseVisualStyleBackColor = true;
+            // 
             // ReportsTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.ShowFor30Days);
             this.Controls.Add(this.ShowForLastWeek);
             this.Controls.Add(this.ShowAll);
@@ -385,10 +419,13 @@
             this.Name = "ReportsTab";
             this.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
             this.Size = new System.Drawing.Size(833, 574);
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableClientsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tpProduct.ResumeLayout(false);
+            this.tpStation.ResumeLayout(false);
+            this.tpClients.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,10 +438,13 @@
         private System.Windows.Forms.RadioButton ShowForLast3Month;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton ShowFor30Days;
-        private System.Windows.Forms.Panel panel1;
         private Dundas.Charting.WinControl.Chart MostProfitableClientsChart;
         private Dundas.Charting.WinControl.Chart MostProfitableStationsChart;
         private Dundas.Charting.WinControl.Chart MostProfitableProductsChart;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tpProduct;
+        private System.Windows.Forms.TabPage tpStation;
+        private System.Windows.Forms.TabPage tpClients;
 
 
 

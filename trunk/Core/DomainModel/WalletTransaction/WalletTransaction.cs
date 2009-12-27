@@ -1,4 +1,6 @@
-﻿namespace Core.DomainModel
+﻿using System.Xml.Serialization;
+
+namespace Core.DomainModel
 {
     using System;
     using System.Collections.Generic;
@@ -25,6 +27,7 @@
 
         private double iSalesTax = 0;
 
+        [XmlIgnore]
         public double SalesTax
         {
             get
