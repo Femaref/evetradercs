@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Core;
-using Core.Updaters;
-using Core.DomainModel;
 using Core.ClassExtenders;
-using EveTrader.Analysis;
-using EveTrader.Helpers;
-using EveTrader.Main.Reports;
+using Core.DomainModel;
 using MarketOrder=EveTrader.Analysis.MarketOrders;
-using Settings=EveTrader.Settings;
 
 namespace EveTrader.Main.MarketOrders
 {

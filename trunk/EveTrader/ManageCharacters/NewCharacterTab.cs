@@ -1,16 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Core.Network.EveApi.Requests;
 using Core.ClassExtenders;
 using Core.DomainModel;
-using Core.Updaters.DataRequest;
-using Settings=EveTrader.Settings;
+using Core.Network.EveApi.Requests;
 
 namespace EveTrader.ManageCharacters
 {

@@ -1,13 +1,8 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.DomainModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Linq;
-
     public class WalletTransaction : IGenericObject<WalletTransaction>
     {
         public int TransactionID { get; set; }

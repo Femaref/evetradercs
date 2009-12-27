@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 using System.Windows.Forms;
 
 namespace EveTrader.Helpers
@@ -10,7 +7,7 @@ namespace EveTrader.Helpers
 	/// The InputBox class is used to show a prompt in a dialog box using the static method Show().
 	/// </summary>
 	/// <remarks>
-	/// Copyright © 2003 Reflection IT
+	/// Copyright � 2003 Reflection IT
 	/// 
 	/// This software is provided 'as-is', without any express or implied warranty.
 	/// In no event will the authors be held liable for any damages arising from the

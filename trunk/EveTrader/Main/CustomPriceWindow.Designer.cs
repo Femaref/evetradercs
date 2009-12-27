@@ -34,8 +34,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.BuyPriceTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.SaveButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.Save = new System.Windows.Forms.Button();
+            this.Cancel = new System.Windows.Forms.Button();
             this.SellPriceErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.BuyPriceErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.MainGroupBox.SuspendLayout();
@@ -105,25 +105,25 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Custom buy price:";
             // 
-            // SaveButton
+            // Save
             // 
-            this.SaveButton.Location = new System.Drawing.Point(85, 120);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(91, 23);
-            this.SaveButton.TabIndex = 7;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.Save.Location = new System.Drawing.Point(85, 120);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(91, 23);
+            this.Save.TabIndex = 7;
+            this.Save.Text = "Save";
+            this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // CancelButton
+            // Cancel
             // 
-            this.CancelButton.Location = new System.Drawing.Point(182, 120);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(91, 23);
-            this.CancelButton.TabIndex = 8;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.Cancel.Location = new System.Drawing.Point(182, 120);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(91, 23);
+            this.Cancel.TabIndex = 8;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
+            this.Cancel.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // SellPriceErrorProvider
             // 
@@ -142,8 +142,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(359, 155);
-            this.Controls.Add(this.CancelButton);
-            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.Cancel);
+            this.Controls.Add(this.Save);
             this.Controls.Add(this.MainGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -165,8 +165,8 @@
         private System.Windows.Forms.GroupBox MainGroupBox;
         private System.Windows.Forms.TextBox BuyPriceTextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button SaveButton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.ErrorProvider SellPriceErrorProvider;
         private System.Windows.Forms.TextBox SellPriceTextBox;
         private System.Windows.Forms.Label label1;

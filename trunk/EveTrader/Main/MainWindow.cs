@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Linq;
-using Core.Updaters;
 using Core.DomainModel;
-using Core.Updaters.DataRequest;
-using Core.ClassExtenders;
+using Core.Updaters;
 using EveTrader.ReleaseNotes;
-using EveTrader.ReleaseNotes;
-using EveTrader.RetrivingData;
-using Settings=EveTrader.Settings;
 
 namespace EveTrader.Main
 {

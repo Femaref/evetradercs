@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Dundas.Charting.WinControl;
-using Core.DomainModel;
-using Core.Updaters;
 using Core.ClassExtenders;
-using EveTrader.Main.Reports;
-using EveTrader.Main.Reports;
-using Settings=EveTrader.Settings;
-using System.Threading;
+using Core.DomainModel;
+using Dundas.Charting.WinControl;
 
 namespace EveTrader.Main.Dashboard
 {

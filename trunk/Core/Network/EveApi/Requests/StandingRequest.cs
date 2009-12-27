@@ -1,8 +1,7 @@
-﻿using Core.DomainModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Core.ClassExtenders;
+using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {

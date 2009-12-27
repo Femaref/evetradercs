@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Core.DomainModel;
 using EveTrader.Helpers;
-using Settings=EveTrader.Settings;
 
 namespace EveTrader.ManageCharacters
 {

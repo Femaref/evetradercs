@@ -1,16 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
-using Core.DomainModel;
-using Core.Updaters;
 using Core.ClassExtenders;
-using Settings=EveTrader.Settings;
+using Core.DomainModel;
 
 namespace EveTrader.Main.WalletTransactions
 {

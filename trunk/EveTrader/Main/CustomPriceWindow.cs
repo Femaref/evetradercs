@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Core;
-using Core.DomainModel;
 using Core.ClassExtenders;
+using Core.DomainModel;
 
 namespace EveTrader.Main
 {

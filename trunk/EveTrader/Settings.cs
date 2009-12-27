@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.IO;
 using Core.DomainModel;
 using EveTrader.Helpers;
-using EveTrader.Main.Dashboard;
-using EveTrader.ReleaseNotes;
-using EveTrader.Main.Dashboard;
-using EveTrader.ReleaseNotes;
 
 namespace EveTrader
 {

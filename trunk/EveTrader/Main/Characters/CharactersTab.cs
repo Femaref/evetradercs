@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Drawing;
-using System.Data;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using Core.ClassExtenders;
-using Core.Updaters;
 using Core.DomainModel;
-using Settings=EveTrader.Settings;
+using Core.Updaters;
 
 namespace EveTrader.Main.Characters
 {
@@ -57,7 +51,7 @@ namespace EveTrader.Main.Characters
                 {
                     characterInfoUpdater.UpdateCharacter(character);
                 }
-                catch (WebException webException)
+                catch (WebException)
                 {
                     MessageBox.Show("Unable to connect to eve server", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

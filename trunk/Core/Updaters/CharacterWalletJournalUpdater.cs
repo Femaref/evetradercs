@@ -1,9 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Core.DomainModel;
-using Core.Network.EveApi.Requests;
 using Core.DomainModel;
 using Core.Network.EveApi.Requests;
 

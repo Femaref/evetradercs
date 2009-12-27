@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Dundas.Charting.WinControl;
-using Core.ClassExtenders;
 using Core.DomainModel;
-using Label=System.Windows.Forms.Label;
 
 namespace EveTrader.Main.Reports
 {

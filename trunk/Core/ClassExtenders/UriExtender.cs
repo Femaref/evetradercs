@@ -1,11 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Core.Updaters.DataRequest.Parameters;
-using Core.Updaters.DataRequest.Parameters;
-using System.Web;
 using System.Collections.Specialized;
+using System.Text;
+using System.Web;
+using Core.Updaters.DataRequest.Parameters;
 
 namespace Core.ClassExtenders
 {
