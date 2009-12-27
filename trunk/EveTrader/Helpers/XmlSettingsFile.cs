@@ -38,6 +38,7 @@ namespace EveTrader.Helpers
         }
         public void Save(string saveToFile)
         {
+            BeforeSave();
             string backup = File.ReadAllText(saveToFile);
             try
             {
@@ -52,7 +53,11 @@ namespace EveTrader.Helpers
                 File.WriteAllText(saveToFile, backup);
                 throw;
             }
+            AfterSave();
         }
+
+        protected abstract void BeforeSave();
+        protected abstract void AfterSave();
 
         public void Load()
         {            
@@ -66,12 +71,17 @@ namespace EveTrader.Helpers
             }
         }
         public void Load(string loadFromFile)
-        {            
+        {
+            BeforeLoad();
             using (FileStream fileStream = new FileStream(loadFromFile, FileMode.Open, FileAccess.Read))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
                 Instance = (T) xmlSerializer.Deserialize(fileStream);
             }
+            AfterLoad();
         }
+
+        protected abstract void BeforeLoad();
+        protected abstract void AfterLoad();
     }
 }

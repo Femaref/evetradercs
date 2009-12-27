@@ -27,22 +27,21 @@ namespace Core.DomainModel
 
         private double iSalesTax = 0;
 
-        [XmlIgnore]
         public double SalesTax
         {
             get
             {
-                if (iSalesTax > 0)
+                if (iSalesTax >= 0)
                     return iSalesTax;
                 else
-                    throw new Exception("No SalesTax set!");
+                    throw new Exception("SalesTax below 0!");
             }
             set { this.iSalesTax = value; }
         }
 
         public double CalculateSalesTax(int skillLevel)
         {
-            this.iSalesTax = (0.01*0.9*skillLevel);
+            this.iSalesTax = (0.01*Math.Pow(0.9, skillLevel))*Price;
             return this.iSalesTax;
         }
 

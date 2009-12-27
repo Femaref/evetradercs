@@ -26,6 +26,9 @@ namespace Core.Updaters
                 if (walletTransactionsRequest.ErrorCode == 0)
                 {
                     character.WalletTransactions = character.WalletTransactions.Union(newWalletTransactions, walletTransactionComparer).OrderByDescending(p => p.TransactionID).ToList();
+
+                    character.WalletTransactions.ForEach(wt => wt.CalculateSalesTax(character.AccountingLevel));
+
                     character.NextWalletTransactionsUpdateTime = DateTime.Now.AddHours(1).AddMinutes(1);
                     return true;
                 }

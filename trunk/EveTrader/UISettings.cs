@@ -20,6 +20,26 @@ namespace EveTrader
             }
         }
 
+        protected override void BeforeSave()
+        {
+            return;
+        }
+
+        protected override void AfterSave()
+        {
+            return;
+        }
+
+        protected override void BeforeLoad()
+        {
+            return;
+        }
+
+        protected override void AfterLoad()
+        {
+            return;
+        }
+
         public string LastBackupDirectory { get; set; }
         public DashboardSettings DashboardSettings { get; set; }
         public ReleaseNotesSettings ReleaseNotesSettings { get; set; }

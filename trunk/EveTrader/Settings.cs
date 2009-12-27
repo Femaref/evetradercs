@@ -32,5 +32,34 @@ namespace EveTrader
             this.Characters = new List<Character>();
             this.UserData = new UserData();
         }
+
+        protected override void BeforeSave()
+        {
+            return;
+        }
+
+        protected override void AfterSave()
+        {
+            return;
+        }
+
+        protected override void BeforeLoad()
+        {
+            return;
+        }
+
+        protected override void AfterLoad()
+        {
+            foreach (Character c in Instance.Characters)
+            {
+                foreach (WalletTransaction wt in c.WalletTransactions)
+                {
+                    if(wt.SalesTax > 0)
+                        continue;
+
+                    wt.CalculateSalesTax(c.AccountingLevel);
+                }
+            }
+        }
     }
 }

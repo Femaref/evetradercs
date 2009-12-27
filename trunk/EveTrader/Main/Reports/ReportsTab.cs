@@ -116,8 +116,8 @@ namespace EveTrader.Main.Reports
                         "{0} x{1}", 
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
-                    Value1 = Math.Round(g.Sum(gi => gi.Price * gi.Quantity / 1000000), 2),
-                    Value2 = Math.Round(g.Sum(gi => (gi.Price - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    Value1 = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
+                    Value2 = Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax) - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
             return reportData.OrderByDescending ( ri => ri.Value2 ).Take(15).OrderBy( ri => ri.Value2 ).ToList();
@@ -130,8 +130,8 @@ namespace EveTrader.Main.Reports
                 select new ReportChartItem
                 {
                     Label = g.Key,
-                    Value1 = Math.Round(g.Sum(gi => gi.Price * gi.Quantity / 1000000), 2),
-                    Value2 = Math.Round(g.Sum(gi => (gi.Price - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    Value1 = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
+                    Value2 = Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax) - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
             return reportData.OrderByDescending(ri => ri.Value2).Take(15).OrderBy(ri => ri.Value2).ToList();
@@ -144,8 +144,8 @@ namespace EveTrader.Main.Reports
                 select new ReportChartItem
                 {
                     Label = g.Key,
-                    Value1 = Math.Round(g.Sum(gi => gi.Price * gi.Quantity / 1000000), 2),
-                    Value2 = Math.Round(g.Sum(gi => (gi.Price - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    Value1 = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
+                    Value2 = Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax) - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
             return reportData.OrderByDescending(ri => ri.Value2).Take(15).OrderBy(ri => ri.Value2).ToList();
