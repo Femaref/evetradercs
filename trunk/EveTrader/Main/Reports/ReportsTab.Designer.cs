@@ -43,6 +43,9 @@
             Dundas.Charting.WinControl.Series series5 = new Dundas.Charting.WinControl.Series();
             Dundas.Charting.WinControl.Series series6 = new Dundas.Charting.WinControl.Series();
             Dundas.Charting.WinControl.Title title3 = new Dundas.Charting.WinControl.Title();
+            Dundas.Charting.WinControl.ChartArea chartArea4 = new Dundas.Charting.WinControl.ChartArea();
+            Dundas.Charting.WinControl.Series series7 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Title title4 = new Dundas.Charting.WinControl.Title();
             this.ShowForLastWeek = new System.Windows.Forms.RadioButton();
             this.ShowAll = new System.Windows.Forms.RadioButton();
             this.ShowForLast3Month = new System.Windows.Forms.RadioButton();
@@ -51,17 +54,21 @@
             this.MostProfitableClientsChart = new Dundas.Charting.WinControl.Chart();
             this.MostProfitableStationsChart = new Dundas.Charting.WinControl.Chart();
             this.MostProfitableProductsChart = new Dundas.Charting.WinControl.Chart();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tcReports = new System.Windows.Forms.TabControl();
             this.tpProduct = new System.Windows.Forms.TabPage();
             this.tpStation = new System.Windows.Forms.TabPage();
             this.tpClients = new System.Windows.Forms.TabPage();
+            this.tpBalanceHistory = new System.Windows.Forms.TabPage();
+            this.BalanceHistory = new Dundas.Charting.WinControl.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableClientsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).BeginInit();
-            this.tabControl1.SuspendLayout();
+            this.tcReports.SuspendLayout();
             this.tpProduct.SuspendLayout();
             this.tpStation.SuspendLayout();
             this.tpClients.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).BeginInit();
+            this.tpBalanceHistory.SuspendLayout();
             this.SuspendLayout();
             // 
             // ShowForLastWeek
@@ -362,16 +369,17 @@
             this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
             this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
             // 
-            // tabControl1
+            // tcReports
             // 
-            this.tabControl1.Controls.Add(this.tpProduct);
-            this.tabControl1.Controls.Add(this.tpStation);
-            this.tabControl1.Controls.Add(this.tpClients);
-            this.tabControl1.Location = new System.Drawing.Point(3, 30);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(827, 544);
-            this.tabControl1.TabIndex = 21;
+            this.tcReports.Controls.Add(this.tpProduct);
+            this.tcReports.Controls.Add(this.tpStation);
+            this.tcReports.Controls.Add(this.tpClients);
+            this.tcReports.Controls.Add(this.tpBalanceHistory);
+            this.tcReports.Location = new System.Drawing.Point(3, 30);
+            this.tcReports.Name = "tcReports";
+            this.tcReports.SelectedIndex = 0;
+            this.tcReports.Size = new System.Drawing.Size(827, 544);
+            this.tcReports.TabIndex = 21;
             // 
             // tpProduct
             // 
@@ -406,11 +414,79 @@
             this.tpClients.Text = "Clients";
             this.tpClients.UseVisualStyleBackColor = true;
             // 
+            // tpBalanceHistory
+            // 
+            // 
+            // BalanceHistory
+            // 
+            this.BalanceHistory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.BalanceHistory.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BalanceHistory.BackGradientEndColor = System.Drawing.Color.White;
+            this.BalanceHistory.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalLeft;
+            this.BalanceHistory.BorderLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
+            this.BalanceHistory.BorderLineStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
+            this.BalanceHistory.BorderSkin.FrameBackColor = System.Drawing.Color.CornflowerBlue;
+            this.BalanceHistory.BorderSkin.FrameBackGradientEndColor = System.Drawing.Color.CornflowerBlue;
+            this.BalanceHistory.BorderSkin.FrameBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BalanceHistory.BorderSkin.FrameBorderWidth = 2;
+            this.BalanceHistory.BorderSkin.PageColor = System.Drawing.Color.AliceBlue;
+            this.BalanceHistory.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
+            chartArea4.AxisX.LabelStyle.Format = "g";
+            chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisX2.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisY.LabelStyle.Format = "N2";
+            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisY.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisY.StartFromZero = false;
+            chartArea4.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.AxisY2.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea4.BackColor = System.Drawing.Color.White;
+            chartArea4.BorderColor = System.Drawing.Color.Gainsboro;
+            chartArea4.BorderStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
+            chartArea4.Name = "Default";
+            chartArea4.ShadowOffset = 2;
+            this.BalanceHistory.ChartAreas.Add(chartArea4);
+            this.BalanceHistory.Location = new System.Drawing.Point(0, 0);
+            this.BalanceHistory.Margin = new System.Windows.Forms.Padding(0);
+            this.BalanceHistory.Name = "BalanceHistory";
+            this.BalanceHistory.Palette = Dundas.Charting.WinControl.ChartColorPalette.Dundas;
+            series7.BackGradientEndColor = System.Drawing.Color.ForestGreen;
+            series7.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalRight;
+            series7.BorderWidth = 2;
+            series7.ChartType = "Line";
+            series7.Color = System.Drawing.Color.YellowGreen;
+            series7.Name = "Balance";
+            series7.PaletteCustomColors = new System.Drawing.Color[0];
+            series7.ShadowOffset = 1;
+            series7.ShowLabelAsValue = true;
+            series7.XValueType = Dundas.Charting.WinControl.ChartValueTypes.DateTime;
+            this.BalanceHistory.Series.Add(series7);
+            this.BalanceHistory.Size = new System.Drawing.Size(819, 518);
+            this.BalanceHistory.TabIndex = 6;
+            this.BalanceHistory.Text = "chart1";
+            title4.Name = "Title1";
+            title4.Text = "Balance";
+            this.BalanceHistory.Titles.Add(title4);
+            this.BalanceHistory.UI.Toolbar.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
+            this.BalanceHistory.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
+            this.BalanceHistory.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
+            this.tpBalanceHistory.Controls.Add(this.BalanceHistory);
+            this.tpBalanceHistory.Location = new System.Drawing.Point(4, 22);
+            this.tpBalanceHistory.Name = "tpBalanceHistory";
+            this.tpBalanceHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tpBalanceHistory.Size = new System.Drawing.Size(819, 518);
+            this.tpBalanceHistory.TabIndex = 3;
+            this.tpBalanceHistory.Text = "Balance History";
+            this.tpBalanceHistory.UseVisualStyleBackColor = true;
+            // 
             // ReportsTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tcReports);
             this.Controls.Add(this.ShowFor30Days);
             this.Controls.Add(this.ShowForLastWeek);
             this.Controls.Add(this.ShowAll);
@@ -422,10 +498,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableClientsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
-            this.tabControl1.ResumeLayout(false);
+            this.tcReports.ResumeLayout(false);
             this.tpProduct.ResumeLayout(false);
             this.tpStation.ResumeLayout(false);
             this.tpClients.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).EndInit();
+            this.tpBalanceHistory.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -441,10 +519,12 @@
         private Dundas.Charting.WinControl.Chart MostProfitableClientsChart;
         private Dundas.Charting.WinControl.Chart MostProfitableStationsChart;
         private Dundas.Charting.WinControl.Chart MostProfitableProductsChart;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tcReports;
         private System.Windows.Forms.TabPage tpProduct;
         private System.Windows.Forms.TabPage tpStation;
         private System.Windows.Forms.TabPage tpClients;
+        private System.Windows.Forms.TabPage tpBalanceHistory;
+        private Dundas.Charting.WinControl.Chart BalanceHistory;
 
 
 

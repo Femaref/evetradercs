@@ -43,6 +43,7 @@ namespace EveTrader.Main.Reports
             this.RenderMostProfitableProductsChart(mostProfitableProducts);
             this.RenderMostProfitableStationsChart(mostProfitableStations);
             this.RenderMostProfitableClientsChart(mostProfitableClients);
+            this.RenderBalanceHistory(this.BalanceHistoryList(Settings.Instance.Characters.First().BalanceHistory));
 
             this.Cursor = Cursors.Default;
         }
@@ -96,6 +97,11 @@ namespace EveTrader.Main.Reports
 
             this.MostProfitableClientsChart.ResetAutoValues();
         }
+        private void RenderBalanceHistory(IEnumerable<ReportChartItem> reportItems)
+        {
+            this.BalanceHistory.Series[0].Points.DataBindXY(reportItems, "Label", reportItems, "Value1");
+            this.BalanceHistory.ResetAutoValues();
+        }
 
         private IEnumerable<ReportChartItem> MostProfitableProductsList(IEnumerable<WalletTransaction> walletTransactions, IEnumerable<WalletTransaction> filteredWalletTransactions)
         {
@@ -141,6 +147,20 @@ namespace EveTrader.Main.Reports
                 };
 
             return reportData.OrderByDescending(ri => ri.Value2).Take(15).OrderBy(ri => ri.Value2).ToList();
+        }
+        private IEnumerable<ReportChartItem> BalanceHistoryList(IEnumerable<WalletHistory> history)
+        {
+            IEnumerable<ReportChartItem> reportData =
+                (from wh in history
+                 orderby wh.Key
+                 select new ReportChartItem
+                            {
+                                Label = wh.Key.ToString(),
+                                Value1 = wh.Value,
+                                Value2 = 0
+                            });
+            return reportData.ToList();
+            
         }
 
         private void ShowForLastWeek_Click(object sender, EventArgs e)
