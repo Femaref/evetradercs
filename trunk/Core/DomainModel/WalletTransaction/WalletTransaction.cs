@@ -23,6 +23,26 @@
         
         public bool Ignore { get; set; }
 
+        private double iSalesTax = 0;
+
+        public double SalesTax
+        {
+            get
+            {
+                if (iSalesTax > 0)
+                    return iSalesTax;
+                else
+                    throw new Exception("No SalesTax set!");
+            }
+            set { this.iSalesTax = value; }
+        }
+
+        public double CalculateSalesTax(int skillLevel)
+        {
+            this.iSalesTax = (0.01*0.9*skillLevel);
+            return this.iSalesTax;
+        }
+
         public IEqualityComparer<WalletTransaction> GetComparer()
         {
             return new WalletTransactionComparer();

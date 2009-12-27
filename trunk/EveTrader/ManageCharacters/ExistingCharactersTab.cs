@@ -42,13 +42,13 @@ namespace EveTrader.ManageCharacters
         private void ChangeApiKey_Click(object sender, EventArgs e)
         {
             if (!this.CheckCharacterIsSelected())
-            {
                 return;
-            }
+
 
             Character character = this.GetSelectedCharacter();
 
-            InputBoxResult result = InputBox.Show(string.Format("Enter new API key for {0}", character.Name), "Change API key");
+            InputBoxResult result = InputBox.Show(string.Format("Enter new API key for {0}", character.Name),
+                                                  "Change API key");
 
             if (result.OK && !string.IsNullOrEmpty(result.Text))
             {
@@ -56,18 +56,19 @@ namespace EveTrader.ManageCharacters
                 character.NextMarketOrdersUpdateTime = DateTime.Now;
                 character.NextWalletJournalUpdateTime = DateTime.Now;
                 character.NextWalletTransactionsUpdateTime = DateTime.Now;
-                
+
                 Settings.Instance.Save();
 
                 MessageBox.Show(
                     string.Format(
-                        "API key for {0} successfully changed", 
+                        "API key for {0} successfully changed",
                         character.Name),
                     "API key successfully changed");
-                
+
                 this.RenderCharactersList();
             }
         }
+
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (!this.CheckCharacterIsSelected())
@@ -112,30 +113,24 @@ namespace EveTrader.ManageCharacters
         {
             if (!this.CheckCharacterIsSelected())
                 return;
+            Character c = this.GetSelectedCharacter();
+            c.AccountingLevel = int.Parse((string)(sender as ToolStripMenuItem).Tag);
+        }
+
+        private void accountingLevelToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        {
+            if (!this.CheckCharacterIsSelected())
+                return;
+            ToolStripDropDownItem context = (sender as ToolStripDropDownItem);
 
             Character c = this.GetSelectedCharacter();
 
-            switch ((sender as ToolStripMenuItem).Name)
+            foreach (ToolStripItem t in context.DropDown.Items)
             {
-                case "setAcc0":
-                    c.AccountingLevel = 0;
-                    break;
-                case "setAcc1":
-                    c.AccountingLevel = 1;
-                    break;
-                case "setAcc2":
-                    c.AccountingLevel = 2;
-                    break;
-                case "setAcc3":
-                    c.AccountingLevel = 3;
-                    break;
-                case "setAcc4":
-                    c.AccountingLevel = 4;
-                    break;
-                case "setAcc5":
-                    c.AccountingLevel = 5;
-                    break;
+                t.Font = new Font(t.Font, FontStyle.Regular);
             }
+            ToolStripItem ts = context.DropDown.Items["setAcc" + c.AccountingLevel];
+            ts.Font = new Font(ts.Font, FontStyle.Bold);
         }
 
 

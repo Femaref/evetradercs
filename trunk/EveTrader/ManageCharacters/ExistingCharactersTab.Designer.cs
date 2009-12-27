@@ -92,11 +92,13 @@
             this.accountingLevelToolStripMenuItem.Name = "accountingLevelToolStripMenuItem";
             this.accountingLevelToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.accountingLevelToolStripMenuItem.Text = "Accounting Level";
+            this.accountingLevelToolStripMenuItem.DropDownOpened += new System.EventHandler(this.accountingLevelToolStripMenuItem_DropDownOpened);
             // 
             // setAcc0
             // 
             this.setAcc0.Name = "setAcc0";
             this.setAcc0.Size = new System.Drawing.Size(152, 22);
+            this.setAcc0.Tag = "0";
             this.setAcc0.Text = "Set to 0";
             this.setAcc0.Click += new System.EventHandler(this.accountSet_Click);
             // 
@@ -104,6 +106,7 @@
             // 
             this.setAcc1.Name = "setAcc1";
             this.setAcc1.Size = new System.Drawing.Size(152, 22);
+            this.setAcc1.Tag = "1";
             this.setAcc1.Text = "Set to 1";
             this.setAcc1.Click += new System.EventHandler(this.accountSet_Click);
             // 
@@ -111,6 +114,7 @@
             // 
             this.setAcc2.Name = "setAcc2";
             this.setAcc2.Size = new System.Drawing.Size(152, 22);
+            this.setAcc2.Tag = "2";
             this.setAcc2.Text = "Set to 2";
             this.setAcc2.Click += new System.EventHandler(this.accountSet_Click);
             // 
@@ -118,6 +122,7 @@
             // 
             this.setAcc3.Name = "setAcc3";
             this.setAcc3.Size = new System.Drawing.Size(152, 22);
+            this.setAcc3.Tag = "3";
             this.setAcc3.Text = "Set to 3";
             this.setAcc3.Click += new System.EventHandler(this.accountSet_Click);
             // 
@@ -125,6 +130,7 @@
             // 
             this.setAcc4.Name = "setAcc4";
             this.setAcc4.Size = new System.Drawing.Size(152, 22);
+            this.setAcc4.Tag = "4";
             this.setAcc4.Text = "Set to 4";
             this.setAcc4.Click += new System.EventHandler(this.accountSet_Click);
             // 
@@ -132,6 +138,7 @@
             // 
             this.setAcc5.Name = "setAcc5";
             this.setAcc5.Size = new System.Drawing.Size(152, 22);
+            this.setAcc5.Tag = "5";
             this.setAcc5.Text = "Set to 5";
             this.setAcc5.Click += new System.EventHandler(this.accountSet_Click);
             // 
