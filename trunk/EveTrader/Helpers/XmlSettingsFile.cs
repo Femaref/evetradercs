@@ -36,7 +36,11 @@ namespace EveTrader.Helpers
         public void Save(string saveToFile)
         {
             BeforeSave();
-            string backup = File.ReadAllText(saveToFile);
+            string backup = "";
+            bool exists = File.Exists(saveToFile);
+
+            if(exists)
+                backup = File.ReadAllText(saveToFile);
             try
             {
                 using (FileStream fileStream = new FileStream(saveToFile, FileMode.Create, FileAccess.Write))
@@ -47,7 +51,8 @@ namespace EveTrader.Helpers
             }
             catch (Exception)
             {
-                File.WriteAllText(saveToFile, backup);
+                if(exists)
+                    File.WriteAllText(saveToFile, backup);
                 throw;
             }
             AfterSave();
