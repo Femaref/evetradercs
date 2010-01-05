@@ -53,19 +53,20 @@ namespace EveTrader.Main.Reports
         private void RenderMostProfitableProductsChart(IEnumerable<ReportChartItem> reportItems)
         {
             this.MostProfitableProductsChart.Series[1].Points.DataBindXY(
-                    reportItems,
-                    "Label",
-                    reportItems,
-                    "Profit");
+                reportItems,
+                "Label",
+                reportItems,
+                "Profit");
 
             this.MostProfitableProductsChart.Series[0].Points.DataBindXY(
-                    reportItems,
-                    "Label",
-                    reportItems,
-                    "GrossSales");
+                reportItems,
+                "Label",
+                reportItems,
+                "GrossSales");
 
             this.MostProfitableProductsChart.ResetAutoValues();
         }
+
         private void RenderMostProfitableStationsChart(IEnumerable<ReportChartItem> reportItems)
         {
             this.MostProfitableStationsChart.Series[1].Points.DataBindXY(
@@ -105,7 +106,7 @@ namespace EveTrader.Main.Reports
             foreach(CharacterBalance er in reportItems)
             {
                 Series s = this.BalanceHistory.Series.Add(er.Key);
-                s.Type = SeriesChartType.Line;
+                s.Type = SeriesChartType.StepLine;
                 s.XValueType = ChartValueTypes.DateTime;
                 s.YValueType = ChartValueTypes.Double;
                 s.Points.DataBindXY(er.Values, "Key", er.Values, "Value"); 
@@ -126,7 +127,8 @@ namespace EveTrader.Main.Reports
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
                     Profit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
-                    GrossSales = Math.Round(g.Sum(gi => (gi.Price  - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    GrossSales = Math.Round(g.Sum(gi => (gi.Price  - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2),
+                    SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 
             return reportData.OrderByDescending ( ri => ri.GrossSales ).Take(15).OrderBy( ri => ri.GrossSales ).ToList();
