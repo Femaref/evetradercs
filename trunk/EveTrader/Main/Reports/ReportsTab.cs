@@ -66,7 +66,6 @@ namespace EveTrader.Main.Reports
 
             this.MostProfitableProductsChart.ResetAutoValues();
         }
-
         private void RenderMostProfitableStationsChart(IEnumerable<ReportChartItem> reportItems)
         {
             this.MostProfitableStationsChart.Series[1].Points.DataBindXY(
@@ -198,6 +197,7 @@ namespace EveTrader.Main.Reports
         {
             this.fromDate = DateTime.Now.Date.AddDays(-6);
             this.Initialize();
+            
         }
         private void ShowFor30Days_Click(object sender, EventArgs e)
         {

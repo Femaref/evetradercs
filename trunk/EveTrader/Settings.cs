@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using Core.DomainModel;
 using EveTrader.Helpers;
@@ -18,7 +19,7 @@ namespace EveTrader
 
         public List<Character> Characters { get; set; }
         public UserData UserData { get; set; }
-
+        
         public Settings()
         {
             this.Characters = new List<Character>();

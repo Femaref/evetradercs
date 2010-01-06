@@ -31,17 +31,17 @@
             System.Windows.Forms.RadioButton SalesAmount7;
             System.Windows.Forms.RadioButton SalesAmount14;
             System.Windows.Forms.RadioButton SalesAmount30;
-            Dundas.Charting.WinControl.ChartArea chartArea1 = ((Dundas.Charting.WinControl.ChartArea)(new Dundas.Charting.WinControl.ChartArea()));
-            Dundas.Charting.WinControl.Legend legend1 = ((Dundas.Charting.WinControl.Legend)(new Dundas.Charting.WinControl.Legend()));
-            Dundas.Charting.WinControl.Series series1 = ((Dundas.Charting.WinControl.Series)(new Dundas.Charting.WinControl.Series()));
-            Dundas.Charting.WinControl.Series series2 = ((Dundas.Charting.WinControl.Series)(new Dundas.Charting.WinControl.Series()));
-            Dundas.Charting.WinControl.Series series3 = ((Dundas.Charting.WinControl.Series)(new Dundas.Charting.WinControl.Series()));
-            Dundas.Charting.WinControl.Title title1 = ((Dundas.Charting.WinControl.Title)(new Dundas.Charting.WinControl.Title()));
-            Dundas.Charting.WinControl.ChartArea chartArea2 = ((Dundas.Charting.WinControl.ChartArea)(new Dundas.Charting.WinControl.ChartArea()));
-            Dundas.Charting.WinControl.Legend legend2 = ((Dundas.Charting.WinControl.Legend)(new Dundas.Charting.WinControl.Legend()));
-            Dundas.Charting.WinControl.Series series4 = ((Dundas.Charting.WinControl.Series)(new Dundas.Charting.WinControl.Series()));
-            Dundas.Charting.WinControl.Series series5 = ((Dundas.Charting.WinControl.Series)(new Dundas.Charting.WinControl.Series()));
-            Dundas.Charting.WinControl.Title title2 = ((Dundas.Charting.WinControl.Title)(new Dundas.Charting.WinControl.Title()));
+            Dundas.Charting.WinControl.ChartArea chartArea1 = new Dundas.Charting.WinControl.ChartArea();
+            Dundas.Charting.WinControl.Legend legend1 = new Dundas.Charting.WinControl.Legend();
+            Dundas.Charting.WinControl.Series series1 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Series series2 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Series series3 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Title title1 = new Dundas.Charting.WinControl.Title();
+            Dundas.Charting.WinControl.ChartArea chartArea2 = new Dundas.Charting.WinControl.ChartArea();
+            Dundas.Charting.WinControl.Legend legend2 = new Dundas.Charting.WinControl.Legend();
+            Dundas.Charting.WinControl.Series series4 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Series series5 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Title title2 = new Dundas.Charting.WinControl.Title();
             this.SalesDetailsChart = new Dundas.Charting.WinControl.Chart();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SalesAmountChart = new Dundas.Charting.WinControl.Chart();
@@ -57,10 +57,10 @@
             SalesAmount14 = new System.Windows.Forms.RadioButton();
             SalesAmount30 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.SalesDetailsChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SalesAmountChart)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SalesAmountChart)).BeginInit();
             this.ShowSalesPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +103,7 @@
             SalesAmount30.Text = "30 days";
             SalesAmount30.UseVisualStyleBackColor = true;
             SalesAmount30.Click += new System.EventHandler(this.ChangeSalesAmountDaysToShow_Click);
+
             // 
             // SalesDetailsChart
             // 
@@ -214,6 +215,16 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.SalesAmountChart);
+            this.splitContainer1.Panel1MinSize = 250;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.SalesDetailsChart);
+            this.splitContainer1.Panel2MinSize = 100;
+            this.splitContainer1.Size = new System.Drawing.Size(887, 470);
+            this.splitContainer1.SplitterDistance = 519;
+            this.splitContainer1.TabIndex = 9;
             // 
             // SalesAmountChart
             // 
@@ -294,16 +305,6 @@
             this.SalesAmountChart.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
             this.SalesAmountChart.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
             this.SalesAmountChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SalesAmountChart_MouseMove);
-            this.splitContainer1.Panel1.Controls.Add(this.SalesAmountChart);
-            this.splitContainer1.Panel1MinSize = 250;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.SalesDetailsChart);
-            this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(887, 470);
-            this.splitContainer1.SplitterDistance = 519;
-            this.splitContainer1.TabIndex = 9;
             // 
             // ShowSalesPanel
             // 
@@ -410,10 +411,10 @@
             this.Size = new System.Drawing.Size(887, 551);
             this.Load += new System.EventHandler(this.DashboardTab_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SalesDetailsChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SalesAmountChart)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SalesAmountChart)).EndInit();
             this.ShowSalesPanel.ResumeLayout(false);
             this.ShowSalesPanel.PerformLayout();
             this.panel2.ResumeLayout(false);
