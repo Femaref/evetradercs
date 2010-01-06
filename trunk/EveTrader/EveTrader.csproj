@@ -137,6 +137,7 @@
     <Compile Include="Main\MarketOrders\MarketOrdersTab.Designer.cs">
       <DependentUpon>MarketOrdersTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Reports\ReportSettings.cs" />
     <Compile Include="Main\Reports\ReportsTab.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using EveTrader.Helpers;
 using EveTrader.Main.Dashboard;
+using EveTrader.Main.Reports;
 using EveTrader.ReleaseNotes;
 
 namespace EveTrader
@@ -40,11 +41,13 @@ namespace EveTrader
         public string LastBackupDirectory { get; set; }
         public DashboardSettings DashboardSettings { get; set; }
         public ReleaseNotesSettings ReleaseNotesSettings { get; set; }
+        public ReportSettings ReportSettings { get; set; }
 
         public UISettings()
         {
             this.DashboardSettings = new DashboardSettings();
             this.ReleaseNotesSettings = new ReleaseNotesSettings();
+            this.ReportSettings = new ReportSettings();
         }
     }
 }

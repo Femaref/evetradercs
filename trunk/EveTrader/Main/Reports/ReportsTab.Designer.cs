@@ -68,15 +68,15 @@
             Dundas.Charting.WinControl.DataPoint dataPoint29 = new Dundas.Charting.WinControl.DataPoint(13, 78);
             Dundas.Charting.WinControl.DataPoint dataPoint30 = new Dundas.Charting.WinControl.DataPoint(14, 98);
             Dundas.Charting.WinControl.Title title2 = new Dundas.Charting.WinControl.Title();
-            Dundas.Charting.WinControl.ChartArea chartArea4 = new Dundas.Charting.WinControl.ChartArea();
-            Dundas.Charting.WinControl.Legend legend4 = new Dundas.Charting.WinControl.Legend();
-            Dundas.Charting.WinControl.Series series7 = new Dundas.Charting.WinControl.Series();
-            Dundas.Charting.WinControl.Title title4 = new Dundas.Charting.WinControl.Title();
             Dundas.Charting.WinControl.ChartArea chartArea3 = new Dundas.Charting.WinControl.ChartArea();
             Dundas.Charting.WinControl.Legend legend3 = new Dundas.Charting.WinControl.Legend();
             Dundas.Charting.WinControl.Series series5 = new Dundas.Charting.WinControl.Series();
             Dundas.Charting.WinControl.Series series6 = new Dundas.Charting.WinControl.Series();
             Dundas.Charting.WinControl.Title title3 = new Dundas.Charting.WinControl.Title();
+            Dundas.Charting.WinControl.ChartArea chartArea4 = new Dundas.Charting.WinControl.ChartArea();
+            Dundas.Charting.WinControl.Legend legend4 = new Dundas.Charting.WinControl.Legend();
+            Dundas.Charting.WinControl.Series series7 = new Dundas.Charting.WinControl.Series();
+            Dundas.Charting.WinControl.Title title4 = new Dundas.Charting.WinControl.Title();
             this.ShowForLastWeek = new System.Windows.Forms.RadioButton();
             this.ShowAll = new System.Windows.Forms.RadioButton();
             this.ShowForLast3Month = new System.Windows.Forms.RadioButton();
@@ -86,20 +86,24 @@
             this.MostProfitableStationsChart = new Dundas.Charting.WinControl.Chart();
             this.tcReports = new System.Windows.Forms.TabControl();
             this.tpProduct = new System.Windows.Forms.TabPage();
+            this.MostProfitableProductsChart = new Dundas.Charting.WinControl.Chart();
             this.tpStation = new System.Windows.Forms.TabPage();
             this.tpClients = new System.Windows.Forms.TabPage();
             this.tpBalanceHistory = new System.Windows.Forms.TabPage();
             this.BalanceHistory = new Dundas.Charting.WinControl.Chart();
-            this.MostProfitableProductsChart = new Dundas.Charting.WinControl.Chart();
+            this.tbItemsDisplayed = new System.Windows.Forms.TextBox();
+            this.descItemsDisplayed = new System.Windows.Forms.Label();
+            this.btApply = new System.Windows.Forms.Button();
+            this.cbAutomaticApply = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableClientsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).BeginInit();
             this.tcReports.SuspendLayout();
             this.tpProduct.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).BeginInit();
             this.tpStation.SuspendLayout();
             this.tpClients.SuspendLayout();
             this.tpBalanceHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).BeginInit();
             this.SuspendLayout();
             // 
             // ShowForLastWeek
@@ -515,6 +519,87 @@
             this.tpProduct.Text = "Products";
             this.tpProduct.UseVisualStyleBackColor = true;
             // 
+            // MostProfitableProductsChart
+            // 
+            this.MostProfitableProductsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.MostProfitableProductsChart.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.MostProfitableProductsChart.BackGradientEndColor = System.Drawing.Color.White;
+            this.MostProfitableProductsChart.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalLeft;
+            this.MostProfitableProductsChart.BorderLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
+            this.MostProfitableProductsChart.BorderLineStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
+            this.MostProfitableProductsChart.BorderSkin.FrameBackColor = System.Drawing.Color.CornflowerBlue;
+            this.MostProfitableProductsChart.BorderSkin.FrameBackGradientEndColor = System.Drawing.Color.CornflowerBlue;
+            this.MostProfitableProductsChart.BorderSkin.FrameBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.MostProfitableProductsChart.BorderSkin.FrameBorderWidth = 2;
+            this.MostProfitableProductsChart.BorderSkin.PageColor = System.Drawing.SystemColors.Control;
+            this.MostProfitableProductsChart.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
+            chartArea3.AxisX.Interval = 1;
+            chartArea3.AxisX.LabelsAutoFit = false;
+            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisX.MinorTickMark.Size = 2F;
+            chartArea3.AxisX2.LabelsAutoFit = false;
+            chartArea3.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisX2.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisY.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisY.MinorTickMark.Size = 2F;
+            chartArea3.AxisY2.LabelsAutoFit = false;
+            chartArea3.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.AxisY2.MinorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea3.BackColor = System.Drawing.Color.White;
+            chartArea3.BorderColor = System.Drawing.Color.Gainsboro;
+            chartArea3.BorderStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
+            chartArea3.Name = "Default";
+            chartArea3.ShadowOffset = 2;
+            this.MostProfitableProductsChart.ChartAreas.Add(chartArea3);
+            legend3.Alignment = System.Drawing.StringAlignment.Center;
+            legend3.AutoFitText = false;
+            legend3.BackColor = System.Drawing.Color.Transparent;
+            legend3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
+            legend3.BorderWidth = 0;
+            legend3.Docking = Dundas.Charting.WinControl.LegendDocking.Bottom;
+            legend3.LegendStyle = Dundas.Charting.WinControl.LegendStyle.Row;
+            legend3.MaxAutoSize = 100F;
+            legend3.Name = "Default";
+            legend3.TextWrapThreshold = 50;
+            this.MostProfitableProductsChart.Legends.Add(legend3);
+            this.MostProfitableProductsChart.Location = new System.Drawing.Point(0, 0);
+            this.MostProfitableProductsChart.Margin = new System.Windows.Forms.Padding(0);
+            this.MostProfitableProductsChart.Name = "MostProfitableProductsChart";
+            this.MostProfitableProductsChart.Palette = Dundas.Charting.WinControl.ChartColorPalette.Dundas;
+            series5.BackGradientEndColor = System.Drawing.Color.ForestGreen;
+            series5.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalRight;
+            series5.ChartType = "Bar";
+            series5.Color = System.Drawing.Color.YellowGreen;
+            series5.Name = "Pure profit (gross sales - average buy price)";
+            series5.PaletteCustomColors = new System.Drawing.Color[0];
+            series5.ShadowOffset = 2;
+            series5.ShowLabelAsValue = true;
+            series5.SmartLabels.Enabled = true;
+            series6.BackGradientEndColor = System.Drawing.Color.DarkOrange;
+            series6.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalRight;
+            series6.BorderColor = System.Drawing.Color.Transparent;
+            series6.ChartType = "Bar";
+            series6.Color = System.Drawing.Color.Gold;
+            series6.Name = "Gross sales";
+            series6.PaletteCustomColors = new System.Drawing.Color[0];
+            series6.ShadowOffset = 2;
+            series6.ShowLabelAsValue = true;
+            this.MostProfitableProductsChart.Series.Add(series5);
+            this.MostProfitableProductsChart.Series.Add(series6);
+            this.MostProfitableProductsChart.Size = new System.Drawing.Size(823, 522);
+            this.MostProfitableProductsChart.TabIndex = 2;
+            this.MostProfitableProductsChart.Text = "chart1";
+            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title3.Name = "Default Title";
+            title3.Text = "Top 15 most profitable products";
+            this.MostProfitableProductsChart.Titles.Add(title3);
+            this.MostProfitableProductsChart.UI.Toolbar.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
+            this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
+            this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
+            // 
             // tpStation
             // 
             this.tpStation.Controls.Add(this.MostProfitableStationsChart);
@@ -665,91 +750,53 @@
             this.BalanceHistory.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
             this.BalanceHistory.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
             // 
-            // MostProfitableProductsChart
+            // tbItemsDisplayed
             // 
-            this.MostProfitableProductsChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.MostProfitableProductsChart.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.MostProfitableProductsChart.BackGradientEndColor = System.Drawing.Color.White;
-            this.MostProfitableProductsChart.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalLeft;
-            this.MostProfitableProductsChart.BorderLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
-            this.MostProfitableProductsChart.BorderLineStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
-            this.MostProfitableProductsChart.BorderSkin.FrameBackColor = System.Drawing.Color.CornflowerBlue;
-            this.MostProfitableProductsChart.BorderSkin.FrameBackGradientEndColor = System.Drawing.Color.CornflowerBlue;
-            this.MostProfitableProductsChart.BorderSkin.FrameBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.MostProfitableProductsChart.BorderSkin.FrameBorderWidth = 2;
-            this.MostProfitableProductsChart.BorderSkin.PageColor = System.Drawing.SystemColors.Control;
-            this.MostProfitableProductsChart.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
-            chartArea3.AxisX.Interval = 1;
-            chartArea3.AxisX.LabelsAutoFit = false;
-            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisX.MinorTickMark.Size = 2F;
-            chartArea3.AxisX2.LabelsAutoFit = false;
-            chartArea3.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisX2.MinorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisY.MinorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisY.MinorTickMark.Size = 2F;
-            chartArea3.AxisY2.LabelsAutoFit = false;
-            chartArea3.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.AxisY2.MinorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea3.BackColor = System.Drawing.Color.White;
-            chartArea3.BorderColor = System.Drawing.Color.Gainsboro;
-            chartArea3.BorderStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
-            chartArea3.Name = "Default";
-            chartArea3.ShadowOffset = 2;
-            this.MostProfitableProductsChart.ChartAreas.Add(chartArea3);
-            legend3.Alignment = System.Drawing.StringAlignment.Center;
-            legend3.AutoFitText = false;
-            legend3.BackColor = System.Drawing.Color.Transparent;
-            legend3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
-            legend3.BorderWidth = 0;
-            legend3.Docking = Dundas.Charting.WinControl.LegendDocking.Bottom;
-            legend3.LegendStyle = Dundas.Charting.WinControl.LegendStyle.Row;
-            legend3.MaxAutoSize = 100F;
-            legend3.Name = "Default";
-            legend3.TextWrapThreshold = 50;
-            this.MostProfitableProductsChart.Legends.Add(legend3);
-            this.MostProfitableProductsChart.Location = new System.Drawing.Point(0, 0);
-            this.MostProfitableProductsChart.Margin = new System.Windows.Forms.Padding(0);
-            this.MostProfitableProductsChart.Name = "MostProfitableProductsChart";
-            this.MostProfitableProductsChart.Palette = Dundas.Charting.WinControl.ChartColorPalette.Dundas;
-            series5.BackGradientEndColor = System.Drawing.Color.ForestGreen;
-            series5.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalRight;
-            series5.ChartType = "Bar";
-            series5.Color = System.Drawing.Color.YellowGreen;
-            series5.Name = "Pure profit (gross sales - average buy price)";
-            series5.PaletteCustomColors = new System.Drawing.Color[0];
-            series5.ShadowOffset = 2;
-            series5.ShowLabelAsValue = true;
-            series5.SmartLabels.Enabled = true;
-            series6.BackGradientEndColor = System.Drawing.Color.DarkOrange;
-            series6.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalRight;
-            series6.BorderColor = System.Drawing.Color.Transparent;
-            series6.ChartType = "Bar";
-            series6.Color = System.Drawing.Color.Gold;
-            series6.Name = "Gross sales";
-            series6.PaletteCustomColors = new System.Drawing.Color[0];
-            series6.ShadowOffset = 2;
-            series6.ShowLabelAsValue = true;
-            this.MostProfitableProductsChart.Series.Add(series5);
-            this.MostProfitableProductsChart.Series.Add(series6);
-            this.MostProfitableProductsChart.Size = new System.Drawing.Size(823, 522);
-            this.MostProfitableProductsChart.TabIndex = 2;
-            this.MostProfitableProductsChart.Text = "chart1";
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            title3.Name = "Default Title";
-            title3.Text = "Top 15 most profitable products";
-            this.MostProfitableProductsChart.Titles.Add(title3);
-            this.MostProfitableProductsChart.UI.Toolbar.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
-            this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
-            this.MostProfitableProductsChart.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
+            this.tbItemsDisplayed.Location = new System.Drawing.Point(487, 11);
+            this.tbItemsDisplayed.Name = "tbItemsDisplayed";
+            this.tbItemsDisplayed.Size = new System.Drawing.Size(47, 20);
+            this.tbItemsDisplayed.TabIndex = 22;
+            this.tbItemsDisplayed.Text = "15";
+            this.tbItemsDisplayed.TextChanged += new System.EventHandler(this.tbItemsDisplayed_TextChanged);
+            // 
+            // descItemsDisplayed
+            // 
+            this.descItemsDisplayed.AutoSize = true;
+            this.descItemsDisplayed.Location = new System.Drawing.Point(396, 14);
+            this.descItemsDisplayed.Name = "descItemsDisplayed";
+            this.descItemsDisplayed.Size = new System.Drawing.Size(85, 13);
+            this.descItemsDisplayed.TabIndex = 23;
+            this.descItemsDisplayed.Text = "Items displayed: ";
+            // 
+            // btApply
+            // 
+            this.btApply.Location = new System.Drawing.Point(549, 9);
+            this.btApply.Name = "btApply";
+            this.btApply.Size = new System.Drawing.Size(75, 23);
+            this.btApply.TabIndex = 24;
+            this.btApply.Text = "Apply";
+            this.btApply.UseVisualStyleBackColor = true;
+            this.btApply.Click += new System.EventHandler(this.btApply_Click);
+            // 
+            // cbAutomaticApply
+            // 
+            this.cbAutomaticApply.AutoSize = true;
+            this.cbAutomaticApply.Location = new System.Drawing.Point(639, 13);
+            this.cbAutomaticApply.Name = "cbAutomaticApply";
+            this.cbAutomaticApply.Size = new System.Drawing.Size(76, 17);
+            this.cbAutomaticApply.TabIndex = 25;
+            this.cbAutomaticApply.Text = "Auto apply";
+            this.cbAutomaticApply.UseVisualStyleBackColor = true;
+            this.cbAutomaticApply.CheckedChanged += new System.EventHandler(this.cbAutomaticApply_CheckedChanged);
             // 
             // ReportsTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cbAutomaticApply);
+            this.Controls.Add(this.btApply);
+            this.Controls.Add(this.descItemsDisplayed);
+            this.Controls.Add(this.tbItemsDisplayed);
             this.Controls.Add(this.tcReports);
             this.Controls.Add(this.ShowFor30Days);
             this.Controls.Add(this.ShowForLastWeek);
@@ -763,11 +810,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).EndInit();
             this.tcReports.ResumeLayout(false);
             this.tpProduct.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
             this.tpStation.ResumeLayout(false);
             this.tpClients.ResumeLayout(false);
             this.tpBalanceHistory.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -789,6 +836,10 @@
         private System.Windows.Forms.TabPage tpBalanceHistory;
         private Dundas.Charting.WinControl.Chart BalanceHistory;
         private Dundas.Charting.WinControl.Chart MostProfitableProductsChart;
+        private System.Windows.Forms.TextBox tbItemsDisplayed;
+        private System.Windows.Forms.Label descItemsDisplayed;
+        private System.Windows.Forms.Button btApply;
+        private System.Windows.Forms.CheckBox cbAutomaticApply;
 
 
 
