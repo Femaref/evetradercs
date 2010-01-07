@@ -11,10 +11,10 @@ namespace EveTrader.Main.Dashboard
 {
     public partial class DashboardTab : UserControl
     {
-        private bool showTotalLabels = true;
-        private bool showProfitLabels = true;
-        private bool showInvestmentLabels = false;
-        private bool showDetailedLabeles = false;
+        private bool iShowTotalLabels = true;
+        private bool iShowProfitLabels = true;
+        private bool iShowInvestmentLabels = false;
+        private bool iShowDetailedLabeles = false;
 
         public bool ReInitialize { get; set; }
 
@@ -41,7 +41,6 @@ namespace EveTrader.Main.Dashboard
             }
 
             this.RenderSalesAmountChart();
-
         }
 
         private void RenderSalesAmountChart()
@@ -54,7 +53,7 @@ namespace EveTrader.Main.Dashboard
                 this.SalesAmountChart.Series.Add(character.Name);
                 reportData = this.GetSalesAmount(character.WalletJournal);
                 this.SalesAmountChart.Series[character.Name].Type = SeriesChartType.StackedColumn;
-                this.SalesAmountChart.Series[character.Name].ShowLabelAsValue = showDetailedLabeles;
+                this.SalesAmountChart.Series[character.Name].ShowLabelAsValue = iShowDetailedLabeles;
                 this.SalesAmountChart.Series[character.Name]["StackedGroupName"] = "General";
                 this.SalesAmountChart.Series[character.Name].ShadowOffset = 2;
                 this.SalesAmountChart.Series[character.Name].CustomAttributes = "LabelStyle=BottomCenter";
@@ -77,7 +76,7 @@ namespace EveTrader.Main.Dashboard
             this.SalesAmountChart.Series["Total"].Name = "Total";
             this.SalesAmountChart.Series["Total"].PaletteCustomColors = new System.Drawing.Color[0];
             this.SalesAmountChart.Series["Total"].ShadowOffset = 2;
-            this.SalesAmountChart.Series["Total"].ShowLabelAsValue = showTotalLabels;
+            this.SalesAmountChart.Series["Total"].ShowLabelAsValue = iShowTotalLabels;
             this.SalesAmountChart.Series["Total"].Points.DataBindXY(
                     reportData,
                     "Label",
@@ -94,13 +93,13 @@ namespace EveTrader.Main.Dashboard
             this.SalesAmountChart.Series["Daily investments"].SmartLabels.CalloutLineWidth = 2;
             this.SalesAmountChart.Series["Daily investments"].SmartLabels.CalloutStyle = LabelCalloutStyle.Box;
             this.SalesAmountChart.Series["Daily investments"].BorderColor = Color.FromArgb(
-                this.showInvestmentLabels ? 255 : 100,
+                this.iShowInvestmentLabels ? 255 : 100,
                 Color.OrangeRed.R,
                 Color.OrangeRed.G,
                 Color.OrangeRed.B);
             this.SalesAmountChart.Series["Daily investments"].ChartType = "Line";
             this.SalesAmountChart.Series["Daily investments"].Color = Color.FromArgb(
-                this.showInvestmentLabels ? 255 : 100,   
+                this.iShowInvestmentLabels ? 255 : 100,   
                 Color.OrangeRed.R,
                 Color.OrangeRed.G,
                 Color.OrangeRed.B);
@@ -108,17 +107,17 @@ namespace EveTrader.Main.Dashboard
             this.SalesAmountChart.Series["Daily investments"].FontColor = System.Drawing.Color.Black;
             this.SalesAmountChart.Series["Daily investments"].MarkerSize = UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount > 14 ? 5 : 9;;
             this.SalesAmountChart.Series["Daily investments"].MarkerBorderColor = Color.FromArgb(
-                this.showInvestmentLabels ? 255 : 100,
+                this.iShowInvestmentLabels ? 255 : 100,
                 Color.Crimson.R,
                 Color.Crimson.G,
                 Color.Crimson.B);
             this.SalesAmountChart.Series["Daily investments"].MarkerStyle = Dundas.Charting.WinControl.MarkerStyle.Circle;
             this.SalesAmountChart.Series["Daily investments"].Name = "Daily investments";
             this.SalesAmountChart.Series["Daily investments"].PaletteCustomColors = new System.Drawing.Color[0];
-            this.SalesAmountChart.Series["Daily investments"].ShadowOffset = this.showInvestmentLabels ? 2 : 0;
-            this.SalesAmountChart.Series["Daily investments"].BorderWidth = UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount <= 14 ? 3 : this.showInvestmentLabels ? 2 : 1;
+            this.SalesAmountChart.Series["Daily investments"].ShadowOffset = this.iShowInvestmentLabels ? 2 : 0;
+            this.SalesAmountChart.Series["Daily investments"].BorderWidth = UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount <= 14 ? 3 : this.iShowInvestmentLabels ? 2 : 1;
             this.SalesAmountChart.Series["Daily investments"].CustomAttributes = "LabelStyle=Right";
-            this.SalesAmountChart.Series["Daily investments"].ShowLabelAsValue = showInvestmentLabels;
+            this.SalesAmountChart.Series["Daily investments"].ShowLabelAsValue = iShowInvestmentLabels;
             this.SalesAmountChart.Series["Daily investments"].Points.DataBindXY(
                     reportData,
                     "Label",
@@ -134,13 +133,13 @@ namespace EveTrader.Main.Dashboard
             this.SalesAmountChart.Series["Daily profit"].SmartLabels.CalloutLineWidth = 2;
             this.SalesAmountChart.Series["Daily profit"].SmartLabels.CalloutStyle = LabelCalloutStyle.Box;
             this.SalesAmountChart.Series["Daily profit"].BorderColor = Color.FromArgb(
-                this.showProfitLabels ? 255 : 100,   
+                this.iShowProfitLabels ? 255 : 100,   
                 Color.GreenYellow.R,
                 Color.GreenYellow.G,
                 Color.GreenYellow.B);
             this.SalesAmountChart.Series["Daily profit"].ChartType = "Line";
             this.SalesAmountChart.Series["Daily profit"].Color = Color.FromArgb(
-                this.showProfitLabels ? 255 : 100,  
+                this.iShowProfitLabels ? 255 : 100,  
                 Color.GreenYellow.R,
                 Color.GreenYellow.G,
                 Color.GreenYellow.B);
@@ -148,26 +147,22 @@ namespace EveTrader.Main.Dashboard
             this.SalesAmountChart.Series["Daily profit"].FontColor = System.Drawing.Color.Black;
             this.SalesAmountChart.Series["Daily profit"].MarkerSize = UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount > 14 ? 5 : 9;;
             this.SalesAmountChart.Series["Daily profit"].MarkerBorderColor = Color.FromArgb(
-                this.showProfitLabels ? 255 : 100,    
+                this.iShowProfitLabels ? 255 : 100,    
                 Color.OliveDrab.R,
                 Color.OliveDrab.G,
                 Color.OliveDrab.B);
             this.SalesAmountChart.Series["Daily profit"].MarkerStyle = Dundas.Charting.WinControl.MarkerStyle.Circle;
             this.SalesAmountChart.Series["Daily profit"].Name = "Daily profit";
             this.SalesAmountChart.Series["Daily profit"].PaletteCustomColors = new System.Drawing.Color[0];
-            this.SalesAmountChart.Series["Daily profit"].ShadowOffset = this.showProfitLabels ? 2 : 0;
-            this.SalesAmountChart.Series["Daily profit"].BorderWidth = UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount <= 14 ? 3 : this.showProfitLabels ? 2 : 1;
+            this.SalesAmountChart.Series["Daily profit"].ShadowOffset = this.iShowProfitLabels ? 2 : 0;
+            this.SalesAmountChart.Series["Daily profit"].BorderWidth = UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount <= 14 ? 3 : this.iShowProfitLabels ? 2 : 1;
             this.SalesAmountChart.Series["Daily profit"].CustomAttributes = "LabelStyle=Right";
-            this.SalesAmountChart.Series["Daily profit"].ShowLabelAsValue = showProfitLabels;
+            this.SalesAmountChart.Series["Daily profit"].ShowLabelAsValue = iShowProfitLabels;
             this.SalesAmountChart.Series["Daily profit"].Points.DataBindXY(
                     reportData,
                     "Label",
                     reportData,
                     "Value");
-
-            
-            
-
         }
         private void RenderSalesDetailsChart(IEnumerable<DashboardChartItem> sales)
         {
@@ -254,7 +249,6 @@ namespace EveTrader.Main.Dashboard
                         Label = date.ToString("MMM dd"),
                         Value = Math.Round(value, 1) 
                     });
-                
             }
 
             return reportData;
@@ -278,7 +272,6 @@ namespace EveTrader.Main.Dashboard
                     Value = Math.Round(g.Sum(gi => (gi.Price  * gi.Quantity) / 1000000), 2)
                 };
 
-
             return reportData.OrderBy ( ri => ri.Value).ToList();
         }
         private IEnumerable<DashboardChartItem> GetDayInvestmentsAmount(IEnumerable<WalletTransaction> walletTransactions, DateTime date)
@@ -299,7 +292,6 @@ namespace EveTrader.Main.Dashboard
                         g.Sum(gi => gi.Quantity)),
                     Value = Math.Round(g.Sum(gi => (gi.Price  * gi.Quantity) / 1000000), 2)
                 };
-
 
             return reportData.OrderBy ( ri => ri.Value).ToList();
         }
@@ -322,7 +314,6 @@ namespace EveTrader.Main.Dashboard
                     Value = Math.Round(g.Sum(gi => (gi.Price  - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
-
             return reportData.OrderBy ( ri => ri.Value).ToList();
         }
         private IEnumerable<DashboardChartItem> GetSalesProfitAmount()
@@ -342,16 +333,7 @@ namespace EveTrader.Main.Dashboard
                     group wt by wt.TransactionDateTime.Date into g
                     select Math.Round(g.Sum(gi => (gi.Price - Analysis.Products.GetProductAverageBuyPrice(unitedWalletTransactions, gi.TypeID)) * gi.Quantity / 1000000), 2);
 
-                double value = 0;
-
-                try
-                {
-                    value = values.First();
-                }
-                catch
-                {
-                    
-                }
+                double value = values.FirstOrDefault();
 
                 reportData.Add(
                     new DashboardChartItem
@@ -360,7 +342,6 @@ namespace EveTrader.Main.Dashboard
                         Label = date.ToString("MMM dd"),
                         Value = Math.Round(value, 1) 
                     });
-                
             }
 
             return reportData;
@@ -382,16 +363,7 @@ namespace EveTrader.Main.Dashboard
                     group wt by wt.TransactionDateTime.Date into g
                     select Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2);
 
-                double value = 0;
-
-                try
-                {
-                    value = values.First();
-                }
-                catch
-                {
-                    
-                }
+                double value = values.FirstOrDefault();
 
                 reportData.Add(
                     new DashboardChartItem
@@ -400,12 +372,10 @@ namespace EveTrader.Main.Dashboard
                         Label = date.ToString("MMM dd"),
                         Value = Math.Round(value, 1) 
                     });
-                
             }
 
             return reportData;
         }
-
         private void SalesAmountChart_MouseMove(object sender, MouseEventArgs e)
         {
             HitTestResult result = this.SalesAmountChart.HitTest( e.X, e.Y );
@@ -452,10 +422,6 @@ namespace EveTrader.Main.Dashboard
         {
             return Settings.Instance.Characters.First( character => character.Name == name );
         }
-        private void DashboardTab_Load(object sender, EventArgs e)
-        {
-
-        }
         private void ChangeSalesAmountDaysToShow_Click(object sender, EventArgs e)
         {
             RadioButton radioButton = (RadioButton) sender;
@@ -465,48 +431,42 @@ namespace EveTrader.Main.Dashboard
 
         private void ShowProfitLabelsRadioButton_Click(object sender, EventArgs e)
         {
-            if (this.showProfitLabels)
+            if (this.iShowProfitLabels)
             {
                 return;
             }
 
-            this.showProfitLabels = true;
-            this.showInvestmentLabels = false;
-            this.showDetailedLabeles = false;
+            this.iShowProfitLabels = true;
+            this.iShowInvestmentLabels = false;
+            this.iShowDetailedLabeles = false;
 
             this.RenderSalesAmountChart();
         }
         private void ShowInvestmentLabelsRadioButton_Click(object sender, EventArgs e)
         {
-            if (this.showInvestmentLabels)
+            if (this.iShowInvestmentLabels)
             {
                 return;
             }
 
-            this.showProfitLabels = false;
-            this.showInvestmentLabels = true;
-            this.showDetailedLabeles = false;
+            this.iShowProfitLabels = false;
+            this.iShowInvestmentLabels = true;
+            this.iShowDetailedLabeles = false;
 
             this.RenderSalesAmountChart();
         }
         private void ShowDetailedLabelsRadioButton_Click(object sender, EventArgs e)
         {
-            if (this.showDetailedLabeles)
+            if (this.iShowDetailedLabeles)
             {
                 return;
             }
 
-            this.showProfitLabels = false;
-            this.showInvestmentLabels = false;
-            this.showDetailedLabeles = true;
+            this.iShowProfitLabels = false;
+            this.iShowInvestmentLabels = false;
+            this.iShowDetailedLabeles = true;
 
             this.RenderSalesAmountChart();
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-    
     }
 }

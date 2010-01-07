@@ -339,7 +339,6 @@
             this.ShowSalesFor.Size = new System.Drawing.Size(79, 13);
             this.ShowSalesFor.TabIndex = 13;
             this.ShowSalesFor.Text = "Show sales for:";
-            this.ShowSalesFor.Click += new System.EventHandler(this.label1_Click);
             // 
             // panel2
             // 
@@ -409,7 +408,6 @@
             this.Name = "DashboardTab";
             this.Padding = new System.Windows.Forms.Padding(8);
             this.Size = new System.Drawing.Size(887, 551);
-            this.Load += new System.EventHandler(this.DashboardTab_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SalesDetailsChart)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
