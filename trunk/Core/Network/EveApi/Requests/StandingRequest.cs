@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -30,15 +31,11 @@ namespace Core.Network.EveApi.Requests
         {
             var root = document.Element("eveapi").Element("result");
 
-            IEnumerable<Standing> standingsToCharacter = new List<Standing>();
-            IEnumerable<Standing> standingsToCorporation = new List<Standing>();
-            IEnumerable<Standing> standingsFromAgent = new List<Standing>();
-            IEnumerable<Standing> standingsFromNPC = new List<Standing>();
-            IEnumerable<Standing> standingsFromFaction = new List<Standing>();
+            List<IEnumerable<Standing>> standingList = new List<IEnumerable<Standing>>();
 
             if (root.Element("standingsTo").HasElements)
             {
-                standingsToCharacter =
+                var standingsToCharacter =
                     (from d in
                          root.Element("standingsTo").Elements().Where(r => r.Attribute("name").Value == "characters").
                          Descendants()
@@ -52,7 +49,10 @@ namespace Core.Network.EveApi.Requests
                                         double.Parse(d.Attribute("standing").Value,
                                                      System.Globalization.CultureInfo.InvariantCulture)
                                 });
-                standingsToCorporation =
+
+                standingList.Add(standingsToCharacter);
+
+                var standingsToCorporation =
                     (from d in
                          root.Element("standingsTo").Elements().Where(r => r.Attribute("name").Value == "corporations").
                          Descendants()
@@ -64,10 +64,12 @@ namespace Core.Network.EveApi.Requests
                                     Type = StandingType.To,
                                     Value = double.Parse(d.Attribute("standing").Value)
                                 });
+
+                standingList.Add(standingsToCorporation);
             }
             if (root.Element("standingsFrom").HasElements)
             {
-                standingsFromAgent =
+                var standingsFromAgent =
                     (from d in
                          root.Element("standingsFrom").Elements().Where(r => r.Attribute("name").Value == "agents").
                          Descendants()
@@ -81,7 +83,9 @@ namespace Core.Network.EveApi.Requests
                                         double.Parse(d.Attribute("standing").Value,
                                                      System.Globalization.CultureInfo.InvariantCulture)
                                 });
-                standingsFromNPC =
+                standingList.Add(standingsFromAgent);
+
+                var standingsFromNPC =
                     (from d in
                          root.Element("standingsFrom").Elements().Where(
                          r => r.Attribute("name").Value == "NPCCorporations").Descendants()
@@ -95,7 +99,9 @@ namespace Core.Network.EveApi.Requests
                                         double.Parse(d.Attribute("standing").Value,
                                                      System.Globalization.CultureInfo.InvariantCulture)
                                 });
-                standingsFromFaction =
+                standingList.Add(standingsFromNPC);
+
+                var standingsFromFaction =
                     (from d in
                          root.Element("standingsFrom").Elements().Where(r => r.Attribute("name").Value == "factions").
                          Descendants()
@@ -109,11 +115,14 @@ namespace Core.Network.EveApi.Requests
                                         double.Parse(d.Attribute("standing").Value,
                                                      System.Globalization.CultureInfo.InvariantCulture)
                                 });
+                standingList.Add(standingsFromFaction);
             }
 
-            return
-                standingsFromAgent.Union(standingsFromFaction).Union(standingsFromNPC).Union(standingsToCharacter).Union
-                    (standingsToCorporation);
+            List<Standing> output = new List<Standing>();
+
+            standingList.ForEach(en => output.AddRange(en));
+
+            return output;
         }
     }
 }

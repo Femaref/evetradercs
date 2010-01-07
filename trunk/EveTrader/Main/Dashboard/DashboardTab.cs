@@ -275,7 +275,7 @@ namespace EveTrader.Main.Dashboard
                         "{0} x{1}", 
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
-                    Value = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity) / 1000000, 2)
+                    Value = Math.Round(g.Sum(gi => (gi.Price  * gi.Quantity) / 1000000), 2)
                 };
 
 
@@ -297,7 +297,7 @@ namespace EveTrader.Main.Dashboard
                         "{0} x{1}", 
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
-                    Value = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity) / 1000000, 2)
+                    Value = Math.Round(g.Sum(gi => (gi.Price  * gi.Quantity) / 1000000), 2)
                 };
 
 
@@ -319,7 +319,7 @@ namespace EveTrader.Main.Dashboard
                         "{0} x{1}", 
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
-                    Value = Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax) - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    Value = Math.Round(g.Sum(gi => (gi.Price  - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
 
@@ -340,7 +340,7 @@ namespace EveTrader.Main.Dashboard
                         wt.TransactionDateTime.Date == date && 
                         wt.TransactionType == WalletTransactionType.Sell
                     group wt by wt.TransactionDateTime.Date into g
-                    select Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax) - Analysis.Products.GetProductAverageBuyPrice(unitedWalletTransactions, gi.TypeID)) * gi.Quantity / 1000000), 2);
+                    select Math.Round(g.Sum(gi => (gi.Price - Analysis.Products.GetProductAverageBuyPrice(unitedWalletTransactions, gi.TypeID)) * gi.Quantity / 1000000), 2);
 
                 double value = 0;
 
