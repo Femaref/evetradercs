@@ -79,7 +79,6 @@ namespace EveTrader.Main.Reports
         {
             this.MostProfitableStationsChart.Titles[0].Text = string.Format("Top {0} most profitable stations",
                                                                             this.iItemsDisplayed);
-
             this.MostProfitableStationsChart.Series[1].Points.DataBindXY(
                     reportItems,
                     "Label",
@@ -98,7 +97,6 @@ namespace EveTrader.Main.Reports
         {
             this.MostProfitableClientsChart.Titles[0].Text = string.Format("Top {0} most profitable clients",
                                                                 this.iItemsDisplayed);
-
             this.MostProfitableClientsChart.Series[1].Points.DataBindXY(
                     reportItems,
                     "Label",
@@ -192,6 +190,7 @@ namespace EveTrader.Main.Reports
                                         }).ToList();
                 output.Add(cb);
             }
+
             return output;
         }
 
@@ -211,7 +210,6 @@ namespace EveTrader.Main.Reports
         {
             this.iFromDate = DateTime.Now.Date.AddDays(-6);
             this.Initialize();
-            
         }
         private void ShowFor30Days_Click(object sender, EventArgs e)
         {
@@ -229,11 +227,7 @@ namespace EveTrader.Main.Reports
             this.Initialize();
         }
 
-        private void tbItemsDisplayed_TextChanged(object sender, EventArgs e)
-        {
-            if(this.iAutoApply)
-                this.ChangeItemDisplayCount();
-        }
+        
 
         private void ChangeItemDisplayCount()
         {
@@ -246,12 +240,16 @@ namespace EveTrader.Main.Reports
             }
         }
 
+        private void tbItemsDisplayed_TextChanged(object sender, EventArgs e)
+        {
+            if (this.iAutoApply)
+                this.ChangeItemDisplayCount();
+        }
         private void cbAutomaticApply_CheckedChanged(object sender, EventArgs e)
         {
             this.iAutoApply = (sender as CheckBox).Checked;
             this.ChangeItemDisplayCount();
         }
-
         private void btApply_Click(object sender, EventArgs e)
         {
             this.ChangeItemDisplayCount();
