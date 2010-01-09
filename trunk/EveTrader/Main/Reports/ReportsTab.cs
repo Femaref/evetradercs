@@ -22,23 +22,34 @@ namespace EveTrader.Main.Reports
             public double GrossSales { get; set; }
             public double SalesTax { get; set; }
         }
+        private class BalanceChartItem
+        {
+            public DateTime Key { get; set; }
+            public double Value { get; set; }
+        }
+        private class CharacterBalance
+        {
+            public string Key { get; set; }
+            public List<BalanceChartItem> Values { get; set; }
+        }
 
         public ReportsTab()
         {
             InitializeComponent();
+        }
+
+        public void Initialize()
+        {
             this.iItemsDisplayed = UISettings.Instance.ReportSettings.ItemsDisplayed;
             this.iAutoApply = UISettings.Instance.ReportSettings.AutomaticApply;
 
             this.tbItemsDisplayed.Text = this.iItemsDisplayed.ToString();
             this.cbAutomaticApply.Checked = this.iAutoApply;
-        }
 
-        public void Initialize()
-        {
             this.RenderReports();
         }
 
-        public void RenderReports()
+        private void RenderReports()
         {
             this.Cursor = Cursors.WaitCursor;
 
@@ -117,9 +128,15 @@ namespace EveTrader.Main.Reports
             foreach(CharacterBalance er in reportItems)
             {
                 Series s = this.BalanceHistory.Series.Add(er.Key);
-                s.Type = SeriesChartType.StepLine;
+
                 s.XValueType = ChartValueTypes.DateTime;
                 s.YValueType = ChartValueTypes.Double;
+                s.Type = SeriesChartType.StepLine;
+                s.PaletteCustomColors = new System.Drawing.Color[] { };
+                s.ShadowOffset = 1;
+                s.BorderWidth = 2;
+                s.BackGradientType = Dundas.Charting.WinControl.GradientType.DiagonalRight;
+
                 s.Points.DataBindXY(er.Values, "Key", er.Values, "Value"); 
             }
             
@@ -194,18 +211,6 @@ namespace EveTrader.Main.Reports
             return output;
         }
 
-
-        private class BalanceChartItem
-        {
-            public DateTime Key { get; set; }
-            public double Value { get; set; }
-        }
-        private class CharacterBalance
-        {
-            public string Key { get; set; }
-            public List<BalanceChartItem> Values { get; set; }
-        }
-
         private void ShowForLastWeek_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.Now.Date.AddDays(-6);
@@ -227,8 +232,6 @@ namespace EveTrader.Main.Reports
             this.Initialize();
         }
 
-        
-
         private void ChangeItemDisplayCount()
         {
             int count;
@@ -248,6 +251,7 @@ namespace EveTrader.Main.Reports
         private void cbAutomaticApply_CheckedChanged(object sender, EventArgs e)
         {
             this.iAutoApply = (sender as CheckBox).Checked;
+            UISettings.Instance.ReportSettings.AutomaticApply = this.iAutoApply;
             this.ChangeItemDisplayCount();
         }
         private void btApply_Click(object sender, EventArgs e)

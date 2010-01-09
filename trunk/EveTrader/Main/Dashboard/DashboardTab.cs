@@ -99,7 +99,7 @@ namespace EveTrader.Main.Dashboard
                 Color.OrangeRed.B);
             this.SalesAmountChart.Series["Daily investments"].ChartType = "Line";
             this.SalesAmountChart.Series["Daily investments"].Color = Color.FromArgb(
-                this.iShowInvestmentLabels ? 255 : 100,   
+                this.iShowInvestmentLabels ? 255 : 100,
                 Color.OrangeRed.R,
                 Color.OrangeRed.G,
                 Color.OrangeRed.B);
