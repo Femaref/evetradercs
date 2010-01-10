@@ -11,7 +11,7 @@ namespace Core.DomainModel
 
         public int GetHashCode(WalletJournalRecord walletJournalRecord)
         {
-            return walletJournalRecord.ReferenceId;
+            return walletJournalRecord.ReferenceId > int.MaxValue ? (int)(int.MinValue + (walletJournalRecord.ReferenceId - int.MaxValue)) : (int)walletJournalRecord.ReferenceId;
         }
     }
 }

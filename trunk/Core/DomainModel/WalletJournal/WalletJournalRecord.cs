@@ -6,7 +6,7 @@ namespace Core.DomainModel
     public class WalletJournalRecord : IGenericObject<WalletJournalRecord>
     {
         public DateTime Date { get; set; }
-        public int ReferenceId  { get; set; }
+        public long ReferenceId  { get; set; }
         public int ReferenceTypeId  { get; set; }
         public double Amount  { get; set; }
         public double Balance  { get; set; }

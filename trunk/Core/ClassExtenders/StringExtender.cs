@@ -15,6 +15,13 @@ namespace Core.ClassExtenders
                 System.Globalization.NumberStyles.Number,
                 System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
         }
+        public static long ToInt64(this string str)
+        {
+            return long.Parse(
+                str,
+                System.Globalization.NumberStyles.Number,
+                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
+        }
         public static double ToDouble (this string str)
         {
             return double.Parse(

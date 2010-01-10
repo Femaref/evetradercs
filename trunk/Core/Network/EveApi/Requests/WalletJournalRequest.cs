@@ -32,7 +32,7 @@ namespace Core.Network.EveApi.Requests
                              .Select(r => new WalletJournalRecord
                              {
                                  Date = r.Attribute("date").Value.ToDateTime().LocalizeEveTime(),
-                                 ReferenceId = r.Attribute("refID").Value.ToInt32(),
+                                 ReferenceId = r.Attribute("refID").Value.ToInt64(),
                                  ReferenceTypeId = r.Attribute("refTypeID").Value.ToInt32(),
                                  Amount = r.Attribute("amount").Value.ToDouble(),
                                  Balance = r.Attribute("balance").Value.ToDouble()
