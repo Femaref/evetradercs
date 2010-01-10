@@ -94,22 +94,23 @@ namespace EveTrader.Main.Reports
 
             this.MostProfitableProductsChart.ResetAutoValues();
         }
-
         private void RenderMostProfitableStationsChart(IEnumerable<ReportChartItem> reportItems)
         {
             this.MostProfitableStationsChart.Titles[0].Text = string.Format("Top {0} most profitable stations",
                                                                             this.iItemsDisplayed);
-            this.MostProfitableStationsChart.Series[1].Points.DataBindXY(
-                    reportItems,
-                    "Label",
-                    reportItems,
-                    "GrossSales");
+
 
             this.MostProfitableStationsChart.Series[0].Points.DataBindXY(
-                    reportItems,
-                    "Label",
-                    reportItems,
-                    "PureProfit");
+                reportItems,
+                "Label",
+                reportItems,
+                "PureProfit");
+
+            this.MostProfitableStationsChart.Series[1].Points.DataBindXY(
+                reportItems,
+                "Label",
+                reportItems,
+                "GrossSales");
 
             this.MostProfitableStationsChart.ResetAutoValues();
         }
@@ -179,7 +180,8 @@ namespace EveTrader.Main.Reports
                 {
                     Label = g.Key,
                     GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2),
+                    SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 
             return reportData.OrderByDescending(ri => ri.PureProfit).Take(this.iItemsDisplayed).OrderBy(ri => ri.PureProfit).ToList();
