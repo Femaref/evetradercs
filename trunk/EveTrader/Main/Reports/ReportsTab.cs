@@ -18,8 +18,8 @@ namespace EveTrader.Main.Reports
         private struct ReportChartItem
         {
             public string Label { get; set; }
-            public double Profit { get; set; }
             public double GrossSales { get; set; }
+            public double PureProfit { get; set; }
             public double SalesTax { get; set; }
         }
         private class BalanceChartItem
@@ -72,20 +72,29 @@ namespace EveTrader.Main.Reports
         {
             this.MostProfitableProductsChart.Titles[0].Text = string.Format("Top {0} most profitable products",
                                                                             this.iItemsDisplayed);
-            this.MostProfitableProductsChart.Series[1].Points.DataBindXY(
-                reportItems,
-                "Label",
-                reportItems,
-                "Profit");
+
 
             this.MostProfitableProductsChart.Series[0].Points.DataBindXY(
                 reportItems,
                 "Label",
                 reportItems,
+                "PureProfit");
+
+            this.MostProfitableProductsChart.Series[1].Points.DataBindXY(
+                reportItems,
+                "Label",
+                reportItems,
                 "GrossSales");
+
+            this.MostProfitableProductsChart.Series[2].Points.DataBindXY(
+                reportItems,
+                "Label",
+                reportItems,
+                "SalesTax");
 
             this.MostProfitableProductsChart.ResetAutoValues();
         }
+
         private void RenderMostProfitableStationsChart(IEnumerable<ReportChartItem> reportItems)
         {
             this.MostProfitableStationsChart.Titles[0].Text = string.Format("Top {0} most profitable stations",
@@ -94,13 +103,13 @@ namespace EveTrader.Main.Reports
                     reportItems,
                     "Label",
                     reportItems,
-                    "Profit");
+                    "GrossSales");
 
             this.MostProfitableStationsChart.Series[0].Points.DataBindXY(
                     reportItems,
                     "Label",
                     reportItems,
-                    "GrossSales");
+                    "PureProfit");
 
             this.MostProfitableStationsChart.ResetAutoValues();
         }
@@ -112,13 +121,13 @@ namespace EveTrader.Main.Reports
                     reportItems,
                     "Label",
                     reportItems,
-                    "Profit");
+                    "GrossSales");
 
             this.MostProfitableClientsChart.Series[0].Points.DataBindXY(
                     reportItems,
                     "Label",
                     reportItems,
-                    "GrossSales");
+                    "PureProfit");
 
             this.MostProfitableClientsChart.ResetAutoValues();
         }
@@ -154,12 +163,12 @@ namespace EveTrader.Main.Reports
                         "{0} x{1}", 
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
-                    Profit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
-                    GrossSales = Math.Round(g.Sum(gi => (gi.Price  - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2),
+                    GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
+                    PureProfit = Math.Round(g.Sum(gi => (gi.Price  - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2),
                     SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 
-            return reportData.OrderByDescending ( ri => ri.GrossSales ).Take(this.iItemsDisplayed).OrderBy( ri => ri.GrossSales ).ToList();
+            return reportData.OrderByDescending ( ri => ri.PureProfit ).Take(this.iItemsDisplayed).OrderBy( ri => ri.PureProfit ).ToList();
         }
         private IEnumerable<ReportChartItem> MostProfitableStationsList(IEnumerable<WalletTransaction> walletTransactions, IEnumerable<WalletTransaction> filteredWalletTransactions)
         {
@@ -169,11 +178,11 @@ namespace EveTrader.Main.Reports
                 select new ReportChartItem
                 {
                     Label = g.Key,
-                    Profit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
-                    GrossSales = Math.Round(g.Sum(gi => (gi.Price - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
+                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
-            return reportData.OrderByDescending(ri => ri.GrossSales).Take(this.iItemsDisplayed).OrderBy(ri => ri.GrossSales).ToList();
+            return reportData.OrderByDescending(ri => ri.PureProfit).Take(this.iItemsDisplayed).OrderBy(ri => ri.PureProfit).ToList();
         }
         private IEnumerable<ReportChartItem> MostProfitableClientsList(IEnumerable<WalletTransaction> walletTransactions, IEnumerable<WalletTransaction> filteredWalletTransactions)
         {
@@ -183,11 +192,11 @@ namespace EveTrader.Main.Reports
                 select new ReportChartItem
                 {
                     Label = g.Key,
-                    Profit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax) * gi.Quantity / 1000000), 2),
-                    GrossSales = Math.Round(g.Sum(gi => (gi.Price  - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
+                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
                 };
 
-            return reportData.OrderByDescending(ri => ri.GrossSales).Take(this.iItemsDisplayed).OrderBy(ri => ri.GrossSales).ToList();
+            return reportData.OrderByDescending(ri => ri.PureProfit).Take(this.iItemsDisplayed).OrderBy(ri => ri.PureProfit).ToList();
         }
         private IEnumerable<CharacterBalance> BalanceHistoryList(IEnumerable<Character> characters)
         {
