@@ -36,7 +36,7 @@ namespace Core.DomainModel
 
         public double CalculateSalesTax(int skillLevel)
         {
-            this.iSalesTax = (0.01*Math.Pow(0.9, skillLevel))*Price;
+            this.iSalesTax = (0.01*(1-(0.1*skillLevel)))*Price;
             return this.iSalesTax;
         }
 

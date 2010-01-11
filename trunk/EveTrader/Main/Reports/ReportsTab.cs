@@ -46,6 +46,26 @@ namespace EveTrader.Main.Reports
             this.tbItemsDisplayed.Text = this.iItemsDisplayed.ToString();
             this.cbAutomaticApply.Checked = this.iAutoApply;
 
+            switch (UISettings.Instance.ReportSettings.GraphTimeSpan)
+            {
+                case ReportTimeSetting.Week:
+                    this.iFromDate = DateTime.Now.Date.AddDays(-6);
+                    this.ShowForLastWeek.Checked = true;
+                    break;
+                case ReportTimeSetting.Month:
+                    this.iFromDate = DateTime.Now.Date.AddDays(-29);
+                    this.ShowFor30Days.Checked = true;
+                    break;
+                case ReportTimeSetting.ThreeMonths:
+                    this.iFromDate = DateTime.Now.Date.AddMonths(-3);
+                    this.ShowForLast3Month.Checked = true;
+                    break;
+                case ReportTimeSetting.All:
+                    this.iFromDate = DateTime.MinValue;
+                    this.ShowAll.Checked = true;
+                    break;
+            }
+
             this.RenderReports();
         }
 
@@ -225,21 +245,25 @@ namespace EveTrader.Main.Reports
         private void ShowForLastWeek_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.Now.Date.AddDays(-6);
+            UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.Week;
             this.Initialize();
         }
         private void ShowFor30Days_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.Now.Date.AddDays(-29);
+            UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.Month;
             this.Initialize();
         }
         private void ShowForLast3Month_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.Now.Date.AddMonths(-3);
+            UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.ThreeMonths;
             this.Initialize();
         }
         private void ShowAll_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.MinValue;
+            UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.All;
             this.Initialize();
         }
 
