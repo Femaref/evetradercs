@@ -59,6 +59,7 @@ namespace EveTrader.Main.MarketOrders
             this.label4 = new System.Windows.Forms.Label();
             this.FilterByTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbHideExpired = new System.Windows.Forms.CheckBox();
             label2 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -69,7 +70,7 @@ namespace EveTrader.Main.MarketOrders
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(285, 14);
+            label2.Location = new System.Drawing.Point(275, 14);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(53, 13);
             label2.TabIndex = 14;
@@ -274,7 +275,7 @@ namespace EveTrader.Main.MarketOrders
             // GroupByProductRadioButton
             // 
             this.GroupByProductRadioButton.AutoSize = true;
-            this.GroupByProductRadioButton.Location = new System.Drawing.Point(441, 12);
+            this.GroupByProductRadioButton.Location = new System.Drawing.Point(431, 12);
             this.GroupByProductRadioButton.Name = "GroupByProductRadioButton";
             this.GroupByProductRadioButton.Size = new System.Drawing.Size(62, 17);
             this.GroupByProductRadioButton.TabIndex = 13;
@@ -286,7 +287,7 @@ namespace EveTrader.Main.MarketOrders
             // 
             this.GroupBySolarSystemRadioButton.AutoSize = true;
             this.GroupBySolarSystemRadioButton.Checked = true;
-            this.GroupBySolarSystemRadioButton.Location = new System.Drawing.Point(509, 12);
+            this.GroupBySolarSystemRadioButton.Location = new System.Drawing.Point(499, 12);
             this.GroupBySolarSystemRadioButton.Name = "GroupBySolarSystemRadioButton";
             this.GroupBySolarSystemRadioButton.Size = new System.Drawing.Size(84, 17);
             this.GroupBySolarSystemRadioButton.TabIndex = 15;
@@ -298,7 +299,7 @@ namespace EveTrader.Main.MarketOrders
             // DoNotGroupRadioButton
             // 
             this.DoNotGroupRadioButton.AutoSize = true;
-            this.DoNotGroupRadioButton.Location = new System.Drawing.Point(348, 12);
+            this.DoNotGroupRadioButton.Location = new System.Drawing.Point(338, 12);
             this.DoNotGroupRadioButton.Name = "DoNotGroupRadioButton";
             this.DoNotGroupRadioButton.Size = new System.Drawing.Size(87, 17);
             this.DoNotGroupRadioButton.TabIndex = 16;
@@ -335,18 +336,30 @@ namespace EveTrader.Main.MarketOrders
             this.label5.TabIndex = 19;
             this.label5.Text = "estimated / expected";
             // 
+            // cbHideExpired
+            // 
+            this.cbHideExpired.AutoSize = true;
+            this.cbHideExpired.Location = new System.Drawing.Point(589, 13);
+            this.cbHideExpired.Name = "cbHideExpired";
+            this.cbHideExpired.Size = new System.Drawing.Size(85, 17);
+            this.cbHideExpired.TabIndex = 20;
+            this.cbHideExpired.Text = "Hide expired";
+            this.cbHideExpired.UseVisualStyleBackColor = true;
+            this.cbHideExpired.CheckedChanged += new System.EventHandler(this.cbHideExpired_CheckedChanged);
+            // 
             // MarketOrdersTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.cbHideExpired);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.FilterByTextBox);
+            this.Controls.Add(label2);
             this.Controls.Add(this.DoNotGroupRadioButton);
             this.Controls.Add(this.GroupBySolarSystemRadioButton);
-            this.Controls.Add(label2);
-            this.Controls.Add(this.GroupByProductRadioButton);
             this.Controls.Add(this.TotalIncomeLabel);
+            this.Controls.Add(this.GroupByProductRadioButton);
             this.Controls.Add(this.CharactersComboBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TotalInExcrowLabel);
@@ -393,5 +406,6 @@ namespace EveTrader.Main.MarketOrders
         private ColumnHeader soldOutColumn;
         private ColumnHeader estimatedColumn;
         private Label label5;
+        private CheckBox cbHideExpired;
     }
 }

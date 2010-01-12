@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using EveTrader.Helpers;
 using EveTrader.Main.Dashboard;
+using EveTrader.Main.MarketOrders;
 using EveTrader.Main.Reports;
 using EveTrader.ReleaseNotes;
 
@@ -42,12 +43,14 @@ namespace EveTrader
         public DashboardSettings DashboardSettings { get; set; }
         public ReleaseNotesSettings ReleaseNotesSettings { get; set; }
         public ReportSettings ReportSettings { get; set; }
+        public MarketOrderSettings OrderSettings { get; set; }
 
         public UISettings()
         {
             this.DashboardSettings = new DashboardSettings();
             this.ReleaseNotesSettings = new ReleaseNotesSettings();
             this.ReportSettings = new ReportSettings();
+            this.OrderSettings = new MarketOrderSettings();
         }
     }
 }

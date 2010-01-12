@@ -11,10 +11,11 @@ namespace EveTrader.Main.MarketOrders
 {
     public partial class MarketOrdersTab : UserControl
     {
-        private int lastClickedColumnHeaderIndex = -1;
-        private bool sortAscending;
-        Func<Core.DomainModel.MarketOrder, object> orderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
-        Func<Core.DomainModel.MarketOrder, object> groupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+        private int iLastClickedColumnHeaderIndex = -1;
+        private bool iSortAscending;
+        private bool iHideExpired;
+        Func<Core.DomainModel.MarketOrder, object> iOrderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+        Func<Core.DomainModel.MarketOrder, object> iGroupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
 
         public MarketOrdersTab()
         {
@@ -25,6 +26,12 @@ namespace EveTrader.Main.MarketOrders
         {
             this.CharactersComboBox.Items.Clear();
             this.BuyOrdersListView.Columns.Clear();
+            this.iHideExpired = UISettings.Instance.OrderSettings.HideExpiredOrders;
+
+            //need to remove the EventHandler before the init, otherwise an exception is thrown
+            this.cbHideExpired.CheckedChanged -= this.cbHideExpired_CheckedChanged;
+            this.cbHideExpired.Checked = this.iHideExpired;
+            this.cbHideExpired.CheckedChanged += this.cbHideExpired_CheckedChanged;
 
             foreach (Character character in Settings.Instance.Characters)
             {
@@ -64,8 +71,15 @@ namespace EveTrader.Main.MarketOrders
             IEnumerable<Core.DomainModel.MarketOrder> marketOrders = character.MarketOrders;
             IEnumerable<WalletTransaction> walletTransactions = character.WalletTransactions;
 
-            marketOrders = this.SortMarketOrders(marketOrders, this.groupByKey, this.orderByKey, this.sortAscending);
+            marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey, this.iSortAscending);
             marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
+
+            //filters expired orders
+            if (iHideExpired)
+                marketOrders =
+                    marketOrders.Where(
+                        order =>
+                        order.OrderState == MarketOrderState.OpenActive || order.OrderState == MarketOrderState.Pending);
 
             this.BuyOrdersListView.Items.Clear();
             this.SellOrdersListView.Items.Clear();
@@ -243,53 +257,53 @@ namespace EveTrader.Main.MarketOrders
         {
             if (changeSorting)
             {
-                if (columnIndex == this.lastClickedColumnHeaderIndex)
+                if (columnIndex == this.iLastClickedColumnHeaderIndex)
                 {
-                    sortAscending = !sortAscending;
+                    iSortAscending = !iSortAscending;
                 }
                 else
                 {
-                    this.lastClickedColumnHeaderIndex = columnIndex;
-                    sortAscending = false;
+                    this.iLastClickedColumnHeaderIndex = columnIndex;
+                    iSortAscending = false;
                 }
             }
 
             switch (columnIndex)
             {
                 case 0:
-                    orderByKey = (order => order.OrderState);
+                    iOrderByKey = (order => order.OrderState);
                     break;
                 
                 case 1:
-                    orderByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name);
+                    iOrderByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name);
                     break;
 
                 case 2:
-                    orderByKey = (order => order.Price);
+                    iOrderByKey = (order => order.Price);
                     break;
 
                 case 3:
-                    orderByKey = (order => order.VolumeRemaining);
+                    iOrderByKey = (order => order.VolumeRemaining);
                     break;
 
                 case 4:
-                    orderByKey = (order => order.VolumeRemaining * order.Price);
+                    iOrderByKey = (order => order.VolumeRemaining * order.Price);
                     break;
 
                 case 5:
-                    orderByKey = (order => MarketOrder.GetEtcb(order));
+                    iOrderByKey = (order => MarketOrder.GetEtcb(order));
                     break;
 
                 case 6:
-                    orderByKey = (order => MarketOrder.GetEstimatedSoldAmount(order));
+                    iOrderByKey = (order => MarketOrder.GetEstimatedSoldAmount(order));
                     break;
 
                 case 7:
-                    orderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+                    iOrderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
                     break;
 
                 case 8:
-                    orderByKey = (order => order.Duration - (DateTime.Now - order.Issued).Days);
+                    iOrderByKey = (order => order.Duration - (DateTime.Now - order.Issued).Days);
                     break;
 
                 default:
@@ -300,18 +314,18 @@ namespace EveTrader.Main.MarketOrders
 
         private void GroupByProductRadioButton_Click(object sender, EventArgs e)
         {
-            this.groupByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name);
+            this.iGroupByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name);
             this.RenderMarketOrders();
         }
         private void GroupBySolarSystemRadioButton_Click(object sender, EventArgs e)
         {
-            this.groupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+            this.iGroupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
             this.RenderMarketOrders();
         }
 
         private void DoNotGroupRadioButton_Click(object sender, EventArgs e)
         {
-            this.groupByKey = null;
+            this.iGroupByKey = null;
             this.RenderMarketOrders();
         }
 
@@ -374,6 +388,13 @@ namespace EveTrader.Main.MarketOrders
                 this.FilterByTextBox.SelectionStart = 0;
                 this.FilterByTextBox.SelectionLength = this.FilterByTextBox.Text.Length;
             }
+        }
+
+        private void cbHideExpired_CheckedChanged(object sender, EventArgs e)
+        {
+            this.iHideExpired = (sender as CheckBox).Checked;
+            UISettings.Instance.OrderSettings.HideExpiredOrders = this.iHideExpired;
+            this.RenderMarketOrders();
         }
     }
 }

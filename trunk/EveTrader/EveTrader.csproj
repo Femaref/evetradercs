@@ -131,6 +131,7 @@
       <DependentUpon>DashboardTab.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\MarketOrders\MarketOrderListViewItem.cs" />
+    <Compile Include="Main\MarketOrders\MarketOrderSettings.cs" />
     <Compile Include="Main\MarketOrders\MarketOrdersTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
