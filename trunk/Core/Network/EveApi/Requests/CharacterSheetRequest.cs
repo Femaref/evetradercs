@@ -44,7 +44,7 @@ namespace Core.Network.EveApi.Requests
             this.character.Gender = characterInfo.Element("gender").Value == "Female"
                                         ? CharacterGender.Female
                                         : CharacterGender.Male;
-            this.character.Corporation.Id = characterInfo.Element("corporationID").Value.ToInt32();
+            this.character.Corporation.ID = characterInfo.Element("corporationID").Value.ToInt32();
             this.character.Corporation.Name = characterInfo.Element("corporationName").Value;
             this.character.Balance = characterInfo.Element("balance").Value.ToDouble();
             

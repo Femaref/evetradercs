@@ -54,9 +54,13 @@
     <Compile Include="ClassExtenders\UriExtender.cs" />
     <Compile Include="ClassExtenders\WalletJournalRecordExtender.cs" />
     <Compile Include="ClassExtenders\WalletTransactionExtender.cs" />
+    <Compile Include="DomainModel\AccountBalance\Account.cs" />
     <Compile Include="DomainModel\Asset\Asset.cs" />
     <Compile Include="DomainModel\Asset\AssetStorageType.cs" />
+    <Compile Include="DomainModel\Corporation\CorporationComparer.cs" />
     <Compile Include="DomainModel\CustomPrice.cs" />
+    <Compile Include="DomainModel\Logo\CorporationLogo.cs" />
+    <Compile Include="DomainModel\Logo\CorporationLogoComparer.cs" />
     <Compile Include="DomainModel\Standing\Standing.cs" />
     <Compile Include="DomainModel\Standing\StandingComparer.cs" />
     <Compile Include="DomainModel\Standing\StandingTarget.cs" />
