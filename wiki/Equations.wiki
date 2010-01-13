@@ -1,0 +1,5 @@
+#summary Equations in Eve Trader
+
+*Market Orders*
+
+<wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="text(ETSC) = (text(VolumeRemaining)) / (text(IssuedSince) / (text(VolumeEntered) - text(VolumeRemaining)))"/>
