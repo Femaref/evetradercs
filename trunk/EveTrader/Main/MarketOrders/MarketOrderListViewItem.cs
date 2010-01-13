@@ -41,8 +41,6 @@ namespace EveTrader.Main.MarketOrders
 
         private static string PrepareEtcb(MarketOrder marketOrder)
         {
-            string infinitySign = "∞";
-
             double etcb = Analysis.MarketOrders.GetEtcb(marketOrder);
 
             if (double.IsInfinity(etcb))

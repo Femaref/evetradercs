@@ -5,7 +5,7 @@ namespace EveTrader.Analysis
 {
     public static class MarketOrders
     {
-        public static double GetAverageTransactionsPeerDay(Core.DomainModel.MarketOrder marketOrder)
+        public static double GetAverageTransactionsPerDay(Core.DomainModel.MarketOrder marketOrder)
         {
             double delta = marketOrder.VolumeEntered - marketOrder.VolumeRemaining;
             double daysPast = (DateTime.Now - marketOrder.Issued).Days;
@@ -22,7 +22,7 @@ namespace EveTrader.Analysis
         {
             double etcb = GetEtcb(marketOrder);
             double daysRemaining = marketOrder.Duration - (DateTime.Now - marketOrder.Issued).Days;
-            double avgTransactions = GetAverageTransactionsPeerDay(marketOrder);
+            double avgTransactions = GetAverageTransactionsPerDay(marketOrder);
             double volume;
 
             if (etcb <= daysRemaining)
@@ -45,7 +45,7 @@ namespace EveTrader.Analysis
                 marketOrder.StationId,
                 (DateTime.Now - marketOrder.Issued).Days);*/
 
-            return marketOrder.VolumeRemaining / GetAverageTransactionsPeerDay(marketOrder);
+            return marketOrder.VolumeRemaining / GetAverageTransactionsPerDay(marketOrder);
         }
     }
 }

@@ -68,8 +68,9 @@ namespace EveTrader.Main.MarketOrders
         }
         public void RenderMarketOrders(Character character)
         {
-            IEnumerable<Core.DomainModel.MarketOrder> marketOrders = character.MarketOrders;
-            IEnumerable<WalletTransaction> walletTransactions = character.WalletTransactions;
+            IEnumerable<Core.DomainModel.MarketOrder> marketOrders =
+                new List<Core.DomainModel.MarketOrder>(character.MarketOrders);
+            IEnumerable<WalletTransaction> walletTransactions = new List<WalletTransaction>(character.WalletTransactions);
 
             marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey, this.iSortAscending);
             marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
