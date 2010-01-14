@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Core.DomainModel
 {
@@ -21,8 +22,8 @@ namespace Core.DomainModel
         public int MemberLimit { get; set; }
         public int Shares { get; set; }
 
-        public Dictionary<int, string> Divisions { get; set; }
-        public Dictionary<int, string> WalletDivisions { get; set; }
+        public List<KeyValuePair<int, string>> Divisions { get; set; }
+        public List<KeyValuePair<int, string>> WalletDivisions { get; set; }
 
         public CorporationLogo Logo { get; set; }
 

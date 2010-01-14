@@ -9,14 +9,7 @@ namespace Core.ClassExtenders
     {
         public static WalletTransaction MatchWalletTransaction(this WalletJournalRecord walletJournalRecord, IEnumerable<WalletTransaction> walletTransactions)
         {
-            try
-            {
-                return walletTransactions.Single(wt => wt.TransactionDateTime == walletJournalRecord.Date);
-            }
-            catch(InvalidOperationException ex)
-            {
-                return new WalletTransaction();
-            }
+            return walletTransactions.SingleOrDefault(wt => wt.TransactionDateTime == walletJournalRecord.Date);
         }
     }
 }

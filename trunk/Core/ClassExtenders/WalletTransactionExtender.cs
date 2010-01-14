@@ -12,9 +12,9 @@ namespace Core.ClassExtenders
         {
             try
             {
-                return walletJournalRecords.Where( wjr => wjr.Date == walletTransaction.TransactionDateTime);
+                return walletJournalRecords.Where(wjr => wjr.Date == walletTransaction.TransactionDateTime);
             }
-            catch(InvalidOperationException ex)
+            catch(InvalidOperationException)
             {
                 return new Collection<WalletJournalRecord>();
             }
