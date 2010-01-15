@@ -11,4 +11,5 @@
 *Bugfixes*
 
 - Fixed int32 overflow in WalletTransaction.ReferenceID
+
 - 
