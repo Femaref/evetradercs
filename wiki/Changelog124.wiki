@@ -1,0 +1,12 @@
+#summary Preliminary Patchnotes 1.2.4, as of 15-01-10 21:05
+
+*Features*
+
+- Corporation wallets
+- Hiding non-active orders in the Market Orders tab
+- Limit the time how long orders will be calculated into the graphs (keeps prices more to the reality)
+
+*Bugfixes*
+
+- Fixed int32 overflow in WalletTransaction.ReferenceID
+- 
