@@ -6,7 +6,7 @@
 
 - Hiding non-active orders in the Market Orders tab
 
-- Limit the time how long orders will be calculated into the graphs (keeps prices more to the reality)
+- Limit the time how long transactions will be calculated into the graphs (keeps prices more to the reality)
 
 *Bugfixes*
 
