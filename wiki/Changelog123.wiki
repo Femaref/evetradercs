@@ -1,4 +1,5 @@
 #summary Changelog 1.2.3, as of 12-01-10, 16:51
+#labels Featured
 
 *Features*
 
