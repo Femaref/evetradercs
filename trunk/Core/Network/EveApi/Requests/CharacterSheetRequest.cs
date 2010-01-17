@@ -6,7 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests 
 {
-    public class CharacterSheetRequest : EveApiCharacterResourceRequest
+    public class CharacterSheetRequest : EveApiCharacterResourceRequest<Character>
     {
         private Character character;
 
@@ -29,7 +29,7 @@ namespace Core.Network.EveApi.Requests
             this.character = character;
         }
 
-        public Character Request()
+        public override Character Request()
         {
             return this.Parse(base.GetResponseXml());
         }

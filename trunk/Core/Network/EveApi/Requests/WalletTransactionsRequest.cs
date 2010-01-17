@@ -6,7 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class WalletTransactionsRequest : EveApiCharacterResourceRequest
+    public class WalletTransactionsRequest : EveApiCharacterResourceRequest<IEnumerable<WalletTransaction>>
     {
         protected override EveApiResourceType ResourceType
         {
@@ -22,7 +22,7 @@ namespace Core.Network.EveApi.Requests
             
         }
 
-        public IEnumerable<WalletTransaction> Request()
+        public override IEnumerable<WalletTransaction> Request()
         {
             return this.Parse(base.GetResponseXml());
         }

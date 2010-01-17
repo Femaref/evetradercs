@@ -7,7 +7,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class MarketOrdersRequest : EveApiCharacterResourceRequest
+    public class MarketOrdersRequest : EveApiCharacterResourceRequest<IEnumerable<MarketOrder>>
     {
         protected override EveApiResourceType ResourceType
         {
@@ -21,7 +21,7 @@ namespace Core.Network.EveApi.Requests
         {
         }
 
-        public IEnumerable<MarketOrder> Request()
+        public override IEnumerable<MarketOrder> Request()
         {
             return this.Parse(base.GetResponseXml());
         }

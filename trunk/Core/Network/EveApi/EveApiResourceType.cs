@@ -16,6 +16,7 @@ namespace Core.Network.EveApi
         WalletJournal,
         IndustryJobs,
         WalletTransactions,
-        Standings
+        Standings,
+        CorporationSheet
     }
 }

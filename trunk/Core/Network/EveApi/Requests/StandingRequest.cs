@@ -6,7 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class StandingRequest : EveApiCharacterResourceRequest
+    public class StandingRequest : EveApiCharacterResourceRequest<IEnumerable<Standing>>
     {
         protected override EveApiResourceType ResourceType
         {
@@ -22,7 +22,7 @@ namespace Core.Network.EveApi.Requests
 
         }
 
-        public IEnumerable<Standing> Request()
+        public override IEnumerable<Standing> Request()
         {
             return this.Parse(base.GetResponseXml());
         }

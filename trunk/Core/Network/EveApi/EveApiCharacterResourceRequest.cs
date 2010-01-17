@@ -6,7 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi
 {
-    public abstract class EveApiCharacterResourceRequest : EveApiResourceRequest
+    public abstract class EveApiCharacterResourceRequest<T> : EveApiResourceRequest
     {
         protected int CharacterId { get; set; }
 
@@ -14,14 +14,10 @@ namespace Core.Network.EveApi
         {
             get
             {
-                try
-                {
-                    return this.ChachedResponseXml.Descendants("error").First().Attribute("code").Value.ToInt32();
-                }
-                catch
-                {
+                if (this.CachedResponseXml.Descendants().Where(x => x.Name == "error").Count() > 0)
+                    return this.CachedResponseXml.Descendants("error").First().Attribute("code").Value.ToInt32();
+                else
                     return 0;
-                }
             }
         }
 
@@ -56,5 +52,7 @@ namespace Core.Network.EveApi
         {
             this.CharacterId = characterId;
         }
+
+        public abstract T Request();
     }
 }

@@ -7,7 +7,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class AssetsRequest : EveApiCharacterResourceRequest
+    public class AssetsRequest : EveApiCharacterResourceRequest<IEnumerable<Asset>>
     {
         protected override EveApiResourceType ResourceType
         {
@@ -21,7 +21,7 @@ namespace Core.Network.EveApi.Requests
         {
         }
 
-        public List<Asset> Request()
+        public override IEnumerable<Asset> Request()
         {
             return this.Parse(base.GetResponseXml());
         }

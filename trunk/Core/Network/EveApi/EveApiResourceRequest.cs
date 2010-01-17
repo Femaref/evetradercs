@@ -41,7 +41,7 @@ namespace Core.Network.EveApi
                 return requestUrlTemplate;
             }
         }
-        protected XDocument ChachedResponseXml
+        protected XDocument CachedResponseXml
         {
             get
             {
