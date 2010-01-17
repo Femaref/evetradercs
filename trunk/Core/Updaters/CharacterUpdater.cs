@@ -12,6 +12,7 @@ namespace Core.Updaters
             //ICharacterUpdater assetsUpdater = new CharacterAssetsUpdater();
             ICharacterUpdater infoUpdater = new CharacterInfoUpdater();
             ICharacterUpdater standingUpdater = new CharacterStandingUpdater();
+            ICharacterUpdater corporationUpdater = new CorporationSheetUpdater();
 
             bool updated = true;
                 
@@ -21,6 +22,7 @@ namespace Core.Updaters
             //updated &= assetsUpdater.UpdateCharacter(character);
             updated &= infoUpdater.UpdateCharacter(character);
             updated &= standingUpdater.UpdateCharacter(character);
+            updated &= corporationUpdater.UpdateCharacter(character);
 
             return updated;
         }

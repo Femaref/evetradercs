@@ -13,11 +13,11 @@ namespace Core.Updaters
 
             if (character.NextAssetsUpdateTime <= DateTime.Now)
             {
-                List<Asset> assets = assetsRequest.Request();
+                IEnumerable<Asset> assets = assetsRequest.Request();
 
                 if (assetsRequest.ErrorCode == 0)
                 {
-                    character.Assets = assets;
+                    character.Assets = new List<Asset>(assets);
                     character.NextAssetsUpdateTime = DateTime.Now.AddHours(1).AddMinutes(1);
                     return true;
                 }

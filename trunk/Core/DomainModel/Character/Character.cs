@@ -29,6 +29,7 @@ namespace Core.DomainModel
         public DateTime NextMarketOrdersUpdateTime { get; set; }
         public DateTime NextAssetsUpdateTime { get; set; }
         public DateTime NextStandingUpdateTime { get; set; }
+        public DateTime NextCorporationSheetUpdateTime { get; set; }
 
         public int AccountingLevel { get; set; }
 
