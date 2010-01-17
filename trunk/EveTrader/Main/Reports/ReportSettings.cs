@@ -10,6 +10,8 @@ namespace EveTrader.Main.Reports
         public int ItemsDisplayed { get; set; }
         public bool AutomaticApply { get; set; }
         public ReportTimeSetting GraphTimeSpan { get; set; }
+        public DateTime TransactionTimeLimit { get; set; }
+        public bool ActivateTransactionLimit { get; set; }
 
         public ReportSettings()
         {

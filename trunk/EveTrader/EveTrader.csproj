@@ -123,6 +123,12 @@
     <Compile Include="Main\CustomPriceWindow.Designer.cs">
       <DependentUpon>CustomPriceWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\CustomTransaction\CustomTransaction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\CustomTransaction\CustomTransaction.Designer.cs">
+      <DependentUpon>CustomTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\Dashboard\DashboardSettings.cs" />
     <Compile Include="Main\Dashboard\DashboardTab.cs">
       <SubType>UserControl</SubType>
@@ -204,6 +210,9 @@
     <EmbeddedResource Include="Main\CustomPriceWindow.resx">
       <DependentUpon>CustomPriceWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\CustomTransaction\CustomTransaction.resx">
+      <DependentUpon>CustomTransaction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Dashboard\DashboardTab.resx">
       <DependentUpon>DashboardTab.cs</DependentUpon>

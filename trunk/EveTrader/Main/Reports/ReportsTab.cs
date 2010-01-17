@@ -10,8 +10,11 @@ namespace EveTrader.Main.Reports
     public partial class ReportsTab : UserControl
     {
         private DateTime iFromDate = DateTime.Now.Date.AddDays(-6);
+        private DateTime iTransactionTimeLimit = DateTime.MinValue;
         private int iItemsDisplayed = 15;
         private bool iAutoApply = false;
+        private bool iActivateTransactionLimit;
+
 
         public bool ReInitialize { get; set; }
 
@@ -42,9 +45,18 @@ namespace EveTrader.Main.Reports
         {
             this.iItemsDisplayed = UISettings.Instance.ReportSettings.ItemsDisplayed;
             this.iAutoApply = UISettings.Instance.ReportSettings.AutomaticApply;
+            this.iTransactionTimeLimit = UISettings.Instance.ReportSettings.TransactionTimeLimit >
+                                         DateTimePicker.MinimumDateTime
+                                             ? UISettings.Instance.ReportSettings.TransactionTimeLimit
+                                             : DateTimePicker.MinimumDateTime;
+            this.iActivateTransactionLimit = UISettings.Instance.ReportSettings.ActivateTransactionLimit;
 
             this.tbItemsDisplayed.Text = this.iItemsDisplayed.ToString();
             this.cbAutomaticApply.Checked = this.iAutoApply;
+            this.dtpTransactionLimit.Value = this.iTransactionTimeLimit;
+            this.cbActivateTransactionLimit.CheckedChanged -= this.cbActivateTransactionLimit_CheckedChanged;
+            this.cbActivateTransactionLimit.Checked = this.iActivateTransactionLimit;
+            this.cbActivateTransactionLimit.CheckedChanged += this.cbActivateTransactionLimit_CheckedChanged;
 
             switch (UISettings.Instance.ReportSettings.GraphTimeSpan)
             {
@@ -185,7 +197,7 @@ namespace EveTrader.Main.Reports
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
                     GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                    PureProfit = Math.Round(g.Sum(gi => (gi.Price  - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2),
+                    PureProfit = Math.Round(g.Sum(gi => (gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000), 2),
                     SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 
@@ -200,7 +212,7 @@ namespace EveTrader.Main.Reports
                 {
                     Label = g.Key,
                     GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2),
+                                        PureProfit = Math.Round(g.Sum(gi => (gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000), 2),
                     SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 
@@ -215,7 +227,7 @@ namespace EveTrader.Main.Reports
                 {
                     Label = g.Key,
                     GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000, 2)
+                    PureProfit = Math.Round(g.Sum(gi => (gi.Price - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID)) * gi.Quantity) / 1000000), 2)
                 };
 
             return reportData.OrderByDescending(ri => ri.PureProfit).Take(this.iItemsDisplayed).OrderBy(ri => ri.PureProfit).ToList();
@@ -246,25 +258,25 @@ namespace EveTrader.Main.Reports
         {
             this.iFromDate = DateTime.Now.Date.AddDays(-6);
             UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.Week;
-            this.Initialize();
+            this.RenderReports();
         }
         private void ShowFor30Days_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.Now.Date.AddDays(-29);
             UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.Month;
-            this.Initialize();
+            this.RenderReports();
         }
         private void ShowForLast3Month_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.Now.Date.AddMonths(-3);
             UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.ThreeMonths;
-            this.Initialize();
+            this.RenderReports();
         }
         private void ShowAll_Click(object sender, EventArgs e)
         {
             this.iFromDate = DateTime.MinValue;
             UISettings.Instance.ReportSettings.GraphTimeSpan = ReportTimeSetting.All;
-            this.Initialize();
+            this.RenderReports();
         }
 
         private void ChangeItemDisplayCount()
@@ -292,6 +304,20 @@ namespace EveTrader.Main.Reports
         private void btApply_Click(object sender, EventArgs e)
         {
             this.ChangeItemDisplayCount();
+        }
+
+        private void dtpTransactionLimit_ValueChanged(object sender, EventArgs e)
+        {
+            this.iTransactionTimeLimit = (sender as DateTimePicker).Value;
+            UISettings.Instance.ReportSettings.TransactionTimeLimit = this.iTransactionTimeLimit;
+            this.RenderReports();
+        }
+
+        private void cbActivateTransactionLimit_CheckedChanged(object sender, EventArgs e)
+        {
+            this.iActivateTransactionLimit = (sender as CheckBox).Checked;
+            UISettings.Instance.ReportSettings.ActivateTransactionLimit = this.iActivateTransactionLimit;
+            this.RenderReports();
         }
     }
 }

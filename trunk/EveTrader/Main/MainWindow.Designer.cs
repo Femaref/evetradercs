@@ -71,6 +71,7 @@ namespace EveTrader.Main
             this.AuraTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.RestoreFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.BackupFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tabCustomTransaction = new System.Windows.Forms.TabPage();
             this.statusBar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabsMain.SuspendLayout();
@@ -208,6 +209,7 @@ namespace EveTrader.Main
             this.tabsMain.Controls.Add(this.tabDashboard);
             this.tabsMain.Controls.Add(this.tabCharacters);
             this.tabsMain.Controls.Add(this.tabWalletTransactions);
+            this.tabsMain.Controls.Add(this.tabCustomTransaction);
             this.tabsMain.Controls.Add(this.tabMarketOrders);
             this.tabsMain.Controls.Add(this.tabReports);
             this.tabsMain.Controls.Add(this.tabStarMap);
@@ -391,6 +393,16 @@ namespace EveTrader.Main
             this.BackupFileDialog.Filter = "Eve Trader storage|*.xml";
             this.BackupFileDialog.Title = "Backup Eve trader data";
             // 
+            // tabCustomTransaction
+            // 
+            this.tabCustomTransaction.Location = new System.Drawing.Point(4, 22);
+            this.tabCustomTransaction.Name = "tabCustomTransaction";
+            this.tabCustomTransaction.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCustomTransaction.Size = new System.Drawing.Size(963, 608);
+            this.tabCustomTransaction.TabIndex = 11;
+            this.tabCustomTransaction.Text = "Custom Transaction";
+            this.tabCustomTransaction.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -460,5 +472,6 @@ namespace EveTrader.Main
         private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog RestoreFileDialog;
         private System.Windows.Forms.SaveFileDialog BackupFileDialog;
+        private System.Windows.Forms.TabPage tabCustomTransaction;
     }
 }
