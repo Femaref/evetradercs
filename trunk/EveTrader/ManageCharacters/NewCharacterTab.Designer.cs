@@ -1,4 +1,4 @@
-﻿namespace EveTrader.ManageCharacters
+namespace EveTrader.ManageCharacters
 {
     partial class NewCharacterTab
     {
@@ -96,7 +96,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Account Id";
+            this.label1.Text = "AccountBalance Id";
             // 
             // SuccessfullyAddedGroupBox
             // 

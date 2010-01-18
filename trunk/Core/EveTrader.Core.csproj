@@ -54,13 +54,15 @@
     <Compile Include="ClassExtenders\UriExtender.cs" />
     <Compile Include="ClassExtenders\WalletJournalRecordExtender.cs" />
     <Compile Include="ClassExtenders\WalletTransactionExtender.cs" />
-    <Compile Include="DomainModel\AccountBalance\Account.cs" />
+    <Compile Include="DomainModel\AccountBalance\AccountBalance.cs" />
     <Compile Include="DomainModel\Alliance\Alliance.cs" />
     <Compile Include="DomainModel\Alliance\AllianceComparer.cs" />
     <Compile Include="DomainModel\Asset\Asset.cs" />
     <Compile Include="DomainModel\Asset\AssetStorageType.cs" />
     <Compile Include="DomainModel\Corporation\CorporationComparer.cs" />
     <Compile Include="DomainModel\CustomPrice.cs" />
+    <Compile Include="DomainModel\IAccount.cs" />
+    <Compile Include="DomainModel\ICorporationUpdater.cs" />
     <Compile Include="DomainModel\Logo\CorporationLogo.cs" />
     <Compile Include="DomainModel\Logo\CorporationLogoComparer.cs" />
     <Compile Include="DomainModel\Standing\Standing.cs" />
@@ -69,10 +71,13 @@
     <Compile Include="DomainModel\Standing\StandingType.cs" />
     <Compile Include="DomainModel\WalletHistory\WalletHistory.cs" />
     <Compile Include="DomainModel\WalletHistory\WalletHistoryComparer.cs" />
+    <Compile Include="Network\Account.cs" />
     <Compile Include="Network\EveApi\EveApiCorporationResourceRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\AccountBalanceRequest.cs" />
     <Compile Include="Network\EveApi\Requests\AssetsRequest.cs" />
     <Compile Include="Network\EveApi\Requests\CorporationSheetRequest.cs" />
     <Compile Include="Network\EveApi\Requests\StandingRequest.cs" />
+    <Compile Include="Updaters\AccountBalanceUpdater.cs" />
     <Compile Include="Updaters\CharacterAssetsUpdater.cs" />
     <Compile Include="Updaters\CharacterInfoUpdater.cs">
       <SubType>Code</SubType>

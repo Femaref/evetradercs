@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Core.DomainModel
 {
-    public class Corporation: IGenericObject<Corporation>
+    public class Corporation : IGenericObject<Corporation>, IAccount
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -27,10 +27,21 @@ namespace Core.DomainModel
 
         public CorporationLogo Logo { get; set; }
 
+        public List<AccountBalance> Wallets { get; set; }
+
+        public DateTime NextAccountBalanceUpdate { get; set; }
+        public DateTime NextAssetsUpdateTime { get; set; }
+
 
         public IEqualityComparer<Corporation> GetComparer()
         {
             return new CorporationComparer();
         }
+
+        #region IAccount Members
+
+        public Core.Network.Account ApiData { get; set; }
+
+        #endregion
     }
 }

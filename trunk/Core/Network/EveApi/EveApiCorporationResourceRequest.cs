@@ -43,10 +43,10 @@ namespace Core.Network.EveApi
             }
         }
 
-        protected EveApiCorporationResourceRequest(Character character)
-            : base(character.AccountId, character.ApiKey)
+        protected EveApiCorporationResourceRequest(IAccount input)
+            : base(input.ApiData.UserID, input.ApiData.ApiKey)
         {
-            this.CharacterId = character.Id;
+            this.CharacterId = input.ApiData.CharacterID;
         }
 
         protected EveApiCorporationResourceRequest(int accountId, string apiKey, int characterId)

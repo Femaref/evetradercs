@@ -64,12 +64,12 @@ namespace EveTrader.ManageCharacters
 
             if (this.AccountIdTextBox.Text.IsEmpty())
             {
-                this.ErrorProvider.SetError(this.AccountIdTextBox, "Account Id requered");
+                this.ErrorProvider.SetError(this.AccountIdTextBox, "AccountId requered");
                 isValid = false;
             }
             else if (!int.TryParse(this.AccountIdTextBox.Text, out accountId))
             {
-                this.ErrorProvider.SetError(this.AccountIdTextBox, "Account Id must be a number");
+                this.ErrorProvider.SetError(this.AccountIdTextBox, "AccountId must be a number");
                 isValid = false;
             }
 

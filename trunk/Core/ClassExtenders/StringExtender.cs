@@ -29,6 +29,10 @@ namespace Core.ClassExtenders
                 System.Globalization.NumberStyles.Number,
                 System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
         }
+        public static decimal ToDecimal(this string str)
+        {
+            return decimal.Parse(str);
+        }
         public static DateTime ToDateTime (this string str)
         {
             return Convert.ToDateTime(str);
@@ -41,5 +45,6 @@ namespace Core.ClassExtenders
         {
             return string.Format(str, args);
         }
+
     }
 }
