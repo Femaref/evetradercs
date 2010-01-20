@@ -153,7 +153,7 @@ namespace EveTrader.Main.MarketOrders
             // 
             this.soldOutColumn.Text = "ETCB";
             this.soldOutColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.soldOutColumn.Width = 40;
+            this.soldOutColumn.Width = 55;
             // 
             // estimatedColumn
             // 

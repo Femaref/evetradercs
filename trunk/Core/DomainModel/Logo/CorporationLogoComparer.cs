@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +11,12 @@ namespace Core.DomainModel
 
         public bool Equals(CorporationLogo x, CorporationLogo y)
         {
-            return x.ID == y.ID;
+            return x.CorporationID == y.CorporationID;
         }
 
         public int GetHashCode(CorporationLogo obj)
         {
-            return obj.ID;
+            return obj.CorporationID;
         }
 
         #endregion

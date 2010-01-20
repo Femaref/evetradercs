@@ -190,7 +190,6 @@ namespace EveTrader.Main.Reports
             IEnumerable<ReportChartItem> reportData =
                 from wt in filteredWalletTransactions
                 group wt by wt.TypeName into g
-                let buyPrice = (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))
                 select new ReportChartItem
                 {
                     Label = string.Format(
@@ -198,7 +197,7 @@ namespace EveTrader.Main.Reports
                         g.Key, 
                         g.Sum(gi => gi.Quantity)),
                     GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                    PureProfit = Math.Round(g.Sum(gi => ((gi.Price  - gi.SalesTax - buyPrice) * gi.Quantity) / 1000000), 2),
+                    PureProfit = Math.Round(g.Sum(gi => ((gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))) * gi.Quantity) / 1000000), 2),
                     SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 
@@ -209,12 +208,11 @@ namespace EveTrader.Main.Reports
             IEnumerable<ReportChartItem> reportData =
                 from wt in filteredWalletTransactions
                 group wt by wt.StationName into g
-                let buyPrice = (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))
                 select new ReportChartItem
                 {
                     Label = g.Key,
                     GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                    PureProfit = Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax - buyPrice) * gi.Quantity) / 1000000), 2),
+                    PureProfit = Math.Round(g.Sum(gi => ((gi.Price - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))) * gi.Quantity) / 1000000), 2),
                     SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                 };
 

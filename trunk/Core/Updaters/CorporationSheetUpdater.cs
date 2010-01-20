@@ -7,22 +7,21 @@ using Core.Network.EveApi.Requests;
 
 namespace Core.Updaters
 {
-    public class CorporationSheetUpdater : ICharacterUpdater
+    public class CorporationSheetUpdater : ICorporationUpdater
     {
         #region ICharacterUpdater Members
 
-        public bool UpdateCharacter(Character character)
+        public bool UpdateCorporation(Corporation corporation)
         {
-            CorporationSheetRequest corporationSheetRequest = new CorporationSheetRequest(character);
+            CorporationSheetRequest corporationSheetRequest = new CorporationSheetRequest(corporation);
 
-            if (character.NextCorporationSheetUpdateTime <= DateTime.Now)
+            if (corporation.NextCorporationSheetUpdateTime <= DateTime.Now)
             {
                 Corporation c = corporationSheetRequest.Request();
 
                 if (corporationSheetRequest.ErrorCode == 0)
                 {
-                    character.Corporation = c;
-                    character.NextCorporationSheetUpdateTime = DateTime.Now.AddHours(6).AddMinutes(1);
+                    corporation.NextCorporationSheetUpdateTime = DateTime.Now.AddHours(6).AddMinutes(1);
                     return true;
                 }
             }

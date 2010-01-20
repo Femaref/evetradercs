@@ -1,4 +1,8 @@
-﻿using Core.DomainModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Core.DomainModel;
+using Core.Network;
 
 namespace Core.Updaters
 {
@@ -6,23 +10,41 @@ namespace Core.Updaters
     {
         public bool UpdateCharacter(Character character)
         {
-            ICharacterUpdater walletTransactionsUpdater = new CharacterWalletTransactionsUpdater();
-            ICharacterUpdater walletJournalUpdater = new CharacterWalletJournalUpdater();
-            ICharacterUpdater marketOrdersUpdater = new CharacterMarketOrdersUpdater();
-            //ICharacterUpdater assetsUpdater = new CharacterAssetsUpdater();
-            ICharacterUpdater infoUpdater = new CharacterInfoUpdater();
-            ICharacterUpdater standingUpdater = new CharacterStandingUpdater();
-            ICharacterUpdater corporationUpdater = new CorporationSheetUpdater();
+            character.Corporation.ApiData = new Account()
+                                                {
+                                                    UserID = character.AccountId,
+                                                    ApiKey = character.ApiKey,
+                                                    CharacterID = character.Id
+                                                };
+
+            List<ICharacterUpdater> updater = new List<ICharacterUpdater>()
+                                                  {
+
+                                                      new CharacterWalletTransactionsUpdater(),
+                                                      new CharacterWalletJournalUpdater(),
+                                                      new CharacterMarketOrdersUpdater(),
+                                                      //new CharacterAssetsUpdater(),
+                                                      new CharacterInfoUpdater(),
+                                                      new CharacterStandingUpdater(),
+                                                      new CorporationUpdater(),
+                                                  };
 
             bool updated = true;
-                
-            updated &= walletTransactionsUpdater.UpdateCharacter(character);
-            updated &= walletJournalUpdater.UpdateCharacter(character);
-            updated &= marketOrdersUpdater.UpdateCharacter(character);
-            //updated &= assetsUpdater.UpdateCharacter(character);
-            updated &= infoUpdater.UpdateCharacter(character);
-            updated &= standingUpdater.UpdateCharacter(character);
-            updated &= corporationUpdater.UpdateCharacter(character);
+
+            Action<ICharacterUpdater> iter = ic =>
+                                                 {
+                                                     if (!ic.UpdateCharacter(character))
+                                                     {
+                                                         Debug.WriteLine(
+                                                             "Update failed in " +
+                                                             ic.GetType().Namespace +
+                                                             ic.GetType().Name);
+                                                         updated &= false;
+                                                     }
+                                                     else return;
+                                                 };
+
+            updater.ForEach(iter);
 
             return updated;
         }

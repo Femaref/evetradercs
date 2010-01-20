@@ -9,17 +9,17 @@ namespace Core.Network.EveApi.Requests
 {
     public class CorporationSheetRequest : EveApiCorporationResourceRequest<Corporation>
     {
-        private Character iCharacter;
+        private Account iAccount;
 
         public CorporationSheetRequest(int accountId, string apiKey, int characterId)
             : base(accountId, apiKey, characterId)
         {
-            this.iCharacter = new Character { AccountId = accountId, ApiKey = apiKey, Id = characterId };
+            this.iAccount = new Account() { UserID = accountId, ApiKey = apiKey, CharacterID = characterId };
         }
-        public CorporationSheetRequest(Character character)
-            : base(character.AccountId, character.ApiKey, character.Id)
+        public CorporationSheetRequest(IAccount account)
+            : base(account.ApiData.UserID, account.ApiData.ApiKey, account.ApiData.CharacterID)
         {
-            this.iCharacter = character;
+            this.iAccount = account.ApiData;
         }
 
 
@@ -56,7 +56,7 @@ namespace Core.Network.EveApi.Requests
                            Url = root.Element("url").Value,
                            Logo = new CorporationLogo()
                                       {
-                                          ID = root.Element("logo").Element("graphicID").Value.ToInt32(),
+                                          CorporationID = root.Element("corporationID").Value.ToInt32(),
                                           Color1 = root.Element("logo").Element("color1").Value.ToInt32(),
                                           Color2 = root.Element("logo").Element("color2").Value.ToInt32(),
                                           Color3 = root.Element("logo").Element("color3").Value.ToInt32(),
@@ -71,16 +71,16 @@ namespace Core.Network.EveApi.Requests
                                     x => x.Name == "rowset" && x.Attribute("name").Value == "divisions").First().
                                     Elements()
                                 select
-                                    new KeyValuePair<int, string>(x.Attribute("accountKey").Value.ToInt32(),
-                                                                  x.Attribute("description").Value)).ToList(),
+                                    new SerializableKeyValuePair<int, string>(x.Attribute("accountKey").Value.ToInt32(),
+                                                                              x.Attribute("description").Value)).ToList(),
                            WalletDivisions =
                                (from x in
                                     root.Elements().Where(
                                     x => x.Name == "rowset" && x.Attribute("name").Value == "walletDivisions").First().
                                     Elements()
                                 select
-                                    new KeyValuePair<int, string>(x.Attribute("accountKey").Value.ToInt32(),
-                                                                  x.Attribute("description").Value)).ToList()
+                                    new SerializableKeyValuePair<int, string>(x.Attribute("accountKey").Value.ToInt32(),
+                                                                              x.Attribute("description").Value)).ToList()
                        };
         }
     }

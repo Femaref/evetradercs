@@ -25,6 +25,7 @@ namespace EveTrader.Analysis
             double avgTransactions = GetAverageTransactionsPerDay(marketOrder);
             double volume;
 
+            //if the estimated time until this order completion is lower than the orders remaining time
             if (etcb <= daysRemaining)
             {
                 volume = marketOrder.VolumeRemaining;
@@ -36,6 +37,7 @@ namespace EveTrader.Analysis
 
             return volume * marketOrder.Price;
         }
+        //estimated time before complete buyout -> estimated time until order completed
         public static double GetEtcb(Core.DomainModel.MarketOrder marketOrder)
         {
             /*return marketOrder.VolumeRemaining / ReportHelper.GetAverageTransactionsCount(

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ namespace Core.DomainModel
 {
     public class CorporationLogo : IGenericObject<CorporationLogo>
     {
-        public int ID { get; set; }
+        public int CorporationID { get; set; }
         public int Shape1 { get; set; }
         public int Shape2 { get; set; }
         public int Shape3 { get; set; }

@@ -22,8 +22,8 @@ namespace Core.DomainModel
         public int MemberLimit { get; set; }
         public int Shares { get; set; }
 
-        public List<KeyValuePair<int, string>> Divisions { get; set; }
-        public List<KeyValuePair<int, string>> WalletDivisions { get; set; }
+        public List<SerializableKeyValuePair<int, string>> Divisions { get; set; }
+        public List<SerializableKeyValuePair<int, string>> WalletDivisions { get; set; }
 
         public CorporationLogo Logo { get; set; }
 
@@ -41,6 +41,8 @@ namespace Core.DomainModel
         #region IAccount Members
 
         public Core.Network.Account ApiData { get; set; }
+
+        public DateTime NextCorporationSheetUpdateTime { get; set; }
 
         #endregion
     }
