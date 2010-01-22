@@ -4,11 +4,11 @@ namespace Core.ClassExtenders
 {
     public static class StringExtender
     {
-        public static bool IsEmpty (this string str)
+        public static bool IsEmpty(this string str)
         {
             return string.IsNullOrEmpty(str);
         }
-        public static int ToInt32 (this string str)
+        public static int ToInt32(this string str)
         {
             return int.Parse(
                 str,
@@ -22,7 +22,7 @@ namespace Core.ClassExtenders
                 System.Globalization.NumberStyles.Number,
                 System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
         }
-        public static double ToDouble (this string str)
+        public static double ToDouble(this string str)
         {
             return double.Parse(
                 str,
@@ -31,17 +31,25 @@ namespace Core.ClassExtenders
         }
         public static decimal ToDecimal(this string str)
         {
-            return decimal.Parse(str);
+            decimal o;
+            if (decimal.TryParse(
+                str,
+                System.Globalization.NumberStyles.Number,
+                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat, out o))
+                return o;
+            else
+                return 0;
         }
-        public static DateTime ToDateTime (this string str)
+
+        public static DateTime ToDateTime(this string str)
         {
             return Convert.ToDateTime(str);
         }
-        public static string StringFormat (this string str, params object[] args)
+        public static string StringFormat(this string str, params object[] args)
         {
             return string.Format(str, args);
         }
-        public static string StringFormat (this string str, object args)
+        public static string StringFormat(this string str, object args)
         {
             return string.Format(str, args);
         }

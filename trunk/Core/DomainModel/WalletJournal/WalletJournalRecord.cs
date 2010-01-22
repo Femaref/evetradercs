@@ -10,6 +10,8 @@ namespace Core.DomainModel
         public int ReferenceTypeId  { get; set; }
         public double Amount  { get; set; }
         public double Balance  { get; set; }
+        public decimal TaxAmount { get; set; }
+        public int TaxReceiverID { get; set; }
         /*
          * unset:
         ownerName1="corpslave"

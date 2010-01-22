@@ -35,7 +35,9 @@ namespace Core.Network.EveApi.Requests
                                  ReferenceId = r.Attribute("refID").Value.ToInt64(),
                                  ReferenceTypeId = r.Attribute("refTypeID").Value.ToInt32(),
                                  Amount = r.Attribute("amount").Value.ToDouble(),
-                                 Balance = r.Attribute("balance").Value.ToDouble()
+                                 Balance = r.Attribute("balance").Value.ToDouble(),
+                                 TaxAmount = r.Attribute("taxAmount").Value.ToDecimal(),
+                                 TaxReceiver = r.Attribute("taxReceiverID").Value.ToInt32()
                              });
         }
     }
