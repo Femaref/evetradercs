@@ -1,6 +1,6 @@
 ﻿namespace EveTrader.Main.Characters
 {
-    partial class CharactersTab
+    partial class WalletsTab
     {
         /// <summary> 
         /// Required designer variable.

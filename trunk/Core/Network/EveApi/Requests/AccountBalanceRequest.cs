@@ -9,27 +9,36 @@ namespace Core.Network.EveApi.Requests
 {
     public class AccountBalanceRequest : EveApiCorporationResourceRequest<IEnumerable<AccountBalance>>
     {
-        public AccountBalanceRequest(IAccount input)
+        private Account iAccount;
+        private Corporation iCorp;
+
+        public AccountBalanceRequest(Corporation input)
             : base(input)
         {
+            this.iAccount = input.ApiData;
+            this.iCorp = input;
         }
 
         public override IEnumerable<AccountBalance> Request()
         {
-            return this.Parse(base.CachedResponseXml);
+            return this.Parse(base.GetResponseXml());
         }
 
         private IEnumerable<AccountBalance> Parse(System.Xml.Linq.XDocument document)
         {
+            if (document.ToString().Contains("error code="))
+                return new List<AccountBalance>();
+
             var root = document.Element("eveapi").Element("result").Element("rowset");
-            return (from x in root.Elements()
+            var balances = (from x in root.Elements()
                     select new AccountBalance()
                                {
                                    ID = x.Attribute("accountID").Value.ToInt32(),
                                    Balance = x.Attribute("balance").Value.ToDecimal(),
                                    Key = x.Attribute("accountKey").Value.ToInt32()
                                });
-
+            this.iCorp.Wallets = new List<AccountBalance>(balances);
+            return balances;
         }
 
         protected override EveApiResourceType ResourceType

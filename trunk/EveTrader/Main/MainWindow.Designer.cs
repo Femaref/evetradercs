@@ -57,7 +57,7 @@ namespace EveTrader.Main
             this.tabDashboard = new System.Windows.Forms.TabPage();
             this.DashboardTab = new EveTrader.Main.Dashboard.DashboardTab();
             this.tabCharacters = new System.Windows.Forms.TabPage();
-            this.CharactersTab = new EveTrader.Main.Characters.CharactersTab();
+            this.CharactersTab = new EveTrader.Main.Characters.WalletsTab();
             this.tabWalletTransactions = new System.Windows.Forms.TabPage();
             this.WalletTransactionsTab = new EveTrader.Main.WalletTransactions.WalletTransactionsTab();
             this.tabMarketOrders = new System.Windows.Forms.TabPage();
@@ -449,7 +449,7 @@ namespace EveTrader.Main
         private System.Windows.Forms.TabPage tabStarMap;
         private WalletTransactionsTab WalletTransactionsTab;
         private System.Windows.Forms.TabPage tabCharacters;
-        private EveTrader.Main.Characters.CharactersTab CharactersTab;
+        private EveTrader.Main.Characters.WalletsTab CharactersTab;
         private System.Windows.Forms.ToolStripMenuItem manageCharactersToolStripMenuItem;
         private System.Windows.Forms.TabPage tabMarketOrders;
         private DashboardTab DashboardTab;

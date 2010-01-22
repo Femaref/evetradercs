@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -10,9 +11,9 @@ using Core.Updaters;
 
 namespace EveTrader.Main.Characters
 {
-    public partial class CharactersTab : UserControl
+    public partial class WalletsTab : UserControl
     {
-        public CharactersTab()
+        public WalletsTab()
         {
             InitializeComponent();
         }
@@ -38,11 +39,32 @@ namespace EveTrader.Main.Characters
 
                 this.CharactersListView.Items.Add(listViewItem);
 
-                foreach (SerializableKeyValuePair<int, string> kvp in character.Corporation.WalletDivisions)
+                Dictionary<string, int> counter = new Dictionary<string, int>();
+
+                foreach (AccountBalance ab in character.Corporation.Wallets)
                 {
-                    //lvi.UseItemStyleForSubItems = false;
-                    //lvi.SubItems[1].ForeColor = ab.Balance > 0 ? Color.ForestGreen : Color.IndianRed;
-                    //this.CharactersListView.Items.Add(lvi);
+                    var kvp = character.Corporation.WalletDivisions.Where(k => k.Key == ab.Key).SingleOrDefault();
+
+                    if(counter.ContainsKey(character.Corporation.Name))
+                        counter[character.Corporation.Name]++;
+                    else
+                        counter[character.Corporation.Name] = 1;
+
+                    string header = character.Corporation.Name + ": " +
+                                    (kvp != null
+                                         ? kvp.Value
+                                         : "Corporation Wallet" + counter[character.Corporation.Name]);
+
+                    ListViewItem lvi = new                   ListViewItem(
+                        new string[]
+                            {
+                                header,
+                                ab.Balance.FormatCurrency()
+                            });
+                    
+                    lvi.UseItemStyleForSubItems = false;
+                    lvi.SubItems[1].ForeColor = ab.Balance > 0 ? Color.ForestGreen : Color.IndianRed;
+                    this.CharactersListView.Items.Add(lvi);
                 }
 
 

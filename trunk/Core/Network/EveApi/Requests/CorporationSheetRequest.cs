@@ -11,15 +11,13 @@ namespace Core.Network.EveApi.Requests
     {
         private Account iAccount;
 
-        public CorporationSheetRequest(int accountId, string apiKey, int characterId)
-            : base(accountId, apiKey, characterId)
-        {
-            this.iAccount = new Account() { UserID = accountId, ApiKey = apiKey, CharacterID = characterId };
-        }
-        public CorporationSheetRequest(IAccount account)
+        private Corporation iCorp;
+
+        public CorporationSheetRequest(Corporation account)
             : base(account.ApiData.UserID, account.ApiData.ApiKey, account.ApiData.CharacterID)
         {
             this.iAccount = account.ApiData;
+            this.iCorp = account;
         }
 
 

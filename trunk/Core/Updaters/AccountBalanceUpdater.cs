@@ -15,13 +15,12 @@ namespace Core.Updaters
         {
             AccountBalanceRequest accountBalanceRequest = new AccountBalanceRequest(corporation);
 
-            if (corporation.NextAssetsUpdateTime <= DateTime.Now)
+            if (corporation.NextAccountBalanceUpdate <= DateTime.Now)
             {
                 IEnumerable<AccountBalance> accounts = accountBalanceRequest.Request();
 
                 if (accountBalanceRequest.ErrorCode == 0)
                 {
-                    corporation.Wallets = new List<AccountBalance>(accounts);
                     corporation.NextAccountBalanceUpdate = DateTime.Now.AddHours(1).AddMinutes(1);
                     return true;
                 }
