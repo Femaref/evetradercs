@@ -56,10 +56,11 @@ namespace EveTrader.Main
             this.tabsMain = new System.Windows.Forms.TabControl();
             this.tabDashboard = new System.Windows.Forms.TabPage();
             this.DashboardTab = new EveTrader.Main.Dashboard.DashboardTab();
-            this.tabCharacters = new System.Windows.Forms.TabPage();
-            this.CharactersTab = new EveTrader.Main.Characters.WalletsTab();
+            this.tabWallets = new System.Windows.Forms.TabPage();
+            this.CharactersTab = new EveTrader.Main.Characters.CharactersTab();
             this.tabWalletTransactions = new System.Windows.Forms.TabPage();
             this.WalletTransactionsTab = new EveTrader.Main.WalletTransactions.WalletTransactionsTab();
+            this.tabCustomTransaction = new System.Windows.Forms.TabPage();
             this.tabMarketOrders = new System.Windows.Forms.TabPage();
             this.MarketOrdersTab = new EveTrader.Main.MarketOrders.MarketOrdersTab();
             this.tabReports = new System.Windows.Forms.TabPage();
@@ -71,12 +72,11 @@ namespace EveTrader.Main
             this.AuraTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.RestoreFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.BackupFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.tabCustomTransaction = new System.Windows.Forms.TabPage();
             this.statusBar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabsMain.SuspendLayout();
             this.tabDashboard.SuspendLayout();
-            this.tabCharacters.SuspendLayout();
+            this.tabWallets.SuspendLayout();
             this.tabWalletTransactions.SuspendLayout();
             this.tabMarketOrders.SuspendLayout();
             this.tabReports.SuspendLayout();
@@ -207,7 +207,7 @@ namespace EveTrader.Main
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tabsMain.Controls.Add(this.tabDashboard);
-            this.tabsMain.Controls.Add(this.tabCharacters);
+            this.tabsMain.Controls.Add(this.tabWallets);
             this.tabsMain.Controls.Add(this.tabWalletTransactions);
             this.tabsMain.Controls.Add(this.tabCustomTransaction);
             this.tabsMain.Controls.Add(this.tabMarketOrders);
@@ -248,16 +248,16 @@ namespace EveTrader.Main
             this.DashboardTab.TabIndex = 0;
             this.DashboardTab.Load += new System.EventHandler(this.DashboardTab_Load);
             // 
-            // tabCharacters
+            // tabWallets
             // 
-            this.tabCharacters.Controls.Add(this.CharactersTab);
-            this.tabCharacters.Location = new System.Drawing.Point(4, 22);
-            this.tabCharacters.Name = "tabCharacters";
-            this.tabCharacters.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCharacters.Size = new System.Drawing.Size(963, 608);
-            this.tabCharacters.TabIndex = 4;
-            this.tabCharacters.Text = "Characters";
-            this.tabCharacters.UseVisualStyleBackColor = true;
+            this.tabWallets.Controls.Add(this.CharactersTab);
+            this.tabWallets.Location = new System.Drawing.Point(4, 22);
+            this.tabWallets.Name = "tabWallets";
+            this.tabWallets.Padding = new System.Windows.Forms.Padding(3);
+            this.tabWallets.Size = new System.Drawing.Size(963, 608);
+            this.tabWallets.TabIndex = 4;
+            this.tabWallets.Text = "Wallets";
+            this.tabWallets.UseVisualStyleBackColor = true;
             // 
             // CharactersTab
             // 
@@ -291,6 +291,16 @@ namespace EveTrader.Main
             this.WalletTransactionsTab.Padding = new System.Windows.Forms.Padding(8);
             this.WalletTransactionsTab.Size = new System.Drawing.Size(963, 608);
             this.WalletTransactionsTab.TabIndex = 0;
+            // 
+            // tabCustomTransaction
+            // 
+            this.tabCustomTransaction.Location = new System.Drawing.Point(4, 22);
+            this.tabCustomTransaction.Name = "tabCustomTransaction";
+            this.tabCustomTransaction.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCustomTransaction.Size = new System.Drawing.Size(963, 608);
+            this.tabCustomTransaction.TabIndex = 11;
+            this.tabCustomTransaction.Text = "Custom Transaction";
+            this.tabCustomTransaction.UseVisualStyleBackColor = true;
             // 
             // tabMarketOrders
             // 
@@ -393,16 +403,6 @@ namespace EveTrader.Main
             this.BackupFileDialog.Filter = "Eve Trader storage|*.xml";
             this.BackupFileDialog.Title = "Backup Eve trader data";
             // 
-            // tabCustomTransaction
-            // 
-            this.tabCustomTransaction.Location = new System.Drawing.Point(4, 22);
-            this.tabCustomTransaction.Name = "tabCustomTransaction";
-            this.tabCustomTransaction.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCustomTransaction.Size = new System.Drawing.Size(963, 608);
-            this.tabCustomTransaction.TabIndex = 11;
-            this.tabCustomTransaction.Text = "Custom Transaction";
-            this.tabCustomTransaction.UseVisualStyleBackColor = true;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -426,7 +426,7 @@ namespace EveTrader.Main
             this.menuStrip1.PerformLayout();
             this.tabsMain.ResumeLayout(false);
             this.tabDashboard.ResumeLayout(false);
-            this.tabCharacters.ResumeLayout(false);
+            this.tabWallets.ResumeLayout(false);
             this.tabWalletTransactions.ResumeLayout(false);
             this.tabMarketOrders.ResumeLayout(false);
             this.tabReports.ResumeLayout(false);
@@ -448,8 +448,8 @@ namespace EveTrader.Main
         private System.Windows.Forms.ToolStripStatusLabel StatusToolStripLabel;
         private System.Windows.Forms.TabPage tabStarMap;
         private WalletTransactionsTab WalletTransactionsTab;
-        private System.Windows.Forms.TabPage tabCharacters;
-        private EveTrader.Main.Characters.WalletsTab CharactersTab;
+        private System.Windows.Forms.TabPage tabWallets;
+        private EveTrader.Main.Characters.CharactersTab CharactersTab;
         private System.Windows.Forms.ToolStripMenuItem manageCharactersToolStripMenuItem;
         private System.Windows.Forms.TabPage tabMarketOrders;
         private DashboardTab DashboardTab;

@@ -99,12 +99,6 @@
     <Compile Include="Main\Assets\AssetsTab.Designer.cs">
       <DependentUpon>AssetsTab.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Characters\CharactersTab.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Main\Characters\CharactersTab.Designer.cs">
-      <DependentUpon>CharactersTab.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main\CrossRegionalMarket\CrossRegionalMarketTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,6 +158,12 @@
     <Compile Include="Main\UserData\UserData.Designer.cs">
       <DependentUpon>UserData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Wallets\WalletsTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Wallets\WalletsTab.Designer.cs">
+      <DependentUpon>WalletsTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\WalletTransactions\WalletTransactionListViewItem.cs" />
     <Compile Include="ManageCharacters\ExistingCharactersTab.cs">
       <SubType>UserControl</SubType>
@@ -193,10 +193,6 @@
     <Compile Include="Program.cs" />
     <EmbeddedResource Include="Main\Assets\AssetsTab.resx">
       <DependentUpon>AssetsTab.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Main\Characters\CharactersTab.resx">
-      <DependentUpon>CharactersTab.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\CrossRegionalMarket\CrossRegionalMarketTab.resx">
@@ -237,6 +233,9 @@
     <EmbeddedResource Include="Main\UserData\UserData.resx">
       <DependentUpon>UserData.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Wallets\WalletsTab.resx">
+      <DependentUpon>WalletsTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ManageCharacters\ExistingCharactersTab.resx">
       <DependentUpon>ExistingCharactersTab.cs</DependentUpon>
