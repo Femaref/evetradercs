@@ -3,12 +3,13 @@ using Core.Network.EveApi.Requests;
 
 namespace Core.Updaters
 {
-    public class CharacterInfoUpdater : ICharacterUpdater
+    public class CharacterInfoUpdater : ICharacterUpdater<Character>, ICharacterUpdater
     {
-        public bool UpdateCharacter(Character character)
+
+        public bool UpdateEntity(Character entity)
         {
-            CharacterSheetRequest characterSheetRequest = new CharacterSheetRequest(character);
-            
+            CharacterSheetRequest characterSheetRequest = new CharacterSheetRequest(entity);
+
             try
             {
                 characterSheetRequest.Request(); // updates passed character inside}
@@ -19,5 +20,14 @@ namespace Core.Updaters
                 return false;
             }
         }
+
+        #region ICharacterUpdater<Character> Members
+
+        public bool UpdateCharacter(Character character)
+        {
+            return this.UpdateEntity(character);
+        }
+
+        #endregion
     }
 }

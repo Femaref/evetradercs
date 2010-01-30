@@ -10,14 +10,14 @@ namespace Core.Updaters
     {
         public bool UpdateCharacter(Character character)
         {
-            WalletTransactionsRequest walletTransactionsRequest = new WalletTransactionsRequest(character);
+            CharacterWalletTransactionsRequest characterWalletTransactionsRequest = new CharacterWalletTransactionsRequest(character);
             WalletTransactionComparer walletTransactionComparer = new WalletTransactionComparer();
 
             if (character.NextWalletTransactionsUpdateTime <= DateTime.Now)
             {
-                IEnumerable<WalletTransaction> newWalletTransactions = walletTransactionsRequest.Request();
+                IEnumerable<WalletTransaction> newWalletTransactions = characterWalletTransactionsRequest.Request();
             
-                if (walletTransactionsRequest.ErrorCode == 0)
+                if (characterWalletTransactionsRequest.ErrorCode == 0)
                 {
                     foreach (WalletTransaction wt in newWalletTransactions)
                         wt.CalculateSalesTax(character.AccountingLevel);

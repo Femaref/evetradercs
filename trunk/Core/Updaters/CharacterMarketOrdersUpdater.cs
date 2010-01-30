@@ -6,6 +6,7 @@ using Core.Network.EveApi.Requests;
 
 namespace Core.Updaters
 {
+    [Obsolete("Use MarketOrdersUpdater:IEntityUpdater<T> instead")]
     public class CharacterMarketOrdersUpdater : ICharacterUpdater
     {
         public bool UpdateCharacter(Character character)
@@ -23,7 +24,6 @@ namespace Core.Updaters
                     return true;
                 }
             }
-
             return false;
         }
     }

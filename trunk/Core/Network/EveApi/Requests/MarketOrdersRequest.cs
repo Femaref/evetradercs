@@ -7,7 +7,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class MarketOrdersRequest : EveApiCharacterResourceRequest<IEnumerable<MarketOrder>>
+    public class MarketOrdersRequest : EveApiEntityRequest<IEnumerable<MarketOrder>>
     {
         protected override EveApiResourceType ResourceType
         {
@@ -17,7 +17,7 @@ namespace Core.Network.EveApi.Requests
             }
         }
 
-        public MarketOrdersRequest(Character character) : base (character)
+        public MarketOrdersRequest(IAccount account) : base (account)
         {
         }
 
@@ -28,8 +28,12 @@ namespace Core.Network.EveApi.Requests
 
         private IEnumerable<MarketOrder> Parse(XDocument document)
         {
-            return document.Descendants("row")
-                             .Select(r => new MarketOrder
+            if (this.ErrorCode != 0)
+                return null;
+
+            var root = document.Element("eveapi").Element("result").Element("rowset").Elements();
+
+            var orders = root.Select(r => new MarketOrder
                              {
                                  Id = r.Attribute("orderID").Value.ToInt32(),
                                  CharacterId = r.Attribute("charID").Value.ToInt32(),
@@ -47,6 +51,8 @@ namespace Core.Network.EveApi.Requests
                                  Type = r.Attribute("bid").Value == "0" ? MarketOrderType.Sell : MarketOrderType.Buy,
                                  Issued = r.Attribute("issued").Value.ToDateTime()
                              });
+
+            return orders;
 
         }
     }

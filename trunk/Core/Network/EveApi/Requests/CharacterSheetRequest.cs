@@ -21,10 +21,10 @@ namespace Core.Network.EveApi.Requests
         public CharacterSheetRequest(int accountId, string apiKey, int characterId)
             : base(accountId, apiKey, characterId)
         {
-            this.character = new Character { AccountId = accountId, ApiKey = apiKey, Id = characterId };
+            this.character = new Character { AccountId = accountId, ApiKey = apiKey, ID = characterId };
         }
         public CharacterSheetRequest(Character character)
-            : base(character.AccountId, character.ApiKey, character.Id)
+            : base(character.AccountId, character.ApiKey, character.ID)
         {
             this.character = character;
         }

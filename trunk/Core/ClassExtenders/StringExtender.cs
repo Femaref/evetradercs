@@ -10,33 +10,45 @@ namespace Core.ClassExtenders
         }
         public static int ToInt32(this string str)
         {
-            return int.Parse(
+            int output;
+            if (int.TryParse(
                 str,
                 System.Globalization.NumberStyles.Number,
-                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat, out output))
+                return output;
+            else
+                return 0;
         }
         public static long ToInt64(this string str)
         {
-            return long.Parse(
+            long output;
+            if (long.TryParse(
                 str,
                 System.Globalization.NumberStyles.Number,
-                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat, out output))
+                return output;
+            else
+                return 0;
         }
         public static double ToDouble(this string str)
         {
-            return double.Parse(
+            double output;
+            if (double.TryParse(
                 str,
                 System.Globalization.NumberStyles.Number,
-                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat, out output))
+                return output;
+            else
+                return 0;
         }
         public static decimal ToDecimal(this string str)
         {
-            decimal o;
+            decimal output;
             if (decimal.TryParse(
                 str,
                 System.Globalization.NumberStyles.Number,
-                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat, out o))
-                return o;
+                System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat, out output))
+                return output;
             else
                 return 0;
         }
@@ -45,14 +57,5 @@ namespace Core.ClassExtenders
         {
             return Convert.ToDateTime(str);
         }
-        public static string StringFormat(this string str, params object[] args)
-        {
-            return string.Format(str, args);
-        }
-        public static string StringFormat(this string str, object args)
-        {
-            return string.Format(str, args);
-        }
-
     }
 }

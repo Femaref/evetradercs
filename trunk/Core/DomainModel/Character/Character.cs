@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Core.Network;
+using Core.Network.EveApi;
+using Core.Updaters;
 
 namespace Core.DomainModel
 {
-    public class Character : IGenericObject<Character>
+    public class Character : IEntity, IGenericObject<Character>, IAccount, IWallet, IMarketOrder
     {
+        //[Obsolete("Use IAccount.ApiData")]
         public int AccountId { get; set; }
+       // [Obsolete("Use IAccount.ApiData")]
         public string ApiKey { get; set; }
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         public string Name { get; set; }
         public string Race { get; set; }
@@ -15,7 +20,7 @@ namespace Core.DomainModel
         public CharacterGender Gender { get; set; }
         public Corporation Corporation { get; set; }
         public double Balance { get; set; }
-        
+
         public List<WalletTransaction> WalletTransactions { get; set; }
         public List<WalletJournalRecord> WalletJournal { get; set; }
         public List<MarketOrder> MarketOrders { get; set; }
@@ -73,5 +78,45 @@ namespace Core.DomainModel
         {
             return this.Name;
         }
+
+        #region IAccount Members
+
+        private Account iApiData;
+        public Core.Network.Account ApiData
+        {
+            get { return iApiData; }
+            set
+            {
+                iApiData = value;
+                this.Corporation.ApiData = value;
+            }
+        }
+
+        public EveApiResourceFrom RequestFrom { get { return EveApiResourceFrom.Character; } }
+
+        #endregion
+
+        #region IWallet Members
+
+        public List<Wallet> Wallets
+        {
+            get; set;
+        }
+
+        #endregion
+
+        #region Implementation of IEntity
+
+        public void BeforeUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AfterUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

@@ -28,7 +28,7 @@ namespace EveTrader.Main
                 this.customPrice = Settings.Instance.UserData.CustomPrice.Single( 
                     cp => 
                         cp.ProductId == productId &&
-                        cp.CharactedId == character.Id
+                        cp.CharactedId == character.ID
                     );
             }
             catch
@@ -36,7 +36,7 @@ namespace EveTrader.Main
                 this.customPrice = new CustomPrice
                                        {
                                            ProductId = productId,
-                                           CharactedId = character.Id
+                                           CharactedId = character.ID
                                        };
                 Settings.Instance.UserData.CustomPrice.Add(customPrice);
             }

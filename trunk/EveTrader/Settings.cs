@@ -9,6 +9,9 @@ namespace EveTrader
     [XmlRoot("EveTrader")]
     public class Settings : XmlSettingsFile<Settings>
     {
+        public int Version { get; set; }
+
+
         protected override string fileName
         {
             get

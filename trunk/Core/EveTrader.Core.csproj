@@ -55,15 +55,19 @@
     <Compile Include="ClassExtenders\UriExtender.cs" />
     <Compile Include="ClassExtenders\WalletJournalRecordExtender.cs" />
     <Compile Include="ClassExtenders\WalletTransactionExtender.cs" />
-    <Compile Include="DomainModel\AccountBalance\AccountBalance.cs" />
+    <Compile Include="Network\EveApi\Entities\IAccountBalance.cs" />
     <Compile Include="DomainModel\Alliance\Alliance.cs" />
     <Compile Include="DomainModel\Alliance\AllianceComparer.cs" />
     <Compile Include="DomainModel\Asset\Asset.cs" />
     <Compile Include="DomainModel\Asset\AssetStorageType.cs" />
     <Compile Include="DomainModel\Corporation\CorporationComparer.cs" />
     <Compile Include="DomainModel\CustomPrice.cs" />
-    <Compile Include="DomainModel\IAccount.cs" />
-    <Compile Include="DomainModel\ICorporationUpdater.cs" />
+    <Compile Include="Network\EveApi\Entities\IAccount.cs" />
+    <Compile Include="Updaters\MarketOrdersUpdater.cs" />
+    <Compile Include="Updaters\UpdateBase\ICorporationUpdater.cs" />
+    <Compile Include="Network\EveApi\Entities\IEntityUpdater.cs" />
+    <Compile Include="Network\EveApi\Entities\ISubEntity.cs" />
+    <Compile Include="Network\EveApi\Entities\ISubEntityUpdater.cs" />
     <Compile Include="DomainModel\Logo\CorporationLogo.cs" />
     <Compile Include="DomainModel\Logo\CorporationLogoComparer.cs" />
     <Compile Include="DomainModel\Standing\Standing.cs" />
@@ -72,9 +76,12 @@
     <Compile Include="DomainModel\Standing\StandingType.cs" />
     <Compile Include="DomainModel\WalletHistory\WalletHistory.cs" />
     <Compile Include="DomainModel\WalletHistory\WalletHistoryComparer.cs" />
+    <Compile Include="DomainModel\Wallet\Wallet.cs" />
+    <Compile Include="DomainModel\Wallet\WalletComparer.cs" />
+    <Compile Include="Network\EveApi\Requests\WalletTransactionRequest.cs" />
     <Compile Include="SerializableKeyValuePair.cs" />
-    <Compile Include="Network\Account.cs" />
-    <Compile Include="Network\EveApi\EveApiCorporationResourceRequest.cs" />
+    <Compile Include="Network\EveApi\Account.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiCorporationResourceRequest.cs" />
     <Compile Include="Network\EveApi\Requests\AccountBalanceRequest.cs" />
     <Compile Include="Network\EveApi\Requests\AssetsRequest.cs" />
     <Compile Include="Network\EveApi\Requests\CorporationSheetRequest.cs" />
@@ -103,7 +110,7 @@
     <Compile Include="DomainModel\MarketOrder\MarketOrderState.cs" />
     <Compile Include="DomainModel\Corporation\Corporation.cs" />
     <Compile Include="DomainModel\EnumStringValueAttribute.cs" />
-    <Compile Include="DomainModel\ICharacterUpdater.cs" />
+    <Compile Include="Updaters\UpdateBase\ICharacterUpdater.cs" />
     <Compile Include="DomainModel\MarketOrder\MarketOrder.cs" />
     <Compile Include="DomainModel\WalletJournal\WalletJournalComparer.cs" />
     <Compile Include="DomainModel\WalletJournal\WalletJournalRecord.cs" />
@@ -111,16 +118,16 @@
     <Compile Include="DomainModel\WalletTransaction\WalletTransactionComparer.cs" />
     <Compile Include="DomainModel\WalletTransaction\WalletTransactionFor.cs" />
     <Compile Include="DomainModel\WalletTransaction\WalletTransactionType.cs" />
-    <Compile Include="Network\EveApi\EveApiAccountResourceRequest.cs" />
-    <Compile Include="Network\EveApi\EveApiCharacterResourceRequest.cs" />
-    <Compile Include="Network\EveApi\EveApiResourceFrom.cs" />
-    <Compile Include="Network\EveApi\EveApiResourceRequest.cs" />
-    <Compile Include="Network\EveApi\EveApiResourceType.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiAccountResourceRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiCharacterResourceRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiResourceFrom.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiResourceRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiResourceType.cs" />
     <Compile Include="Network\EveApi\Requests\CharacterSheetRequest.cs" />
     <Compile Include="Network\EveApi\Requests\CharactersListRequest.cs" />
     <Compile Include="Network\EveApi\Requests\MarketOrdersRequest.cs" />
     <Compile Include="Network\EveApi\Requests\WalletJournalRequest.cs" />
-    <Compile Include="Network\EveApi\Requests\WalletTransactionsRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\CharacterWalletTransactionsRequest.cs" />
     <Compile Include="Network\EveCentral\EveCentralResourceRequest.cs" />
     <Compile Include="Network\ResourceRequestMethod.cs" />
     <Compile Include="Network\ResourceRequestParameter.cs" />
@@ -129,6 +136,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Updaters\CorporationSheetUpdater.cs" />
     <Compile Include="Updaters\CorporationUpdater.cs" />
+    <Compile Include="Network\EveApi\Requests\RequestBase\EveApiEntityRequest.cs" />
+    <Compile Include="Network\EveApi\Entities\IEntity.cs" />
+    <Compile Include="Network\EveApi\Entities\IMarketOrder.cs" />
+    <Compile Include="Network\EveApi\Entities\IWallet.cs" />
+    <Compile Include="Network\EveApi\Entities\IWalletJournal.cs" />
+    <Compile Include="Network\EveApi\Entities\IWalletTransactions.cs" />
+    <Compile Include="Updaters\WalletJournalUpdater.cs" />
+    <Compile Include="Updaters\WalletTransactionUpdater.cs" />
+    <Compile Include="Updaters\WalletUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EveObjects\EveObjects.csproj">
@@ -137,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DomainModel\AccountBalance\" />
     <Folder Include="Settings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

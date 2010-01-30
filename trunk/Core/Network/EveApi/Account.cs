@@ -10,5 +10,10 @@ namespace Core.Network
         public int UserID { get; set; }
         public string ApiKey { get; set;}
         public int CharacterID { get; set; }
+
+        public override string ToString()
+        {
+            return "Account[" + UserID + "," + ApiKey + "," + CharacterID + "]";
+        }
     }
 }

@@ -6,12 +6,12 @@ namespace Core.DomainModel
     {
         public bool Equals(Character character1, Character character2)
         {
-            return character1.Id == character2.Id;
+            return character1.ID == character2.ID;
         }
 
         public int GetHashCode(Character character)
         {
-            return character.Id;
+            return character.ID;
         }
     }
 }

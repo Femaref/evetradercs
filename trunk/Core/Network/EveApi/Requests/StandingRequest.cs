@@ -17,7 +17,7 @@ namespace Core.Network.EveApi.Requests
         }
 
         public StandingRequest(Character character)
-            : base(character.AccountId, character.ApiKey, character.Id)
+            : base(character.AccountId, character.ApiKey, character.ID)
         {
 
         }
@@ -29,6 +29,9 @@ namespace Core.Network.EveApi.Requests
 
         private IEnumerable<Standing> Parse(XDocument document)
         {
+            if(this.ErrorCode != 0)
+                return null;
+
             var root = document.Element("eveapi").Element("result");
 
             List<IEnumerable<Standing>> standingList = new List<IEnumerable<Standing>>();

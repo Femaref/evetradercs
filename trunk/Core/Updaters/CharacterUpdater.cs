@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Core.DomainModel;
@@ -10,19 +10,21 @@ namespace Core.Updaters
     {
         public bool UpdateCharacter(Character character)
         {
-            character.Corporation.ApiData = new Account()
-                                                {
-                                                    UserID = character.AccountId,
-                                                    ApiKey = character.ApiKey,
-                                                    CharacterID = character.Id
-                                                };
+            character.ApiData = new Account()
+            {
+                UserID = character.AccountId,
+                ApiKey = character.ApiKey,
+                CharacterID = character.ID
+            };
+            character.Corporation.ApiData = character.ApiData;
 
             List<ICharacterUpdater> updater = new List<ICharacterUpdater>()
                                                   {
 
                                                       new CharacterWalletTransactionsUpdater(),
                                                       new CharacterWalletJournalUpdater(),
-                                                      new CharacterMarketOrdersUpdater(),
+                                                      new WalletUpdater(),
+                                                      new MarketOrdersUpdater(),
                                                       //new CharacterAssetsUpdater(),
                                                       new CharacterInfoUpdater(),
                                                       new CharacterStandingUpdater(),

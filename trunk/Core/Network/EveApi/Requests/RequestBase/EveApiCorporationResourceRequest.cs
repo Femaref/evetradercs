@@ -10,17 +10,6 @@ namespace Core.Network.EveApi
     {
         protected int CharacterId { get; set; }
 
-        public int ErrorCode
-        {
-            get
-            {
-                if (this.CachedResponseXml.Descendants().Where(x => x.Name == "error").Count() > 0)
-                    return this.CachedResponseXml.Descendants("error").First().Attribute("code").Value.ToInt32();
-                else
-                    return 0;
-            }
-        }
-
         protected override IList<ResourceRequestParameter> Parameters
         {
             get

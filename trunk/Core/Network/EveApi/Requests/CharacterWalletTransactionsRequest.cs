@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Core.ClassExtenders;
@@ -6,35 +6,20 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class WalletTransactionsRequest : EveApiEntityRequest<IEnumerable<WalletTransaction>>
+    public class CharacterWalletTransactionsRequest : EveApiCharacterResourceRequest<IEnumerable<WalletTransaction>>
     {
         protected override EveApiResourceType ResourceType
         {
-            get
-            {
+            get 
+            { 
                 return EveApiResourceType.WalletTransactions;
             }
         }
-        protected override IList<ResourceRequestParameter> Parameters
-        {
-            get
-            {
-                IList<ResourceRequestParameter> parameters = base.Parameters;
-                parameters.Add(new ResourceRequestParameter { Name = "accountKey", Value = this.iAccountKey.ToString() });
-                return parameters;
-            }
-        }
 
-        private int iAccountKey;
 
-        public WalletTransactionsRequest(IAccount account, int accountKey)
-            : this(account.ApiData, account.RequestFrom, accountKey)
+        public CharacterWalletTransactionsRequest(Character character) : base (character.AccountId, character.ApiKey, character.ID)
         {
-        }
-        public WalletTransactionsRequest(Account account, EveApiResourceFrom from, int accountKey)
-            : base(account, from)
-        {
-            this.iAccountKey = accountKey;
+            
         }
 
         public override IEnumerable<WalletTransaction> Request()
@@ -44,12 +29,7 @@ namespace Core.Network.EveApi.Requests
 
         private IEnumerable<WalletTransaction> Parse(XDocument document)
         {
-            if (this.ErrorCode != 0)
-                return null;
-
-            var root = document.Element("eveapi").Element("result").Element("rowset").Elements();
-
-            var transactions = root.Descendants("row")
+            return document.Descendants("row")
                              .Select(r => new WalletTransaction
                              {
                                  TransactionID = r.Attribute("transactionID").Value.ToInt32(),
@@ -65,8 +45,6 @@ namespace Core.Network.EveApi.Requests
                                  StationID = r.Attribute("stationID").Value.ToInt32(),
                                  StationName = r.Attribute("stationName").Value
                              });
-
-            return transactions;
 
         }
     }

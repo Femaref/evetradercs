@@ -7,37 +7,38 @@ using Core.ClassExtenders;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class AccountBalanceRequest : EveApiCorporationResourceRequest<IEnumerable<AccountBalance>>
+    public class AccountBalanceRequest : EveApiEntityRequest<IEnumerable<IAccountBalance>>
     {
         private Account iAccount;
-        private Corporation iCorp;
 
-        public AccountBalanceRequest(Corporation input)
-            : base(input)
+        public AccountBalanceRequest(IAccount account)
+            : this(account.ApiData, account.RequestFrom)
         {
-            this.iAccount = input.ApiData;
-            this.iCorp = input;
+        }
+        public AccountBalanceRequest(Account account, EveApiResourceFrom from)
+            : base(account, from)
+        {
+
         }
 
-        public override IEnumerable<AccountBalance> Request()
+        public override IEnumerable<IAccountBalance> Request()
         {
             return this.Parse(base.GetResponseXml());
         }
 
-        private IEnumerable<AccountBalance> Parse(System.Xml.Linq.XDocument document)
+        private IEnumerable<IAccountBalance> Parse(System.Xml.Linq.XDocument document)
         {
             if (document.ToString().Contains("error code="))
-                return new List<AccountBalance>();
+                return new List<IAccountBalance>();
 
             var root = document.Element("eveapi").Element("result").Element("rowset");
             var balances = (from x in root.Elements()
-                    select new AccountBalance()
-                               {
-                                   ID = x.Attribute("accountID").Value.ToInt32(),
-                                   Balance = x.Attribute("balance").Value.ToDecimal(),
-                                   Key = x.Attribute("accountKey").Value.ToInt32()
-                               });
-            this.iCorp.Wallets = new List<AccountBalance>(balances);
+                            select (IAccountBalance)new Wallet()
+                                       {
+                                           ID = x.Attribute("accountID").Value.ToInt32(),
+                                           Balance = x.Attribute("balance").Value.ToDecimal(),
+                                           Key = x.Attribute("accountKey").Value.ToInt32()
+                                       });
             return balances;
         }
 

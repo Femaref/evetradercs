@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Core.DomainModel
 {
-    public interface ICorporationUpdater
+    public interface ISubEntity
     {
-        bool UpdateCorporation(Corporation corporation);
     }
 }
