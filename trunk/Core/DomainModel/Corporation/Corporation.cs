@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using Core.Network;
 using Core.Network.EveApi;
@@ -60,14 +61,28 @@ namespace Core.DomainModel
             get { throw new NotImplementedException(); }
         }
 
-        public void BeforeUpdate()
+
+        void IEntity.BeforeUpdate()
         {
-            throw new NotImplementedException();
+            return;
+        }
+        void IEntity.AfterUpdate()
+        {
+            return;
         }
 
-        public void AfterUpdate()
+        void IWallet.BeforeUpdate()
         {
-            throw new NotImplementedException();
+            return;
+        }
+        void IWallet.AfterUpdate()
+        {
+            foreach(Wallet w in this.Wallets)
+            {
+                var kvp = this.WalletDivisions.Where(wd => wd.Key == w.Key).SingleOrDefault();
+                if(kvp.Value != null && kvp.Value != "")
+                    w.Name = kvp.Value;
+            }
         }
 
         #endregion

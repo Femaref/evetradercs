@@ -22,8 +22,6 @@ namespace Core.Migration
 
             FileInfo fiBase = new FileInfo(this.iPathToXml);
 
-            
-
             iWorkingDirectory = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
 
             Type migrationInterface = typeof (IXmlMigrationTarget);

@@ -55,6 +55,26 @@ namespace Core.DomainModel
             }
         }
 
+        void IEntity.BeforeUpdate()
+        {
+            return;
+        }
+
+        void IWallet.AfterUpdate()
+        {
+            return;
+        }
+
+        void IWallet.BeforeUpdate()
+        {
+            return;
+        }
+
+        void IEntity.AfterUpdate()
+        {
+            return;
+        }
+
         public Character()
         {
             this.Corporation = new Corporation();
@@ -101,20 +121,6 @@ namespace Core.DomainModel
         public List<Wallet> Wallets
         {
             get; set;
-        }
-
-        #endregion
-
-        #region Implementation of IEntity
-
-        public void BeforeUpdate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AfterUpdate()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

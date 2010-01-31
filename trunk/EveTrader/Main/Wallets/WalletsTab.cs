@@ -43,28 +43,27 @@ namespace EveTrader.Main.Characters
                 //TODO fix
                 foreach (Wallet w in character.Corporation.Wallets)
                 {
-                    //var kvp = character.Corporation.WalletDivisions.Where(k => k.Key == ab.Key).SingleOrDefault();
 
-                    //if(counter.ContainsKey(character.Corporation.Name))
-                    //    counter[character.Corporation.Name]++;
-                    //else
-                    //    counter[character.Corporation.Name] = 1;
+                    if (counter.ContainsKey(character.Corporation.Name))
+                        counter[character.Corporation.Name]++;
+                    else
+                        counter[character.Corporation.Name] = 1;
 
-                    //string header = character.Corporation.Name + ": " +
-                    //                (kvp != null
-                    //                     ? kvp.Value
-                    //                     : "Corporation Wallet" + counter[character.Corporation.Name]);
+                    string header = character.Corporation.Name + ": " +
+                                    (w.Name != ""
+                                         ? w.Name
+                                         : "Corporation Wallet" + counter[character.Corporation.Name]);
 
-                    //ListViewItem lvi = new                   ListViewItem(
-                    //    new string[]
-                    //        {
-                    //            header,
-                    //            ab.Balance.FormatCurrency()
-                    //        });
-                    
-                    //lvi.UseItemStyleForSubItems = false;
-                    //lvi.SubItems[1].ForeColor = ab.Balance > 0 ? Color.ForestGreen : Color.IndianRed;
-                    //this.CharactersListView.Items.Add(lvi);
+                    ListViewItem lvi = new ListViewItem(
+                        new string[]
+                            {
+                                header,
+                                w.Balance.FormatCurrency()
+                            });
+
+                    lvi.UseItemStyleForSubItems = false;
+                    lvi.SubItems[1].ForeColor = w.Balance > 0 ? Color.ForestGreen : Color.IndianRed;
+                    this.CharactersListView.Items.Add(lvi);
                 }
 
 

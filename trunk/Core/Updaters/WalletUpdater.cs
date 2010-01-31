@@ -13,11 +13,12 @@ namespace Core.Updaters
 
         public bool UpdateEntity(IWallet entity)
         {
+            entity.BeforeUpdate();
             bool sucess = true;
 
             AccountBalanceUpdater abu = new AccountBalanceUpdater();
 
-            if(!abu.UpdateEntity(entity))
+            if(!abu.UpdateEntity(entity) && entity.Wallets.Count() == 0)
                 return false;
 
 
@@ -37,6 +38,7 @@ namespace Core.Updaters
                 }
 
             }
+            entity.AfterUpdate();
             return sucess;
         }
 

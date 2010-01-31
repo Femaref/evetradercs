@@ -9,5 +9,7 @@ namespace Core.Updaters
     public interface IWallet : IEntity
     {
         List<Wallet> Wallets { get; set; }
+        new void BeforeUpdate();
+        new void AfterUpdate();
     }
 }
