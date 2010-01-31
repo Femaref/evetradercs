@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using Core.DomainModel;
 using Core.Migration;
@@ -56,7 +57,8 @@ namespace EveTrader
         {
             foreach (Character c in Instance.Characters)
             {
-                foreach (WalletTransaction wt in c.WalletTransactions)
+                //TODO: FIX for character.Wallets == null
+                foreach (WalletTransaction wt in c.Wallets.Single().Transactions)
                 {
                     if(wt.SalesTax > 0)
                         continue;

@@ -56,7 +56,8 @@ namespace EveTrader.Main.WalletTransactions
             DateTime previousDate = DateTime.Now.Date.AddDays(2);
             ListViewGroup activeGroup = null;
 
-            IEnumerable<WalletTransaction> filteredWalletTransactions = this.FilterWalletTransactions(this.selectedCharacter.WalletTransactions);
+            //TODO: FIX for character.Wallets == null
+            IEnumerable<WalletTransaction> filteredWalletTransactions = this.FilterWalletTransactions(this.selectedCharacter.Wallets.Single().Transactions);
 
             foreach (WalletTransaction walletTransaction in filteredWalletTransactions)
             {
@@ -210,7 +211,8 @@ namespace EveTrader.Main.WalletTransactions
             {
                 item.WalletTransaction.Ignore = !item.WalletTransaction.Ignore;
 
-                foreach (WalletJournalRecord record in item.WalletTransaction.MatchWalletJournalRecords(this.selectedCharacter.WalletJournal))
+                //TODO: FIX for character.Wallets == null
+                foreach (WalletJournalRecord record in item.WalletTransaction.MatchWalletJournalRecords(this.selectedCharacter.Wallets.Single().Journal))
                 {
                     record.Ignore = item.WalletTransaction.Ignore;
                 }

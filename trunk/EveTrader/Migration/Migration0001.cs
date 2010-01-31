@@ -51,6 +51,7 @@ namespace EveTrader.Migration
                                                                          walletAccount.NextAccountBalanceUpdate)
                                                    )
                             );
+                        ch.Add(wallets);
                     }
                     else
                     {
@@ -76,11 +77,6 @@ namespace EveTrader.Migration
                     {
                         wallets.Element("Wallet").Element("Journal").Add(journal.Elements());
                     }
-
-
-
-                    ch.Add(wallets);
-
 
                     trans.Remove();
                     journal.Remove();

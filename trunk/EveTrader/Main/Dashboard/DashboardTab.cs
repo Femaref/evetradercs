@@ -51,7 +51,8 @@ namespace EveTrader.Main.Dashboard
             foreach (Character character in Settings.Instance.Characters)
             {
                 this.SalesAmountChart.Series.Add(character.Name);
-                reportData = this.GetSalesAmount(character.WalletJournal);
+                //TODO: FIX for character.Wallets == null
+                reportData = this.GetSalesAmount(character.Wallets.Single().Journal);
                 this.SalesAmountChart.Series[character.Name].Type = SeriesChartType.StackedColumn;
                 this.SalesAmountChart.Series[character.Name].ShowLabelAsValue = iShowDetailedLabeles;
                 this.SalesAmountChart.Series[character.Name]["StackedGroupName"] = "General";
@@ -219,8 +220,9 @@ namespace EveTrader.Main.Dashboard
 
             foreach (Character character in characters)
             {
+                //TODO: FIX for character.Wallets == null
                 walletJournal = walletJournal.Union(
-                    character.WalletJournal.Where(
+                    character.Wallets.Single().Journal.Where(
                         wjr => wjr.Ignore == false)
                     ).ToList();
             }
@@ -413,7 +415,8 @@ namespace EveTrader.Main.Dashboard
 
                 default:
                     Character selectCharacter = GetCharacterByName(result.Series.Name);
-                    reportData = this.GetDaySalesAmount(selectCharacter.WalletTransactions, DateTime.Now.Date.AddDays(result.PointIndex - UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount));
+                    //TODO: FIX for character.Wallets == null
+                    reportData = this.GetDaySalesAmount(selectCharacter.Wallets.Single().Transactions, DateTime.Now.Date.AddDays(result.PointIndex - UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount));
                     this.RenderSalesDetailsChart(reportData);
                     break;
             }

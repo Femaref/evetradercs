@@ -9,8 +9,6 @@ namespace Core.Network.EveApi.Requests
 {
     public class AccountBalanceRequest : EveApiEntityRequest<IEnumerable<IAccountBalance>>
     {
-        private Account iAccount;
-
         public AccountBalanceRequest(IAccount account)
             : this(account.ApiData, account.RequestFrom)
         {

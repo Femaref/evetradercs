@@ -20,9 +20,6 @@ namespace Core.Updaters
 
             List<ICharacterUpdater> updater = new List<ICharacterUpdater>()
                                                   {
-
-                                                      new CharacterWalletTransactionsUpdater(),
-                                                      new CharacterWalletJournalUpdater(),
                                                       new WalletUpdater(),
                                                       new MarketOrdersUpdater(),
                                                       //new CharacterAssetsUpdater(),

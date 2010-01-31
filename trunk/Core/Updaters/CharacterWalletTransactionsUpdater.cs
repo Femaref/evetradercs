@@ -6,6 +6,7 @@ using Core.Network.EveApi.Requests;
 
 namespace Core.Updaters
 {
+    [Obsolete("Use generic EntityUpdater instead")]
     public class CharacterWalletTransactionsUpdater : ICharacterUpdater
     {
         public bool UpdateCharacter(Character character)

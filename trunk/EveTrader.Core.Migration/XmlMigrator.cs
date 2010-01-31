@@ -58,7 +58,9 @@ namespace Core.Migration
             Version max =
                 iMigrationTargets.Max(t => t.GetCustomAttributes<TargetVersionAttribute>(false).Single().ToVersion);
 
-            if (baseVersion < min || baseVersion >= max)
+            if (baseVersion >= max)
+                return true;
+            if(baseVersion < min)
                 return false;
 
             iMigrationTargets.RemoveAll(

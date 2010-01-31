@@ -21,7 +21,9 @@ namespace Core.DomainModel
         public Corporation Corporation { get; set; }
         public double Balance { get; set; }
 
+        [Obsolete("Use Wallets.* instead")]
         public List<WalletTransaction> WalletTransactions { get; set; }
+        [Obsolete("Use Wallets.* instead")]
         public List<WalletJournalRecord> WalletJournal { get; set; }
         public List<MarketOrder> MarketOrders { get; set; }
         public List<Asset> Assets { get; set; }
@@ -56,8 +58,6 @@ namespace Core.DomainModel
         public Character()
         {
             this.Corporation = new Corporation();
-            this.WalletTransactions = new List<WalletTransaction>();
-            this.WalletJournal = new List<WalletJournalRecord>();
             this.MarketOrders = new List<MarketOrder>();
             this.CustomBuyPrices = new List<CustomPrice>();
             this.Assets = new List<Asset>();
