@@ -6,12 +6,12 @@ namespace Core.DomainModel
     {
         public bool Equals(WalletJournalRecord walletJournalRecord1, WalletJournalRecord walletJournalRecord2)
         {
-            return walletJournalRecord1.ReferenceId == walletJournalRecord2.ReferenceId;
+            return walletJournalRecord1.ReferenceID == walletJournalRecord2.ReferenceID;
         }
 
         public int GetHashCode(WalletJournalRecord walletJournalRecord)
         {
-            return walletJournalRecord.ReferenceId.GetHashCode();
+            return walletJournalRecord.ReferenceID.GetHashCode();
         }
     }
 }

@@ -53,8 +53,8 @@ namespace Core.Network.EveApi.Requests
             var records = root.Select(r => new WalletJournalRecord
                                                {
                                                    Date = r.Attribute("date").Value.ToDateTime().LocalizeEveTime(),
-                                                   ReferenceId = r.Attribute("refID").Value.ToInt64(),
-                                                   ReferenceTypeId = r.Attribute("refTypeID").Value.ToInt32(),
+                                                   ReferenceID = r.Attribute("refID").Value.ToInt64(),
+                                                   ReferenceTypeID = r.Attribute("refTypeID").Value.ToInt32(),
                                                    Amount = r.Attribute("amount").Value.ToDouble(),
                                                    Balance = r.Attribute("balance").Value.ToDouble(),
                                                    TaxAmount =
@@ -64,7 +64,14 @@ namespace Core.Network.EveApi.Requests
                                                    TaxReceiverID =
                                                        r.Attribute("taxReceiverID") != null
                                                            ? r.Attribute("taxReceiverID").Value.ToInt32()
-                                                           : 0
+                                                           : 0,
+                                                   OwnerID1 = r.Attribute("ownerID1").Value.ToInt32(),
+                                                   OwnerName1 = r.Attribute("ownerName1").Value,
+                                                   OwnerID2 = r.Attribute("ownerID2").Value.ToInt32(),
+                                                   OwnerName2 = r.Attribute("ownerName2").Value,
+                                                   ArgID1 = r.Attribute("argID1").Value.ToInt32(),
+                                                   ArgName1 = r.Attribute("argName1").Value,
+                                                   Reason = r.Attribute("reason").Value
                                                });
 
             return records;

@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 
-namespace EveTrader.Core.Migration
+namespace Core.Migration
 {
     public class XmlMigrator : MigratorBase
     {

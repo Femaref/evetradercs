@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace EveTrader.Core.Migration
+namespace Core.Migration
 {
     public abstract class MigratorBase
     {

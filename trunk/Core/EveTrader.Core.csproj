@@ -78,7 +78,7 @@
     <Compile Include="DomainModel\WalletHistory\WalletHistoryComparer.cs" />
     <Compile Include="DomainModel\Wallet\Wallet.cs" />
     <Compile Include="DomainModel\Wallet\WalletComparer.cs" />
-    <Compile Include="Network\EveApi\Requests\WalletTransactionRequest.cs" />
+    <Compile Include="Network\EveApi\Requests\WalletTransactionsRequest.cs" />
     <Compile Include="SerializableKeyValuePair.cs" />
     <Compile Include="Network\EveApi\Account.cs" />
     <Compile Include="Network\EveApi\Requests\RequestBase\EveApiCorporationResourceRequest.cs" />
@@ -143,7 +143,7 @@
     <Compile Include="Network\EveApi\Entities\IWalletJournal.cs" />
     <Compile Include="Network\EveApi\Entities\IWalletTransactions.cs" />
     <Compile Include="Updaters\WalletJournalUpdater.cs" />
-    <Compile Include="Updaters\WalletTransactionUpdater.cs" />
+    <Compile Include="Updaters\WalletTransactionsUpdater.cs" />
     <Compile Include="Updaters\WalletUpdater.cs" />
   </ItemGroup>
   <ItemGroup>

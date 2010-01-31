@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EveTrader.Core.Migration
+namespace Core.Migration
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class TargetVersionAttribute : Attribute

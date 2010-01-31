@@ -41,6 +41,7 @@ namespace EveTrader
 
         protected override void BeforeLoad()
         {
+            //TODO: Add migration stuff
             return;
         }
 

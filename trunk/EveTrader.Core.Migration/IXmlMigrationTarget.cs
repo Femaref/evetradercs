@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace EveTrader.Core.Migration
+namespace Core.Migration
 {
     public interface IXmlMigrationTarget
     {

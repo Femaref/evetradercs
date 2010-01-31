@@ -183,6 +183,7 @@
     <Compile Include="ManageCharacters\NewCharacterTab.Designer.cs">
       <DependentUpon>NewCharacterTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migration\Migration0001.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main\MainWindow.cs">
       <SubType>Form</SubType>
@@ -324,6 +325,10 @@
     <ProjectReference Include="..\EveObjects\EveObjects.csproj">
       <Project>{021616BA-A56D-427F-BB8C-24993DC1207E}</Project>
       <Name>EveObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Migration\EveTrader.Core.Migration.csproj">
+      <Project>{CDB1323E-4069-491F-80A6-38B167E79445}</Project>
+      <Name>EveTrader.Core.Migration</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

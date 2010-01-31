@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -238,7 +238,7 @@ namespace EveTrader.Main.Dashboard
                     .Where(r =>
                         r.Date.Date == DateTime.Now.Date.AddDays(-day) &&
                         r.Amount > 0 &&
-                        r.ReferenceTypeId == 2 &&
+                        r.ReferenceTypeID == 2 &&
                         r.Ignore == false)
                     .Sum(r => r.Amount) / 1000000;
 

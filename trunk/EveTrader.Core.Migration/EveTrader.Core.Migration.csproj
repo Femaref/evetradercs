@@ -8,8 +8,8 @@
     <ProjectGuid>{CDB1323E-4069-491F-80A6-38B167E79445}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EveTrader.Core.Migration</RootNamespace>
-    <AssemblyName>EveTrader.Core.Migration</AssemblyName>
+    <RootNamespace>Core.Migration</RootNamespace>
+    <AssemblyName>Core.Migration</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
