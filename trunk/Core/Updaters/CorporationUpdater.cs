@@ -17,7 +17,8 @@ namespace Core.Updaters
             List<ICorporationUpdater> updater = new List<ICorporationUpdater>()
                                         {
                                             new CorporationSheetUpdater(),
-                                            new WalletUpdater()
+                                            new WalletUpdater(),
+                                            new MarketOrdersUpdater()
                                         };
 
             bool updated = true;

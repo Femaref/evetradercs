@@ -89,7 +89,7 @@ namespace Core.Migration
                     root.Save(Path.Combine(iWorkingDirectory, "backup_post_" + currentTypeItem.Name + ".xml"));
 
                     baseVersion = toVersion;
-                    root.Element("EveTrader").Element("Version").Value = baseVersion.ToString();
+                    root.Element(rootNodeName).Element("Version").Value = baseVersion.ToString();
                 }
             }
 
