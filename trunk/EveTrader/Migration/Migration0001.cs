@@ -12,6 +12,7 @@ using Core.ClassExtenders;
 namespace EveTrader.Migration
 {
     [TargetVersion(1, 2, 3, 1, 2, 4)]
+    [TargetFile("settings.xml")]
     public class Migrate0001 : IXmlMigrationTarget
     {
         #region Implementation of IXmlMigrationTarget

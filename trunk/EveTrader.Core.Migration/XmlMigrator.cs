@@ -20,6 +20,10 @@ namespace Core.Migration
         {
             iPathToXml = pathToXml;
 
+            FileInfo fiBase = new FileInfo(this.iPathToXml);
+
+            
+
             iWorkingDirectory = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
 
             Type migrationInterface = typeof (IXmlMigrationTarget);
@@ -27,9 +31,10 @@ namespace Core.Migration
             iMigrationTargets =
                 new List<Type>(
                     from t in a.GetTypes().Where(tb => migrationInterface.IsAssignableFrom(tb))
-                    let attrib = t.GetCustomAttributes<TargetVersionAttribute>()
-                    orderby attrib.Single().FromVersion ascending
-                    where attrib.Count() == 1
+                    let versionAttrib = t.GetCustomAttributes<TargetVersionAttribute>()
+                    let fileAttrib = t.GetCustomAttributes<TargetFileAttribute>()
+                    orderby versionAttrib.Single().FromVersion ascending
+                    where versionAttrib.Count() == 1 && fileAttrib.Count() == 1 && fileAttrib.Single().Target == fiBase.Name
                     select t
                     );
         }
@@ -44,7 +49,9 @@ namespace Core.Migration
         {
             XDocument root = XDocument.Load(this.iPathToXml);
 
-            Version baseVersion = new Version(root.Element("EveTrader").Element("Version").Value);
+            string rootNodeName = root.Root.Name.ToString();
+
+            Version baseVersion = new Version(root.Element(rootNodeName).Element("Version").Value);
 
             Version min =
                 iMigrationTargets.Min(t => t.GetCustomAttributes<TargetVersionAttribute>(false).Single().FromVersion);
@@ -92,9 +99,9 @@ namespace Core.Migration
                 DirectoryInfo di = new DirectoryInfo(this.iWorkingDirectory);
                 FileInfo[] backups = di.GetFiles("backup*.xml");
                 backups.ToList().ForEach(fi => fi.Delete());
+                return true;
             }
-
-            return true;
+            return false;
         }
 
         public override bool MigrateDown()

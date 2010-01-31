@@ -49,6 +49,7 @@
     <Compile Include="MigratorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IXmlMigrationTarget.cs" />
+    <Compile Include="TargetFileAttribute.cs" />
     <Compile Include="TargetVersionAttribute.cs" />
     <Compile Include="XmlMigrator.cs" />
   </ItemGroup>
