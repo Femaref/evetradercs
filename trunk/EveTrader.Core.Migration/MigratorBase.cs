@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +8,7 @@ namespace EveTrader.Core.Migration
 {
     public abstract class MigratorBase
     {
-        public abstract bool Migrate();
+        public abstract bool MigrateUp();
+        public abstract bool MigrateDown();
     }
 }

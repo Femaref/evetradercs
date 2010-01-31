@@ -33,16 +33,14 @@ namespace EveTrader.Core.Migration
                     select t
                     );
         }
-
         public XmlMigrator(string pathToAssembly, string pathToXml)
             : this(Assembly.LoadFile(pathToAssembly), pathToXml)
         {
         }
 
-
         #region Overrides of MigratorBase
 
-        public override bool Migrate()
+        public override bool MigrateUp()
         {
             XDocument root = XDocument.Load(this.iPathToXml);
 
@@ -64,23 +62,21 @@ namespace EveTrader.Core.Migration
                     iMigrationTargets.OrderBy(
                         t => t.GetCustomAttributes<TargetVersionAttribute>(false).Single().FromVersion));
 
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 Type currentTypeItem = queue.Dequeue();
                 Version currentVersion =
                     currentTypeItem.GetCustomAttributes<TargetVersionAttribute>(false).Single().FromVersion;
                 Version toVersion =
-    currentTypeItem.GetCustomAttributes<TargetVersionAttribute>(false).Single().ToVersion;
+                    currentTypeItem.GetCustomAttributes<TargetVersionAttribute>(false).Single().ToVersion;
                 if (currentVersion == baseVersion)
                 {
-                    root.Save(Path.Combine(iWorkingDirectory,"backup_pre_" + currentTypeItem.Name + ".xml"));
+                    root.Save(Path.Combine(iWorkingDirectory, "backup_pre_" + currentTypeItem.Name + ".xml"));
 
                     IXmlMigrationTarget currentItem = (Activator.CreateInstance(currentTypeItem) as IXmlMigrationTarget);
 
-                    if(!currentItem.Upgrade(root))
+                    if (!currentItem.Upgrade(root))
                     {
-                        File.Copy(Path.Combine(iWorkingDirectory, "backup_pre_" + currentTypeItem.Name + ".xml"),
-                                               this.iPathToXml);
                         return false;
                     }
                     root.Save(Path.Combine(iWorkingDirectory, "backup_post_" + currentTypeItem.Name + ".xml"));
@@ -89,11 +85,20 @@ namespace EveTrader.Core.Migration
                 }
             }
 
-
-
-
+            if(baseVersion == max)
+            {
+                root.Save(this.iPathToXml);
+                DirectoryInfo di = new DirectoryInfo(this.iWorkingDirectory);
+                FileInfo[] backups = di.GetFiles("backup*.xml");
+                backups.ToList().ForEach(fi => fi.Delete());
+            }
 
             return true;
+        }
+
+        public override bool MigrateDown()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
