@@ -8,14 +8,14 @@ namespace EveTrader.Helpers
     {
         protected  abstract string fileName { get; }
 
-        private string folder
+        protected string folder
         {
             get
             {
                 return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"EveTrader");
             }
         }
-        private string filePath
+        protected string filePath
         {
             get
             {

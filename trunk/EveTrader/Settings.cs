@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 using Core.DomainModel;
+using Core.Migration;
 using EveTrader.Helpers;
 
 namespace EveTrader
@@ -9,7 +11,7 @@ namespace EveTrader
     [XmlRoot("EveTrader")]
     public class Settings : XmlSettingsFile<Settings>
     {
-        public int Version { get; set; }
+        public string Version { get; set; }
 
 
         protected override string fileName
@@ -41,7 +43,12 @@ namespace EveTrader
 
         protected override void BeforeLoad()
         {
-            //TODO: Add migration stuff
+            XmlMigrator migrator = new XmlMigrator(this.GetType().Assembly, this.filePath);
+            if(!migrator.MigrateUp())
+            {
+                File.Copy(this.filePath, Path.Combine(this.folder, "backup.xml"));
+                throw new Exception("Migration failed for class" +this.GetType().Name); 
+            }
             return;
         }
 
