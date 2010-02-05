@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using Core.ClassExtenders;
@@ -46,7 +47,11 @@ namespace Core.Network.EveApi.Requests
         private IEnumerable<WalletJournalRecord> Parse(XDocument document)
         {
             if (this.ErrorCode != 0)
+            {
+                Debug.WriteLine(this.ToString());
                 return null;
+            }
+
 
             var root = document.Element("eveapi").Element("result").Element("rowset").Elements();
 

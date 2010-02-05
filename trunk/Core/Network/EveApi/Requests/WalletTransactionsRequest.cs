@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using Core.ClassExtenders;
@@ -45,12 +46,15 @@ namespace Core.Network.EveApi.Requests
         private IEnumerable<WalletTransaction> Parse(XDocument document)
         {
             if (this.ErrorCode != 0)
+            {
+                Debug.WriteLine(this.ToString());
                 return null;
+            }
+               
 
             var root = document.Element("eveapi").Element("result").Element("rowset").Elements();
 
-            var transactions = root.Descendants("row")
-                             .Select(r => new WalletTransaction
+            var transactions = root.Select(r => new WalletTransaction
                              {
                                  TransactionID = r.Attribute("transactionID").Value.ToInt32(),
                                  TransactionFor = r.Attribute("transactionFor").Value == "personal" ? WalletTransactionFor.Personal : WalletTransactionFor.Undefined,

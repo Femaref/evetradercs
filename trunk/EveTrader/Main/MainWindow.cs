@@ -63,16 +63,6 @@ namespace EveTrader.Main
             this.WalletTransactionsTab.Initialize();
             this.CharactersTab.Initialize();
             this.MarketOrdersTab.Initialize();
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Next possible update time: ");
-
-            foreach (Character character in Settings.Instance.Characters)
-            {
-                sb.AppendFormat("{0} - {1:HH:mm}, ", character.Name, character.NextUpdateTime);
-            }
-
-            this.StatusToolStripLabel.Text = sb.ToString();
         }
 
         private void UpdateCharactersAndInitialize()
@@ -86,6 +76,16 @@ namespace EveTrader.Main
             }
 
             Settings.Instance.Save();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Next possible update time: ");
+
+            foreach (Character character in Settings.Instance.Characters)
+            {
+                sb.AppendFormat("{0} - {1:HH:mm}, ", character.Name, character.NextUpdateTime);
+            }
+            sb.Remove(sb.Length - 2, 2);
+            this.StatusToolStripLabel.Text = sb.ToString();
 
             this.Initialize();
         }

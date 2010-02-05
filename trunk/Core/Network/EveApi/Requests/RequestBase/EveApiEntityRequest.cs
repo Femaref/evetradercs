@@ -49,5 +49,12 @@ namespace Core.Network.EveApi
         }
 
         public abstract TOutput Request();
+
+        public override string ToString()
+        {
+            return this.GetType().Name + "[Account[" + iAccountId + "," + iApiKey + "," + iCharacterID + "]," +
+                   iFrom + "," + this.ErrorCode + "]";
+
+        }
     }
 }

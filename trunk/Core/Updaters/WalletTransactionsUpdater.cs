@@ -48,7 +48,7 @@ namespace Core.Updaters
         public override string ToString()
         {
             return "WalletTransactionsUpdater[" + 
-                iAccount + "," + iFrom.StringValue() + "]";
+                iAccount + "," + iFrom.StringValue() +"]";
         }
     }
 }
