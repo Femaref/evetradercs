@@ -82,6 +82,8 @@ namespace Core.DomainModel
             this.CustomBuyPrices = new List<CustomPrice>();
             this.Assets = new List<Asset>();
             this.BalanceHistory = new List<WalletHistory>();
+            this.Wallets = new List<Wallet>();
+
 
             this.NextWalletTransactionsUpdateTime = DateTime.Now;
             this.NextWalletJournalUpdateTime = DateTime.Now;

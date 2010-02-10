@@ -17,9 +17,10 @@ namespace Core.Updaters
             bool sucess = true;
 
             AccountBalanceUpdater abu = new AccountBalanceUpdater();
-
-            if(!abu.UpdateEntity(entity) && entity.Wallets.Count() == 0)
+            if (!abu.UpdateEntity(entity) && entity.Wallets.Count() == 0)
                 return false;
+            if(entity is Character)
+                entity.Wallets.Single().Name = (entity as Character).Name;
 
 
             foreach(Wallet w in entity.Wallets)

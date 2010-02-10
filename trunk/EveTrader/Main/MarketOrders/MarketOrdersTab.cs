@@ -70,11 +70,14 @@ namespace EveTrader.Main.MarketOrders
         {
             IEnumerable<Core.DomainModel.MarketOrder> marketOrders =
                 new List<Core.DomainModel.MarketOrder>(character.MarketOrders);
-            //TODO: FIX for character.Wallets == null
-            IEnumerable<WalletTransaction> walletTransactions = new List<WalletTransaction>(character.Wallets.Single().Transactions);
-
-            marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey, this.iSortAscending);
-            marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
+            if (character.Wallets != null && character.Wallets.Count() == 1)
+            {
+                IEnumerable<WalletTransaction> walletTransactions =
+                    new List<WalletTransaction>(character.Wallets.Single().Transactions);
+                marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey,
+                                                     this.iSortAscending);
+                marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
+            }
 
             //filters expired orders
             if (iHideExpired)

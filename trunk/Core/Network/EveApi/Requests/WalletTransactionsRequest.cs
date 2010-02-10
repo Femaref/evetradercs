@@ -22,11 +22,13 @@ namespace Core.Network.EveApi.Requests
             {
                 IList<ResourceRequestParameter> parameters = base.Parameters;
                 parameters.Add(new ResourceRequestParameter { Name = "accountKey", Value = this.iAccountKey.ToString() });
+                parameters.Add(new ResourceRequestParameter() {Name = "beforeTransID", Value = this.iBeforeTransID.ToString()});
                 return parameters;
             }
         }
 
         private int iAccountKey;
+        private int iBeforeTransID = 0;
 
         public WalletTransactionsRequest(IAccount account, int accountKey)
             : this(account.ApiData, account.RequestFrom, accountKey)
@@ -41,6 +43,12 @@ namespace Core.Network.EveApi.Requests
         public override IEnumerable<WalletTransaction> Request()
         {
             return this.Parse(base.GetResponseXml());
+        }
+
+        public IEnumerable<WalletTransaction> Request(int beforeTransID)
+        {
+            this.iBeforeTransID = beforeTransID;
+            return Request();
         }
 
         private IEnumerable<WalletTransaction> Parse(XDocument document)

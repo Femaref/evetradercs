@@ -11,6 +11,18 @@ namespace EveTrader.Main.WalletTransactions
     public partial class WalletTransactionsTab : UserControl
     {
         private DateTime showForDate = DateTime.Now.Date.AddDays(-6);
+
+        private List<Wallet> iWallets = new List<Wallet>();
+
+
+        private Wallet SelectedWallet
+        {
+            get
+            {
+                return iWallets.Where(w => w.Name == this.CharactersComboBox.SelectedItem.ToString()).Single();
+            }
+        }
+
         private Character selectedCharacter
         {
             get
@@ -27,10 +39,24 @@ namespace EveTrader.Main.WalletTransactions
         public void Initialize()
         {
             CharactersComboBox.Items.Clear();
-
+            iWallets.Clear();
             foreach (Character character in Settings.Instance.Characters)
             {
-                CharactersComboBox.Items.Add(character);
+                if (character.Wallets != null && character.Wallets.Count() == 1)
+                {
+                    Wallet w = character.Wallets.Single();
+                    iWallets.Add(w);
+                    CharactersComboBox.Items.Add(w.Name);
+                }
+
+                if (character.Corporation.Wallets != null)
+                {
+                    foreach (Wallet w in character.Corporation.Wallets)
+                    {
+                        iWallets.Add(w);
+                        CharactersComboBox.Items.Add(w.Name);
+                    }
+                }
             }
 
             if (CharactersComboBox.Items.Count > 0)
@@ -56,8 +82,7 @@ namespace EveTrader.Main.WalletTransactions
             DateTime previousDate = DateTime.Now.Date.AddDays(2);
             ListViewGroup activeGroup = null;
 
-            //TODO: FIX for character.Wallets == null
-            IEnumerable<WalletTransaction> filteredWalletTransactions = this.FilterWalletTransactions(this.selectedCharacter.Wallets.Single().Transactions);
+            IEnumerable<WalletTransaction> filteredWalletTransactions = this.FilterWalletTransactions(this.SelectedWallet.Transactions);
 
             foreach (WalletTransaction walletTransaction in filteredWalletTransactions)
             {

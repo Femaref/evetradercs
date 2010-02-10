@@ -40,7 +40,7 @@ namespace EveTrader.Main.Characters
                 this.CharactersListView.Items.Add(listViewItem);
 
                 Dictionary<string, int> counter = new Dictionary<string, int>();
-                //TODO fix
+
                 foreach (Wallet w in character.Corporation.Wallets)
                 {
 

@@ -50,8 +50,10 @@ namespace EveTrader.Main.Dashboard
 
             foreach (Character character in Settings.Instance.Characters)
             {
+                if(character.Wallets == null || character.Wallets.Count() == 0)
+                    continue;
+
                 this.SalesAmountChart.Series.Add(character.Name);
-                //TODO: FIX for character.Wallets == null
                 reportData = this.GetSalesAmount(character.Wallets.Single().Journal);
                 this.SalesAmountChart.Series[character.Name].Type = SeriesChartType.StackedColumn;
                 this.SalesAmountChart.Series[character.Name].ShowLabelAsValue = iShowDetailedLabeles;
@@ -220,11 +222,13 @@ namespace EveTrader.Main.Dashboard
 
             foreach (Character character in characters)
             {
-                //TODO: FIX for character.Wallets == null
-                walletJournal = walletJournal.Union(
-                    character.Wallets.Single().Journal.Where(
-                        wjr => wjr.Ignore == false)
-                    ).ToList();
+                if (character.Wallets != null && character.Wallets.Count() == 1)
+                {
+                    walletJournal = walletJournal.Union(
+                        character.Wallets.Single().Journal.Where(
+                            wjr => wjr.Ignore == false)
+                        ).ToList();
+                }
             }
 
             return this.GetSalesAmount(walletJournal);
@@ -413,12 +417,12 @@ namespace EveTrader.Main.Dashboard
                     this.RenderSalesDetailsChart(reportData);
                     break;
 
-                default:
-                    Character selectCharacter = GetCharacterByName(result.Series.Name);
-                    //TODO: FIX for character.Wallets == null
-                    reportData = this.GetDaySalesAmount(selectCharacter.Wallets.Single().Transactions, DateTime.Now.Date.AddDays(result.PointIndex - UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount));
-                    this.RenderSalesDetailsChart(reportData);
-                    break;
+                //default:
+                //    Character selectCharacter = GetCharacterByName(result.Series.Name);
+                //    //TODO: FIX for character.Wallets == null
+                //    reportData = this.GetDaySalesAmount(selectCharacter.Wallets.Single().Transactions, DateTime.Now.Date.AddDays(result.PointIndex - UISettings.Instance.DashboardSettings.DaysToShowInSalesAmount));
+                //    this.RenderSalesDetailsChart(reportData);
+                //    break;
             }
         }
         private Character GetCharacterByName(string name)

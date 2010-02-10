@@ -13,8 +13,8 @@ namespace EveTrader.Analysis
 
             foreach (Character character in Settings.Instance.Characters)
             {
-                //TODO: FIX for character.Wallets == null
-                result = result.Union(character.Wallets.Single().Transactions, walletTransactionComparer);
+                if(character.Wallets != null && character.Wallets.Count() == 1)
+                    result = result.Union(character.Wallets.Single().Transactions, walletTransactionComparer);
             }
 
             return result;

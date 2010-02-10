@@ -26,6 +26,11 @@ namespace Core.DomainModel
         public int MemberLimit { get; set; }
         public int Shares { get; set; }
 
+        public Corporation()
+        {
+            this.Wallets = new List<Wallet>();
+        }
+
         public DateTime NextCorporationSheetUpdateTime { get; set; }
 
         public List<SerializableKeyValuePair<int, string>> Divisions { get; set; }

@@ -14,7 +14,7 @@ namespace Core.Updaters
         {
             AccountBalanceRequest accountBalanceRequest = new AccountBalanceRequest(entity);
 
-            if (entity.Wallets.Count == 0 || entity.Wallets.Max(w => w.NextAccountBalanceUpdate) <= DateTime.Now)
+            if ((entity.Wallets.Count() > 0 && entity.Wallets.Min(w => w.NextAccountBalanceUpdate) <= DateTime.Now) || entity.Wallets.Count == 0)
             {
                 IEnumerable<IAccountBalance> accounts = accountBalanceRequest.Request();
 

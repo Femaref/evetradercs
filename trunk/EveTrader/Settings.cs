@@ -57,13 +57,15 @@ namespace EveTrader
         {
             foreach (Character c in Instance.Characters)
             {
-                //TODO: FIX for character.Wallets == null
-                foreach (WalletTransaction wt in c.Wallets.Single().Transactions)
+                if (c.Wallets != null && c.Wallets.Count() > 0)
                 {
-                    if(wt.SalesTax > 0)
-                        continue;
+                    foreach (WalletTransaction wt in c.Wallets.Single().Transactions)
+                    {
+                        if (wt.SalesTax > 0)
+                            continue;
 
-                    wt.CalculateSalesTax(c.AccountingLevel);
+                        wt.CalculateSalesTax(c.AccountingLevel);
+                    }
                 }
             }
         }
