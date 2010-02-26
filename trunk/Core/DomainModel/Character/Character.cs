@@ -77,6 +77,10 @@ namespace Core.DomainModel
 
         public Character()
         {
+            this.Name = "";
+            this.Race = "";
+            this.BloodLine = "";
+
             this.Corporation = new Corporation();
             this.MarketOrders = new List<MarketOrder>();
             this.CustomBuyPrices = new List<CustomPrice>();

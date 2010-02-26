@@ -6,7 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Updaters
 {
-    public interface IWallet : IEntity
+    public interface IWallet : IMarketOrder, IEntity
     {
         List<Wallet> Wallets { get; set; }
         new void BeforeUpdate();

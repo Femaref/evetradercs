@@ -72,6 +72,7 @@ namespace EveTrader.Main
             this.AuraTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.RestoreFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.BackupFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tabWalletJournal = new System.Windows.Forms.TabPage();
             this.statusBar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabsMain.SuspendLayout();
@@ -208,6 +209,7 @@ namespace EveTrader.Main
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tabsMain.Controls.Add(this.tabDashboard);
             this.tabsMain.Controls.Add(this.tabWallets);
+            this.tabsMain.Controls.Add(this.tabWalletJournal);
             this.tabsMain.Controls.Add(this.tabWalletTransactions);
             this.tabsMain.Controls.Add(this.tabCustomTransaction);
             this.tabsMain.Controls.Add(this.tabMarketOrders);
@@ -278,7 +280,7 @@ namespace EveTrader.Main
             this.tabWalletTransactions.Padding = new System.Windows.Forms.Padding(3);
             this.tabWalletTransactions.Size = new System.Drawing.Size(963, 608);
             this.tabWalletTransactions.TabIndex = 2;
-            this.tabWalletTransactions.Text = "Wallet transactions";
+            this.tabWalletTransactions.Text = "Wallet Transactions";
             this.tabWalletTransactions.UseVisualStyleBackColor = true;
             // 
             // WalletTransactionsTab
@@ -310,7 +312,7 @@ namespace EveTrader.Main
             this.tabMarketOrders.Padding = new System.Windows.Forms.Padding(3);
             this.tabMarketOrders.Size = new System.Drawing.Size(963, 608);
             this.tabMarketOrders.TabIndex = 7;
-            this.tabMarketOrders.Text = "Market orders";
+            this.tabMarketOrders.Text = "Market Orders";
             this.tabMarketOrders.UseVisualStyleBackColor = true;
             // 
             // MarketOrdersTab
@@ -342,6 +344,7 @@ namespace EveTrader.Main
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.ReportsTab.AutoScroll = true;
+            this.ReportsTab.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ReportsTab.Cursor = System.Windows.Forms.Cursors.Default;
             this.ReportsTab.Location = new System.Drawing.Point(0, 0);
             this.ReportsTab.Name = "ReportsTab";
@@ -402,6 +405,16 @@ namespace EveTrader.Main
             // 
             this.BackupFileDialog.Filter = "Eve Trader storage|*.xml";
             this.BackupFileDialog.Title = "Backup Eve trader data";
+            // 
+            // tabWalletJournal
+            // 
+            this.tabWalletJournal.Location = new System.Drawing.Point(4, 22);
+            this.tabWalletJournal.Name = "tabWalletJournal";
+            this.tabWalletJournal.Padding = new System.Windows.Forms.Padding(3);
+            this.tabWalletJournal.Size = new System.Drawing.Size(963, 608);
+            this.tabWalletJournal.TabIndex = 12;
+            this.tabWalletJournal.Text = "Wallet Journal";
+            this.tabWalletJournal.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -473,5 +486,6 @@ namespace EveTrader.Main
         private System.Windows.Forms.OpenFileDialog RestoreFileDialog;
         private System.Windows.Forms.SaveFileDialog BackupFileDialog;
         private System.Windows.Forms.TabPage tabCustomTransaction;
+        private System.Windows.Forms.TabPage tabWalletJournal;
     }
 }

@@ -29,6 +29,13 @@ namespace Core.DomainModel
         public Corporation()
         {
             this.Wallets = new List<Wallet>();
+            this.Name = "";
+            this.Ticker = "";
+            this.CeoName = "";
+            this.HeadquarterStationName = "";
+            this.Description = "";
+            this.Url = "";
+            this.AllianceName = "";
         }
 
         public DateTime NextCorporationSheetUpdateTime { get; set; }

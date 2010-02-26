@@ -3,9 +3,9 @@ using Core.DomainModel;
 
 namespace EveTrader.Analysis
 {
-    public static class MarketOrders
+    public static class MarketOrderExtender
     {
-        public static double GetAverageTransactionsPerDay(Core.DomainModel.MarketOrder marketOrder)
+        public static double GetAverageTransactionsPerDay(this MarketOrder marketOrder)
         {
             double delta = marketOrder.VolumeEntered - marketOrder.VolumeRemaining;
             double daysPast = (DateTime.Now - marketOrder.Issued).Days;
@@ -18,11 +18,11 @@ namespace EveTrader.Analysis
             return delta / daysPast;
         }
 
-        public static double GetEstimatedSoldAmount(Core.DomainModel.MarketOrder marketOrder)
+        public static double GetEstimatedSoldAmount(this MarketOrder marketOrder)
         {
-            double etcb = GetEtcb(marketOrder);
+            double etcb = marketOrder.GetEtcb();
             double daysRemaining = marketOrder.Duration - (DateTime.Now - marketOrder.Issued).Days;
-            double avgTransactions = GetAverageTransactionsPerDay(marketOrder);
+            double avgTransactions = marketOrder.GetAverageTransactionsPerDay();
             double volume;
 
             //if the estimated time until this order completion is lower than the orders remaining time
@@ -38,7 +38,7 @@ namespace EveTrader.Analysis
             return volume * marketOrder.Price;
         }
         //estimated time before complete buyout -> estimated time until order completed
-        public static double GetEtcb(Core.DomainModel.MarketOrder marketOrder)
+        public static double GetEtcb(this MarketOrder marketOrder)
         {
             /*return marketOrder.VolumeRemaining / ReportHelper.GetAverageTransactionsCount(
                 walletTransactions,
@@ -47,7 +47,7 @@ namespace EveTrader.Analysis
                 marketOrder.StationId,
                 (DateTime.Now - marketOrder.Issued).Days);*/
 
-            return marketOrder.VolumeRemaining / GetAverageTransactionsPerDay(marketOrder);
+            return marketOrder.VolumeRemaining / marketOrder.GetAverageTransactionsPerDay();
         }
     }
 }

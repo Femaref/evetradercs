@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Core;
 using Core.ClassExtenders;
 using Core.DomainModel;
+using EveTrader.Analysis;
 
 namespace EveTrader.Main.MarketOrders
 {
@@ -41,7 +42,7 @@ namespace EveTrader.Main.MarketOrders
 
         private static string PrepareEtcb(MarketOrder marketOrder)
         {
-            double etcb = Analysis.MarketOrders.GetEtcb(marketOrder);
+            double etcb = marketOrder.GetEtcb();
 
             if (double.IsInfinity(etcb))
             {
@@ -64,7 +65,7 @@ namespace EveTrader.Main.MarketOrders
         {
             return string.Format(
                 "{0} / {1} /{2:  #} / {3:  #}",
-                Analysis.MarketOrders.GetEstimatedSoldAmount(marketOrder)/marketOrder.Price,
+                marketOrder.GetEstimatedSoldAmount() / marketOrder.Price,
                 marketOrder.VolumeRemaining,
                 marketOrder.VolumeEntered,
                 marketOrder.VolumeMinimum);
@@ -72,8 +73,8 @@ namespace EveTrader.Main.MarketOrders
 
         private static string PrepareEstimatedSoldAmount(MarketOrder marketOrder)
         {
-            double estimated = Analysis.MarketOrders.GetEstimatedSoldAmount(marketOrder);
-            double etcb = Analysis.MarketOrders.GetEtcb(marketOrder);
+            double estimated = marketOrder.GetEstimatedSoldAmount();
+            double etcb = marketOrder.GetEtcb();
 
             if (double.IsInfinity(estimated))
             {

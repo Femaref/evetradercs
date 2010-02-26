@@ -8,6 +8,8 @@ namespace Core.Updaters
 {
     public interface IEntity : IAccount
     {
+        string Name { get; set; }
+
         DateTime NextUpdateTime { get; }
 
         void BeforeUpdate();

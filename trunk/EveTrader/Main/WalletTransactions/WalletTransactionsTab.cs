@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Core.ClassExtenders;
 using Core.DomainModel;
+using Core.Updaters;
 
 namespace EveTrader.Main.WalletTransactions
 {
@@ -12,25 +13,31 @@ namespace EveTrader.Main.WalletTransactions
     {
         private DateTime showForDate = DateTime.Now.Date.AddDays(-6);
 
-        private List<Wallet> iWallets = new List<Wallet>();
+        private List<IWallet> iWallets = new List<IWallet>();
 
 
         private Wallet SelectedWallet
         {
             get
             {
-                return iWallets.Where(w => w.Name == this.CharactersComboBox.SelectedItem.ToString()).Single();
+                var character = (from iw in iWallets
+                                 where iw.Name == this.CharactersComboBox.Text
+                                 select iw.Wallets.Single());
+                if (character.Count() == 1)
+                    return character.Single();
+
+                var corporation = (from iw in iWallets
+                                   where this.CharactersComboBox.Text.Contains(iw.Name + " ")
+                                   select (from w in iw.Wallets
+                                           where this.CharactersComboBox.Text.Contains(" " + w.Name)
+                                           select w).Single());
+                if (corporation.Count() == 1)
+                    return corporation.Single();
+
+                return new Wallet();
+
             }
         }
-
-        private Character selectedCharacter
-        {
-            get
-            {
-                return this.CharactersComboBox.SelectedItem as Character;
-            }
-        }
-
         public WalletTransactionsTab()
         {
             InitializeComponent();
@@ -44,17 +51,16 @@ namespace EveTrader.Main.WalletTransactions
             {
                 if (character.Wallets != null && character.Wallets.Count() == 1)
                 {
-                    Wallet w = character.Wallets.Single();
-                    iWallets.Add(w);
-                    CharactersComboBox.Items.Add(w.Name);
+                    iWallets.Add(character);
+                    CharactersComboBox.Items.Add(character.Name);
                 }
 
                 if (character.Corporation.Wallets != null)
                 {
+                    iWallets.Add(character.Corporation);
                     foreach (Wallet w in character.Corporation.Wallets)
                     {
-                        iWallets.Add(w);
-                        CharactersComboBox.Items.Add(w.Name);
+                        CharactersComboBox.Items.Add(character.Corporation.Name + " " + w.Name);
                     }
                 }
             }
@@ -237,7 +243,7 @@ namespace EveTrader.Main.WalletTransactions
                 item.WalletTransaction.Ignore = !item.WalletTransaction.Ignore;
 
                 //TODO: FIX for character.Wallets == null
-                foreach (WalletJournalRecord record in item.WalletTransaction.MatchWalletJournalRecords(this.selectedCharacter.Wallets.Single().Journal))
+                foreach (WalletJournalRecord record in item.WalletTransaction.MatchWalletJournalRecords(this.SelectedWallet.Journal))
                 {
                     record.Ignore = item.WalletTransaction.Ignore;
                 }
@@ -268,10 +274,10 @@ namespace EveTrader.Main.WalletTransactions
                 return;
             }
 
-            WalletTransactionListViewItem item = (WalletTransactionListViewItem) this.WalletTransactionsListView.SelectedItems[0];
+            //WalletTransactionListViewItem item = (WalletTransactionListViewItem) this.WalletTransactionsListView.SelectedItems[0];
 
-            CustomPriceWindow customPriceWindow = new CustomPriceWindow(this.selectedCharacter, item.WalletTransaction.TypeID);
-            customPriceWindow.ShowDialog(this);
+            //CustomPriceWindow customPriceWindow = new CustomPriceWindow(this.selectedCharacter, item.WalletTransaction.TypeID);
+            //customPriceWindow.ShowDialog(this);
         }
 
     }

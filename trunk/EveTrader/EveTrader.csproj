@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\Data.cs" />
-    <Compile Include="Analysis\MarketOrders.cs" />
+    <Compile Include="Analysis\MarketOrderExtender.cs" />
     <Compile Include="Analysis\Products.cs" />
     <Compile Include="Helpers\Singleton.cs" />
     <Compile Include="Helpers\XmlSettingsFile.cs" />
@@ -158,6 +158,10 @@
     <Compile Include="Main\UserData\UserData.Designer.cs">
       <DependentUpon>UserData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\WalletJournal\WalletJournalTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\WalletJournal\WalletTransactionListViewItem.cs" />
     <Compile Include="Main\Wallets\WalletsTab.cs">
       <SubType>UserControl</SubType>
     </Compile>

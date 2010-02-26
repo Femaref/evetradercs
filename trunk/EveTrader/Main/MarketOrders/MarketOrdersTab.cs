@@ -5,12 +5,17 @@ using System.Linq;
 using System.Windows.Forms;
 using Core.ClassExtenders;
 using Core.DomainModel;
-using MarketOrder=EveTrader.Analysis.MarketOrders;
+using Core.Updaters;
+using EveTrader.Analysis;
 
 namespace EveTrader.Main.MarketOrders
 {
+    //FIX for corporations
     public partial class MarketOrdersTab : UserControl
     {
+        List<IWallet> entities = new List<IWallet>();
+
+
         private int iLastClickedColumnHeaderIndex = -1;
         private bool iSortAscending;
         private bool iHideExpired;
@@ -33,9 +38,19 @@ namespace EveTrader.Main.MarketOrders
             this.cbHideExpired.Checked = this.iHideExpired;
             this.cbHideExpired.CheckedChanged += this.cbHideExpired_CheckedChanged;
 
+            entities.Clear();
             foreach (Character character in Settings.Instance.Characters)
             {
-                CharactersComboBox.Items.Add(character);
+                if (!CharactersComboBox.Items.Contains(character.Name))
+                {
+                    CharactersComboBox.Items.Add(character.Name);
+                    entities.Add(character);
+                }
+                if (!CharactersComboBox.Items.Contains(character.Corporation.Name))
+                {
+                    CharactersComboBox.Items.Add(character.Corporation.Name);
+                    entities.Add(character.Corporation);
+                }
             }
 
             if (this.CharactersComboBox.Items.Count > 0)
@@ -63,21 +78,22 @@ namespace EveTrader.Main.MarketOrders
         }
         public void RenderMarketOrders()
         {
-            Character selectedCharacter = (Character) this.CharactersComboBox.SelectedItem;
-            this.RenderMarketOrders(selectedCharacter);
+            this.RenderMarketOrders(this.SelectedEntity());
         }
-        public void RenderMarketOrders(Character character)
+
+        public IWallet SelectedEntity()
+        {
+            return entities.Where(e => e.Name == this.CharactersComboBox.Text).Single();
+        }
+        public void RenderMarketOrders(IWallet entity)
         {
             IEnumerable<Core.DomainModel.MarketOrder> marketOrders =
-                new List<Core.DomainModel.MarketOrder>(character.MarketOrders);
-            if (character.Wallets != null && character.Wallets.Count() == 1)
-            {
-                IEnumerable<WalletTransaction> walletTransactions =
-                    new List<WalletTransaction>(character.Wallets.Single().Transactions);
+                new List<Core.DomainModel.MarketOrder>(entity.MarketOrders);
+            
+
                 marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey,
                                                      this.iSortAscending);
                 marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
-            }
 
             //filters expired orders
             if (iHideExpired)
@@ -175,7 +191,7 @@ namespace EveTrader.Main.MarketOrders
                         item.SubItems[6].ForeColor = Color.Goldenrod;
                         this.BuyOrdersListView.Items.Add(item);
                         totalExpectedExcrow += marketOrder.Escrow;
-                        totalEstimatedExcrow += MarketOrder.GetEstimatedSoldAmount(marketOrder);
+                        totalEstimatedExcrow += marketOrder.GetEstimatedSoldAmount();
                         break;
 
                     case MarketOrderType.Sell:
@@ -183,7 +199,7 @@ namespace EveTrader.Main.MarketOrders
                         item.SubItems[6].ForeColor = Color.ForestGreen;
                         this.SellOrdersListView.Items.Add(item);
                         totalExpectedIncome += (marketOrder.VolumeRemaining * marketOrder.Price);
-                        totalEstimatedIncome += MarketOrder.GetEstimatedSoldAmount(marketOrder);
+                        totalEstimatedIncome += marketOrder.GetEstimatedSoldAmount();
                         break;
                 }
             }
@@ -296,11 +312,11 @@ namespace EveTrader.Main.MarketOrders
                     break;
 
                 case 5:
-                    iOrderByKey = (order => MarketOrder.GetEtcb(order));
+                    iOrderByKey = (order => order.GetEtcb());
                     break;
 
                 case 6:
-                    iOrderByKey = (order => MarketOrder.GetEstimatedSoldAmount(order));
+                    iOrderByKey = (order => order.GetEstimatedSoldAmount());
                     break;
 
                 case 7:
