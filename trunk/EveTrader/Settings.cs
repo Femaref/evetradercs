@@ -9,6 +9,7 @@ using EveTrader.Helpers;
 
 namespace EveTrader
 {
+    [Serializable]
     [XmlRoot("EveTrader")]
     public class Settings : XmlSettingsFile<Settings>
     {

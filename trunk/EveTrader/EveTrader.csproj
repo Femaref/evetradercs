@@ -45,6 +45,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,9 +56,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DundasWinChart, Version=6.1.0.1726, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL">
+    <Reference Include="DundasWinChart, Version=7.1.0.1810, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Dundas Software\Charting\WinControlVS2008\Bin\DundasWinChart.dll</HintPath>
+      <HintPath>C:\Programme\Dundas Software\Charting\WinControlVS2008\bin\DundasWinChart.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

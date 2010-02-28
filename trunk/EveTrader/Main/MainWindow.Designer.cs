@@ -1,12 +1,4 @@
-﻿using AssetsTab=EveTrader.Main.Assets.AssetsTab;
-using CrossRegionalMarketTab=EveTrader.Main.CrossRegionalMarket.CrossRegionalMarketTab;
-using DashboardTab=EveTrader.Main.Dashboard.DashboardTab;
-using MarketOrdersTab=EveTrader.Main.MarketOrders.MarketOrdersTab;
-using ReportsTab=EveTrader.Main.Reports.ReportsTab;
-using StarMapTab=EveTrader.Main.StarMap.StarMapTab;
-using WalletTransactionsTab=EveTrader.Main.WalletTransactions.WalletTransactionsTab;
-
-namespace EveTrader.Main
+﻿namespace EveTrader.Main
 {
     partial class MainWindow
     {
@@ -460,25 +452,25 @@ namespace EveTrader.Main
         private System.Windows.Forms.TabPage tabWalletTransactions;
         private System.Windows.Forms.ToolStripStatusLabel StatusToolStripLabel;
         private System.Windows.Forms.TabPage tabStarMap;
-        private WalletTransactionsTab WalletTransactionsTab;
+        private WalletTransactions.WalletTransactionsTab WalletTransactionsTab;
         private System.Windows.Forms.TabPage tabWallets;
-        private EveTrader.Main.Characters.CharactersTab CharactersTab;
+        private Characters.CharactersTab CharactersTab;
         private System.Windows.Forms.ToolStripMenuItem manageCharactersToolStripMenuItem;
         private System.Windows.Forms.TabPage tabMarketOrders;
-        private DashboardTab DashboardTab;
+        private Dashboard.DashboardTab DashboardTab;
         private System.Timers.Timer InfoReloadingTimer;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel AsyncOperationToolStripLabel;
         private System.Windows.Forms.TabPage tabReports;
-        private ReportsTab ReportsTab;
+        private Reports.ReportsTab ReportsTab;
         private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forceUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel AppVersionToolStripLabel;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem releaseNotesToolStripMenuItem;
-        private StarMapTab starMapTab;
+        private StarMap.StarMapTab starMapTab;
         private System.Windows.Forms.NotifyIcon AuraTrayIcon;
-        private MarketOrdersTab MarketOrdersTab;
+        private MarketOrders.MarketOrdersTab MarketOrdersTab;
         private System.Windows.Forms.TabPage tabUserData;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem backupToolStripMenuItem;

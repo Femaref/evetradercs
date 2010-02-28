@@ -8,6 +8,7 @@ using EveTrader.ReleaseNotes;
 
 namespace EveTrader
 {
+    [Serializable]
     [XmlRoot("UISettings")]
     public class UISettings : XmlSettingsFile<UISettings>
     {

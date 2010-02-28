@@ -687,7 +687,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).EndInit();
             this.tcReports.ResumeLayout(false);
             this.tpProduct.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
+           ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
             this.tpStation.ResumeLayout(false);
             this.tpClients.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).EndInit();
