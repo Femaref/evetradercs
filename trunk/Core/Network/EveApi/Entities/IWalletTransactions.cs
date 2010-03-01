@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Core.DomainModel;
 
-namespace Core.Updaters
+namespace Core.Network.EveApi.Entities
 {
     public interface IWalletTransactions : ISubEntity
     {

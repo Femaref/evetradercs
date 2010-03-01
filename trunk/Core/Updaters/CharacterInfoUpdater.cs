@@ -1,5 +1,6 @@
 using Core.DomainModel;
 using Core.Network.EveApi.Requests;
+using Core.Updaters.UpdateBase;
 
 namespace Core.Updaters
 {

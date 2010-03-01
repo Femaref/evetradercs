@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Core.ClassExtenders;
 using Core.DomainModel;
-using Core.Updaters;
+using Core.Network.EveApi.Entities;
 using EveTrader.Analysis;
 
 namespace EveTrader.Main.MarketOrders

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml;
 using Core.Network;
 using Core.Network.EveApi;
-using Core.Updaters;
+using Core.Network.EveApi.Entities;
 
 namespace Core.DomainModel
 {

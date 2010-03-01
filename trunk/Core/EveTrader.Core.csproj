@@ -65,9 +65,7 @@
     <Compile Include="Network\EveApi\Entities\IAccount.cs" />
     <Compile Include="Updaters\MarketOrdersUpdater.cs" />
     <Compile Include="Updaters\UpdateBase\ICorporationUpdater.cs" />
-    <Compile Include="Network\EveApi\Entities\IEntityUpdater.cs" />
     <Compile Include="Network\EveApi\Entities\ISubEntity.cs" />
-    <Compile Include="Network\EveApi\Entities\ISubEntityUpdater.cs" />
     <Compile Include="DomainModel\Logo\CorporationLogo.cs" />
     <Compile Include="DomainModel\Logo\CorporationLogoComparer.cs" />
     <Compile Include="DomainModel\Standing\Standing.cs" />
@@ -142,6 +140,8 @@
     <Compile Include="Network\EveApi\Entities\IWallet.cs" />
     <Compile Include="Network\EveApi\Entities\IWalletJournal.cs" />
     <Compile Include="Network\EveApi\Entities\IWalletTransactions.cs" />
+    <Compile Include="Updaters\UpdateBase\IEntityUpdater.cs" />
+    <Compile Include="Updaters\UpdateBase\ISubEntityUpdater.cs" />
     <Compile Include="Updaters\WalletJournalUpdater.cs" />
     <Compile Include="Updaters\WalletTransactionsUpdater.cs" />
     <Compile Include="Updaters\WalletUpdater.cs" />

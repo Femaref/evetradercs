@@ -3,6 +3,7 @@ using Core.ClassExtenders;
 
 namespace Core.Network.EveApi
 {
+    [Obsolete("Use EveApiEntityRequest<T> instead")]
     public abstract class EveApiAccountResourceRequest : EveApiResourceRequest
     {
         protected override Uri Uri

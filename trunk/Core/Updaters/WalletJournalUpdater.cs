@@ -5,8 +5,10 @@ using System.Text;
 using Core.DomainModel;
 using Core.Network;
 using Core.Network.EveApi;
+using Core.Network.EveApi.Entities;
 using Core.Network.EveApi.Requests;
 using Core.ClassExtenders;
+using Core.Updaters.UpdateBase;
 
 namespace Core.Updaters
 {

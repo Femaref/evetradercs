@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Core.ClassExtenders;
 using Core.DomainModel;
+using Core.Network.EveApi.Entities;
 
 namespace Core.Network.EveApi.Requests
 {

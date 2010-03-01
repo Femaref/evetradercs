@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Core.DomainModel;
 using Core.Network;
+using Core.Updaters.UpdateBase;
 
 namespace Core.Updaters
 {

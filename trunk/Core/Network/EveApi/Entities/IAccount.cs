@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Core.Network;
-using Core.Network.EveApi;
 
-namespace Core.DomainModel
+namespace Core.Network.EveApi.Entities
 {
     public interface IAccount
     {

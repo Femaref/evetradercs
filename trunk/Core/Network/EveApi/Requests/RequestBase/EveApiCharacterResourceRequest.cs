@@ -6,6 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi
 {
+    [Obsolete("Use EveApiEntityRequest<T> instead")]
     public abstract class EveApiCharacterResourceRequest<T> : EveApiResourceRequest
     {
         protected int CharacterId { get; set; }

@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.ClassExtenders;
-using Core.DomainModel;
+using Core.Network.EveApi.Entities;
 
 namespace Core.Network.EveApi
 {
+    [Obsolete("Use EveApiEntityRequest<T> instead")]
     public abstract class EveApiCorporationResourceRequest<T> : EveApiResourceRequest
     {
         protected int CharacterId { get; set; }

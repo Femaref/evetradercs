@@ -1,6 +1,8 @@
+using Core.DomainModel;
+using Core.Network.EveApi.Entities;
 using Core.Updaters;
 
-namespace Core.DomainModel
+namespace Core.Updaters.UpdateBase
 {
     public interface ICharacterUpdater<T> : IEntityUpdater<T> where T:IEntity
     {

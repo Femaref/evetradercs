@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Core.DomainModel;
+using Core.Updaters.UpdateBase;
 
 namespace Core.Updaters
 {

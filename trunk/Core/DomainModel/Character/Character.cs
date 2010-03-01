@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core.Network;
 using Core.Network.EveApi;
-using Core.Updaters;
+using Core.Network.EveApi.Entities;
 
 namespace Core.DomainModel
 {

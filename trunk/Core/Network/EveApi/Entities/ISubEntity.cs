@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Core.DomainModel
+namespace Core.Network.EveApi.Entities
 {
     public interface ISubEntity
     {

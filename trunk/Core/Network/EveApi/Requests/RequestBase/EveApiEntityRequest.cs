@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Core.ClassExtenders;
-using Core.DomainModel;
 using Core.Network;
 using Core.Network.EveApi;
+using Core.Network.EveApi.Entities;
 
 namespace Core.Network.EveApi
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Core.ClassExtenders;
 using Core.DomainModel;
-using Core.Updaters;
+using Core.Network.EveApi.Entities;
 
 namespace EveTrader.Main.WalletTransactions
 {

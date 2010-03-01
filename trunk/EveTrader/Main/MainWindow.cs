@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Core.DomainModel;
 using Core.Updaters;
+using Core.Updaters.UpdateBase;
 using EveTrader.ReleaseNotes;
 
 namespace EveTrader.Main

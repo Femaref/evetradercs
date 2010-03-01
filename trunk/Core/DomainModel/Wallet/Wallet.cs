@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Core.Updaters;
+using Core.Network.EveApi.Entities;
 
 namespace Core.DomainModel
 {

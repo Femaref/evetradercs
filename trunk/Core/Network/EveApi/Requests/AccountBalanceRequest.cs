@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Core.DomainModel;
 using Core.ClassExtenders;
+using Core.Network.EveApi.Entities;
 
 namespace Core.Network.EveApi.Requests
 {
