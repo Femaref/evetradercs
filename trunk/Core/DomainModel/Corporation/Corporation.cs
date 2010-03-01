@@ -8,7 +8,7 @@ using Core.Network.EveApi.Entities;
 
 namespace Core.DomainModel
 {
-    public class Corporation : IGenericObject<Corporation>, IEntity, IWallet, IMarketOrder
+    public class Corporation : IGenericObject<Corporation>, IEntity, IWallet, IMarketOrder, IStanding
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -110,6 +110,14 @@ namespace Core.DomainModel
         {
             get; set;
         }
+
+        #endregion
+
+        #region IStanding Members
+
+        public List<Standing> Standings { get; set; }
+
+        public DateTime NextStandingUpdateTime { get; set; }
 
         #endregion
     }

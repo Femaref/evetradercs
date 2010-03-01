@@ -88,7 +88,17 @@ namespace EveTrader.Helpers
                 SwitchToCurrentInstance();
                 return false;
             }
-            Application.Run(frmMain);
+            try
+            {
+                Application.Run(frmMain);
+            }
+            catch
+            {
+                Settings.Instance.Save();
+                UISettings.Instance.Save();
+                throw;
+            }
+            
             return true;
         }
 

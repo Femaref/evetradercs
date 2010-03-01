@@ -7,25 +7,8 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class AssetsRequest : EveApiCharacterResourceRequest<IEnumerable<Asset>>
+    public class AssetsRequest : EveApiEntityRequest<IEnumerable<Asset>>
     {
-        protected override EveApiResourceType ResourceType
-        {
-            get 
-            {
-                return EveApiResourceType.AssetList;
-            }
-        }
-
-        public AssetsRequest(Character character) : base (character)
-        {
-        }
-
-        public override IEnumerable<Asset> Request()
-        {
-            return this.Parse(base.GetResponseXml());
-        }
-
         private List<Asset> Parse(XDocument document)
         {
             IEnumerable<XElement> rows;
@@ -49,10 +32,24 @@ namespace Core.Network.EveApi.Requests
                     LocationId = (r.Attribute("locationID").Value ?? locationId).ToInt32(),
                     TypeId = r.Attribute("typeID").Value.ToInt32(),
                     Quantity = r.Attribute("quantity").Value.ToInt32(),
-                    AssetStorageType = (AssetStorageType) Enum.Parse(typeof (AssetStorageType), r.Attribute("flag").Value),
+                    AssetStorageType = (AssetStorageType)Enum.Parse(typeof(AssetStorageType), r.Attribute("flag").Value),
                     IsPacked = r.Attribute("singleton").Value == "0" ? true : false,
                     SubAssets = r.HasElements ? this.Parse(r.Descendants("row"), r.Attribute("locationID") != null ? r.Attribute("locationID").Value : locationId) : new List<Asset>()
                 }).ToList();
+        }
+
+        public AssetsRequest(Account a, EveApiResourceFrom from) : base(a, from)
+        {
+        }
+
+        public override IEnumerable<Asset> Request()
+        {
+            return this.Parse(base.GetResponseXml());
+        }
+
+        protected override EveApiResourceType ResourceType
+        {
+            get { return EveApiResourceType.AssetList; }
         }
     }
 }

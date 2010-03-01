@@ -3,10 +3,11 @@ using System.Linq;
 using System.Xml.Linq;
 using Core.ClassExtenders;
 using Core.DomainModel;
+using Core.Network.EveApi.Entities;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class CharactersListRequest : EveApiAccountResourceRequest
+    public class CharactersListRequest : EveApiEntityRequest<IEnumerable<IEntity>>
     {
         protected override EveApiResourceType ResourceType
         {
@@ -16,26 +17,28 @@ namespace Core.Network.EveApi.Requests
             }
         }
 
-        public CharactersListRequest(int accountId, string apiKey) : base(accountId, apiKey)
+        public CharactersListRequest(int accountId, string apiKey)
+            : base(accountId, apiKey)
         {
-            
+
         }
 
-        public IEnumerable<Character> Request()
-        {
-            return this.Parse(base.GetResponseXml());
-        }
 
-        private IEnumerable<Character> Parse(XDocument document)
+
+        private IEnumerable<IEntity> Parse(XDocument document)
         {
-            return document.Descendants("row")
-                             .Select(r => new Character
+            return document.Descendants("row").Select(r => new Character
                              {
                                  AccountId = this.iAccountId,
                                  ApiKey = this.iApiKey,
                                  ID = r.Attribute("characterID").Value.ToInt32(),
                                  Name = r.Attribute("name").Value
-                             });
+                             }).Cast<IEntity>();
+        }
+
+        public override IEnumerable<IEntity> Request()
+        {
+            return this.Parse(base.GetResponseXml());
         }
     }
 }

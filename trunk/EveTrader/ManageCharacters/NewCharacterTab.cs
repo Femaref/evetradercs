@@ -5,12 +5,13 @@ using System.Windows.Forms;
 using Core.ClassExtenders;
 using Core.DomainModel;
 using Core.Network.EveApi.Requests;
+using Core.Network.EveApi.Entities;
 
 namespace EveTrader.ManageCharacters
 {
     public partial class NewCharacterTab : UserControl
     {
-        private IList<Character> characters;
+        private IList<IEntity> characters;
 
         public NewCharacterTab()
         {
@@ -75,7 +76,7 @@ namespace EveTrader.ManageCharacters
 
             if (this.ApiKeyTextBox.Text.IsEmpty())
             {
-                this.ErrorProvider.SetError(this.ApiKeyTextBox, "Api Key requered");
+                this.ErrorProvider.SetError(this.ApiKeyTextBox, "Api Key requiered");
                 isValid = false;
             }
 

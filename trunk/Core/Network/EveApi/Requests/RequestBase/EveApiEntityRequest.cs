@@ -35,6 +35,10 @@ namespace Core.Network.EveApi
             this.iCharacterID = account.CharacterID;
             this.iFrom = from;
         }
+        protected EveApiEntityRequest(int userID, string apiKey) : base(userID, apiKey)
+        {
+            
+        }
 
         protected override Uri Uri
         {

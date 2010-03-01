@@ -6,7 +6,7 @@ using Core.Network.EveApi.Entities;
 
 namespace Core.DomainModel
 {
-    public class Character : IEntity, IGenericObject<Character>, IAccount, IWallet, IMarketOrder
+    public class Character : IEntity, IGenericObject<Character>, IAccount, IWallet, IMarketOrder, IStanding
     {
         //[Obsolete("Use IAccount.ApiData")]
         public int AccountId { get; set; }

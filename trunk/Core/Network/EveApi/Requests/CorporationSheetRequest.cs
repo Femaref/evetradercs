@@ -7,20 +7,17 @@ using Core.ClassExtenders;
 
 namespace Core.Network.EveApi.Requests
 {
-    public class CorporationSheetRequest : EveApiCorporationResourceRequest<Corporation>
+    public class CorporationSheetRequest : EveApiEntityRequest<Corporation>
     {
-        private Account iAccount;
-
-        private Corporation iCorp;
-
         public CorporationSheetRequest(Corporation account)
-            : base(account.ApiData.UserID, account.ApiData.ApiKey, account.ApiData.CharacterID)
+            : base(account)
         {
-            this.iAccount = account.ApiData;
-            this.iCorp = account;
         }
 
-
+        public CorporationSheetRequest(Account a, EveApiResourceFrom from ) : base(a, from)
+        {
+            
+        }
         protected override EveApiResourceType ResourceType
         {
             get { return EveApiResourceType.CorporationSheet; }

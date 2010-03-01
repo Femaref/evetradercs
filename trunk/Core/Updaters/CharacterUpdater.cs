@@ -25,7 +25,7 @@ namespace Core.Updaters
                                                       new MarketOrdersUpdater(),
                                                       //new CharacterAssetsUpdater(),
                                                       new CharacterInfoUpdater(),
-                                                      new CharacterStandingUpdater(),
+                                                      new StandingUpdater(),
                                                       new CorporationUpdater(),
                                                   };
 

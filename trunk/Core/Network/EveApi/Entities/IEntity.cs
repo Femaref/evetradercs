@@ -7,6 +7,7 @@ namespace Core.Network.EveApi.Entities
 {
     public interface IEntity : IAccount
     {
+        int ID { get; set; }
         string Name { get; set; }
 
         DateTime NextUpdateTime { get; }
