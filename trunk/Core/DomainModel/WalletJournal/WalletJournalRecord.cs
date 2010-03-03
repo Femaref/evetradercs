@@ -38,6 +38,9 @@ namespace Core.DomainModel
 
         public bool Ignore { get; set; }
 
+        int IGenericObject.ObjectID { get; set; }
+        IGenericObject IGenericObject.Parent { get; set; }
+
         public IEqualityComparer<WalletJournalRecord> GetComparer()
         {
             return new WalletJournalComparer();

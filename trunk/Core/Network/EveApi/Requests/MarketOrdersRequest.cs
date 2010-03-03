@@ -36,14 +36,14 @@ namespace Core.Network.EveApi.Requests
 
             var orders = root.Select(r => new MarketOrder
                              {
-                                 Id = r.Attribute("orderID").Value.ToInt32(),
-                                 CharacterId = r.Attribute("charID").Value.ToInt32(),
-                                 StationId = r.Attribute("stationID").Value.ToInt32(),
+                                 ID = r.Attribute("orderID").Value.ToInt32(),
+                                 EntityID = r.Attribute("charID").Value.ToInt32(),
+                                 StationID = r.Attribute("stationID").Value.ToInt32(),
                                  VolumeEntered = r.Attribute("volEntered").Value.ToInt32(),
                                  VolumeRemaining = r.Attribute("volRemaining").Value.ToInt32(),
                                  VolumeMinimum = r.Attribute("minVolume").Value.ToInt32(),
                                  OrderState = (MarketOrderState) Enum.Parse(typeof(MarketOrderState), r.Attribute("orderState").Value),
-                                 TypeId = r.Attribute("typeID").Value.ToInt32(),
+                                 TypeID = r.Attribute("typeID").Value.ToInt32(),
                                  Range = r.Attribute("range").Value.ToInt32(),
                                  AccountKey = r.Attribute("accountKey").Value.ToInt32(),
                                  Duration = r.Attribute("duration").Value.ToInt32(),

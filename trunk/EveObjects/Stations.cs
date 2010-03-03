@@ -23,14 +23,11 @@ namespace EveObjects
 
         public Station GetStationById(int id)
         {
-            try
-            {
-                return stations.First(station => station.Id == id);
-            }
-            catch
-            {
-                return new Station {Name = "Unknown"};
-            }
+            var stat = stations.Where(station => station.Id == id);
+            if (stat.Count() > 0)
+                return stat.First();
+
+            return new Station() { Name = "Unknown" };
         }
     }
 }

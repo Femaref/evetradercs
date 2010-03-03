@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,8 +20,8 @@ namespace EveTrader.Main.MarketOrders
         private int iLastClickedColumnHeaderIndex = -1;
         private bool iSortAscending;
         private bool iHideExpired;
-        Func<Core.DomainModel.MarketOrder, object> iOrderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
-        Func<Core.DomainModel.MarketOrder, object> iGroupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+        private Func<MarketOrder, object> iOrderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationID).Name);
+        private Func<MarketOrder, object> iGroupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationID).Name);
 
         public MarketOrdersTab()
         {
@@ -29,6 +30,10 @@ namespace EveTrader.Main.MarketOrders
 
         public void Initialize()
         {
+
+
+
+
             this.CharactersComboBox.Items.Clear();
             this.BuyOrdersListView.Columns.Clear();
             this.iHideExpired = UISettings.Instance.OrderSettings.HideExpiredOrders;
@@ -85,15 +90,56 @@ namespace EveTrader.Main.MarketOrders
         {
             return entities.Where(e => e.Name == this.CharactersComboBox.Text).Single();
         }
+
+        private MarketOrderListViewItem CreateListViewItem(MarketOrder order, ListViewGroup group)
+        {
+            MarketOrderListViewItem item = MarketOrderListViewItem.Create(order, group);
+
+            Font itemFont = new Font(item.Font, item.MarketOrder.Ignore ? FontStyle.Strikeout : FontStyle.Regular);
+
+            item.UseItemStyleForSubItems = false;
+            item.Font = itemFont;
+
+            foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+            {
+                subItem.Font = itemFont;
+            }
+            switch (order.Type)
+            {
+                case MarketOrderType.Buy:
+                    item.SubItems[4].ForeColor = Color.Goldenrod;
+                    item.SubItems[6].ForeColor = Color.Goldenrod;
+                    break;
+
+                case MarketOrderType.Sell:
+                    item.SubItems[4].ForeColor = Color.ForestGreen;
+                    item.SubItems[6].ForeColor = Color.ForestGreen;
+                    break;
+            }
+            return item;
+        }
+        private void AddGroup(ListView lv, string groupName, IEnumerable<MarketOrder> orders)
+        {
+            ListViewGroup currentGroup = new ListViewGroup(groupName);
+            lv.Groups.Add(currentGroup);
+
+            foreach (MarketOrder mo in orders)
+            {
+                MarketOrderListViewItem item = this.CreateListViewItem(mo, currentGroup);
+                lv.Items.Add(item);
+            }
+        }
+
+
+
+
         public void RenderMarketOrders(IWallet entity)
         {
-            IEnumerable<Core.DomainModel.MarketOrder> marketOrders =
-                new List<Core.DomainModel.MarketOrder>(entity.MarketOrders);
-            
+            IEnumerable<MarketOrder> marketOrders = new List<MarketOrder>(entity.MarketOrders);
 
-                marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey,
-                                                     this.iSortAscending);
-                marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
+            marketOrders = this.SortMarketOrders(marketOrders, this.iGroupByKey, this.iOrderByKey,
+                                                 this.iSortAscending);
+            marketOrders = this.FilterMarketOrders(marketOrders, this.FilterByTextBox.Text);
 
             //filters expired orders
             if (iHideExpired)
@@ -105,153 +151,120 @@ namespace EveTrader.Main.MarketOrders
             this.BuyOrdersListView.Items.Clear();
             this.SellOrdersListView.Items.Clear();
 
-            double totalExpectedExcrow = 0;
-            double totalEstimatedExcrow = 0;
-            double totalExpectedIncome = 0;
-            double totalEstimatedIncome = 0;
+            double totalExpectedEscrow = 
+                marketOrders.Where(mo => mo.Type == MarketOrderType.Buy).Sum(mo => mo.Escrow);
+            double totalEstimatedEscrow =
+                marketOrders.Where(mo => mo.Type == MarketOrderType.Buy).Sum(mo => mo.GetEstimatedSoldAmount());
+            double totalExpectedIncome =
+                marketOrders.Where(mo => mo.Type == MarketOrderType.Sell).Sum(mo => mo.VolumeRemaining*mo.Price);
+            double totalEstimatedIncome =
+                marketOrders.Where(mo => mo.Type == MarketOrderType.Sell).Sum(mo => mo.GetEstimatedSoldAmount());
 
-            ListViewGroup activeSellGroup = null;
-            ListViewGroup activeBuyGroup = null;
-            int prevSellGroupId = -1;
-            int prevBuyGroupId = -1;
 
-            foreach (Core.DomainModel.MarketOrder marketOrder in marketOrders)
+
+
+            if (GroupByProductRadioButton.Checked || GroupByStationRadioButton.Checked)
             {
-                if (this.GroupByProductRadioButton.Checked)
+                foreach (var grouping in marketOrders.GroupBy(mo => GroupByProductRadioButton.Checked ? mo.TypeID : mo.StationID))
                 {
-                    if (marketOrder.Type == MarketOrderType.Sell)
+                    foreach (var orderTypeGroup in grouping.GroupBy(mo => mo.Type))
                     {
-                        if (prevSellGroupId != marketOrder.TypeId)
+                        if (orderTypeGroup.Key == MarketOrderType.Sell)
                         {
-                            activeSellGroup =
-                                new ListViewGroup(
-                                    Core.Resources.Instance.EveObjects.Types.GetTypeById(marketOrder.TypeId).Name);
-                            prevSellGroupId = marketOrder.TypeId;
-                            this.SellOrdersListView.Groups.Add(activeSellGroup);
+                            string groupName = GroupByProductRadioButton.Checked
+                                                   ? Core.Resources.Instance.EveObjects.Types.GetTypeById(
+                                                         grouping.Key).Name
+                                                   : Core.Resources.Instance.EveObjects.Stations.
+                                                         GetStationById(grouping.Key).Name;
+
+                            AddGroup(SellOrdersListView, groupName, orderTypeGroup);
+                        }
+                        else
+                        {
+                            string groupName = GroupByProductRadioButton.Checked
+                                                   ? Core.Resources.Instance.EveObjects.Types.GetTypeById(
+                                                         grouping.Key).Name
+                                                   : Core.Resources.Instance.EveObjects.Stations.
+                                                         GetStationById(grouping.Key).Name;
+
+                            AddGroup(BuyOrdersListView, groupName, orderTypeGroup);
+
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var orderTypeGroup in marketOrders.GroupBy(mo => mo.Type))
+                {
+                    if (orderTypeGroup.Key == MarketOrderType.Sell)
+                    {
+                        foreach (MarketOrder mo in orderTypeGroup)
+                        {
+                            MarketOrderListViewItem item = this.CreateListViewItem(mo, null);
+                            SellOrdersListView.Items.Add(item);
                         }
                     }
                     else
                     {
-                        if (prevBuyGroupId != marketOrder.TypeId)
+                        foreach (MarketOrder mo in orderTypeGroup)
                         {
-                            activeBuyGroup =
-                                new ListViewGroup(
-                                    Core.Resources.Instance.EveObjects.Types.GetTypeById(marketOrder.TypeId).Name);
-                            prevBuyGroupId = marketOrder.TypeId;
-                            this.BuyOrdersListView.Groups.Add(activeBuyGroup);
+                            MarketOrderListViewItem item = this.CreateListViewItem(mo, null);
+                            BuyOrdersListView.Items.Add(item);
                         }
                     }
-                }
-                else if (this.GroupBySolarSystemRadioButton.Checked)
-                {
-                    if (marketOrder.Type == MarketOrderType.Sell)
-                    {
-                        if (prevSellGroupId != marketOrder.StationId)
-                        {
-                            activeSellGroup =
-                                new ListViewGroup(
-                                    Core.Resources.Instance.EveObjects.Stations.GetStationById(marketOrder.StationId).Name);
-                            prevSellGroupId = marketOrder.StationId;
-                            this.SellOrdersListView.Groups.Add(activeSellGroup);
-                        }
-                    }
-                    else
-                    {
-                        if (prevBuyGroupId != marketOrder.StationId)
-                        {
-                            activeBuyGroup =
-                                new ListViewGroup(
-                                    Core.Resources.Instance.EveObjects.Stations.GetStationById(marketOrder.StationId).Name);
-                            prevBuyGroupId = marketOrder.StationId;
-                            this.BuyOrdersListView.Groups.Add(activeBuyGroup);
-                        }
-                    }
-                }
-
-                MarketOrderListViewItem item = MarketOrderListViewItem.Create(
-                    marketOrder,  
-                    marketOrder.Type == MarketOrderType.Sell ? 
-                        activeSellGroup : 
-                        activeBuyGroup);
-
-                Font itemFont = new Font(item.Font, item.MarketOrder.Ignore ? FontStyle.Strikeout : FontStyle.Regular);
-
-                item.UseItemStyleForSubItems = false;
-                item.Font = itemFont;
-
-                foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
-                {
-                    subItem.Font = itemFont;
-                }
-
-                switch (marketOrder.Type)
-                {
-                    case MarketOrderType.Buy:
-                        item.SubItems[4].ForeColor = Color.Goldenrod;
-                        item.SubItems[6].ForeColor = Color.Goldenrod;
-                        this.BuyOrdersListView.Items.Add(item);
-                        totalExpectedExcrow += marketOrder.Escrow;
-                        totalEstimatedExcrow += marketOrder.GetEstimatedSoldAmount();
-                        break;
-
-                    case MarketOrderType.Sell:
-                        item.SubItems[4].ForeColor = Color.ForestGreen;
-                        item.SubItems[6].ForeColor = Color.ForestGreen;
-                        this.SellOrdersListView.Items.Add(item);
-                        totalExpectedIncome += (marketOrder.VolumeRemaining * marketOrder.Price);
-                        totalEstimatedIncome += marketOrder.GetEstimatedSoldAmount();
-                        break;
                 }
             }
 
+
             this.TotalInExcrowLabel.Text = string.Format(
-                "{0} / {1}", 
-                totalEstimatedExcrow.FormatCurrency(),
-                totalExpectedExcrow.FormatCurrency());
+                "{0} / {1}",
+                totalEstimatedEscrow.FormatCurrency(),
+                totalExpectedEscrow.FormatCurrency());
 
             this.TotalIncomeLabel.Text = string.Format(
-                "{0} / {1}", 
+                "{0} / {1}",
                 totalEstimatedIncome.FormatCurrency(),
                 totalExpectedIncome.FormatCurrency());
         }
 
-        private IEnumerable<Core.DomainModel.MarketOrder> SortMarketOrders(IEnumerable<Core.DomainModel.MarketOrder> marketOrders, Func<Core.DomainModel.MarketOrder, object> key1, Func<Core.DomainModel.MarketOrder, object> key2, bool ascending)
+        private IEnumerable<MarketOrder> SortMarketOrders(IEnumerable<MarketOrder> marketOrders, Func<MarketOrder, object> groupBy, Func<MarketOrder, object> orderBy, bool ascending)
         {
             IEnumerable<Core.DomainModel.MarketOrder> sortedMarketOrders;
             
-            if (key1 == null)
+            if (groupBy == null)
             {
                 if (ascending)
                 {
-                    sortedMarketOrders = marketOrders.OrderBy(key2);
+                    sortedMarketOrders = marketOrders.OrderBy(orderBy);
                 }
                 else
                 {
-                    sortedMarketOrders = marketOrders.OrderByDescending(key2);
+                    sortedMarketOrders = marketOrders.OrderByDescending(orderBy);
                 }
             }
             else
             {
                 if (ascending)
                 {
-                    sortedMarketOrders = marketOrders.OrderBy(key1).ThenBy(key2);
+                    sortedMarketOrders = marketOrders.OrderBy(groupBy).ThenBy(orderBy);
                 }
                 else
                 {
-                    sortedMarketOrders = marketOrders.OrderBy(key1).ThenByDescending(key2);
+                    sortedMarketOrders = marketOrders.OrderBy(groupBy).ThenByDescending(orderBy);
                 }
             }
 
             return sortedMarketOrders;
         }
-        private IEnumerable<Core.DomainModel.MarketOrder> FilterMarketOrders(IEnumerable<Core.DomainModel.MarketOrder> marketOrders, string keyword)
+        private IEnumerable<MarketOrder> FilterMarketOrders(IEnumerable<MarketOrder> marketOrders, string keyword)
         {
             keyword = keyword.ToLower();
             IEnumerable<Core.DomainModel.MarketOrder> filteredMarketOrders;
 
             filteredMarketOrders = marketOrders.Where(
-                order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name.ToLower().Contains(keyword) ||
-                         Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name.ToLower().Contains(keyword));
+                order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationID).Name.ToLower().Contains(keyword) ||
+                         Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeID).Name.ToLower().Contains(keyword));
 
             return filteredMarketOrders;
         }
@@ -296,7 +309,7 @@ namespace EveTrader.Main.MarketOrders
                     break;
                 
                 case 1:
-                    iOrderByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name);
+                    iOrderByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeID).Name);
                     break;
 
                 case 2:
@@ -320,7 +333,7 @@ namespace EveTrader.Main.MarketOrders
                     break;
 
                 case 7:
-                    iOrderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+                    iOrderByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationID).Name);
                     break;
 
                 case 8:
@@ -335,15 +348,14 @@ namespace EveTrader.Main.MarketOrders
 
         private void GroupByProductRadioButton_Click(object sender, EventArgs e)
         {
-            this.iGroupByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeId).Name);
+            this.iGroupByKey = (order => Core.Resources.Instance.EveObjects.Types.GetTypeById(order.TypeID).Name);
             this.RenderMarketOrders();
         }
         private void GroupBySolarSystemRadioButton_Click(object sender, EventArgs e)
         {
-            this.iGroupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationId).Name);
+            this.iGroupByKey = (order => Core.Resources.Instance.EveObjects.Stations.GetStationById(order.StationID).Name);
             this.RenderMarketOrders();
         }
-
         private void DoNotGroupRadioButton_Click(object sender, EventArgs e)
         {
             this.iGroupByKey = null;

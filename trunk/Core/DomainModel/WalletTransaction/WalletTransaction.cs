@@ -40,6 +40,9 @@ namespace Core.DomainModel
             return this.iSalesTax;
         }
 
+        int IGenericObject.ObjectID { get; set; }
+        IGenericObject IGenericObject.Parent { get; set; }
+
         public IEqualityComparer<WalletTransaction> GetComparer()
         {
             return new WalletTransactionComparer();

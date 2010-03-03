@@ -19,9 +19,19 @@ namespace EveTrader.Migration
 
         public bool Upgrade(XDocument input)
         {
+            return UpgradeWallet(input) && UpgradeMarketOrders(input);
+        }
+        public bool Downgrade(XDocument input)
+        {
+            return DowngradeWallet(input) && DowngradeMarketOrders(input);
+        }
+
+
+        private bool UpgradeWallet(XDocument input)
+        {
             var characters = (from xE in input.Element("EveTrader").Element("Characters").Elements()
                               where xE.Elements().Count(x => x.Name == "Wallets") == 0 ||
-                              (xE.Elements().Count(x => x.Name == "WalletTransactions" || x.Name == "WalletJournal") > 0 && xE.Elements().Count(x => x.Name == "Wallets") == 1)
+                                    (xE.Elements().Count(x => x.Name == "WalletTransactions" || x.Name == "WalletJournal") > 0 && xE.Elements().Count(x => x.Name == "Wallets") == 1)
 
                               select xE);
             try
@@ -29,11 +39,11 @@ namespace EveTrader.Migration
                 foreach (XElement ch in characters)
                 {
                     Account account = new Account
-                    {
-                        UserID = ch.Element("ApiData").Element("UserID").Value.ToInt32(),
-                        ApiKey = ch.Element("ApiData").Element("ApiKey").Value,
-                        CharacterID = ch.Element("ApiData").Element("CharacterID").Value.ToInt32()
-                    };
+                                          {
+                                              UserID = ch.Element("ApiData").Element("UserID").Value.ToInt32(),
+                                              ApiKey = ch.Element("ApiData").Element("ApiKey").Value,
+                                              CharacterID = ch.Element("ApiData").Element("CharacterID").Value.ToInt32()
+                                          };
                     XElement wallets = null;
                     if (ch.Elements().Count(x => x.Name == "Wallets") == 0)
                     {
@@ -91,8 +101,27 @@ namespace EveTrader.Migration
 
             return true;
         }
-
-        public bool Downgrade(XDocument input)
+        private bool UpgradeMarketOrders(XDocument input)
+        {
+            //TODO: Test
+            try
+            {
+                var market = input.Descendants("MarketOrders").Elements();
+                foreach (XElement xe in market)
+                {
+                    xe.Element("StationId").Name = "StationID";
+                    xe.Element("TypeId").Name = "TypeID";
+                    xe.Element("Id").Name = "ID";
+                    xe.Element("CharacterId").Name = "EntityID";
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool DowngradeWallet(XDocument input)
         {
             var characters = (from xE in input.Element("EveTrader").Element("Characters").Elements()
                               select xE);
@@ -119,7 +148,26 @@ namespace EveTrader.Migration
 
             return true;
         }
-
+        private bool DowngradeMarketOrders(XDocument input)
+        {
+            //TODO: Test
+            try
+            {
+                var market = input.Descendants("MarketOrders").Elements();
+                foreach (XElement xe in market)
+                {
+                    xe.Element("StationID").Name = "StationId";
+                    xe.Element("TypeID").Name = "TypeId";
+                    xe.Element("ID").Name = "Id";
+                    xe.Element("EntityID").Name = "CharacterId";
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
         #endregion
     }
 }

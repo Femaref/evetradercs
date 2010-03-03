@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Core.DomainModel
@@ -11,6 +12,9 @@ namespace Core.DomainModel
         public double Value { get; set; }
 
         #region IGenericObject<Standing> Members
+
+        int IGenericObject.ObjectID { get; set; }
+        IGenericObject IGenericObject.Parent { get; set; }
 
         public IEqualityComparer<Standing> GetComparer()
         {

@@ -20,7 +20,7 @@ namespace Core.Updaters
 
                 if (marketOrdersRequest.ErrorCode == 0)
                 {
-                    character.MarketOrders = marketOrders.OrderByDescending(p => p.Id).ToList();
+                    character.MarketOrders = marketOrders.OrderByDescending(p => p.ID).ToList();
                     character.NextMarketOrdersUpdateTime = DateTime.Now.AddHours(1).AddMinutes(1);
                     return true;
                 }

@@ -23,7 +23,7 @@ namespace EveTrader.Main.MarketOrders
             item.SubItems.AddRange(
                 new[]
                     {
-                        Resources.Instance.EveObjects.Types.GetTypeById(marketOrder.TypeId).Name,
+                        Resources.Instance.EveObjects.Types.GetTypeById(marketOrder.TypeID).Name,
                         marketOrder.Price.FormatCurrency(),
                         PrepareQuantity(marketOrder),
                         marketOrder.Type == MarketOrderType.Buy
@@ -31,7 +31,7 @@ namespace EveTrader.Main.MarketOrders
                             : (marketOrder.VolumeRemaining*marketOrder.Price).FormatCurrency(),
                         PrepareEtcb(marketOrder),
                         PrepareEstimatedSoldAmount(marketOrder),
-                        Resources.Instance.EveObjects.Stations.GetStationById(marketOrder.StationId).Name,
+                        Resources.Instance.EveObjects.Stations.GetStationById(marketOrder.StationID).Name,
                         string.Format(
                             "{0}d",
                             marketOrder.Duration - (DateTime.Now - marketOrder.Issued).Days)

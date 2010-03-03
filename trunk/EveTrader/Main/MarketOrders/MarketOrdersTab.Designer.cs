@@ -54,7 +54,7 @@ namespace EveTrader.Main.MarketOrders
             this.label3 = new System.Windows.Forms.Label();
             this.TotalIncomeLabel = new System.Windows.Forms.Label();
             this.GroupByProductRadioButton = new System.Windows.Forms.RadioButton();
-            this.GroupBySolarSystemRadioButton = new System.Windows.Forms.RadioButton();
+            this.GroupByStationRadioButton = new System.Windows.Forms.RadioButton();
             this.DoNotGroupRadioButton = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.FilterByTextBox = new System.Windows.Forms.TextBox();
@@ -283,18 +283,18 @@ namespace EveTrader.Main.MarketOrders
             this.GroupByProductRadioButton.UseVisualStyleBackColor = true;
             this.GroupByProductRadioButton.Click += new System.EventHandler(this.GroupByProductRadioButton_Click);
             // 
-            // GroupBySolarSystemRadioButton
+            // GroupByStationRadioButton
             // 
-            this.GroupBySolarSystemRadioButton.AutoSize = true;
-            this.GroupBySolarSystemRadioButton.Checked = true;
-            this.GroupBySolarSystemRadioButton.Location = new System.Drawing.Point(499, 12);
-            this.GroupBySolarSystemRadioButton.Name = "GroupBySolarSystemRadioButton";
-            this.GroupBySolarSystemRadioButton.Size = new System.Drawing.Size(84, 17);
-            this.GroupBySolarSystemRadioButton.TabIndex = 15;
-            this.GroupBySolarSystemRadioButton.TabStop = true;
-            this.GroupBySolarSystemRadioButton.Text = "Solar system";
-            this.GroupBySolarSystemRadioButton.UseVisualStyleBackColor = true;
-            this.GroupBySolarSystemRadioButton.Click += new System.EventHandler(this.GroupBySolarSystemRadioButton_Click);
+            this.GroupByStationRadioButton.AutoSize = true;
+            this.GroupByStationRadioButton.Checked = true;
+            this.GroupByStationRadioButton.Location = new System.Drawing.Point(499, 12);
+            this.GroupByStationRadioButton.Name = "GroupByStationRadioButton";
+            this.GroupByStationRadioButton.Size = new System.Drawing.Size(58, 17);
+            this.GroupByStationRadioButton.TabIndex = 15;
+            this.GroupByStationRadioButton.TabStop = true;
+            this.GroupByStationRadioButton.Text = "Station";
+            this.GroupByStationRadioButton.UseVisualStyleBackColor = true;
+            this.GroupByStationRadioButton.Click += new System.EventHandler(this.GroupBySolarSystemRadioButton_Click);
             // 
             // DoNotGroupRadioButton
             // 
@@ -357,7 +357,7 @@ namespace EveTrader.Main.MarketOrders
             this.Controls.Add(this.FilterByTextBox);
             this.Controls.Add(label2);
             this.Controls.Add(this.DoNotGroupRadioButton);
-            this.Controls.Add(this.GroupBySolarSystemRadioButton);
+            this.Controls.Add(this.GroupByStationRadioButton);
             this.Controls.Add(this.TotalIncomeLabel);
             this.Controls.Add(this.GroupByProductRadioButton);
             this.Controls.Add(this.CharactersComboBox);
@@ -395,7 +395,7 @@ namespace EveTrader.Main.MarketOrders
         private Label label3;
         private Label TotalIncomeLabel;
         private RadioButton GroupByProductRadioButton;
-        private RadioButton GroupBySolarSystemRadioButton;
+        private RadioButton GroupByStationRadioButton;
         private RadioButton DoNotGroupRadioButton;
         private Label label4;
         private TextBox FilterByTextBox;

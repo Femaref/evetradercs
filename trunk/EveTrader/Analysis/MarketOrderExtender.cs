@@ -43,8 +43,8 @@ namespace EveTrader.Analysis
             /*return marketOrder.VolumeRemaining / ReportHelper.GetAverageTransactionsCount(
                 walletTransactions,
                 marketOrder.Type,
-                marketOrder.TypeId,
-                marketOrder.StationId,
+                marketOrder.TypeID,
+                marketOrder.StationID,
                 (DateTime.Now - marketOrder.Issued).Days);*/
 
             return marketOrder.VolumeRemaining / marketOrder.GetAverageTransactionsPerDay();

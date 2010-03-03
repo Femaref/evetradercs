@@ -6,12 +6,12 @@ namespace Core.DomainModel
     {
         public bool Equals(MarketOrder marketOrder1, MarketOrder marketOrder2)
         {
-            return marketOrder1.Id == marketOrder2.Id;
+            return marketOrder1.ID == marketOrder2.ID;
         }
 
         public int GetHashCode(MarketOrder marketOrder)
         {
-            return marketOrder.Id;
+            return marketOrder.ID;
         }
     }
 }

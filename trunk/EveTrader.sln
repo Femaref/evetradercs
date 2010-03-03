@@ -69,4 +69,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{346E0248-C1B8-488C-BE02-7D9C4B745E3C} = {F383F0A1-3B83-4573-8526-6C1C51A24116}
 	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\EveTrader.ndproj"
+	EndGlobalSection
 EndGlobal

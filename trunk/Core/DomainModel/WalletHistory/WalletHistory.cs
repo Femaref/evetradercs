@@ -10,6 +10,9 @@ namespace Core.DomainModel
         public DateTime Key { get; set; }
         public double Value { get; set; }
 
+        int IGenericObject.ObjectID { get; set; }
+        IGenericObject IGenericObject.Parent { get; set; }
+
         public IEqualityComparer<WalletHistory> GetComparer()
         {
             return new WalletHistoryComparer();
