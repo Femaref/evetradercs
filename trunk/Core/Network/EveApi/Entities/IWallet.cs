@@ -6,7 +6,7 @@ using Core.DomainModel;
 
 namespace Core.Network.EveApi.Entities
 {
-    public interface IWallet : IMarketOrder, IEntity
+    public interface IWallet : IMarketOrder, IEntity, IGenericObject
     {
         List<Wallet> Wallets { get; set; }
         new void BeforeUpdate();

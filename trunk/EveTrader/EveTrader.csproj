@@ -87,7 +87,9 @@
     <Compile Include="Analysis\Data.cs" />
     <Compile Include="Analysis\MarketOrderExtender.cs" />
     <Compile Include="Analysis\Products.cs" />
-    <Compile Include="Helpers\GenericObjectDispatcher.cs" />
+    <Compile Include="Helpers\DispatcherList.cs" />
+    <Compile Include="Helpers\XmlGenericObjectDispatcher.cs" />
+    <Compile Include="Helpers\IGenericObjectDispatcher.cs" />
     <Compile Include="Helpers\ObjectAddedEventArgs.cs" />
     <Compile Include="Helpers\Singleton.cs" />
     <Compile Include="Helpers\XmlSettingsFile.cs" />

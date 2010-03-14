@@ -319,5 +319,6 @@ namespace EveTrader.Main.Reports
             UISettings.Instance.ReportSettings.ActivateTransactionLimit = this.iActivateTransactionLimit;
             this.RenderReports();
         }
+
     }
 }

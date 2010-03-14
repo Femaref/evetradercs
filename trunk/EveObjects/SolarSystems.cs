@@ -23,14 +23,12 @@ namespace EveObjects
 
         public SolarSystem GetSolarSystemById(double id)
         {
-            try
-            {
-                return solarSystems.First(item => item.Id == id);
-            }
-            catch
-            {
-                return new SolarSystem {Name = "Unknown"};
-            }
+            var systems = solarSystems.Where(item => item.Id == id);
+            if (systems.Count() > 0)
+                return systems.First();
+
+            return new SolarSystem() {Name = "Unknown"};
+
         }
 
         public SolarSystem GetSolarSystemByName(string name)

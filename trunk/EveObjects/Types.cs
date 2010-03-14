@@ -23,19 +23,11 @@ namespace EveObjects
 
         public Type GetTypeById(int id)
         {
-            try
-            {
-                return types.First(item => item.Id == id);
-            }
-            catch
-            {
-                return new Type {Name = "Unknown"};
-            }
-        }
+            var type = types.Where(item => item.Id == id);
+            if (type.Count() > 0)
+                return type.First();
 
-        /*public IList<Type> GetItemById(int id)
-        {
-            return items.First( item => item.Id == id);
-        }*/
+            return new Type() { Name = "Unknown" };
+        }
     }
 }

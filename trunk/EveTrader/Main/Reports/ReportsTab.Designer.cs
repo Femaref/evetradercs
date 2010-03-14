@@ -76,8 +76,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).BeginInit();
             this.tpStation.SuspendLayout();
             this.tpClients.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).BeginInit();
             this.tpBalanceHistory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).BeginInit();
             this.SuspendLayout();
             // 
             // ShowForLastWeek
@@ -137,6 +137,7 @@
             // 
             // MostProfitableClientsChart
             // 
+            this.MostProfitableClientsChart.AlwaysRecreateHotregions = true;
             this.MostProfitableClientsChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -219,6 +220,7 @@
             // 
             // MostProfitableStationsChart
             // 
+            this.MostProfitableStationsChart.AlwaysRecreateHotregions = true;
             this.MostProfitableStationsChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -351,6 +353,7 @@
             // 
             // MostProfitableProductsChart
             // 
+            this.MostProfitableProductsChart.AlwaysRecreateHotregions = true;
             this.MostProfitableProductsChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -465,9 +468,18 @@
             // 
             // tpBalanceHistory
             // 
+            this.tpBalanceHistory.Controls.Add(this.BalanceHistory);
+            this.tpBalanceHistory.Location = new System.Drawing.Point(4, 22);
+            this.tpBalanceHistory.Name = "tpBalanceHistory";
+            this.tpBalanceHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tpBalanceHistory.Size = new System.Drawing.Size(819, 518);
+            this.tpBalanceHistory.TabIndex = 3;
+            this.tpBalanceHistory.Text = "Balance History";
+            this.tpBalanceHistory.UseVisualStyleBackColor = true;
             // 
             // BalanceHistory
             // 
+            this.BalanceHistory.AlwaysRecreateHotregions = true;
             this.BalanceHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -583,14 +595,6 @@
             this.BalanceHistory.UI.Toolbar.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
             this.BalanceHistory.UI.Toolbar.BorderSkin.PageColor = System.Drawing.Color.Transparent;
             this.BalanceHistory.UI.Toolbar.BorderSkin.SkinStyle = Dundas.Charting.WinControl.BorderSkinStyle.Emboss;
-            this.tpBalanceHistory.Controls.Add(this.BalanceHistory);
-            this.tpBalanceHistory.Location = new System.Drawing.Point(4, 22);
-            this.tpBalanceHistory.Name = "tpBalanceHistory";
-            this.tpBalanceHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBalanceHistory.Size = new System.Drawing.Size(819, 518);
-            this.tpBalanceHistory.TabIndex = 3;
-            this.tpBalanceHistory.Text = "Balance History";
-            this.tpBalanceHistory.UseVisualStyleBackColor = true;
             // 
             // tbItemsDisplayed
             // 
@@ -687,11 +691,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.MostProfitableStationsChart)).EndInit();
             this.tcReports.ResumeLayout(false);
             this.tpProduct.ResumeLayout(false);
-           ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MostProfitableProductsChart)).EndInit();
             this.tpStation.ResumeLayout(false);
             this.tpClients.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).EndInit();
             this.tpBalanceHistory.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BalanceHistory)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

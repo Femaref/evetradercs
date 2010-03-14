@@ -30,10 +30,6 @@ namespace EveTrader.Main.MarketOrders
 
         public void Initialize()
         {
-
-
-
-
             this.CharactersComboBox.Items.Clear();
             this.BuyOrdersListView.Columns.Clear();
             this.iHideExpired = UISettings.Instance.OrderSettings.HideExpiredOrders;
@@ -78,7 +74,7 @@ namespace EveTrader.Main.MarketOrders
                 }
 
                 this.BuyOrdersListView.Columns.Add(newColumnHeader);
-                n ++;
+                n++;
             }
         }
         public void RenderMarketOrders()
