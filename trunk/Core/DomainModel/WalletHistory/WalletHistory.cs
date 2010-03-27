@@ -11,7 +11,7 @@ namespace Core.DomainModel
         public double Value { get; set; }
 
         public int ObjectID { get; set; }
-        public IGenericObject Parent { get; set; }
+        
 
         public IEqualityComparer<WalletHistory> GetComparer()
         {

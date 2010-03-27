@@ -46,7 +46,7 @@ namespace Core.DomainModel
 
         public int ObjectID { get; set; }
 
-        public IGenericObject Parent { get; set; }
+        
 
         public IEqualityComparer<Wallet> GetComparer()
         {

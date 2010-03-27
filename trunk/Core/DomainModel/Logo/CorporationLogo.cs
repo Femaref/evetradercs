@@ -18,7 +18,7 @@ namespace Core.DomainModel
         #region Implementation of IGenericObject<CorporationLogo>
 
         public int ObjectID { get; set; }
-        public IGenericObject Parent { get; set; }
+        
 
         public IEqualityComparer<CorporationLogo> GetComparer()
         {

@@ -14,7 +14,7 @@ namespace Core.DomainModel
         #region IGenericObject<Standing> Members
 
         public int ObjectID { get; set; }
-        public IGenericObject Parent { get; set; }
+        
 
         public IEqualityComparer<Standing> GetComparer()
         {

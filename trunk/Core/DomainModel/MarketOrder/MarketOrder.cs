@@ -24,7 +24,7 @@ namespace Core.DomainModel
         public bool Ignore { get; set; }
 
         public int ObjectID { get; set; }
-        public IGenericObject Parent { get; set; }
+        
 
         public IEqualityComparer<MarketOrder> GetComparer()
         {

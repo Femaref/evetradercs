@@ -46,7 +46,7 @@ namespace Core.DomainModel
         public CorporationLogo Logo { get; set; }
 
         public int ObjectID { get; set; }
-        public IGenericObject Parent { get; set; }
+        
         public IEqualityComparer<Corporation> GetComparer()
         {
             return new CorporationComparer();
