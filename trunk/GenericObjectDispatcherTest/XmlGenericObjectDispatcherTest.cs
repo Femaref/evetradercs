@@ -102,7 +102,7 @@ namespace GenericObjectDispatcherTest
         public void RemoveAllObject()
         {
             AddRangeObject();
-            int test = dispatcher.RemoveAll(x => ((Character)x).Name == "Femaref");
+            int test = dispatcher.RemoveAll<Character>(x => x.Name == "Femaref");
 
             Assert.IsTrue(test == 1 && dispatcher.Count == 1);
         }

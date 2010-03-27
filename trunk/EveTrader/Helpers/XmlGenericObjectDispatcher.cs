@@ -101,11 +101,11 @@ namespace EveTrader.Helpers
                 iObjects.RemoveAll(go => range.Contains(go));
             }
         }
-        public int RemoveAll(Predicate<IGenericObject> where)
+        public int RemoveAll<T>(Func<T,bool> where)
         {
             lock (iLocker)
             {
-                return iObjects.RemoveAll(where);
+                return iObjects.RemoveAll(x => iObjects.OfType<T>().Where(where).Cast<IGenericObject>().Contains(x));
             }
         }
         public int RemoveAll<T>()

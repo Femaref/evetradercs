@@ -12,7 +12,7 @@ namespace EveTrader.Helpers
         IEnumerable<T> GetByType<T>(Func<T, bool> predicate) where T : IGenericObject;
         IGenericObject GetByID(int id);
         void RemoveRange(IEnumerable<IGenericObject> range);
-        int RemoveAll(Predicate<IGenericObject> where);
+        int RemoveAll<T>(Func<T, bool> where);
         int RemoveAll<T>();
         bool Remove(IGenericObject item);
         int Count { get; }

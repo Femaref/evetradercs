@@ -2,6 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using Core.DomainModel;
+using EveTrader.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GenericObjectDispatcherTest
@@ -12,11 +14,14 @@ namespace GenericObjectDispatcherTest
     [TestClass]
     public class DispatcherListTest
     {
+        private IGenericObjectDispatcher dispatcher;
+        private DispatcherList<WalletJournalRecord> list;
+
         public DispatcherListTest()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            dispatcher = new XmlGenericObjectDispatcher();
+            list = new DispatcherList<WalletJournalRecord>(dispatcher, w => (w.Parent is Character) && (w.Parent as Character).Name == "Femaref");
+            dispatcher.Add(new Character() {Name = "Femaref"});
         }
 
         private TestContext testContextInstance;
@@ -60,11 +65,21 @@ namespace GenericObjectDispatcherTest
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void AddToList()
         {
-            //
-            // TODO: Add test logic	here
-            //
+            WalletJournalRecord r = new WalletJournalRecord()
+                                        {Parent = dispatcher.GetByType<Character>(x => x.Name == "Femaref").Single()};
+            list.Add(r);
+
+            Assert.IsTrue(list.Count == 1 && dispatcher.GetByType<WalletJournalRecord>().Count() == 1);
+        }
+        [TestMethod]
+        public void Clear()
+        {
+            AddToList();
+            list.Clear();
+
+            Assert.IsTrue(list.Count == 0);
         }
     }
 }

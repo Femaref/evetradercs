@@ -9,19 +9,19 @@ namespace EveTrader.Helpers
 {
     public class DispatcherList<T> : IList<T> where T : IGenericObject
     {
-        private readonly XmlGenericObjectDispatcher iDispatcher;
+        private readonly IGenericObjectDispatcher iDispatcher;
         private readonly Func<T, bool> iFilter = x => 1==1;
 
         private List<T> iCurrentData;
 
         private readonly object iLocker = new object();
 
-        public DispatcherList(XmlGenericObjectDispatcher dispatcher)
+        public DispatcherList(IGenericObjectDispatcher dispatcher)
         {
             iDispatcher = dispatcher;
             Update();
         }
-        public DispatcherList(XmlGenericObjectDispatcher dispatcher, Func<T, bool> filter)
+        public DispatcherList(IGenericObjectDispatcher dispatcher, Func<T, bool> filter)
         {
             iDispatcher = dispatcher;
             iFilter = filter;
@@ -50,8 +50,11 @@ namespace EveTrader.Helpers
 
         public void Add(T item)
         {
-            iDispatcher.Add(item);
-            Update();
+            if (iFilter.Invoke(item))
+            {
+                iDispatcher.Add(item);
+                Update();
+            }
         }
 
         private void Update()
@@ -66,7 +69,7 @@ namespace EveTrader.Helpers
 
         public void Clear()
         {
-            iDispatcher.RemoveRange((IEnumerable<IGenericObject>)iCurrentData);
+            iDispatcher.RemoveRange(iCurrentData.Cast<IGenericObject>());
             Update();
         }
 
