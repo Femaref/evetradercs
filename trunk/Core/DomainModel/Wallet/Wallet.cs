@@ -44,9 +44,9 @@ namespace Core.DomainModel
 
         #region IGenericObject<Wallet> Members
 
-        int IGenericObject.ObjectID { get; set; }
+        public int ObjectID { get; set; }
 
-        IGenericObject IGenericObject.Parent { get; set; }
+        public IGenericObject Parent { get; set; }
 
         public IEqualityComparer<Wallet> GetComparer()
         {

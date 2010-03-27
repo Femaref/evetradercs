@@ -13,7 +13,10 @@ namespace Core.DomainModel
         /// Unique for the current run
         /// </summary>
         int ObjectID { get; set; }
-
         IGenericObject Parent { get; set; }
+    }
+
+    public class Holder
+    {
     }
 }

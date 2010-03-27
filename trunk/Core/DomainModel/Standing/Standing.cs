@@ -13,8 +13,8 @@ namespace Core.DomainModel
 
         #region IGenericObject<Standing> Members
 
-        int IGenericObject.ObjectID { get; set; }
-        IGenericObject IGenericObject.Parent { get; set; }
+        public int ObjectID { get; set; }
+        public IGenericObject Parent { get; set; }
 
         public IEqualityComparer<Standing> GetComparer()
         {

@@ -26,8 +26,8 @@ namespace Core.DomainModel
 
         #region IGenericObject<Alliance> Members
 
-        int IGenericObject.ObjectID { get; set; }
-        IGenericObject IGenericObject.Parent { get; set; }
+        public int ObjectID { get; set; }
+        public IGenericObject Parent { get; set; }
 
         #endregion
     }

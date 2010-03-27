@@ -95,8 +95,8 @@ namespace Core.DomainModel
             this.NextAssetsUpdateTime = DateTime.Now;
         }
 
-        int IGenericObject.ObjectID { get; set; }
-        IGenericObject IGenericObject.Parent { get; set; }
+        public int ObjectID { get; set; }
+        public IGenericObject Parent { get; set; }
 
         public IEqualityComparer<Character> GetComparer()
         {
