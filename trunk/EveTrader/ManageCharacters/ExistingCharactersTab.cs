@@ -48,8 +48,6 @@ namespace EveTrader.ManageCharacters
             {
                 character.ApiKey = result.Text;
                 character.NextMarketOrdersUpdateTime = DateTime.Now;
-                character.NextWalletJournalUpdateTime = DateTime.Now;
-                character.NextWalletTransactionsUpdateTime = DateTime.Now;
 
                 Settings.Instance.Save();
 

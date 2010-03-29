@@ -45,11 +45,13 @@ namespace EveTrader
 
         protected override void BeforeLoad()
         {
+            string backup = File.ReadAllText(this.filePath);
+
             XmlMigrator migrator = new XmlMigrator(this.GetType().Assembly, this.filePath);
             if(!migrator.MigrateUp())
             {
-                File.Copy(this.filePath, Path.Combine(this.folder, "backup.xml"));
-                throw new Exception("Migration failed for class" +this.GetType().Name); 
+                File.WriteAllText("settings_backup.xml", backup);
+                throw new Exception("Migration failed for class" + this.GetType().Name); 
             }
             return;
         }

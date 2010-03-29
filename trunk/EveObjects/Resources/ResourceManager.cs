@@ -75,7 +75,7 @@ namespace EveObjects.Resources
             RenewResourceCache("EveRegions.xml");
         }
 
-        private static XDocument GetXDocumentFromCache(string fileName, byte[] defalutData)
+        private static XDocument GetXDocumentFromCache(string fileName, byte[] defaultData)
         {
             if (!Directory.Exists(cacheFolderName))
             {
@@ -87,7 +87,7 @@ namespace EveObjects.Resources
 
             if (!File.Exists(filePath))
             {
-                result = GetXDocumentFromResource(defalutData);
+                result = GetXDocumentFromResource(defaultData);
                 result.Save(filePath);
             }
             else
