@@ -26,3 +26,7 @@
 - Fixed int32 overflow in WalletTransaction.ReferenceID
 
 - Updated EveTypes to Dominion
+
+*Known Issues*
+
+- It is possible for a Corporation to appear more than once in the Wallet/Market Orders/Transactions tab
