@@ -6,7 +6,7 @@
 
 - Please delete the folder "Cache" in the folder of EveTrader.exe to renew static data
 
-- This Release contains debug information (*.pdb files) to help debugging. If you receive an Error, please copy the whole thing and send it to me
+- This Release contains debug information (`*`.pdb files) to help debugging. If you receive an Error, please copy the whole thing and send it to me
 
 - There are blank windows - these will be filled in later releases
 
