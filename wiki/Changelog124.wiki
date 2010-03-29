@@ -2,7 +2,7 @@
 
 *Notes*
 
-- IMPORTANT: This Release changes the structure of the settings.xml. Even though I tested it and implemented fail-save mechanisms, it is still possible you might lose your data
+*- IMPORTANT: This Release changes the structure of the settings.xml. Even though I tested it and implemented fail-save mechanisms, it is still possible you might lose your data*
 
 - Please delete the folder "Cache" in the folder of EveTrader.exe to renew static data
 
