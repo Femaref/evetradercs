@@ -373,6 +373,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\EveTrader.Resources.GlobalResources.datasource" />
     <None Include="Resources\linkIcon.gif" />
   </ItemGroup>

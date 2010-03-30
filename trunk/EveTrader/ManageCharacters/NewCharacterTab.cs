@@ -6,6 +6,8 @@ using Core.ClassExtenders;
 using Core.DomainModel;
 using Core.Network.EveApi.Requests;
 using Core.Network.EveApi.Entities;
+using Core.Updaters;
+using Core.Updaters.UpdateBase;
 
 namespace EveTrader.ManageCharacters
 {
@@ -34,14 +36,19 @@ namespace EveTrader.ManageCharacters
 
                 if (newCharacters.Count() == 0)
                 {
-                    this.CharactesLabel.Text = "Selected character(s) aleady added.";
+                    this.CharactersLabel.Text = "Selected character(s) aleady added.";
                 }
                 else
                 {
-                    this.CharactesLabel.Text = "";
+                    this.CharactersLabel.Text = "";
                     foreach (Character character in newCharacters)
                     {
-                        this.CharactesLabel.Text += character.Name + "\n";
+                        this.CharactersLabel.Text += character.Name + "\n";
+
+                        ICharacterUpdater updater = new CharacterUpdater();
+                        bool updated = false;
+                        updater.UpdateCharacter(character);
+                        Settings.Instance.Save();
                     }
 
                     (this.ParentForm as ManageCharactersWindow).Render();
@@ -79,7 +86,7 @@ namespace EveTrader.ManageCharacters
                 this.ErrorProvider.SetError(this.ApiKeyTextBox, "Api Key requiered");
                 isValid = false;
             }
-
+            
             if (isValid)
             {
                 CharactersListRequest charactersListRequest = new CharactersListRequest(accountId, this.ApiKeyTextBox.Text);

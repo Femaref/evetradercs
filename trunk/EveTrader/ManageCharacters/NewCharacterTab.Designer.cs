@@ -35,7 +35,7 @@ namespace EveTrader.ManageCharacters
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuccessfullyAddedGroupBox = new System.Windows.Forms.GroupBox();
-            this.CharactesLabel = new System.Windows.Forms.Label();
+            this.CharactersLabel = new System.Windows.Forms.Label();
             this.AddCharactersButton = new System.Windows.Forms.Button();
             this.NewCharactersListGroupBox = new System.Windows.Forms.GroupBox();
             this.NewCharactersCheckedListBox = new System.Windows.Forms.CheckedListBox();
@@ -102,7 +102,7 @@ namespace EveTrader.ManageCharacters
             // 
             this.SuccessfullyAddedGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.SuccessfullyAddedGroupBox.Controls.Add(this.CharactesLabel);
+            this.SuccessfullyAddedGroupBox.Controls.Add(this.CharactersLabel);
             this.SuccessfullyAddedGroupBox.Location = new System.Drawing.Point(10, 119);
             this.SuccessfullyAddedGroupBox.Name = "SuccessfullyAddedGroupBox";
             this.SuccessfullyAddedGroupBox.Size = new System.Drawing.Size(337, 142);
@@ -111,14 +111,14 @@ namespace EveTrader.ManageCharacters
             this.SuccessfullyAddedGroupBox.Text = "Successfully added following characters";
             this.SuccessfullyAddedGroupBox.Visible = false;
             // 
-            // CharactesLabel
+            // CharactersLabel
             // 
-            this.CharactesLabel.AutoSize = true;
-            this.CharactesLabel.Location = new System.Drawing.Point(11, 29);
-            this.CharactesLabel.Name = "CharactesLabel";
-            this.CharactesLabel.Size = new System.Drawing.Size(58, 13);
-            this.CharactesLabel.TabIndex = 0;
-            this.CharactesLabel.Text = "Characters";
+            this.CharactersLabel.AutoSize = true;
+            this.CharactersLabel.Location = new System.Drawing.Point(11, 29);
+            this.CharactersLabel.Name = "CharactersLabel";
+            this.CharactersLabel.Size = new System.Drawing.Size(58, 13);
+            this.CharactersLabel.TabIndex = 0;
+            this.CharactersLabel.Text = "Characters";
             // 
             // AddCharactersButton
             // 
@@ -213,7 +213,7 @@ namespace EveTrader.ManageCharacters
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox SuccessfullyAddedGroupBox;
-        private System.Windows.Forms.Label CharactesLabel;
+        private System.Windows.Forms.Label CharactersLabel;
         private System.Windows.Forms.Button AddCharactersButton;
         private System.Windows.Forms.GroupBox NewCharactersListGroupBox;
         private System.Windows.Forms.Button AddMoreCharactersButton;

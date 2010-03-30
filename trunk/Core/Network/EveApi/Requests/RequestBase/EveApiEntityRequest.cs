@@ -12,7 +12,7 @@ namespace Core.Network.EveApi
     public abstract class EveApiEntityRequest<TOutput> : EveApiResourceRequest
     {
         private int iCharacterID;
-        private EveApiResourceFrom iFrom;
+        protected EveApiResourceFrom iFrom;
 
         protected override IList<ResourceRequestParameter> Parameters
         {

@@ -32,7 +32,7 @@ namespace EveTrader.Main.Characters
                 ListViewItem listViewItem = new ListViewItem(
                         new string[] {
                             character.Name,
-                            character.Wallets.Single().Balance.FormatCurrency()
+                            character.Wallets.Count() == 1 ? character.Wallets.Single().Balance.FormatCurrency() : 0m.FormatCurrency()
                         });
                 listViewItem.UseItemStyleForSubItems = false;
                 listViewItem.SubItems[1].ForeColor = character.Balance > 0 ? Color.ForestGreen : Color.IndianRed;
