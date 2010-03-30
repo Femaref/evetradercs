@@ -87,7 +87,6 @@
     <Compile Include="Analysis\Data.cs" />
     <Compile Include="Analysis\MarketOrderExtender.cs" />
     <Compile Include="Analysis\Products.cs" />
-    <Compile Include="Helpers\ObjectAddedEventArgs.cs" />
     <Compile Include="Helpers\Singleton.cs" />
     <Compile Include="Helpers\XmlSettingsFile.cs" />
     <Compile Include="Helpers\InputBox.cs">

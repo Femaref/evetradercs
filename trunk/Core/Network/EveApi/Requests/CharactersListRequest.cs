@@ -20,7 +20,7 @@ namespace Core.Network.EveApi.Requests
         public CharactersListRequest(int accountId, string apiKey)
             : base(accountId, apiKey)
         {
-
+            iFrom = EveApiResourceFrom.Account;
         }
 
 
