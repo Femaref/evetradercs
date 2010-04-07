@@ -1,0 +1,11 @@
+#summary Prelimary Changelogs for 1.2.5
+
+
+*Changes*
+
+  * general overhaul of domain model
+  * general overhaul of the code, fixing bugs currently appearing
+  * switch to sqlite for data saving, due to this:
+    * faster loading times
+    * better data organisation, enabling more possible features without giving me a huge headache
+    * easier to upgrade static data
