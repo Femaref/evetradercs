@@ -11,13 +11,16 @@ namespace Core.Updaters
     {
         public bool UpdateCharacter(Character character)
         {
-            character.ApiData = new Account()
+            if (character.ApiData == null)
             {
-                UserID = character.AccountId,
-                ApiKey = character.ApiKey,
-                CharacterID = character.ID
-            };
-            character.Corporation.ApiData = character.ApiData;
+                character.ApiData = new Account()
+                                        {
+                                            UserID = character.AccountId,
+                                            ApiKey = character.ApiKey,
+                                            CharacterID = character.ID
+                                        };
+                character.Corporation.ApiData = character.ApiData;
+            }
 
             List<ICharacterUpdater> updater = new List<ICharacterUpdater>()
                                                   {

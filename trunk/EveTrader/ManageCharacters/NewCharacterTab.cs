@@ -46,7 +46,6 @@ namespace EveTrader.ManageCharacters
                         this.CharactersLabel.Text += character.Name + "\n";
 
                         ICharacterUpdater updater = new CharacterUpdater();
-                        bool updated = false;
                         updater.UpdateCharacter(character);
                         Settings.Instance.Save();
                     }

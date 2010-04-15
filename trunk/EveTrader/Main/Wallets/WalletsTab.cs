@@ -29,13 +29,17 @@ namespace EveTrader.Main.Characters
 
             foreach (Character character in Settings.Instance.Characters)
             {
+                decimal balance = character.Wallets.Count() == 1
+                                      ? character.Wallets.Single().Balance
+                                      : 0m;
+
                 ListViewItem listViewItem = new ListViewItem(
                         new string[] {
                             character.Name,
-                            character.Wallets.Count() == 1 ? character.Wallets.Single().Balance.FormatCurrency() : 0m.FormatCurrency()
+                            balance.FormatCurrency()
                         });
                 listViewItem.UseItemStyleForSubItems = false;
-                listViewItem.SubItems[1].ForeColor = character.Balance > 0 ? Color.ForestGreen : Color.IndianRed;
+                listViewItem.SubItems[1].ForeColor = balance > 0 ? Color.ForestGreen : Color.IndianRed;
 
                 this.CharactersListView.Items.Add(listViewItem);
 

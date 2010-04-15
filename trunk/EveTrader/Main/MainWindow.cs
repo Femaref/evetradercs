@@ -104,10 +104,6 @@ namespace EveTrader.Main
             this.Initialize();
         }
 
-        private void DashboardTab_Load(object sender, EventArgs e)
-        {
-        }
-
         private void InfoReloadingTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             this.UpdateCharactersAndInitialize();

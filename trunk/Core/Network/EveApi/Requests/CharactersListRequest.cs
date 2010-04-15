@@ -29,10 +29,9 @@ namespace Core.Network.EveApi.Requests
         {
             return document.Descendants("row").Select(r => new Character
                              {
-                                 AccountId = this.iAccountId,
-                                 ApiKey = this.iApiKey,
                                  ID = r.Attribute("characterID").Value.ToInt32(),
-                                 Name = r.Attribute("name").Value
+                                 Name = r.Attribute("name").Value,
+                                 ApiData = new Account() { UserID = this.iAccountId, ApiKey = this.iApiKey, CharacterID = r.Attribute("characterID").Value.ToInt32() }
                              }).Cast<IEntity>();
         }
 

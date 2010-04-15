@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using Core.DomainModel;
 using Core.Migration;
@@ -13,7 +14,13 @@ namespace EveTrader
     [XmlRoot("EveTrader")]
     public class Settings : XmlSettingsFile<Settings>
     {
-        public string Version { get; set; }
+        private string iVersion = Application.ProductVersion;
+
+        public string Version
+        {
+            get { return iVersion; }
+            set { iVersion = value; }
+        }
 
 
         protected override string fileName

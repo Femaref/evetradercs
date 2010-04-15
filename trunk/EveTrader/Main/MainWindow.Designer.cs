@@ -240,7 +240,6 @@
             this.DashboardTab.ReInitialize = false;
             this.DashboardTab.Size = new System.Drawing.Size(967, 612);
             this.DashboardTab.TabIndex = 0;
-            this.DashboardTab.Load += new System.EventHandler(this.DashboardTab_Load);
             // 
             // tabWallets
             // 
