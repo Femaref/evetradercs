@@ -3,8 +3,9 @@
 
 *Changes*
 
+  * upgrade to .net 4.0
   * general overhaul of domain model
-  * general overhaul of the code, fixing bugs currently appearing
+  * general overhaul of the code, fixing bugs currently appearing (rewrite of the whole internal code)
   * switch to sqlite for data saving, due to this:
     * faster loading times
     * better data organisation, enabling more possible features without giving me a huge headache
