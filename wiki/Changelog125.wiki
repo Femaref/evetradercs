@@ -10,3 +10,6 @@
     * faster loading times
     * better data organisation, enabling more possible features without giving me a huge headache
     * easier to upgrade static data
+    * example xml -> sqlite conversion: xml: 2.47mb sqlite 259kb, data compressed by 90%
+  * switch to WPF for GUI
+  * switch to WAF for Layer design (Model - View - ViewModel design, thus decoupling data handling from the GUI as it is currently)
