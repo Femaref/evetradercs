@@ -51,8 +51,10 @@
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\IAccountEntityView.cs" />
     <Compile Include="View\IDashboardView.cs" />
+    <Compile Include="View\IMainWindowView.cs" />
     <Compile Include="View\IMarketOrdersView.cs" />
     <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
     <Compile Include="ViewModel\AccountEntityViewModel.cs" />

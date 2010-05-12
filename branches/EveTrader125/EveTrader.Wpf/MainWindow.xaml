@@ -3,10 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:utility="clr-namespace:System.Collections.ObjectModel;assembly=System"
-	xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader_Wpf"
-	x:Class="EveTrader_Wpf.MainWindow"
+	mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf"
+	x:Class="EveTrader.Wpf.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
 	Width="1181.5" Height="697">

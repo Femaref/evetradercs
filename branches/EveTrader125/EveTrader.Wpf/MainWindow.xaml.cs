@@ -11,13 +11,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using EveTrader.Core.View;
+using System.ComponentModel.Composition;
 
-namespace EveTrader_Wpf
+namespace EveTrader.Wpf
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+    [Export(typeof(IMainWindowView))]
+	public partial class MainWindow : Window, IMainWindowView
 	{
 		public MainWindow()
 		{
@@ -25,5 +28,7 @@ namespace EveTrader_Wpf
 			
 			// Insert code required on object creation below this point.
 		}
+
+
 	}
 }

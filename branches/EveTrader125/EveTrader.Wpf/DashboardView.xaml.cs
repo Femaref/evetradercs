@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
 
-namespace EveTrader_Wpf
+namespace EveTrader.Wpf
 {
 	/// <summary>
 	/// Interaction logic for DashboardView.xaml
