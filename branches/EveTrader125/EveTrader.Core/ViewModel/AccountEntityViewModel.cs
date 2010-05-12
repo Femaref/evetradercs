@@ -33,7 +33,7 @@ namespace EveTrader.Core.ViewModel
             }
             catch (Exception ex)
             {
-                iModel.WriteToLog(ex.ToString());
+                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.AddAccount");
                 return false;
             }
         }
@@ -57,7 +57,7 @@ namespace EveTrader.Core.ViewModel
             }
             catch (Exception ex)
             {
-                iModel.WriteToLog(ex.ToString());
+                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.RemoveAccount");
                 return false;
             }
         }
@@ -72,7 +72,7 @@ namespace EveTrader.Core.ViewModel
             }
             catch (Exception ex)
             {
-                iModel.WriteToLog(ex.ToString());
+                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.AddEntity");
                 return false;
             }
         }
@@ -92,7 +92,7 @@ namespace EveTrader.Core.ViewModel
             }
             catch (Exception ex)
             {
-                iModel.WriteToLog(ex.ToString());
+                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.RemoveAccount");
                 return false;
             }
         }

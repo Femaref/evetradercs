@@ -13,6 +13,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +36,7 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -44,10 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
     <Compile Include="View\IAccountEntityView.cs" />
+    <Compile Include="View\IDashboardView.cs" />
     <Compile Include="View\IMarketOrdersView.cs" />
     <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
     <Compile Include="ViewModel\AccountEntityViewModel.cs" />
@@ -58,6 +63,7 @@
       <DependentUpon>TraderModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\TraderModelPartial.cs" />
+    <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
@@ -67,6 +73,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TraderModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Q:\Assembly\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">

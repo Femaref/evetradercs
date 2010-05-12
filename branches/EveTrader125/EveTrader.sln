@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core", "EveTrader.Core\EveTrader.Core.csproj", "{AF60FE10-88C7-499F-86F3-7078BF22C156}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03F8E121-DD20-425B-BFB2-1DAC7EE9E81C}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		test.vsmdi = test.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core", "EveTrader.Core\EveTrader.Core.csproj", "{AF60FE10-88C7-499F-86F3-7078BF22C156}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core.Test", "EveTrader.Core.Test\EveTrader.Core.Test.csproj", "{701A4AD2-9A50-46AA-A7E8-0CD659EBCE0B}"
 EndProject

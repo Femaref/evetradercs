@@ -9,10 +9,14 @@
 	x:Class="EveTrader_Wpf.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
-	Width="1162" Height="688">
+	Width="1181.5" Height="697">
 
 	<Grid x:Name="LayoutRoot">
-		<TabControl Margin="0,23.277,0,0" RenderTransformOrigin="0.5,0.5">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.969*"/>
+			<RowDefinition Height="0.031*"/>
+		</Grid.RowDefinitions>
+		<TabControl Margin="0,22.724,0,0" RenderTransformOrigin="0.5,0.5" Height="619.723" VerticalAlignment="Top">
 			<TabControl.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -22,51 +26,7 @@
 				</TransformGroup>
 			</TabControl.RenderTransform>
 			<TabItem Header="Dashboard">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="0.743*"/>
-						<ColumnDefinition Width="0.257*"/>
-					</Grid.ColumnDefinitions>
-					<chartingToolkit:Chart x:Name="chart" Title="Chart Title" Margin="0,0,2,0">
-
-                        <chartingToolkit:Chart.Axes>
-                            <chartingToolkit:LinearAxis x:Name="dependentAxis" Orientation="X" Location="Bottom"/>
-                            <chartingToolkit:LinearAxis x:Name="independentAxis" Orientation="Y" Location="Left"/>
-                        </chartingToolkit:Chart.Axes>
-
-
-
-
-                        <chartingToolkit:ColumnSeries x:Name="columnSeries" DependentValuePath="Y" IndependentValuePath="X" DataContext="{DynamicResource testSource}" ItemsSource="{DynamicResource testSource}" >
-							<chartingToolkit:ColumnSeries.Resources>
-								<PointCollection x:Key="testSource">
-								<Point X="1" Y="10"/>
-								<Point X="2" Y="10"/>
-								<Point X="3" Y="10"/>
-								<Point X="4" Y="10"/>
-								<Point X="5" Y="10"/>
-								</PointCollection>
-							</chartingToolkit:ColumnSeries.Resources>
-						</chartingToolkit:ColumnSeries>
-						<chartingToolkit:LineSeries x:Name="lineSeries" DependentValuePath="Y" IndependentValuePath="X" DataContext="{DynamicResource testSource}" ItemsSource="{DynamicResource testSource}" >
-						<chartingToolkit:LineSeries.Resources>
-						<PointCollection x:Key="testSource">
-								<Point X="1" Y="10"/>
-								<Point X="2" Y="15"/>
-								<Point X="3" Y="20"/>
-								<Point X="4" Y="25"/>
-								<Point X="5" Y="30"/>
-								</PointCollection>
-							</chartingToolkit:LineSeries.Resources>
-						</chartingToolkit:LineSeries>
-					</chartingToolkit:Chart>
-					<chartingToolkit:Chart Margin="0,0,-0.537,-0.007" Title="Chart Title" d:LayoutOverrides="Height" Grid.Column="1">
-						<chartingToolkit:Chart.DataContext>
-							<PointCollection>1,10 2,20 3,30 4,40</PointCollection>
-						</chartingToolkit:Chart.DataContext>
-						<chartingToolkit:ColumnSeries DependentValuePath="X" IndependentValuePath="Y" ItemsSource="{Binding}"/>
-					</chartingToolkit:Chart>
-				</Grid>
+				<local:DashboardView Margin="6.5,0,6.5,-3.554"/>
 			</TabItem>
 			<TabItem Header="Wallets">
 				<Grid/>
@@ -78,5 +38,6 @@
 				<Label Content="Exit"/>
 			</MenuItem>
 		</Menu>
+		<StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="1"/>
 	</Grid>
 </Window>

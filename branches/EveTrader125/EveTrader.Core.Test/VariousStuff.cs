@@ -83,5 +83,11 @@ namespace TestProject1
             Assert.IsTrue(t.Transactions.OfType<ApiTransactions>().Count(c => c.ID == at.ID) == 1);
             Assert.IsTrue(t.Wallets.Where(w => w.Entity.Name == "Femaref" && w.AccountKey == 1000).First().Transactions.Count(c => c.ID == at.ID) == 1);
         }
+
+        [TestMethod]
+        public void WriteToLogTest()
+        {
+            Assert.IsTrue(!string.IsNullOrEmpty(t.WriteToLog("test", "VariousStuff.WriteToLogTest")));
+        }
     }
 }
