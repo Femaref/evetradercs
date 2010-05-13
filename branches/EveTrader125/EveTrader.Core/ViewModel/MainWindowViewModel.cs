@@ -16,6 +16,7 @@ namespace EveTrader.Core.ViewModel
         private readonly ICommand iOpenManageAccountsCommand;
 
         private object iDashboardView;
+        private object iWalletsView;
 
         public ICommand OpenManageAccountsCommand
         {
@@ -35,6 +36,15 @@ namespace EveTrader.Core.ViewModel
             {
                 iDashboardView = value;
                 RaisePropertyChanged("DashboardView");
+            }
+        }
+        public object WalletsView
+        {
+            get { return iWalletsView; }
+            set
+            {
+                iWalletsView = value;
+                RaisePropertyChanged("WalletsView");
             }
         }
 

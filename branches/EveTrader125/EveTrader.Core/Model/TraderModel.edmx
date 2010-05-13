@@ -70,7 +70,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationLog">
@@ -105,7 +105,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" />
         </EntityType>
@@ -318,7 +318,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EveTrader.Core.Model" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="TraderModel">
+        <EntityContainer Name="TraderModel" a:LazyLoadingEnabled="true" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="Entity" EntityType="EveTrader.Core.Model.Entities" />
           <EntitySet Name="Wallets" EntityType="EveTrader.Core.Model.Wallets" />
           <AssociationSet Name="FK_Wallets_0" Association="EveTrader.Core.Model.FK_Wallets_0">

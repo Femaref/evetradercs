@@ -44,6 +44,7 @@ namespace EveTrader.Core.Model
         /// </summary>
         public TraderModel() : base("name=TraderModel", "TraderModel")
         {
+            this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
@@ -52,6 +53,7 @@ namespace EveTrader.Core.Model
         /// </summary>
         public TraderModel(string connectionString) : base(connectionString, "TraderModel")
         {
+            this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
@@ -60,6 +62,7 @@ namespace EveTrader.Core.Model
         /// </summary>
         public TraderModel(EntityConnection connection) : base(connection, "TraderModel")
         {
+            this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     

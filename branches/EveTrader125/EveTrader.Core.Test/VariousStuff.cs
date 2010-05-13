@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EveTrader.Core;
 using EveTrader.Core.Model;
+using EveTrader.Core.ViewModel;
 namespace TestProject1
 {
 
@@ -88,6 +89,24 @@ namespace TestProject1
         public void WriteToLogTest()
         {
             Assert.IsTrue(!string.IsNullOrEmpty(t.WriteToLog("test", "VariousStuff.WriteToLogTest")));
+        }
+
+        [TestMethod]
+        public void IterationTest()
+        {
+            List<DisplayWallets> EntityWallets = new List<DisplayWallets>();
+            foreach (Entities e in t.Entity)
+            {
+                if (e is Characters)
+                    EntityWallets.Add(new DisplayWallets() { Name = e.Name, Balance = e.Wallets.First().Balance });
+                if (e is Corporations)
+                {
+                    foreach (Wallets w in e.Wallets)
+                    {
+                        EntityWallets.Add(new DisplayWallets() { Name = string.Format("{0}: {1}", e.Name, w.Name), Balance = w.Balance });
+                    }
+                }
+            }
         }
     }
 }

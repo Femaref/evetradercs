@@ -21,8 +21,8 @@
                 <ContentControl Content="{Binding DashboardView}"/>
 			</TabItem>
 			<TabItem Header="Wallets">
-				<Grid/>
-			</TabItem>
+                <ContentControl Content="{Binding WalletsView}"/>
+            </TabItem>
 		</TabControl>
 		<Menu VerticalAlignment="Top">
 			<MenuItem Margin="0" Header="Main">

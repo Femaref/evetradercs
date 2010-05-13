@@ -20,18 +20,25 @@ namespace EveTrader.Core.Controllers
         private readonly ManageAccountsController iManageAccountsController;
         private readonly CompositionContainer iContainer;
         private readonly DashboardController iDashboardController;
+        private readonly WalletsController iWalletsController;
 
 
 
         [ImportingConstructor]
-        public ApplicationController(MainWindowViewModel mainView, TraderModel tm, CompositionContainer container, ManageAccountsController manageAccountsController, DashboardController dashboardController)
+        public ApplicationController(MainWindowViewModel mainView,
+            TraderModel tm,
+            CompositionContainer container,
+            ManageAccountsController manageAccountsController,
+            DashboardController dashboardController,
+            WalletsController walletsController)
         {
             iMainWindowViewModel = mainView;
-            
+
             iModel = tm;
             iContainer = container;
             iManageAccountsController = manageAccountsController;
             iDashboardController = dashboardController;
+            iWalletsController = walletsController;
 
             mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
 
@@ -41,6 +48,7 @@ namespace EveTrader.Core.Controllers
         {
             iDashboardController.Initialize();
             iManageAccountsController.Initialize();
+            iWalletsController.Initialize();
         }
 
         public void Run()

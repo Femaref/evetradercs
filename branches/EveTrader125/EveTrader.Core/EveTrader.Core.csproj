@@ -50,12 +50,14 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
+    <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
+    <Compile Include="ViewModel\WalletsViewModel.cs" />
     <Compile Include="View\IAccountEntityView.cs" />
     <Compile Include="View\IDashboardView.cs" />
     <Compile Include="View\IMainWindowView.cs" />
