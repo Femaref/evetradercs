@@ -5,30 +5,38 @@ using System.Text;
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using EveTrader.Core.ViewModel;
+using System.ComponentModel.Composition.Hosting;
+using EveTrader.Core.View;
+using EveTrader.Core.Model;
 
 namespace EveTrader.Core.Controllers
 {
     [Export]
     public class ManageAccountsController : Controller
     {
-        private readonly ManageAccountsViewModel iViewModel;
+        private readonly CompositionContainer iContainer;
 
         [ImportingConstructor]
-        public ManageAccountsController(ManageAccountsViewModel viewModel)
+        public ManageAccountsController(CompositionContainer container)
         {
-            iViewModel = viewModel;
-
-            iViewModel.Closing += new System.ComponentModel.CancelEventHandler(iViewModel_Closing);
-        }
-
-        void iViewModel_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            throw new NotImplementedException();
+            iContainer = container;
+            
         }
 
         public void Show()
         {
-            iViewModel.Show();
+            ManageAccountsViewModel model = new ManageAccountsViewModel(iContainer.GetExportedValue<IManageAccountsView>(), iContainer.GetExportedValue<TraderModel>());
+            model.Show();
+        }
+
+        public void Shutdown()
+        {
+            
+        }
+
+        public void Initialize()
+        {
+            
         }
     }
 }

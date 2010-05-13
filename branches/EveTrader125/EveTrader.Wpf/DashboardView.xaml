@@ -7,7 +7,7 @@
 	x:Name="UserControl"
         xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
-	Width="1149.5" Height="603">
+	Width="1149.5" Height="603" Background="Black">
 
 	<Grid x:Name="LayoutRoot" Margin="0,0,0,1.5">
 	</Grid>

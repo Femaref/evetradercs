@@ -8,6 +8,7 @@ using EveTrader.Core.Model;
 using EveTrader.Core.View;
 using EveTrader.Core.ViewModel;
 using System.Windows.Input;
+using System.ComponentModel.Composition.Hosting;
 
 namespace EveTrader.Core.Controllers
 {
@@ -15,34 +16,31 @@ namespace EveTrader.Core.Controllers
     public class ApplicationController : Controller
     {
         private readonly MainWindowViewModel iMainWindowViewModel;
-        private readonly ManageAccountsController iManageAccounts;
         private readonly TraderModel iModel;
+        private readonly ManageAccountsController iManageAccountsController;
+        private readonly CompositionContainer iContainer;
+        private readonly DashboardController iDashboardController;
 
-        private readonly ICommand iOpenManageAccountsCommand;
 
-        public ICommand OpenManageAccountsCommand
-        {
-            get { return iOpenManageAccountsCommand; }
-        }
 
         [ImportingConstructor]
-        public ApplicationController(MainWindowViewModel mainView, ManageAccountsController manageAccounts, TraderModel tm)
+        public ApplicationController(MainWindowViewModel mainView, TraderModel tm, CompositionContainer container, ManageAccountsController manageAccountsController, DashboardController dashboardController)
         {
             iMainWindowViewModel = mainView;
-            iManageAccounts = manageAccounts;
+            
             iModel = tm;
+            iContainer = container;
+            iManageAccountsController = manageAccountsController;
+            iDashboardController = dashboardController;
 
-            iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
+            mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
 
+            this.Initialize();
         }
-
-        private void OpenManageAccounts()
-        {
-            iManageAccounts.Show();
-        }
-
         public void Initialize()
         {
+            iDashboardController.Initialize();
+            iManageAccountsController.Initialize();
         }
 
         public void Run()

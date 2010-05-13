@@ -10,19 +10,17 @@ using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.ViewModel
 {
-    [Export]
     public class ManageAccountsViewModel : ViewModel<IManageAccountsView>
     {
         private readonly TraderModel iModel;
 
         public event CancelEventHandler Closing;
 
-        [ImportingConstructor]
         public ManageAccountsViewModel(IManageAccountsView view, TraderModel tm)
             : base(view)
         {
             iModel = tm;
-            ViewCore.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
+            view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
         }
 
         void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -41,6 +39,11 @@ namespace EveTrader.Core.ViewModel
         public void Show()
         {
             this.ViewCore.Show();
+        }
+
+        public void Shutdown()
+        {
+            iModel.Dispose();
         }
     }
 }

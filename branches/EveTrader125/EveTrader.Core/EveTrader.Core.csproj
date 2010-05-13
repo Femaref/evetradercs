@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />

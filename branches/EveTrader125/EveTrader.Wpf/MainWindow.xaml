@@ -18,7 +18,7 @@
 		</Grid.RowDefinitions>
 		<TabControl Margin="0,22.724,0,0" RenderTransformOrigin="0.5,0.5" Height="619.723" VerticalAlignment="Top">
 			<TabItem Header="Dashboard">
-				<local:DashboardView Margin="6.5,0,6.5,-3.554"/>
+                <ContentControl Content="{Binding DashboardView}"/>
 			</TabItem>
 			<TabItem Header="Wallets">
 				<Grid/>
@@ -27,7 +27,7 @@
 		<Menu VerticalAlignment="Top">
 			<MenuItem Margin="0" Header="Main">
                 <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Exit" Command="ApplicationCommands.Close"/>
 			</MenuItem>
 		</Menu>
 		<StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="1"/>
