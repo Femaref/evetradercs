@@ -44,9 +44,9 @@ namespace EveTrader.Wpf
             AggregateCatalog catalog = new AggregateCatalog();
             // Add the WpfApplicationFramework assembly to the catalog
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Controller).Assembly));
-            // Add the BookLibrary.Presentation assembly to the catalog
+            // Add Frontend Assembly
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-            // Add the BookLibrary.Applications assembly to the catalog
+            // Add EveTrader.Core
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(ApplicationController).Assembly));
 
             CompositionContainer container = new CompositionContainer(catalog);
