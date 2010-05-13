@@ -4,7 +4,8 @@
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:utility="clr-namespace:System.Collections.ObjectModel;assembly=System"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf"
+	mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf" d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
+     xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
 	x:Class="EveTrader.Wpf.MainWindow"
 	x:Name="Window"
 	Title="MainWindow"
@@ -16,14 +17,6 @@
 			<RowDefinition Height="0.031*"/>
 		</Grid.RowDefinitions>
 		<TabControl Margin="0,22.724,0,0" RenderTransformOrigin="0.5,0.5" Height="619.723" VerticalAlignment="Top">
-			<TabControl.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform/>
-				</TransformGroup>
-			</TabControl.RenderTransform>
 			<TabItem Header="Dashboard">
 				<local:DashboardView Margin="6.5,0,6.5,-3.554"/>
 			</TabItem>
@@ -33,8 +26,8 @@
 		</TabControl>
 		<Menu VerticalAlignment="Top">
 			<MenuItem Margin="0" Header="Main">
-				<Label Content="Manage characters"/>
-				<Label Content="Exit"/>
+                <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
+                <MenuItem Header="Exit"/>
 			</MenuItem>
 		</Menu>
 		<StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="1"/>

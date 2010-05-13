@@ -91,6 +91,9 @@
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManageAccountsWindow.xaml.cs">
+      <DependentUpon>ManageAccountsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -115,6 +118,10 @@
     <None Include="Application.ico">
       <Visible>false</Visible>
     </None>
+    <Page Include="ManageAccountsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WalletsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

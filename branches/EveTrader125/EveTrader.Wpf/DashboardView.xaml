@@ -3,9 +3,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d"
 	x:Class="EveTrader.Wpf.DashboardView"
 	x:Name="UserControl"
+        xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
 	Width="1149.5" Height="603">
 
 	<Grid x:Name="LayoutRoot" Margin="0,0,0,1.5">

@@ -18,6 +18,7 @@ namespace EveTrader.Core.ViewModel
             view.Closing += ViewClosing;
         }
 
+
         public void Show()
         {
             this.ViewCore.Show();
