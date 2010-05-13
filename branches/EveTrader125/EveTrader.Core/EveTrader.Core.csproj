@@ -47,13 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassExtenders\DateTimeExtender.cs" />
+    <Compile Include="ClassExtenders\DecimalExtender.cs" />
+    <Compile Include="ClassExtenders\DoubleExtender.cs" />
+    <Compile Include="ClassExtenders\EnumExtender.cs" />
+    <Compile Include="ClassExtenders\StreamExtender.cs" />
+    <Compile Include="ClassExtenders\StringExtender.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
+    <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
+    <Compile Include="Net\Requests\CCP\ApiAccountRequestBase.cs" />
+    <Compile Include="Net\Requests\CCP\ApiEntityRequestBase.cs" />
+    <Compile Include="Net\Requests\CCP\ApiRequestBase.cs" />
+    <Compile Include="Net\Requests\CCP\ApiRequestPage.cs" />
+    <Compile Include="Net\Requests\CCP\ApiRequestTarget.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
@@ -89,6 +101,10 @@
       <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
       <Name>WpfApplicationFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Net\Requests\Central\" />
+    <Folder Include="Net\Requests\Metrics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
