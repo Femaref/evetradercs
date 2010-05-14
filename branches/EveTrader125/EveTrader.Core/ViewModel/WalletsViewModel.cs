@@ -52,7 +52,6 @@ namespace EveTrader.Core.ViewModel
                     }
                 }
             }
-
         }
     }
 }

@@ -3,15 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:selector="clr-namespace:EveTrader.Wpf.Selectors"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" d:DataContext="{d:DesignInstance vm:WalletsViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        
         <DataGrid AutoGenerateColumns="False" 
                   Height="Auto" 
                   HorizontalAlignment="Left" 
                   Margin="1,2,0,0" 
-                  Name="dataGrid1" 
+                  Name="wallets" 
                   VerticalAlignment="Top" 
                   Width="Auto" 
                   CanUserAddRows="False"
@@ -21,15 +23,30 @@
                   AlternatingRowBackground="#FFECECEF" 
                   AreRowDetailsFrozen="True" 
                   IsReadOnly="True">
+            <DataGrid.Resources>
+                <selector:CurrencyColorSelector x:Key="currencyColorSelector">
+                    <selector:CurrencyColorSelector.NegativeTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Balance, StringFormat=n}" Foreground="Red"/>
+                        </DataTemplate>
+                    </selector:CurrencyColorSelector.NegativeTemplate>
+                    <selector:CurrencyColorSelector.NormalTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Balance, StringFormat=n}"/>
+                        </DataTemplate>
+                    </selector:CurrencyColorSelector.NormalTemplate>
+                </selector:CurrencyColorSelector>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" 
                                     Width="SizeToCells"  
                                     Binding="{Binding Name}" 
                                     IsReadOnly="True"/>
-                <DataGridTextColumn Header="Balance" 
+                <DataGridTemplateColumn Header="Balance" 
                                     Width="SizeToCells"  
-                                    Binding="{Binding Balance, StringFormat=n}"
-                                    IsReadOnly="True"/>
+                                    CellTemplateSelector="{StaticResource currencyColorSelector}"
+                                    IsReadOnly="True">
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
