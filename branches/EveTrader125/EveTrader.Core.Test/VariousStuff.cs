@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EveTrader.Core;
 using EveTrader.Core.Model;
 using EveTrader.Core.ViewModel;
+using EveTrader.Core.Network.Requests.CCP;
 namespace TestProject1
 {
 
@@ -107,6 +108,14 @@ namespace TestProject1
                     }
                 }
             }
+        }
+
+        [TestMethod]
+        public void CharacterListRequestTest()
+        {
+            CharacterListRequest clr = new CharacterListRequest(t.Accounts.First(a => a.ID == 334887));
+            var x = clr.Request();
+            Assert.IsTrue(x.Count() == 3);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Net;
 using System.IO;
 using EveTrader.Core.ClassExtenders;
 
-namespace EveTrader.Core.Net.Requests.CCP
+namespace EveTrader.Core.Network.Requests.CCP
 {
     public abstract class ApiRequestBase<T>
     {
@@ -25,10 +25,14 @@ namespace EveTrader.Core.Net.Requests.CCP
 
             req.UserAgent = "EveTrader/1.2.5";
             req.Method = "POST";
-            Stream s = req.GetRequestStream();
+            req.ContentType = "application/x-www-form-urlencoded";
+
 
             byte[] postData = Encoding.Default.GetBytes(this.Data);
-            s.Write(postData, 0, this.Data.Length);
+            req.ContentLength = postData.Length;
+
+            Stream s = req.GetRequestStream();
+            s.Write(postData, 0, postData.Length);
             s.Close();
 
             HttpWebResponse res = (HttpWebResponse)req.GetResponse();
@@ -43,18 +47,26 @@ namespace EveTrader.Core.Net.Requests.CCP
 
         private const string BaseIdentifier = @"http://api.eve-online.com/{0}/{1}.xml.aspx";
 
-        public ApiRequestTarget Target
+        public virtual ApiRequestTarget Target
         {
             get { return iTarget; }
         }
-        public ApiRequestPage Page
+        public virtual ApiRequestPage Page
         {
             get { return iPage; }
         }
 
         public Uri Identifier
         {
-            get { return new Uri(string.Format(BaseIdentifier, Target.ToString(), Page.ToString())); }
+            get
+            {
+                return new Uri(
+                    string.Format(
+                                BaseIdentifier,
+                                Target.StringValue(),
+                                Page.StringValue())
+                    );
+            }
         }
 
         public int ErrorCode
@@ -81,6 +93,6 @@ namespace EveTrader.Core.Net.Requests.CCP
             return this.Parse(this.GetRequestXml());
         }
 
-        public abstract T Parse(XDocument doc);
+        protected abstract T Parse(XDocument doc);
     }
 }

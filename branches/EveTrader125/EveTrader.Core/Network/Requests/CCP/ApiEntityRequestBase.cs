@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 
-namespace EveTrader.Core.Net.Requests.CCP
+namespace EveTrader.Core.Network.Requests.CCP
 {
     public abstract class ApiEntityRequestBase<T> : ApiAccountRequestBase<T>
     {

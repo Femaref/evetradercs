@@ -98,6 +98,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Selectors\CurrencyColorSelector.cs" />
     <Compile Include="WalletsView.xaml.cs">
       <DependentUpon>WalletsView.xaml</DependentUpon>
     </Compile>

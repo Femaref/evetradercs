@@ -3,6 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ManageAccountsWindow" Height="300" Width="300">
     <Grid>
-        
+        <TabControl
+            Height="Auto"
+            Width="Auto">
+                <TabItem Header="Add Account">
+                </TabItem>
+                <TabItem Header="Current Characters">
+                </TabItem>
+        </TabControl>
     </Grid>
 </Window>

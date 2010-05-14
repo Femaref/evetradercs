@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 
-namespace EveTrader.Core.Net.Requests.CCP
+namespace EveTrader.Core.Network.Requests.CCP
 {
     public abstract class ApiAccountRequestBase<T> : ApiRequestBase<T>
     {
-        private readonly Accounts iAccount;
+        protected readonly Accounts iAccount;
 
         protected override string Data
         {
@@ -19,7 +19,7 @@ namespace EveTrader.Core.Net.Requests.CCP
                 {
                     output += string.Format("{0}={1}&", kvp.Key, kvp.Value);
                 }
-                return output.Substring(0, output.Length-2);
+                return output.Substring(0, output.Length-1);
             }
         }
         public ApiAccountRequestBase(Accounts a) :base()

@@ -18,16 +18,19 @@
                   CanUserDeleteRows="False"
                   CanUserResizeRows="False"
                   ItemsSource="{Binding EntityWallets}"
-                  AlternatingRowBackground="#FFECECEF" AreRowDetailsFrozen="True" IsReadOnly="True">
+                  AlternatingRowBackground="#FFECECEF" 
+                  AreRowDetailsFrozen="True" 
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Width="SizeToCells"  
-                                           Binding="{Binding Name}" 
-                                           IsReadOnly="True"/>
-                <DataGridTextColumn Header="Name" Width="SizeToCells"  
-                                           Binding="{Binding Balance, StringFormat=n}" 
-                                           IsReadOnly="True"
-                                    />
+                <DataGridTextColumn Header="Name" 
+                                    Width="SizeToCells"  
+                                    Binding="{Binding Name}" 
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Balance" 
+                                    Width="SizeToCells"  
+                                    Binding="{Binding Balance, StringFormat=n}"
+                                    IsReadOnly="True"/>
             </DataGrid.Columns>
-            </DataGrid>
+        </DataGrid>
     </Grid>
 </UserControl>
