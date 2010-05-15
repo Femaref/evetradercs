@@ -58,6 +58,7 @@
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
+    <Compile Include="Model\DateTimeHelper.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Network\Requests\CCP\ApiRequestTarget.cs" />
     <Compile Include="Network\Requests\CCP\CharacterListRequest.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\DisplayDashboard.cs" />
+    <Compile Include="ViewModel\DisplayWallets.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
     <Compile Include="ViewModel\WalletsViewModel.cs" />

@@ -45,7 +45,8 @@
                 <DataGridTemplateColumn Header="Balance" 
                                     Width="SizeToCells"  
                                     CellTemplateSelector="{StaticResource currencyColorSelector}"
-                                    IsReadOnly="True">
+                                    IsReadOnly="True"
+                                    SortMemberPath="Balance">
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>

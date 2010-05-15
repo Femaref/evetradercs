@@ -12,13 +12,6 @@ using System.Diagnostics;
 
 namespace EveTrader.Core.ViewModel
 {
-    [DebuggerDisplay("Name: {Name} Balance: {Balance}")]
-    public class DisplayWallets
-    {
-        public string Name { get; set; }
-        public decimal Balance { get; set; }
-    }
-
     [Export]
     public class WalletsViewModel : ViewModel<IWalletsView>
     {

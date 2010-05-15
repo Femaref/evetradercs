@@ -6,9 +6,33 @@
 	x:Class="EveTrader.Wpf.DashboardView"
 	x:Name="UserControl"
         xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+    xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
-	Width="1149.5" Height="603" Background="Black">
+	Width="1149.5" Height="603">
 
 	<Grid x:Name="LayoutRoot" Margin="0,0,0,1.5">
+        <visi:Chart Height="Auto" Width="Auto">
+            <visi:Chart.Series>
+                <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Femaref" XValueType="Date" RenderAs="StackedColumn" DataSource="{Binding DailyInfo}" ToolTipText="Femaref">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
+                        <visi:DataMapping MemberName="YValue" Path="Investment[Femaref]"></visi:DataMapping>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+                <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Selena Karen" XValueType="Date" RenderAs="StackedColumn" DataSource="{Binding DailyInfo}" ToolTipText="Selena Karen">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
+                        <visi:DataMapping MemberName="YValue" Path="Investment[Selena Karen]"></visi:DataMapping>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+                <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Profit" XValueType="Date" RenderAs="Line" DataSource="{Binding DailyInfo}">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
+                        <visi:DataMapping MemberName="YValue" Path="Profit"></visi:DataMapping>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+            </visi:Chart.Series>
+
+        </visi:Chart>
 	</Grid>
 </UserControl>
