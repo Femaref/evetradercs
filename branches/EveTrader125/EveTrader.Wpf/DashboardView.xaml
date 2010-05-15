@@ -11,8 +11,23 @@
 	Width="1149.5" Height="603">
 
 	<Grid x:Name="LayoutRoot" Margin="0,0,0,1.5">
-        <visi:Chart Height="Auto" Width="Auto">
-            <visi:Chart.Series>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="726*" />
+            <ColumnDefinition Width="424*" />
+        </Grid.ColumnDefinitions>
+        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0">
+            <visi:Chart.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>
+                    <MenuItem Header="Last 14 days" Command="{Binding FilterTwoWeeksCommand}"/>
+                    <MenuItem Header="Last 30 days" Command="{Binding FilterMonthCommand}"/>
+                    <MenuItem Header="All time" Command="{Binding FilterAllTimeCommand}"/>
+                </ContextMenu>
+            </visi:Chart.ContextMenu>
+
+
+
+            <!--      <visi:Chart.Series>
                 <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Femaref" XValueType="Date" RenderAs="StackedColumn" DataSource="{Binding DailyInfo}" ToolTipText="Femaref">
                     <visi:DataSeries.DataMappings>
                         <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
@@ -31,8 +46,13 @@
                         <visi:DataMapping MemberName="YValue" Path="Profit"></visi:DataMapping>
                     </visi:DataSeries.DataMappings>
                 </visi:DataSeries>
-            </visi:Chart.Series>
+            </visi:Chart.Series> -->
 
         </visi:Chart>
-	</Grid>
+        
+        <ListBox Grid.Column="1" ItemsSource="{Binding Details}">
+
+        </ListBox>
+        
+    </Grid>
 </UserControl>

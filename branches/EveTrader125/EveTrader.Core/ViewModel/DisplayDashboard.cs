@@ -10,6 +10,7 @@ namespace EveTrader.Core.ViewModel
     {
         public DateTime Key { get; set; }
         public decimal Profit { get; set; }
-        public Dictionary<string,decimal> Investment { get; set; }
+        public decimal Investment { get; set; }
+        public Dictionary<string,decimal> Sales { get; set; }
     }
 }
