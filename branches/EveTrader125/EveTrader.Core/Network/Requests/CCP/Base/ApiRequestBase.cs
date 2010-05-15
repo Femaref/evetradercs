@@ -93,6 +93,6 @@ namespace EveTrader.Core.Network.Requests.CCP
             return this.Parse(this.GetRequestXml());
         }
 
-        protected abstract T Parse(XDocument doc);
+        protected abstract T Parse(XDocument document);
     }
 }
