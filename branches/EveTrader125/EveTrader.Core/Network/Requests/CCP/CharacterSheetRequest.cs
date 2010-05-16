@@ -11,7 +11,7 @@ namespace EveTrader.Core.Network.Requests.CCP
     public class CharacterSheetRequest : ApiEntityRequestBase<Characters>
     {
         public CharacterSheetRequest(Accounts a, long characterID)
-            : base(a, characterID)
+            : base(a, characterID, ApiRequestTarget.Character)
         {
         }
 
@@ -20,13 +20,6 @@ namespace EveTrader.Core.Network.Requests.CCP
             get
             {
                 return ApiRequestPage.CharacterSheet;
-            }
-        }
-        public override ApiRequestTarget Target
-        {
-            get
-            {
-                return ApiRequestTarget.Character;
             }
         }
 

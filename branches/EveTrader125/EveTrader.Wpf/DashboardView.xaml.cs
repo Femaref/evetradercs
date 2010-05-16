@@ -114,17 +114,17 @@ namespace EveTrader.Wpf
 
         void ds_MouseMove(object sender, MouseEventArgs e)
         {
-            OnDetailsRequested((sender as DataPoint).XValue as DateTime?);
+            OnDetailsRequested((sender as DataPoint).XValue as DateTime?, (sender as DataPoint).Parent.DataMappings[1].Path);
         }
 
         public event EventHandler<DetailsRequestedEventArgs> DetailsRequested;
 
-        private void OnDetailsRequested(DateTime? key)
+        private void OnDetailsRequested(DateTime? key, string bindingKey)
         {
             EventHandler<DetailsRequestedEventArgs> handler = DetailsRequested;
 
             if (handler != null && key.HasValue)
-                handler(this, new DetailsRequestedEventArgs(key.Value));
+                handler(this, new DetailsRequestedEventArgs(key.Value, bindingKey));
         }
 
         #endregion

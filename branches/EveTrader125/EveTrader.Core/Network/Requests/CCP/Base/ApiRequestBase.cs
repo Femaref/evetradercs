@@ -15,7 +15,11 @@ namespace EveTrader.Core.Network.Requests.CCP
         protected Dictionary<string, string> iData = new Dictionary<string, string>();
 
         protected readonly ApiRequestTarget iTarget;
-        protected readonly ApiRequestPage iPage;
+
+        public ApiRequestBase(ApiRequestTarget target)
+        {
+            iTarget = target;
+        }
 
         public XDocument CachedResponseXml = new XDocument();
 
@@ -47,14 +51,11 @@ namespace EveTrader.Core.Network.Requests.CCP
 
         private const string BaseIdentifier = @"http://api.eve-online.com/{0}/{1}.xml.aspx";
 
-        public virtual ApiRequestTarget Target
+        public ApiRequestTarget Target
         {
             get { return iTarget; }
         }
-        public virtual ApiRequestPage Page
-        {
-            get { return iPage; }
-        }
+        public abstract ApiRequestPage Page { get; }
 
         public Uri Identifier
         {

@@ -62,6 +62,7 @@
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
+    <Compile Include="Network\Requests\CCP\AccountBalanceRequest.cs" />
     <Compile Include="Network\Requests\CCP\Base\ApiAccountRequestBase.cs" />
     <Compile Include="Network\Requests\CCP\Base\ApiEntityRequestBase.cs" />
     <Compile Include="Network\Requests\CCP\Base\ApiRequestBase.cs" />

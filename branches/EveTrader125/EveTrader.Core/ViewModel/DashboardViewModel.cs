@@ -46,9 +46,23 @@ namespace EveTrader.Core.ViewModel
         void view_DetailsRequested(object sender, DetailsRequestedEventArgs e)
         {
             Details.Clear();
-            foreach (Transactions t in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day))
+            if (e.BindingKey.Contains("Investment"))
             {
-                Details.Add(string.Format("{0}: {1} {2}x{3} for {4} each", t.Wallet.Name, ((TransactionType)t.TransactionType).StringValue(), t.Quantity, t.TypeName, t.Price));
+                foreach (var grouping in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day && s.TransactionType == (long)TransactionType.Buy).GroupBy(s=> s.Wallet))
+                {
+                    foreach(var subGroup in grouping.GroupBy(s=> s.TypeName))
+                    {
+
+                        Details.Add(string.Format("{0}: {1} {2}x{3} for a total of {4}", grouping.Key.Name, TransactionType.Buy.StringValue(), subGroup.Sum(t => t.Quantity), subGroup.Key, subGroup.Sum(t => t.Quantity * t.Price).ToString("n")));
+                    }
+                   
+                    
+                }
+                return;
+            }
+            foreach(var t in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day))
+            {
+                Details.Add(string.Format("{0}: {1} {2}x{3} for {4} each", t.Wallet.Name, ((TransactionType)t.TransactionType).StringValue(), t.Quantity, t.TypeName, t.Price.ToString("n")));
             }
         }
 

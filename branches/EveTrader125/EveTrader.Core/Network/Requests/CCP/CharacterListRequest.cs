@@ -10,7 +10,7 @@ namespace EveTrader.Core.Network.Requests.CCP
     public class CharacterListRequest : ApiAccountRequestBase<IEnumerable<Characters>>
     {
         public CharacterListRequest(Accounts a)
-            : base(a)
+            : base(a, ApiRequestTarget.Account)
         {
         }
 
@@ -21,14 +21,6 @@ namespace EveTrader.Core.Network.Requests.CCP
                 return ApiRequestPage.CharactersList;
             }
         }
-        public override ApiRequestTarget Target
-        {
-            get
-            {
-                return ApiRequestTarget.Account;
-            }
-        }
-
 
         protected override IEnumerable<Characters> Parse(System.Xml.Linq.XDocument doc)
         {

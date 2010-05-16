@@ -10,8 +10,8 @@ namespace EveTrader.Core.Network.Requests.CCP
     {
         protected long iCharacterID = 0;
 
-        public ApiEntityRequestBase(Accounts a, long characterID)
-            : base(a)
+        public ApiEntityRequestBase(Accounts a, long characterID, ApiRequestTarget target)
+            : base(a, target)
         {
             iCharacterID = characterID;
             this.iData.Add("characterID", iCharacterID.ToString());

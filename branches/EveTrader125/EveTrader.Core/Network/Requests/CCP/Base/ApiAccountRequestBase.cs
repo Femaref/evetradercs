@@ -22,7 +22,8 @@ namespace EveTrader.Core.Network.Requests.CCP
                 return output.Substring(0, output.Length-1);
             }
         }
-        public ApiAccountRequestBase(Accounts a) :base()
+        public ApiAccountRequestBase(Accounts a, ApiRequestTarget target)
+            : base(target)
         {
             iAccount = a;
             this.iData.Add("userID", a.ID.ToString());

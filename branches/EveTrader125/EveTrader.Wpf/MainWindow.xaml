@@ -8,28 +8,35 @@
      xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
 	x:Class="EveTrader.Wpf.MainWindow"
 	x:Name="Window"
-	Title="MainWindow"
-	Width="1181.5" Height="697">
+	Title="EveTrader"
+	Width="1181.5" Height="697" Icon="/EveTrader.Wpf;component/Images/Intelligence.ico">
 
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="0.969*"/>
-			<RowDefinition Height="0.031*"/>
+			<RowDefinition Height="19*"/>
+            <RowDefinition Height="619*" />
+            <RowDefinition Height="20*"/>
 		</Grid.RowDefinitions>
-		<TabControl Margin="0,22.724,0,0" RenderTransformOrigin="0.5,0.5" Height="619.723" VerticalAlignment="Top">
-			<TabItem Header="Dashboard">
-                <ContentControl Content="{Binding DashboardView}"/>
-			</TabItem>
+        <Menu Height="19" VerticalAlignment="Top">
+            <MenuItem Margin="0" Header="Main">
+                <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
+                <MenuItem Header="Exit" Command="ApplicationCommands.Close"/>
+            </MenuItem>
+        </Menu>
+        <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1">
+            <TabItem Header="Dashboard">
+                <Grid>
+                    <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,1" Width="1148" />
+                </Grid>
+            </TabItem>
 			<TabItem Header="Wallets">
                 <ContentControl Content="{Binding WalletsView}"/>
             </TabItem>
+            <TabItem Header="Journal"></TabItem>
+            <TabItem Header="Transactions"></TabItem>
+            <TabItem Header="Reports"></TabItem>
 		</TabControl>
-		<Menu VerticalAlignment="Top">
-			<MenuItem Margin="0" Header="Main">
-                <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
-                <MenuItem Header="Exit" Command="ApplicationCommands.Close"/>
-			</MenuItem>
-		</Menu>
-		<StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+
+		<StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="2"/>
 	</Grid>
 </Window>

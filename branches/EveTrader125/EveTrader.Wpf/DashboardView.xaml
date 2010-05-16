@@ -8,14 +8,14 @@
         xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
-	Width="1149.5" Height="603">
+	Width="Auto" Height="Auto">
 
-	<Grid x:Name="LayoutRoot" Margin="0,0,0,1.5">
+    <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="726*" />
-            <ColumnDefinition Width="424*" />
+            <ColumnDefinition Width="0.75*" />
+            <ColumnDefinition Width="0.25*" />
         </Grid.ColumnDefinitions>
-        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0">
+        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
             <visi:Chart.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>
@@ -38,7 +38,7 @@
                     <visi:DataSeries.DataMappings>
                         <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
                         <visi:DataMapping MemberName="YValue" Path="Investment[Selena Karen]"></visi:DataMapping>
-                    </visi:DataSeries.DataMappings>
+                    </visi:DataSeries.DataMappings><Border />
                 </visi:DataSeries>
                 <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Profit" XValueType="Date" RenderAs="Line" DataSource="{Binding DailyInfo}">
                     <visi:DataSeries.DataMappings>
@@ -49,10 +49,8 @@
             </visi:Chart.Series> -->
 
         </visi:Chart>
-        
-        <ListBox Grid.Column="1" ItemsSource="{Binding Details}">
 
-        </ListBox>
+        <ListBox Grid.Column="1" ItemsSource="{Binding Details}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"/>
         
     </Grid>
 </UserControl>

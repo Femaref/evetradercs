@@ -9,10 +9,12 @@ namespace EveTrader.Core.View
     public class DetailsRequestedEventArgs : EventArgs
     {
         public DateTime Key { get; set; }
+        public string BindingKey { get; set; }
 
-        public DetailsRequestedEventArgs(DateTime key)
+        public DetailsRequestedEventArgs(DateTime key, string bindingKey)
         {
             Key = key;
+            BindingKey = bindingKey;
         }
     }
 
