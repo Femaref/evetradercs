@@ -31,11 +31,9 @@ namespace EveTrader.Core.Updater.CCP
             entity.Balance = c.Balance;
             entity.Bloodline = c.Bloodline;
             entity.Gender = c.Gender;
-            if (entity.Corporation.ID != c.Corporation.ID)
-            {
-                iCorporationSheetUpdater.Update(c.Corporation);
-                entity.Corporation = c.Corporation;
-            }
+            iCorporationSheetUpdater.Update(c.Corporation);
+            entity.Corporation = iModel.Entity.OfType<Corporations>().First(s => s.ID == c.Corporation.ID);
+
 
             iModel.SaveChanges();
 

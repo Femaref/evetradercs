@@ -29,7 +29,7 @@ namespace EveTrader.Core.Updater.CCP
 
         public bool Update(long characterID, Accounts a)
         {
-            return Update((Characters)iEntityFactory.CreateEntity(characterID, a));
+            return Update(iEntityFactory.CreateCharacter(characterID, a));
         }
 
         protected override bool InnerUpdate(Characters c)

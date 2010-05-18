@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
+using EveTrader.Core.Network.Requests.CCP;
 
 namespace EveTrader.Core.Updater.CCP
 {
@@ -15,7 +16,11 @@ namespace EveTrader.Core.Updater.CCP
 
         protected override bool InnerUpdate(Corporations entity)
         {
-            throw new NotImplementedException();
+            var charID = (from a in 
+                          where a.Entities.Contains(entity) 
+
+            CorporationSheetRequest csr = new CorporationSheetRequest(entity.Account, 
+            return true;
         }
     }
 }
