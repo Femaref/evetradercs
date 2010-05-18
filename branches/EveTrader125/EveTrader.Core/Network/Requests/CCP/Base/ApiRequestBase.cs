@@ -21,10 +21,18 @@ namespace EveTrader.Core.Network.Requests.CCP
             iTarget = target;
         }
 
-        public XDocument CachedResponseXml = new XDocument();
+        public XDocument CachedResponseXml
+        {
+            get { return GetRequestXml(); }
+        }
+
+        private XDocument iCachedResponseXml = null;
 
         private XDocument GetRequestXml()
         {
+            if (iCachedResponseXml != null)
+                return iCachedResponseXml;
+
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(Identifier);
 
             req.UserAgent = "EveTrader/1.2.5";
@@ -44,8 +52,8 @@ namespace EveTrader.Core.Network.Requests.CCP
             using (StreamReader reader = new StreamReader(res.GetResponseStream()))
             {
                 string output = reader.ReadToEnd();
-                CachedResponseXml =  XDocument.Parse(output);
-                return CachedResponseXml;
+                iCachedResponseXml =  XDocument.Parse(output);
+                return iCachedResponseXml;
             }
         }
 

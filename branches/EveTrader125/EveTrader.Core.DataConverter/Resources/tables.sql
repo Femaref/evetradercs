@@ -275,6 +275,20 @@ CREATE TABLE [Journal] (
     CONSTRAINT [FK_Journal_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID])
 
 );
+
+CREATE TABLE [ApiJournal] (
+[ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+[ExternalID] integer NOT NULL,
+CONSTRAINT [FK_ApiJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID])
+);
+
+CREATE TABLE [CustomJournal](
+[ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+[Created] datetime NOT NULL,
+[Description] text NOT NULL,
+CONSTRAINT [FK_CustomJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID])
+);
+
 CREATE TABLE [MarketOrders] (
 
     [ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,

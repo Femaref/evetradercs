@@ -7,6 +7,7 @@ using EveTrader.Core;
 using EveTrader.Core.Model;
 using EveTrader.Core.ViewModel;
 using EveTrader.Core.Network.Requests.CCP;
+using EveTrader.Core.Updater.CCP;
 namespace TestProject1
 {
 
@@ -116,6 +117,13 @@ namespace TestProject1
             CharacterListRequest clr = new CharacterListRequest(t.Accounts.First(a => a.ID == 334887));
             var x = clr.Request();
             Assert.IsTrue(x.Count() == 3);
+        }
+
+        [TestMethod]
+        public void CharacterUpdaterTest()
+        {
+            CharacterUpdater cu = new CharacterUpdater(t, new EntityFactory(t), new CharacterSheetUpdater(t, new CorporationUpdater(t)));
+            Assert.IsTrue(cu.Update(1807434339));
         }
     }
 }

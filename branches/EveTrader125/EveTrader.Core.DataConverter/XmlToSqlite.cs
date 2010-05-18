@@ -34,11 +34,17 @@ namespace EveTrader.Core.DataConverter
 
             TraderModel model = new TraderModel("metadata=res://*/Model.TraderModel.csdl|res://*/Model.TraderModel.ssdl|res://*/Model.TraderModel.msl;provider=System.Data.SQLite;provider connection string='data source=" + path + "'");
 
+            if (model.Accounts.Count(e => e.ID == 0) == 0)
+            {
+                model.Accounts.AddObject(Accounts.CreateAccounts(0, ""));
+                model.SaveChanges();
+            }
+
             Accounts currentAccount;
             foreach (XElement characters in root.Element("Characters").Elements())
             {
                 long id = characters.Element("ApiData").Element("UserID").Value.ToInt64();
-                if (model.Accounts.Count(a => a.ID == id) == 0)
+                if (id != 0 && model.Accounts.Count(a => a.ID == id) == 0)
                 {
                     var newAccount = Accounts.CreateAccounts(characters.Element("ApiData").Element("UserID").Value.ToInt64(), characters.Element("ApiData").Element("ApiKey").Value);
                     model.Accounts.AddObject(newAccount);
@@ -48,7 +54,8 @@ namespace EveTrader.Core.DataConverter
 
                 var dbChar = GetCharacter(characters);
 
-
+                if (model.Entity.Count(e => e.ID == dbChar.ID) != 0)
+                    continue;
 
                 long corpID = characters.Element("Corporation").Element("ID").Value.ToInt64();
 
@@ -153,9 +160,9 @@ namespace EveTrader.Core.DataConverter
             return w;
         }
 
-        private static Journal GetJournal(XElement journal)
+        private static ApiJournal GetJournal(XElement journal)
         {
-            return Journal.CreateJournal(journal.Element("ReferenceID").Value.ToInt64(),
+            return ApiJournal.CreateApiJournal(0,
                 journal.Element("ReferenceTypeID").Value.ToInt64(),
                 journal.Element("OwnerName1").Value,
                 journal.Element("OwnerID1").Value.ToInt64(),
@@ -167,7 +174,8 @@ namespace EveTrader.Core.DataConverter
                 journal.Element("Balance").Value.ToDecimal(),
                 journal.Element("Reason").Value,
                 journal.Element("TaxReceiverID").Value.ToInt64(),
-                journal.Element("TaxAmount").Value.ToDecimal());
+                journal.Element("TaxAmount").Value.ToDecimal(),
+                journal.Element("ReferenceID").Value.ToInt64());
 
 
         }

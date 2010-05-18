@@ -97,9 +97,6 @@ namespace EveTrader.Core.ViewModel
         public void Refresh()
         {
             DailyInfo.Clear();
-
-            
-
             //TODO: Datageneration
 
             var data = (from w in iModel.Transactions

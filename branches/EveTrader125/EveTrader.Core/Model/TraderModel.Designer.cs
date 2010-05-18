@@ -388,6 +388,84 @@ namespace EveTrader.Core.Model
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="ApiJournal")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ApiJournal : Journal
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ApiJournal object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="refTypeID">Initial value of the RefTypeID property.</param>
+        /// <param name="ownerName1">Initial value of the OwnerName1 property.</param>
+        /// <param name="ownerID1">Initial value of the OwnerID1 property.</param>
+        /// <param name="ownerName2">Initial value of the OwnerName2 property.</param>
+        /// <param name="ownerID2">Initial value of the OwnerID2 property.</param>
+        /// <param name="argName1">Initial value of the ArgName1 property.</param>
+        /// <param name="argID1">Initial value of the ArgID1 property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="balance">Initial value of the Balance property.</param>
+        /// <param name="reason">Initial value of the Reason property.</param>
+        /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
+        /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
+        /// <param name="externalID">Initial value of the ExternalID property.</param>
+        public static ApiJournal CreateApiJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.Int64 externalID)
+        {
+            ApiJournal apiJournal = new ApiJournal();
+            apiJournal.ID = id;
+            apiJournal.RefTypeID = refTypeID;
+            apiJournal.OwnerName1 = ownerName1;
+            apiJournal.OwnerID1 = ownerID1;
+            apiJournal.OwnerName2 = ownerName2;
+            apiJournal.OwnerID2 = ownerID2;
+            apiJournal.ArgName1 = argName1;
+            apiJournal.ArgID1 = argID1;
+            apiJournal.Amount = amount;
+            apiJournal.Balance = balance;
+            apiJournal.Reason = reason;
+            apiJournal.TaxReceiverID = taxReceiverID;
+            apiJournal.TaxAmount = taxAmount;
+            apiJournal.ExternalID = externalID;
+            return apiJournal;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ExternalID
+        {
+            get
+            {
+                return _ExternalID;
+            }
+            set
+            {
+                OnExternalIDChanging(value);
+                ReportPropertyChanging("ExternalID");
+                _ExternalID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExternalID");
+                OnExternalIDChanged();
+            }
+        }
+        private global::System.Int64 _ExternalID;
+        partial void OnExternalIDChanging(global::System.Int64 value);
+        partial void OnExternalIDChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="ApiTransactions")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -881,6 +959,110 @@ namespace EveTrader.Core.Model
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="CustomJournal")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class CustomJournal : Journal
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CustomJournal object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="refTypeID">Initial value of the RefTypeID property.</param>
+        /// <param name="ownerName1">Initial value of the OwnerName1 property.</param>
+        /// <param name="ownerID1">Initial value of the OwnerID1 property.</param>
+        /// <param name="ownerName2">Initial value of the OwnerName2 property.</param>
+        /// <param name="ownerID2">Initial value of the OwnerID2 property.</param>
+        /// <param name="argName1">Initial value of the ArgName1 property.</param>
+        /// <param name="argID1">Initial value of the ArgID1 property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="balance">Initial value of the Balance property.</param>
+        /// <param name="reason">Initial value of the Reason property.</param>
+        /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
+        /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
+        /// <param name="created">Initial value of the Created property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        public static CustomJournal CreateCustomJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime created, global::System.String description)
+        {
+            CustomJournal customJournal = new CustomJournal();
+            customJournal.ID = id;
+            customJournal.RefTypeID = refTypeID;
+            customJournal.OwnerName1 = ownerName1;
+            customJournal.OwnerID1 = ownerID1;
+            customJournal.OwnerName2 = ownerName2;
+            customJournal.OwnerID2 = ownerID2;
+            customJournal.ArgName1 = argName1;
+            customJournal.ArgID1 = argID1;
+            customJournal.Amount = amount;
+            customJournal.Balance = balance;
+            customJournal.Reason = reason;
+            customJournal.TaxReceiverID = taxReceiverID;
+            customJournal.TaxAmount = taxAmount;
+            customJournal.Created = created;
+            customJournal.Description = description;
+            return customJournal;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Created
+        {
+            get
+            {
+                return _Created;
+            }
+            set
+            {
+                OnCreatedChanging(value);
+                ReportPropertyChanging("Created");
+                _Created = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Created");
+                OnCreatedChanged();
+            }
+        }
+        private global::System.DateTime _Created;
+        partial void OnCreatedChanging(global::System.DateTime value);
+        partial void OnCreatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="CustomTransactions")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -988,8 +1170,24 @@ namespace EveTrader.Core.Model
     [DataContractAttribute(IsReference=true)]
     [KnownTypeAttribute(typeof(Corporations))]
     [KnownTypeAttribute(typeof(Characters))]
-    public abstract partial class Entities : EntityObject
+    public partial class Entities : EntityObject
     {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Entities object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static Entities CreateEntities(global::System.Int64 id, global::System.String name)
+        {
+            Entities entities = new Entities();
+            entities.ID = id;
+            entities.Name = name;
+            return entities;
+        }
+
+        #endregion
         #region Primitive Properties
     
         /// <summary>
@@ -1138,6 +1336,8 @@ namespace EveTrader.Core.Model
     [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="Journal")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
+    [KnownTypeAttribute(typeof(ApiJournal))]
+    [KnownTypeAttribute(typeof(CustomJournal))]
     public partial class Journal : EntityObject
     {
         #region Factory Method

@@ -7,10 +7,12 @@
     <Schema Namespace="testModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="testModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="testModel.Store.Accounts" store:Type="Tables" />
+          <EntitySet Name="ApiJournal" EntityType="testModel.Store.ApiJournal" store:Type="Tables" />
           <EntitySet Name="ApiTransactions" EntityType="testModel.Store.ApiTransactions" store:Type="Tables" />
           <EntitySet Name="ApplicationLog" EntityType="testModel.Store.ApplicationLog" store:Type="Tables" />
           <EntitySet Name="Characters" EntityType="testModel.Store.Characters" store:Type="Tables" />
           <EntitySet Name="Corporations" EntityType="testModel.Store.Corporations" store:Type="Tables" />
+          <EntitySet Name="CustomJournal" EntityType="testModel.Store.CustomJournal" store:Type="Tables" />
           <EntitySet Name="CustomTransactions" EntityType="testModel.Store.CustomTransactions" store:Type="Tables" />
           <EntitySet Name="Entity" EntityType="testModel.Store.Entity" store:Type="Tables" />
           <EntitySet Name="Journal" EntityType="testModel.Store.Journal" store:Type="Tables" />
@@ -18,6 +20,10 @@
           <EntitySet Name="Transactions" EntityType="testModel.Store.Transactions" store:Type="Tables" />
           <EntitySet Name="WalletHistories" EntityType="testModel.Store.WalletHistories" store:Type="Tables" />
           <EntitySet Name="Wallets" EntityType="testModel.Store.Wallets" store:Type="Tables" />
+          <AssociationSet Name="FK_ApiJournal_0" Association="testModel.Store.FK_ApiJournal_0">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="ApiJournal" EntitySet="ApiJournal" />
+          </AssociationSet>
           <AssociationSet Name="FK_ApiTransactions_0" Association="testModel.Store.FK_ApiTransactions_0">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="ApiTransactions" EntitySet="ApiTransactions" />
@@ -29,6 +35,10 @@
           <AssociationSet Name="FK_Corporations_0" Association="testModel.Store.FK_Corporations_0">
             <End Role="Entity" EntitySet="Entity" />
             <End Role="Corporations" EntitySet="Corporations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomJournal_0" Association="testModel.Store.FK_CustomJournal_0">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="CustomJournal" EntitySet="CustomJournal" />
           </AssociationSet>
           <AssociationSet Name="FK_CustomTransactions_0" Association="testModel.Store.FK_CustomTransactions_0">
             <End Role="Transactions" EntitySet="Transactions" />
@@ -66,11 +76,18 @@
           <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="ApiKey" Type="nvarchar" Nullable="false" />
         </EntityType>
+        <EntityType Name="ApiJournal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false"  />
+          <Property Name="ExternalID" Type="integer" Nullable="false" />
+        </EntityType>
         <EntityType Name="ApiTransactions">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="integer" Nullable="false"  />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationLog">
@@ -101,11 +118,19 @@
           <Property Name="Ticker" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Npc" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="CustomJournal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" />
+        </EntityType>
         <EntityType Name="CustomTransactions">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="integer" Nullable="false"  />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" />
         </EntityType>
@@ -194,6 +219,18 @@
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Balance" Type="decimal" Nullable="false" Precision="53" />
         </EntityType>
+        <Association Name="FK_ApiJournal_0">
+          <End Role="Journal" Type="testModel.Store.Journal" Multiplicity="1" />
+          <End Role="ApiJournal" Type="testModel.Store.ApiJournal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApiJournal">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ApiTransactions_0">
           <End Role="Transactions" Type="testModel.Store.Transactions" Multiplicity="1" />
           <End Role="ApiTransactions" Type="testModel.Store.ApiTransactions" Multiplicity="0..1" />
@@ -226,6 +263,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Corporations">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomJournal_0">
+          <End Role="Journal" Type="testModel.Store.Journal" Multiplicity="1" />
+          <End Role="CustomJournal" Type="testModel.Store.CustomJournal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomJournal">
               <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -361,7 +410,7 @@
           <NavigationProperty Name="Characters" Relationship="EveTrader.Core.Model.FK_Characters_0" FromRole="Corporations" ToRole="Characters" />
           <Property Type="Boolean" Name="Npc" Nullable="false" />
           </EntityType>
-        <EntityType Name="Entities" Abstract="true">
+        <EntityType Name="Entities" Abstract="false">
           <Key>
             <PropertyRef Name="ID" /></Key>
           <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
@@ -413,7 +462,8 @@
           <Property Type="String" Name="Reason" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="TaxReceiverID" Nullable="false" />
           <Property Type="Decimal" Name="TaxAmount" Nullable="false" Precision="53" Scale="0" />
-          <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Journal_0" FromRole="Journal" ToRole="Wallets" /></EntityType>
+          <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Journal_0" FromRole="Journal" ToRole="Wallets" />
+          </EntityType>
         <EntityType Name="MarketOrders">
           <Key>
             <PropertyRef Name="ID" /></Key>
@@ -483,6 +533,13 @@
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <Property Type="String" Name="Message" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CallingClass" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" /></EntityType>
+        <EntityType Name="ApiJournal" BaseType="EveTrader.Core.Model.Journal">
+          <Property Type="Int64" Name="ExternalID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomJournal" BaseType="EveTrader.Core.Model.Journal">
+          <Property Type="DateTime" Name="Created" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -539,21 +596,36 @@
             <EndProperty Name="Corporations">
               <ScalarProperty Name="ID" ColumnName="CorporationID" /></EndProperty></AssociationSetMapping>
           <EntitySetMapping Name="Journal">
-            <EntityTypeMapping TypeName="EveTrader.Core.Model.Journal">
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Journal)">
               <MappingFragment StoreEntitySet="Journal">
-                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
-                <ScalarProperty Name="TaxReceiverID" ColumnName="TaxReceiverID" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ArgID1" ColumnName="ArgID1" />
-                <ScalarProperty Name="ArgName1" ColumnName="ArgName1" />
-                <ScalarProperty Name="OwnerID2" ColumnName="OwnerID2" />
-                <ScalarProperty Name="OwnerName2" ColumnName="OwnerName2" />
-                <ScalarProperty Name="OwnerID1" ColumnName="OwnerID1" />
-                <ScalarProperty Name="OwnerName1" ColumnName="OwnerName1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RefTypeID" ColumnName="RefTypeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+                <ScalarProperty Name="OwnerName1" ColumnName="OwnerName1" />
+                <ScalarProperty Name="OwnerID1" ColumnName="OwnerID1" />
+                <ScalarProperty Name="OwnerName2" ColumnName="OwnerName2" />
+                <ScalarProperty Name="OwnerID2" ColumnName="OwnerID2" />
+                <ScalarProperty Name="ArgName1" ColumnName="ArgName1" />
+                <ScalarProperty Name="ArgID1" ColumnName="ArgID1" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="TaxReceiverID" ColumnName="TaxReceiverID" />
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.ApiJournal)">
+              <MappingFragment StoreEntitySet="ApiJournal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExternalID" ColumnName="ExternalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.CustomJournal)">
+              <MappingFragment StoreEntitySet="CustomJournal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="MarketOrders">
             <EntityTypeMapping TypeName="EveTrader.Core.Model.MarketOrders">
               <MappingFragment StoreEntitySet="MarketOrders">
@@ -693,8 +765,8 @@
           <ConnectorPoint PointX="5.625" PointY="6.375" />
           </AssociationConnector>
         <AssociationConnector Association="EveTrader.Core.Model.FK_Journal_0">
-          <ConnectorPoint PointX="10.625" PointY="5.6061612955729165" />
-          <ConnectorPoint PointX="16.71875" PointY="5.6061612955729165" />
+          <ConnectorPoint PointX="10.625" PointY="5.5239876302083326" />
+          <ConnectorPoint PointX="16.71875" PointY="5.5239876302083326" />
           <ConnectorPoint PointX="16.71875" PointY="6.375" />
           </AssociationConnector>
         <AssociationConnector Association="EveTrader.Core.Model.FK_Transactions_0">
@@ -717,6 +789,16 @@
           <ConnectorPoint PointX="18" PointY="3.9928898111979159" />
           </InheritanceConnector>
         <EntityTypeShape EntityType="EveTrader.Core.Model.ApplicationLog" Width="1.5" PointX="5.375" PointY="0.75" Height="1.5923063151041665" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.ApiJournal" Width="1.5" PointX="17.75" PointY="6.25" Height="1.0992643229166665" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.CustomJournal" Width="1.5" PointX="17.75" PointY="8.5" Height="1.2636116536458335" />
+        <InheritanceConnector EntityType="EveTrader.Core.Model.ApiJournal">
+          <ConnectorPoint PointX="17" PointY="6.8621321614583337" />
+          <ConnectorPoint PointX="17.75" PointY="6.8621321614583337" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="EveTrader.Core.Model.CustomJournal">
+          <ConnectorPoint PointX="17" PointY="9.0553898111979159" />
+          <ConnectorPoint PointX="17.75" PointY="9.0553898111979159" />
+        </InheritanceConnector>
         </Diagram></Diagrams>
   </Designer>
 </edmx:Edmx>

@@ -8,9 +8,9 @@ namespace EveTrader.Core.Network.Requests.CCP
 {
     public enum ApiRequestTarget
     {
-        [EnumStringValue("character")]
+        [EnumStringValue("char")]
         Character,
-        [EnumStringValue("ccorporation")]
+        [EnumStringValue("corp")]
         Corporation,
         [EnumStringValue("account")]
         Account
