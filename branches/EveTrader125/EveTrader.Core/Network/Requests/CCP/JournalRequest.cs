@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
+using EveTrader.Core.ClassExtenders;
 
 namespace EveTrader.Core.Network.Requests.CCP
 {
@@ -29,7 +30,36 @@ namespace EveTrader.Core.Network.Requests.CCP
         }
         protected override IEnumerable<Journal> Parse(System.Xml.Linq.XDocument document)
         {
-            throw new NotImplementedException();
+            if (document.ToString().Contains("error code="))
+                throw new ArgumentException(string.Format("Api error encountered: {0}", this.ErrorCode));
+
+            var root = document.Element("eveapi").Element("result").Element("rowset").Elements();
+
+            var records = root.Select(r => new ApiJournal
+            {
+                Date = r.Attribute("date").Value.ToDateTime(),
+                ExternalID = r.Attribute("refID").Value.ToInt64(),
+                RefTypeID = r.Attribute("refTypeID").Value.ToInt64(),
+                Amount = r.Attribute("amount").Value.ToDecimal(),
+                Balance = r.Attribute("balance").Value.ToDecimal(),
+                TaxAmount =
+                    r.Attribute("taxAmount") != null
+                        ? r.Attribute("taxAmount").Value.ToDecimal()
+                        : 0,
+                TaxReceiverID =
+                    r.Attribute("taxReceiverID") != null
+                        ? r.Attribute("taxReceiverID").Value.ToInt64()
+                        : 0,
+                OwnerID1 = r.Attribute("ownerID1").Value.ToInt32(),
+                OwnerName1 = r.Attribute("ownerName1").Value,
+                OwnerID2 = r.Attribute("ownerID2").Value.ToInt32(),
+                OwnerName2 = r.Attribute("ownerName2").Value,
+                ArgID1 = r.Attribute("argID1").Value.ToInt32(),
+                ArgName1 = r.Attribute("argName1").Value,
+                Reason = r.Attribute("reason").Value
+            });
+
+            return records;
         }
     }
 }

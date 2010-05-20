@@ -14,6 +14,8 @@ CREATE TABLE [Corporations] (
 
 	[Npc] bit NOT NULL DEFAULT 0,
 
+	[ApiCharacterID] integer NOT NULL,
+
 
 
     CONSTRAINT [FK_Corporations_ID_Entity_ID] FOREIGN KEY ([ID]) REFERENCES [Entity] ([ID])
@@ -271,6 +273,8 @@ CREATE TABLE [Journal] (
     [TaxReceiverID] integer NOT NULL,
 
     [TaxAmount] decimal NOT NULL,
+
+	[Date] DateTime NOT NULL,
 
     CONSTRAINT [FK_Journal_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID])
 

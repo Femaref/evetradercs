@@ -84,6 +84,7 @@
     <Compile Include="Updater\CCP\ICharacterUpdater.cs" />
     <Compile Include="Updater\CCP\ICorporationSheetUpdater.cs" />
     <Compile Include="Updater\CCP\ICorporationUpdater.cs" />
+    <Compile Include="Updater\CCP\MarketOrderUpdate.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />

@@ -26,7 +26,7 @@ namespace EveTrader.Core.Network.Requests.CCP
         protected override IEnumerable<Wallets> Parse(System.Xml.Linq.XDocument document)
         {
             if (document.ToString().Contains("error code="))
-                throw new ArgumentException(string.Format("Error Encountered: {0} : {1}", this.ErrorCode));
+                throw new ArgumentException(string.Format("Api error encountered: {0}", this.ErrorCode));
 
             var root = document.Element("eveapi").Element("result").Element("rowset");
             var balances = (from x in root.Elements()

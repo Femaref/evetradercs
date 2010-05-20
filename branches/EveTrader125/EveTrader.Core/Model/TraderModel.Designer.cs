@@ -411,8 +411,9 @@ namespace EveTrader.Core.Model
         /// <param name="reason">Initial value of the Reason property.</param>
         /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
         /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
+        /// <param name="date">Initial value of the Date property.</param>
         /// <param name="externalID">Initial value of the ExternalID property.</param>
-        public static ApiJournal CreateApiJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.Int64 externalID)
+        public static ApiJournal CreateApiJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.Int64 externalID)
         {
             ApiJournal apiJournal = new ApiJournal();
             apiJournal.ID = id;
@@ -428,6 +429,7 @@ namespace EveTrader.Core.Model
             apiJournal.Reason = reason;
             apiJournal.TaxReceiverID = taxReceiverID;
             apiJournal.TaxAmount = taxAmount;
+            apiJournal.Date = date;
             apiJournal.ExternalID = externalID;
             return apiJournal;
         }
@@ -1008,9 +1010,10 @@ namespace EveTrader.Core.Model
         /// <param name="reason">Initial value of the Reason property.</param>
         /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
         /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
+        /// <param name="date">Initial value of the Date property.</param>
         /// <param name="created">Initial value of the Created property.</param>
         /// <param name="description">Initial value of the Description property.</param>
-        public static CustomJournal CreateCustomJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime created, global::System.String description)
+        public static CustomJournal CreateCustomJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.DateTime created, global::System.String description)
         {
             CustomJournal customJournal = new CustomJournal();
             customJournal.ID = id;
@@ -1026,6 +1029,7 @@ namespace EveTrader.Core.Model
             customJournal.Reason = reason;
             customJournal.TaxReceiverID = taxReceiverID;
             customJournal.TaxAmount = taxAmount;
+            customJournal.Date = date;
             customJournal.Created = created;
             customJournal.Description = description;
             return customJournal;
@@ -1384,7 +1388,8 @@ namespace EveTrader.Core.Model
         /// <param name="reason">Initial value of the Reason property.</param>
         /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
         /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
-        public static Journal CreateJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount)
+        /// <param name="date">Initial value of the Date property.</param>
+        public static Journal CreateJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date)
         {
             Journal journal = new Journal();
             journal.ID = id;
@@ -1400,6 +1405,7 @@ namespace EveTrader.Core.Model
             journal.Reason = reason;
             journal.TaxReceiverID = taxReceiverID;
             journal.TaxAmount = taxAmount;
+            journal.Date = date;
             return journal;
         }
 
@@ -1720,6 +1726,30 @@ namespace EveTrader.Core.Model
         private global::System.Decimal _TaxAmount;
         partial void OnTaxAmountChanging(global::System.Decimal value);
         partial void OnTaxAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                OnDateChanging(value);
+                ReportPropertyChanging("Date");
+                _Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Date");
+                OnDateChanged();
+            }
+        }
+        private global::System.DateTime _Date;
+        partial void OnDateChanging(global::System.DateTime value);
+        partial void OnDateChanged();
 
         #endregion
     

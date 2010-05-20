@@ -161,6 +161,7 @@
           <Property Name="Reason" Type="nvarchar" Nullable="false" />
           <Property Name="TaxReceiverID" Type="integer" Nullable="false" />
           <Property Name="TaxAmount" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MarketOrders">
           <Key>
@@ -464,6 +465,7 @@
           <Property Type="String" Name="Reason" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="TaxReceiverID" Nullable="false" />
           <Property Type="Decimal" Name="TaxAmount" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="DateTime" Name="Date" Nullable="false"/>
           <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Journal_0" FromRole="Journal" ToRole="Wallets" />
           </EntityType>
         <EntityType Name="MarketOrders">
@@ -614,6 +616,7 @@
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="TaxReceiverID" ColumnName="TaxReceiverID" />
                 <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.ApiJournal)">

@@ -87,7 +87,8 @@ namespace EveTrader.Core.DataConverter
                 Name = corporations.Element("Name").Value,
                 Ticker = corporations.Element("Ticker").Value,
                 //TODO better check
-                Npc = corporations.Element("ID").Value.ToInt64() <= 1000182
+                Npc = corporations.Element("ID").Value.ToInt64() <= 1000182,
+                ApiCharacterID = corporations.Element("ApiData").Element("CharacterID").Value.ToInt64()
             };
             if (!corporation.Npc)
             {
@@ -175,6 +176,7 @@ namespace EveTrader.Core.DataConverter
                 journal.Element("Reason").Value,
                 journal.Element("TaxReceiverID").Value.ToInt64(),
                 journal.Element("TaxAmount").Value.ToDecimal(),
+                journal.Element("Date").Value.ToDateTime(),
                 journal.Element("ReferenceID").Value.ToInt64());
 
 
