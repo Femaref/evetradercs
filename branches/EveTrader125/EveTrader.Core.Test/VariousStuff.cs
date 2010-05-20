@@ -137,5 +137,12 @@ namespace TestProject1
            // CorporationUpdater cu = new CorporationUpdater(t, new EntityFactory(t), new CorporationSheetUpdater(t));
             //Assert.IsTrue(cu.Update(489322128, t.Accounts.First(f => f.ID == 620637)));
         }
+        [TestMethod]
+        public void AccountBalanceTest()
+        {
+            AccountBalanceUpdater abu = new AccountBalanceUpdater(t);
+
+            Assert.IsTrue(abu.Update(t.Entity.First(e => e.Name == "Armageddon Day")));
+        }
     }
 }

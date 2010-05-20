@@ -866,13 +866,15 @@ namespace EveTrader.Core.Model
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="ticker">Initial value of the Ticker property.</param>
         /// <param name="npc">Initial value of the Npc property.</param>
-        public static Corporations CreateCorporations(global::System.Int64 id, global::System.String name, global::System.String ticker, global::System.Boolean npc)
+        /// <param name="apiCharacterID">Initial value of the ApiCharacterID property.</param>
+        public static Corporations CreateCorporations(global::System.Int64 id, global::System.String name, global::System.String ticker, global::System.Boolean npc, global::System.Int64 apiCharacterID)
         {
             Corporations corporations = new Corporations();
             corporations.ID = id;
             corporations.Name = name;
             corporations.Ticker = ticker;
             corporations.Npc = npc;
+            corporations.ApiCharacterID = apiCharacterID;
             return corporations;
         }
 
@@ -926,6 +928,30 @@ namespace EveTrader.Core.Model
         private global::System.Boolean _Npc;
         partial void OnNpcChanging(global::System.Boolean value);
         partial void OnNpcChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ApiCharacterID
+        {
+            get
+            {
+                return _ApiCharacterID;
+            }
+            set
+            {
+                OnApiCharacterIDChanging(value);
+                ReportPropertyChanging("ApiCharacterID");
+                _ApiCharacterID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ApiCharacterID");
+                OnApiCharacterIDChanged();
+            }
+        }
+        private global::System.Int64 _ApiCharacterID;
+        partial void OnApiCharacterIDChanging(global::System.Int64 value);
+        partial void OnApiCharacterIDChanged();
 
         #endregion
     

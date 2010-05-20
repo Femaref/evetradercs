@@ -10,18 +10,21 @@ namespace EveTrader.Core.Updater.CCP
     {
         private readonly EntityFactory iEntityFactory;
         private readonly List<ICorporationUpdater> iUpdater = new List<ICorporationUpdater>();
+        private readonly ICorporationSheetUpdater iCorpSheetUpdater;
 
         public CorporationUpdater(TraderModel tm, EntityFactory ef, ICorporationSheetUpdater corpSheetUpdater)
             : base(tm)
         {
             iEntityFactory = ef;
 
-            iUpdater.Add(corpSheetUpdater);
+            iCorpSheetUpdater = corpSheetUpdater;
         }
         protected override bool InnerUpdate(Corporations entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
+
+            iCorpSheetUpdater.Update(entity);
 
             iUpdater.ForEach(u => u.Update(entity));
 

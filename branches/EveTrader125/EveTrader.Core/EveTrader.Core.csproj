@@ -74,6 +74,7 @@
     <Compile Include="Network\Requests\CCP\JournalRequest.cs" />
     <Compile Include="Network\Requests\CCP\MarketOrdersRequest.cs" />
     <Compile Include="Network\Requests\CCP\TransactionsRequest.cs" />
+    <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterUpdater.cs" />
     <Compile Include="Updater\CCP\CorporationSheetUpdater.cs" />

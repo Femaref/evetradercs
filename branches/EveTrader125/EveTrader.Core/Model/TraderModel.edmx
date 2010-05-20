@@ -117,6 +117,7 @@
           <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="Ticker" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Npc" Type="bit" Nullable="false" />
+          <Property Name="ApiCharacterID" Type="integer" Nullable="false"/>
         </EntityType>
         <EntityType Name="CustomJournal">
           <Key>
@@ -409,6 +410,7 @@
           <Property Type="String" Name="Ticker" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Characters" Relationship="EveTrader.Core.Model.FK_Characters_0" FromRole="Corporations" ToRole="Characters" />
           <Property Type="Boolean" Name="Npc" Nullable="false" />
+          <Property Type="Int64" Name = "ApiCharacterID" Nullable="false"/>
           </EntityType>
         <EntityType Name="Entities" Abstract="false">
           <Key>
@@ -564,6 +566,7 @@
                 <ScalarProperty Name="Npc" ColumnName="Npc" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="ApiCharacterID" ColumnName="ApiCharacterID" />
                 </MappingFragment>
               </EntityTypeMapping>
             </EntitySetMapping>
