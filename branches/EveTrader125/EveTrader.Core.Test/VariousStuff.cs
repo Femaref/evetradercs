@@ -144,5 +144,13 @@ namespace TestProject1
 
             Assert.IsTrue(abu.Update(t.Entity.First(e => e.Name == "Armageddon Day")));
         }
+
+        [TestMethod]
+        public void MarketOrdersUpdateTest()
+        {
+            MarketOrdersUpdater mou = new MarketOrdersUpdater(t);
+
+            Assert.IsTrue(mou.Update(t.Entity.First(e => e.Name =="Selena Karen")));
+        }
     }
 }

@@ -202,7 +202,7 @@ namespace EveTrader.Core.DataConverter
 
         private static MarketOrders GetMarketOrder(XElement marketOrders)
         {
-            return MarketOrders.CreateMarketOrders(marketOrders.Element("ID").Value.ToInt64(),
+            return MarketOrders.CreateMarketOrders(0,
                                         marketOrders.Element("StationID").Value.ToInt64(),
                                         marketOrders.Element("VolumeEntered").Value.ToInt64(),
                                         marketOrders.Element("VolumeRemaining").Value.ToInt64(),
@@ -215,7 +215,8 @@ namespace EveTrader.Core.DataConverter
                                         marketOrders.Element("Escrow").Value.ToInt64(),
                                         marketOrders.Element("Price").Value.ToInt64(),
                                         marketOrders.Element("Type").Value.ToLower() == "buy",
-                                        marketOrders.Element("Issued").Value.ToDateTime());
+                                        marketOrders.Element("Issued").Value.ToDateTime(),
+                                        marketOrders.Element("ID").Value.ToInt64());
         }
         private string CreateDatabase()
         {

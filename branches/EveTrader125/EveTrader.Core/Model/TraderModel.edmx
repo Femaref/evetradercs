@@ -182,6 +182,7 @@
           <Property Name="Price" Type="decimal" Nullable="false" Precision="53" />
           <Property Name="Bid" Type="bit" Nullable="false" />
           <Property Name="Issued" Type="datetime" Nullable="false" />
+          <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -485,6 +486,7 @@
           <Property Type="Decimal" Name="Price" Nullable="false" Precision="53" Scale="0" />
           <Property Type="Boolean" Name="Bid" Nullable="false" />
           <Property Type="DateTime" Name="Issued" Nullable="false" />
+          <Property Type="Int64" Name ="ExternalID" Nullable="false" />
           <NavigationProperty Name="Entity" Relationship="EveTrader.Core.Model.FK_MarketOrders_0" FromRole="MarketOrders" ToRole="Entity" /></EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -648,7 +650,9 @@
                 <ScalarProperty Name="VolumeRemaining" ColumnName="VolumeRemaining" />
                 <ScalarProperty Name="VolumeEntered" ColumnName="VolumeEntered" />
                 <ScalarProperty Name="StationID" ColumnName="StationID" />
-                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExternalID" ColumnName="ExternalID" />
+              </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Transactions)">
               <MappingFragment StoreEntitySet="Transactions">

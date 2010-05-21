@@ -9,7 +9,7 @@ namespace EveTrader.Core.Updater.CCP
     public class CorporationUpdater : UpdaterBase<Corporations>
     {
         private readonly EntityFactory iEntityFactory;
-        private readonly List<ICorporationUpdater> iUpdater = new List<ICorporationUpdater>();
+        private readonly List<IEntityUpdater<Corporations>> iUpdater = new List<IEntityUpdater<Corporations>>();
         private readonly ICorporationSheetUpdater iCorpSheetUpdater;
 
         public CorporationUpdater(TraderModel tm, EntityFactory ef, ICorporationSheetUpdater corpSheetUpdater)
@@ -19,7 +19,7 @@ namespace EveTrader.Core.Updater.CCP
 
             iCorpSheetUpdater = corpSheetUpdater;
         }
-        protected override bool InnerUpdate(Corporations entity)
+        protected override bool InnerUpdate<U>(U entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");

@@ -6,8 +6,7 @@ using EveTrader.Core.Model;
 
 namespace EveTrader.Core.Updater.CCP
 {
-    public interface ICharacterUpdater
+    public interface IMarketOrdersUpdater : IEntityUpdater<Entities>
     {
-        bool Update(Characters c);
     }
 }

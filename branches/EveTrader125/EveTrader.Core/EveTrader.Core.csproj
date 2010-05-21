@@ -81,10 +81,12 @@
     <Compile Include="Updater\CCP\CorporationUpdater.cs" />
     <Compile Include="Updater\CCP\EntityFactory.cs" />
     <Compile Include="Updater\CCP\ICharacterSheetUpdater.cs" />
-    <Compile Include="Updater\CCP\ICharacterUpdater.cs" />
     <Compile Include="Updater\CCP\ICorporationSheetUpdater.cs" />
-    <Compile Include="Updater\CCP\ICorporationUpdater.cs" />
-    <Compile Include="Updater\CCP\MarketOrderUpdate.cs" />
+    <Compile Include="Updater\CCP\IEntityUpdater.cs" />
+    <Compile Include="Updater\CCP\IMarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\ITransactionsUpdater.cs" />
+    <Compile Include="Updater\CCP\MarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />

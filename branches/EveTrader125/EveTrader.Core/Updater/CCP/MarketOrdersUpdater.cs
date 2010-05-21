@@ -7,14 +7,14 @@ using EveTrader.Core.Network.Requests.CCP;
 
 namespace EveTrader.Core.Updater.CCP
 {
-    public class MarketOrderUpdate : UpdaterBase<Entities>
+    public class MarketOrdersUpdater : UpdaterBase<Entities>, IMarketOrdersUpdater
     {
-        public MarketOrderUpdate(TraderModel tm)
+        public MarketOrdersUpdater(TraderModel tm)
             : base(tm)
         {
         }
 
-        protected override bool InnerUpdate(Entities entity)
+        protected override bool InnerUpdate<U>(U entity)
         {
             MarketOrdersRequest abr = null;
 
@@ -27,7 +27,7 @@ namespace EveTrader.Core.Updater.CCP
 
             foreach (var item in data)
             {
-                var current = entity.MarketOrders.FirstOrDefault(mo => mo.ID == item.ID);
+                var current = entity.MarketOrders.FirstOrDefault(mo => mo.ExternalID == item.ExternalID && mo.TypeID == item.TypeID);
                 if (current == null)
                 {
                     item.Entity = entity;

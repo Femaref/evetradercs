@@ -20,7 +20,7 @@ namespace EveTrader.Core.Updater.CCP
             iCorporationSheetUpdater = corpSheetUpdater;
         }
 
-        protected override bool InnerUpdate(Characters entity)
+        protected override bool InnerUpdate<U>(U entity)
         {
             CharacterSheetRequest req = new CharacterSheetRequest(entity.Account, entity.ID);
 

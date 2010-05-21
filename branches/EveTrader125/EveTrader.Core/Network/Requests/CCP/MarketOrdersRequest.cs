@@ -27,7 +27,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 
             var orders = root.Select(r => new MarketOrders
             {
-                ID = r.Attribute("orderID").Value.ToInt64(),
+                ID = 0,
+                ExternalID = r.Attribute("orderID").Value.ToInt64(),
                 Entity = new Entities(),
                 StationID = r.Attribute("stationID").Value.ToInt64(),
                 VolumeEntered = r.Attribute("volEntered").Value.ToInt64(),

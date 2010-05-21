@@ -1823,7 +1823,8 @@ namespace EveTrader.Core.Model
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="bid">Initial value of the Bid property.</param>
         /// <param name="issued">Initial value of the Issued property.</param>
-        public static MarketOrders CreateMarketOrders(global::System.Int64 id, global::System.Int64 stationID, global::System.Int64 volumeEntered, global::System.Int64 volumeRemaining, global::System.Int64 minimumVolume, global::System.Int64 orderState, global::System.Int64 typeID, global::System.Int64 range, global::System.Int64 accountKey, global::System.Int64 duration, global::System.Decimal escrow, global::System.Decimal price, global::System.Boolean bid, global::System.DateTime issued)
+        /// <param name="externalID">Initial value of the ExternalID property.</param>
+        public static MarketOrders CreateMarketOrders(global::System.Int64 id, global::System.Int64 stationID, global::System.Int64 volumeEntered, global::System.Int64 volumeRemaining, global::System.Int64 minimumVolume, global::System.Int64 orderState, global::System.Int64 typeID, global::System.Int64 range, global::System.Int64 accountKey, global::System.Int64 duration, global::System.Decimal escrow, global::System.Decimal price, global::System.Boolean bid, global::System.DateTime issued, global::System.Int64 externalID)
         {
             MarketOrders marketOrders = new MarketOrders();
             marketOrders.ID = id;
@@ -1840,6 +1841,7 @@ namespace EveTrader.Core.Model
             marketOrders.Price = price;
             marketOrders.Bid = bid;
             marketOrders.Issued = issued;
+            marketOrders.ExternalID = externalID;
             return marketOrders;
         }
 
@@ -2184,6 +2186,30 @@ namespace EveTrader.Core.Model
         private global::System.DateTime _Issued;
         partial void OnIssuedChanging(global::System.DateTime value);
         partial void OnIssuedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ExternalID
+        {
+            get
+            {
+                return _ExternalID;
+            }
+            set
+            {
+                OnExternalIDChanging(value);
+                ReportPropertyChanging("ExternalID");
+                _ExternalID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExternalID");
+                OnExternalIDChanged();
+            }
+        }
+        private global::System.Int64 _ExternalID;
+        partial void OnExternalIDChanging(global::System.Int64 value);
+        partial void OnExternalIDChanged();
 
         #endregion
     

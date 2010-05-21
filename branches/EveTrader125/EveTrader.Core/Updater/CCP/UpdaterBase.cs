@@ -15,7 +15,7 @@ namespace EveTrader.Core.Updater.CCP
             iModel = tm;
         }
 
-        public bool Update(T entity)
+        public bool Update<U>(U entity) where U : T
         {
             try
             {
@@ -30,6 +30,6 @@ namespace EveTrader.Core.Updater.CCP
             }
         }
 
-        protected abstract bool InnerUpdate(T entity);
+        protected abstract bool InnerUpdate<U>(U entity) where U : T;
     }
 }

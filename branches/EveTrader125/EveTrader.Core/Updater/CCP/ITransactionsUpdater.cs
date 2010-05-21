@@ -6,8 +6,7 @@ using EveTrader.Core.Model;
 
 namespace EveTrader.Core.Updater.CCP
 {
-    public interface ICorporationUpdater
+    public interface ITransactionsUpdater : IEntityUpdater<Entities>
     {
-        bool Update(Corporations c);
     }
 }

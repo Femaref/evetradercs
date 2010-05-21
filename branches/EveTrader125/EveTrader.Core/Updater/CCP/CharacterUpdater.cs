@@ -10,7 +10,7 @@ namespace EveTrader.Core.Updater.CCP
     [Export]
     public class CharacterUpdater : UpdaterBase<Characters>
     {
-        private List<ICharacterUpdater> iUpdaters = new List<ICharacterUpdater>();
+        private List<IEntityUpdater<Characters>> iUpdaters = new List<IEntityUpdater<Characters>>();
 
         private readonly EntityFactory iEntityFactory;
 
@@ -32,12 +32,12 @@ namespace EveTrader.Core.Updater.CCP
             return Update(iEntityFactory.CreateCharacter(characterID, a));
         }
 
-        protected override bool InnerUpdate(Characters c)
+        protected override bool InnerUpdate<U>(U entity)
         {
-            if (c == null)
-                throw new ArgumentNullException("c");
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
-                iUpdaters.ForEach(u => u.Update(c));
+                iUpdaters.ForEach(u => u.Update(entity));
                 return true;
         }
     }

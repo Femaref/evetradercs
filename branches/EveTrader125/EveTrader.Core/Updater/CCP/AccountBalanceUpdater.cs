@@ -13,7 +13,7 @@ public class AccountBalanceUpdater : UpdaterBase<Entities>
         {
         }
 
-        protected override bool InnerUpdate(Entities entity)
+        protected override bool InnerUpdate<U>(U entity)
         {
             AccountBalanceRequest abr = null;
 
