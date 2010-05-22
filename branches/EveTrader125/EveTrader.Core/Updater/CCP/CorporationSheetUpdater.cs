@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 using EveTrader.Core.Network.Requests.CCP;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Updater.CCP
 {
+    [Export(typeof(ICorporationSheetUpdater))]
     public  class CorporationSheetUpdater : UpdaterBase<Corporations>, ICorporationSheetUpdater
     {
+        [ImportingConstructor]
         public CorporationSheetUpdater(TraderModel tm)
             : base(tm)
         {

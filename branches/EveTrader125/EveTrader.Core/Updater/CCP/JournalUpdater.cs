@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 using EveTrader.Core.Network.Requests.CCP;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Updater.CCP
 {
@@ -21,8 +22,10 @@ namespace EveTrader.Core.Updater.CCP
         }
     }
 
+    [Export(typeof(IJournalUpdater))]
     public class JournalUpdater : UpdaterBase<Entities>, IJournalUpdater
     {
+        [ImportingConstructor]
         public JournalUpdater(TraderModel tm)
             : base(tm)
         {

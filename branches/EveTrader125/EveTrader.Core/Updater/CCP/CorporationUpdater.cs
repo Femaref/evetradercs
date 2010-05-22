@@ -3,21 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Updater.CCP
 {
+    [Export]
     public class CorporationUpdater : UpdaterBase<Corporations>
     {
         private readonly EntityFactory iEntityFactory;
-        private readonly List<IEntityUpdater<Corporations>> iUpdater = new List<IEntityUpdater<Corporations>>();
+        private readonly List<IEntityUpdater<Corporations>> iUpdaters = new List<IEntityUpdater<Corporations>>();
         private readonly ICorporationSheetUpdater iCorpSheetUpdater;
+        private readonly IAccountBalanceUpdater iAccountBalanceUpdater;
 
-        public CorporationUpdater(TraderModel tm, EntityFactory ef, ICorporationSheetUpdater corpSheetUpdater)
+        [ImportingConstructor]
+        public CorporationUpdater(TraderModel tm, EntityFactory ef,
+            ICorporationSheetUpdater corpSheetUpdater, 
+            IAccountBalanceUpdater accountBalanceUpdater,
+            IJournalUpdater journalUpdater,
+            ITransactionsUpdater transactionsUpdater,
+            IMarketOrdersUpdater marketOrdersUpdater)
             : base(tm)
         {
             iEntityFactory = ef;
 
             iCorpSheetUpdater = corpSheetUpdater;
+            iAccountBalanceUpdater = accountBalanceUpdater;
+
+            iUpdaters.Add((IEntityUpdater<Corporations>)journalUpdater);
+            iUpdaters.Add((IEntityUpdater<Corporations>)transactionsUpdater);
+            iUpdaters.Add((IEntityUpdater<Corporations>)marketOrdersUpdater);
         }
         protected override bool InnerUpdate<U>(U entity)
         {
@@ -25,8 +39,9 @@ namespace EveTrader.Core.Updater.CCP
                 throw new ArgumentNullException("entity");
 
             iCorpSheetUpdater.Update(entity);
+            iAccountBalanceUpdater.Update(entity);
 
-            iUpdater.ForEach(u => u.Update(entity));
+            iUpdaters.ForEach(u => u.Update(entity));
 
             return true;
         }

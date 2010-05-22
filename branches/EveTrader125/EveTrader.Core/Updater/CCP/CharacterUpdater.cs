@@ -12,14 +12,28 @@ namespace EveTrader.Core.Updater.CCP
     {
         private List<IEntityUpdater<Characters>> iUpdaters = new List<IEntityUpdater<Characters>>();
 
+        private readonly ICharacterSheetUpdater iCharSheetUpdater;
+        private readonly IAccountBalanceUpdater iAccountBalanceUpdater;
+
         private readonly EntityFactory iEntityFactory;
 
         [ImportingConstructor]
-        public CharacterUpdater(TraderModel tm, EntityFactory ef, ICharacterSheetUpdater charListUpdater) :base(tm)
+        public CharacterUpdater(TraderModel tm, EntityFactory ef, 
+            ICharacterSheetUpdater charSheetUpdater, 
+            IAccountBalanceUpdater accountBalanceUpdater,
+            IJournalUpdater journalUpdater,
+            ITransactionsUpdater transactionsUpdater,
+            IMarketOrdersUpdater marketOrdersUpdater)
+            : base(tm)
         {
             iEntityFactory = ef;
 
-            iUpdaters.Add(charListUpdater);
+            iCharSheetUpdater = charSheetUpdater;
+            iAccountBalanceUpdater = accountBalanceUpdater;
+
+            iUpdaters.Add((IEntityUpdater<Characters>)journalUpdater);
+            iUpdaters.Add((IEntityUpdater<Characters>)transactionsUpdater);
+            iUpdaters.Add((IEntityUpdater<Characters>)marketOrdersUpdater);
         }
 
         public bool Update(long characterID)
@@ -37,8 +51,11 @@ namespace EveTrader.Core.Updater.CCP
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-                iUpdaters.ForEach(u => u.Update(entity));
-                return true;
+            iCharSheetUpdater.Update(entity);
+            iAccountBalanceUpdater.Update(entity);
+
+            iUpdaters.ForEach(u => u.Update(entity));
+            return true;
         }
     }
 }

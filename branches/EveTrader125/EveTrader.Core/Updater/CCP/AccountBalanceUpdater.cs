@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 using EveTrader.Core.Network.Requests.CCP;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Updater.CCP
 {
-public class AccountBalanceUpdater : UpdaterBase<Entities>
+    [Export(typeof(IAccountBalanceUpdater))]
+    public class AccountBalanceUpdater : UpdaterBase<Entities>, IAccountBalanceUpdater
     {
-        public AccountBalanceUpdater(TraderModel tm) : base(tm)
+        [ImportingConstructor]
+        public AccountBalanceUpdater(TraderModel tm)
+            : base(tm)
         {
         }
 

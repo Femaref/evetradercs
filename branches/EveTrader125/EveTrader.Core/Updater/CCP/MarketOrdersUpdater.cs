@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 using EveTrader.Core.Network.Requests.CCP;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Updater.CCP
 {
+    [Export(typeof(IMarketOrdersUpdater))]
     public class MarketOrdersUpdater : UpdaterBase<Entities>, IMarketOrdersUpdater
     {
+        [ImportingConstructor]
         public MarketOrdersUpdater(TraderModel tm)
             : base(tm)
         {
