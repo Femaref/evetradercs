@@ -11,13 +11,13 @@ namespace EveTrader.Core.Updater.CCP
     [Export(typeof(ICharacterSheetUpdater))]
     public class CharacterSheetUpdater : UpdaterBase<Characters>, ICharacterSheetUpdater
     {
-        private readonly CorporationUpdater iCorporationSheetUpdater;
+        private readonly CorporationUpdater iCorporationUpdater;
 
         [ImportingConstructor]
-        public CharacterSheetUpdater(TraderModel tm, CorporationUpdater corpSheetUpdater)
+        public CharacterSheetUpdater(TraderModel tm, CorporationUpdater corpUpdater)
             : base(tm)
         {
-            iCorporationSheetUpdater = corpSheetUpdater;
+            iCorporationUpdater = corpUpdater;
         }
 
         protected override bool InnerUpdate<U>(U entity)
@@ -31,7 +31,7 @@ namespace EveTrader.Core.Updater.CCP
             entity.Balance = c.Balance;
             entity.Bloodline = c.Bloodline;
             entity.Gender = c.Gender;
-            iCorporationSheetUpdater.Update(c.Corporation);
+            iCorporationUpdater.Update(c.Corporation.ID, entity.Account, entity.ID);
             entity.Corporation = iModel.Entity.OfType<Corporations>().First(s => s.ID == c.Corporation.ID);
 
 

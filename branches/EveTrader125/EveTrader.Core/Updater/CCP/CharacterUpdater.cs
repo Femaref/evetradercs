@@ -18,8 +18,8 @@ namespace EveTrader.Core.Updater.CCP
         private readonly EntityFactory iEntityFactory;
 
         [ImportingConstructor]
-        public CharacterUpdater(TraderModel tm, EntityFactory ef, 
-            ICharacterSheetUpdater charSheetUpdater, 
+        public CharacterUpdater(TraderModel tm, EntityFactory ef,
+            ICharacterSheetUpdater charSheetUpdater,
             IAccountBalanceUpdater accountBalanceUpdater,
             IJournalUpdater journalUpdater,
             ITransactionsUpdater transactionsUpdater,
@@ -54,7 +54,18 @@ namespace EveTrader.Core.Updater.CCP
             iCharSheetUpdater.Update(entity);
             iAccountBalanceUpdater.Update(entity);
 
-            iUpdaters.ForEach(u => u.Update(entity));
+            iUpdaters.ForEach(u =>
+            {
+                try
+                {
+                    u.Update(entity);
+                }
+                catch (UpdaterFailedException ex)
+                {
+                    iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+                }
+            }
+            );
             return true;
         }
     }

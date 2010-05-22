@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="EveTrader.Wpf.MarketOrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:MarketOrdersViewModel}"
+             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" Height="Auto" Width="Auto">
+        <Grid HorizontalAlignment="Stretch" Margin="7,10,0,0" Name="grid1" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="19" />
+                <RowDefinition Height="311" />
+            </Grid.RowDefinitions>
+        <ComboBox Height="Auto" Margin="293,0,0,0" Name="comboBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True" >
+        </ComboBox>
+        <DataGrid Height="Auto" Width="Auto" Grid.Row="1" AutoGenerateColumns="False"  ItemsSource="{Binding Orders}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=StationID}" Header="StationID" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeEntered}" Header="VolumeEntered" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining}" Header="VolumeRemaining" />
+                <DataGridTextColumn Binding="{Binding Path=MinimumVolume}" Header="MinimumVolume" />
+                <DataGridTextColumn Binding="{Binding Path=OrderState}" Header="OrderState" />
+                <DataGridTextColumn Binding="{Binding Path=TypeID}" Header="TypeID" />
+                <DataGridTextColumn Binding="{Binding Path=Range}" Header="Range" />
+                <DataGridTextColumn Binding="{Binding Path=Duration}" Header="Duration" />
+                <DataGridTextColumn Binding="{Binding Path=Escrow}" Header="Escrow" />
+                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" />
+                <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
+                <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

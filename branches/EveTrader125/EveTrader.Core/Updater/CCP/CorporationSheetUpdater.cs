@@ -23,22 +23,24 @@ namespace EveTrader.Core.Updater.CCP
             Corporations c = csr.Request();
 
             entity.Name = c.Name;
-            entity.Npc = c.Npc;
+            entity.Npc = c.ID <= 1000182;
             entity.Ticker = c.Ticker;
 
-            foreach(Wallets w in c.Wallets)
+            if (c.ID > 1000182)
             {
-                var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
-                if (current == null)
+                foreach (Wallets w in c.Wallets)
                 {
-                    entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = 0, ID = 0, Name = w.Name, Entity = entity });
-                }
-                else
-                {
-                    current.Name = w.Name;
+                    var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
+                    if (current == null)
+                    {
+                        entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = 0, ID = 0, Name = w.Name, Entity = entity });
+                    }
+                    else
+                    {
+                        current.Name = w.Name;
+                    }
                 }
             }
-
             iModel.SaveChanges();
 
             return true;

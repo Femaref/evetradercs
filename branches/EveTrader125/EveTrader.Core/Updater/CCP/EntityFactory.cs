@@ -37,13 +37,13 @@ namespace EveTrader.Core.Updater.CCP
             return newEntity;
         }
 
-        public Corporations CreateCorporation(long corporationID, Accounts a)
+        public Corporations CreateCorporation(long corporationID, Accounts a, long apiCharacterID)
         {
             var check = iModel.Entity.OfType<Corporations>().Where(s => s.ID == corporationID);
             if (check.Count() == 1)
                 return check.First();
 
-            Corporations newEntity = new Corporations() { ID = corporationID, Account = a, Name = "", Ticker = "", Npc = false};
+            Corporations newEntity = new Corporations() { ID = corporationID, Account = a, Name = "", Ticker = "", Npc = false, ApiCharacterID = apiCharacterID};
             iModel.Entity.AddObject(newEntity);
             iModel.SaveChanges();
 

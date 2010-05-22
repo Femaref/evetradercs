@@ -35,6 +35,9 @@
             <TabItem Header="Journal"></TabItem>
             <TabItem Header="Transactions"></TabItem>
             <TabItem Header="Reports"></TabItem>
+            <TabItem Header="MarketOrders">
+                <ContentControl Content="{Binding MarketOrdersView}"/>
+            </TabItem>
 		</TabControl>
 
 		<StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="2"/>

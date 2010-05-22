@@ -17,6 +17,7 @@ namespace EveTrader.Core.ViewModel
 
         private object iDashboardView;
         private object iWalletsView;
+        private object iMarketOrdersView;
 
         public ICommand OpenManageAccountsCommand
         {
@@ -48,6 +49,16 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
+        public object MarketOrdersView
+        {
+            get { return iMarketOrdersView; }
+            set
+            {
+                iMarketOrdersView = value;
+                RaisePropertyChanged("MarketOrdersView");
+            }
+        }
+
         public event EventHandler ManageAccountsClicked;
 
         [ImportingConstructor]
@@ -70,5 +81,7 @@ namespace EveTrader.Core.ViewModel
         {
             OnClosing(e);
         }
+
+        
     }
 }

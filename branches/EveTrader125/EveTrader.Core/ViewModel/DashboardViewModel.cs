@@ -40,7 +40,7 @@ namespace EveTrader.Core.ViewModel
             FilterMonthCommand = new DelegateCommand(() => Filter(30));
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
             RefreshWallets();
-            Refresh();
+            Filter(7);
         }
 
         void view_DetailsRequested(object sender, DetailsRequestedEventArgs e)

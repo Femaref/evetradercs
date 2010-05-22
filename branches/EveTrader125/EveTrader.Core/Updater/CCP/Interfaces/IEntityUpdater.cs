@@ -6,7 +6,7 @@ using EveTrader.Core.Model;
 
 namespace EveTrader.Core.Updater.CCP
 {
-    public interface IEntityUpdater<T> where T: Entities
+    public interface IEntityUpdater<in T> where T: Entities
     {
         bool Update<U>(U entity) where U : T;
     }

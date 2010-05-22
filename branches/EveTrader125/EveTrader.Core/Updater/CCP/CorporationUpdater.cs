@@ -17,7 +17,7 @@ namespace EveTrader.Core.Updater.CCP
 
         [ImportingConstructor]
         public CorporationUpdater(TraderModel tm, EntityFactory ef,
-            ICorporationSheetUpdater corpSheetUpdater, 
+            ICorporationSheetUpdater corpSheetUpdater,
             IAccountBalanceUpdater accountBalanceUpdater,
             IJournalUpdater journalUpdater,
             ITransactionsUpdater transactionsUpdater,
@@ -39,9 +39,23 @@ namespace EveTrader.Core.Updater.CCP
                 throw new ArgumentNullException("entity");
 
             iCorpSheetUpdater.Update(entity);
-            iAccountBalanceUpdater.Update(entity);
 
-            iUpdaters.ForEach(u => u.Update(entity));
+            if (!entity.Npc)
+            {
+                iAccountBalanceUpdater.Update(entity);
+                iUpdaters.ForEach(u =>
+                {
+                    try
+                    {
+                        u.Update(entity);
+                    }
+                    catch (UpdaterFailedException ex)
+                    {
+                        iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+                    }
+                }
+                );
+            }
 
             return true;
         }
@@ -51,9 +65,9 @@ namespace EveTrader.Core.Updater.CCP
             return Update(iModel.Entity.OfType<Corporations>().Where(c => c.ID == corporationID).FirstOrDefault());
         }
 
-        public bool Update(long corporationID, Accounts a)
+        public bool Update(long corporationID, Accounts a, long apiCharacterID)
         {
-            return Update(iEntityFactory.CreateCorporation(corporationID, a));
+            return Update(iEntityFactory.CreateCorporation(corporationID, a, apiCharacterID));
         }
     }
 }

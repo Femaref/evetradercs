@@ -13,10 +13,6 @@ namespace EveTrader.Core.Model
     {
         public string WriteToLog(string text, string callingMember)
         {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(0);
-            MethodBase mb = sf.GetMethod();
-
             var log = new Model.ApplicationLog() { Message = text, CallingClass = callingMember, Date = DateTime.UtcNow };
             this.ApplicationLog.AddObject(log);
             this.SaveChanges();

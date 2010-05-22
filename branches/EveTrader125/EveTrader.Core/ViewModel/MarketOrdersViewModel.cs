@@ -8,9 +8,11 @@ using System.Waf.Applications;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using EveTrader.Core.View;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.ViewModel
 {
+    [Export]
     public class MarketOrdersViewModel : ViewModel<IMarketOrdersView>
     {
         private TraderModel iModel;
@@ -26,15 +28,32 @@ namespace EveTrader.Core.ViewModel
             get { return iCurrentEntity; }
         }
 
-        private ICommand iSelectEntityCommand;
+        public ObservableCollection<Entities> CurrentEntities { get; set; }
+
         private ICommand iHideExpiredCommand;
 
+        [ImportingConstructor]
         public MarketOrdersViewModel(IMarketOrdersView view, TraderModel model) : base(view)
         {
-            iSelectEntityCommand = new DelegateCommand((object o) => SelectEntity((string)o));
-
             iModel = model;
-            iCurrentEntity = iModel.Entity.First();
+            Orders = new ObservableCollection<MarketOrders>();
+            CurrentEntities = new ObservableCollection<Entities>();
+            view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs>(view_EntitySelectionChanged);
+
+
+            RefreshCurrentEntities();
+            SelectEntity(iModel.Entity.First());
+        }
+
+        private void RefreshCurrentEntities()
+        {
+            CurrentEntities.Clear();
+            iModel.Entity.ToList().ForEach(e => CurrentEntities.Add(e));
+        }
+
+        void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs e)
+        {
+            SelectEntity(e.Selection);
         }
 
         public ObservableCollection<MarketOrders> Orders { get; set; }
@@ -86,18 +105,11 @@ namespace EveTrader.Core.ViewModel
             RaisePropertyChanged("CurrentEntity");
             Refresh();
         }
-
-        public ICommand SelectEntityCommand
+        private void SelectEntity(Entities e)
         {
-            get {return iSelectEntityCommand;}
-            set
-            {
-                if (iSelectEntityCommand != value)
-                {
-                    iSelectEntityCommand = value;
-                    RaisePropertyChanged("SelectEntityCommand");
-                }
-            }
+            iCurrentEntity = e;
+            RaisePropertyChanged("CurrentEntity");
+            Refresh();
         }
 
         public ICommand HideExpiredCommand
