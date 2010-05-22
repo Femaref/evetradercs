@@ -35,6 +35,7 @@ public class AccountBalanceUpdater : UpdaterBase<Entities>
                 {
                     current.Balance = w.Balance;
                 }
+                current.WalletHistory.Add(WalletHistories.CreateWalletHistories(0, w.Balance, abr.CurrentTime));
             }
 
             iModel.SaveChanges();

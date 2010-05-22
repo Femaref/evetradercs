@@ -142,7 +142,7 @@ namespace TestProject1
         {
             AccountBalanceUpdater abu = new AccountBalanceUpdater(t);
 
-            Assert.IsTrue(abu.Update(t.Entity.First(e => e.Name == "Armageddon Day")));
+            Assert.IsTrue(abu.Update(t.Entity.First(e => e.Name == "Femaref")));
         }
 
         [TestMethod]
@@ -151,6 +151,22 @@ namespace TestProject1
             MarketOrdersUpdater mou = new MarketOrdersUpdater(t);
 
             Assert.IsTrue(mou.Update(t.Entity.First(e => e.Name =="Selena Karen")));
+        }
+
+        [TestMethod]
+        public void JournalUpdateTest()
+        {
+            JournalUpdater ju = new JournalUpdater(t);
+
+            Assert.IsTrue(ju.Update(t.Entity.First(e => e.Name == "Femaref")));
+        }
+
+        [TestMethod]
+        public void TransactionsUpdateTest()
+        {
+            TransactionsUpdater ju = new TransactionsUpdater(t);
+
+            Assert.IsTrue(ju.Update(t.Entity.First(e => e.Name == "Femaref")));
         }
     }
 }

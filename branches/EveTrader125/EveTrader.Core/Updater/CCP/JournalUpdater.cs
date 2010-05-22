@@ -7,22 +7,23 @@ using EveTrader.Core.Network.Requests.CCP;
 
 namespace EveTrader.Core.Updater.CCP
 {
-    public class TransactionsEqualityComparer : EqualityComparer<ApiTransactions>
+    public class JournalEqualityComparer : EqualityComparer<ApiJournal>
     {
-        public override bool Equals(ApiTransactions x, ApiTransactions y)
+
+        public override bool Equals(ApiJournal x, ApiJournal y)
         {
             return x.ExternalID == y.ExternalID;
         }
 
-        public override int GetHashCode(ApiTransactions obj)
+        public override int GetHashCode(ApiJournal obj)
         {
             return obj.ExternalID.GetHashCode();
         }
     }
 
-    public class TransactionsUpdater : UpdaterBase<Entities>, ITransactionsUpdater
+    public class JournalUpdater : UpdaterBase<Entities>, IJournalUpdater
     {
-        public TransactionsUpdater(TraderModel tm)
+        public JournalUpdater(TraderModel tm)
             : base(tm)
         {
         }
@@ -30,13 +31,13 @@ namespace EveTrader.Core.Updater.CCP
 
         protected override bool InnerUpdate<U>(U entity)
         {
-            TransactionsRequest tr = null;
+            JournalRequest tr = null;
             foreach (Wallets w in entity.Wallets)
             {
                 if (entity is Characters)
-                    tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, 0, w.AccountKey);
+                    tr = new JournalRequest(entity.Account, entity.ID, ApiRequestTarget.Character, 0, w.AccountKey);
                 if (entity is Corporations)
-                    tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, 0, w.AccountKey);
+                    tr = new JournalRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, 0, w.AccountKey);
                 var data = tr.Request();
 
                 int beforeID = 0;
@@ -46,18 +47,18 @@ namespace EveTrader.Core.Updater.CCP
                 while (data.Count() == runs * 1000 && data.Min(t => t.Date) > DateTime.UtcNow.AddDays(-7))
                 {
                     if (entity is Characters)
-                        tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, beforeID, w.AccountKey);
+                        tr = new JournalRequest(entity.Account, entity.ID, ApiRequestTarget.Character, beforeID, w.AccountKey);
                     if (entity is Corporations)
-                        tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, beforeID, w.AccountKey);
+                        tr = new JournalRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, beforeID, w.AccountKey);
 
-                    data = data.Cast<ApiTransactions>().Union(tr.Request().Cast<ApiTransactions>(), new TransactionsEqualityComparer());
+                    data = data.Cast<ApiJournal>().Union(tr.Request().Cast<ApiJournal>(), new JournalEqualityComparer());
 
                     runs++;
                 }
                 foreach (var item in data)
                 {
                     item.Wallet = w;
-                    w.Transactions.Add(item);
+                    w.Journal.Add(item);
                 }
             }
 

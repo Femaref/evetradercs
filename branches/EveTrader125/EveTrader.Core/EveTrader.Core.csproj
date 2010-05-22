@@ -83,8 +83,10 @@
     <Compile Include="Updater\CCP\ICharacterSheetUpdater.cs" />
     <Compile Include="Updater\CCP\ICorporationSheetUpdater.cs" />
     <Compile Include="Updater\CCP\IEntityUpdater.cs" />
+    <Compile Include="Updater\CCP\IJournalUpdater.cs" />
     <Compile Include="Updater\CCP\IMarketOrdersUpdater.cs" />
     <Compile Include="Updater\CCP\ITransactionsUpdater.cs" />
+    <Compile Include="Updater\CCP\JournalUpdater.cs" />
     <Compile Include="Updater\CCP\MarketOrdersUpdater.cs" />
     <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />

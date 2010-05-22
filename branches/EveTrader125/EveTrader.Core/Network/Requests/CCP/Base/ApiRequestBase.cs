@@ -89,6 +89,22 @@ namespace EveTrader.Core.Network.Requests.CCP
             }
         }
 
+        public DateTime CurrentTime
+        {
+            get
+            {
+                return this.CachedResponseXml.Descendants("currentTime").First().Value.ToDateTime();
+            }
+        }
+
+        public DateTime CachedUntil
+        {
+            get
+            {
+                return this.CachedResponseXml.Descendants("cachedUntil").First().Value.ToDateTime();
+            }
+        }
+
         protected virtual string Data
         {
             get
