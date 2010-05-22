@@ -325,6 +325,8 @@ CREATE TABLE [MarketOrders] (
 
     [Issued] datetime NOT NULL,
 
+	[ExternalID] integer  NOT NULL,
+
     CONSTRAINT [FK_MarketOrders_0] FOREIGN KEY ([EntityID]) REFERENCES [Entity] ([ID])
 
 );

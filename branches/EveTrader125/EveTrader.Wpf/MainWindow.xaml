@@ -36,7 +36,7 @@
             <TabItem Header="Transactions"></TabItem>
             <TabItem Header="Reports"></TabItem>
             <TabItem Header="MarketOrders">
-                <ContentControl Content="{Binding MarketOrdersView}"/>
+                <ContentControl Content="{Binding MarketOrdersView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </TabItem>
 		</TabControl>
 

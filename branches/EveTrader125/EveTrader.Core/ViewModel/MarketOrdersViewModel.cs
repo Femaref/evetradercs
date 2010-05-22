@@ -40,7 +40,6 @@ namespace EveTrader.Core.ViewModel
             CurrentEntities = new ObservableCollection<Entities>();
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs>(view_EntitySelectionChanged);
 
-
             RefreshCurrentEntities();
             SelectEntity(iModel.Entity.First());
         }
@@ -48,7 +47,7 @@ namespace EveTrader.Core.ViewModel
         private void RefreshCurrentEntities()
         {
             CurrentEntities.Clear();
-            iModel.Entity.ToList().ForEach(e => CurrentEntities.Add(e));
+            iModel.Entity.Where(e => (e is Characters) || !(e as Corporations).Npc).ToList().ForEach(e => CurrentEntities.Add(e));
         }
 
         void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs e)

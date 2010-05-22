@@ -5,28 +5,68 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:MarketOrdersViewModel}"
              xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" Height="Auto" Width="Auto">
-        <Grid HorizontalAlignment="Stretch" Margin="7,10,0,0" Name="grid1" VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Stretch"  Name="grid1" VerticalAlignment="Stretch" Height="Auto" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="19" />
-                <RowDefinition Height="311" />
-            </Grid.RowDefinitions>
-        <ComboBox Height="Auto" Margin="293,0,0,0" Name="comboBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True" >
-        </ComboBox>
-        <DataGrid Height="Auto" Width="Auto" Grid.Row="1" AutoGenerateColumns="False"  ItemsSource="{Binding Orders}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true">
+                <RowDefinition Height="278" />
+            <RowDefinition Height="79*" />
+        </Grid.RowDefinitions>
+        <ComboBox Height="Auto" Name="comboBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <CheckBox Content="Hide Expired" Height="16" HorizontalAlignment="Left" Margin="383,3,0,0" Name="checkBox1" VerticalAlignment="Top" Grid.Row="0" IsChecked="{Binding HideExpired, Mode=TwoWay}"/>
+        <DataGrid Height="Auto" Width="Auto" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False"  ItemsSource="{Binding Orders}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true">
             <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=ID}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding Path=ExternalID}" Header="ExternalID" />
                 <DataGridTextColumn Binding="{Binding Path=StationID}" Header="StationID" />
-                <DataGridTextColumn Binding="{Binding Path=VolumeEntered}" Header="VolumeEntered" />
-                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining}" Header="VolumeRemaining" />
-                <DataGridTextColumn Binding="{Binding Path=MinimumVolume}" Header="MinimumVolume" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeEntered, StringFormat='##,0'}" Header="VolumeEntered" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining, StringFormat='##,0'}" Header="VolumeRemaining" />
+                <DataGridTextColumn Binding="{Binding Path=MinimumVolume, StringFormat='##,0'}" Header="MinimumVolume" />
                 <DataGridTextColumn Binding="{Binding Path=OrderState}" Header="OrderState" />
                 <DataGridTextColumn Binding="{Binding Path=TypeID}" Header="TypeID" />
                 <DataGridTextColumn Binding="{Binding Path=Range}" Header="Range" />
                 <DataGridTextColumn Binding="{Binding Path=Duration}" Header="Duration" />
-                <DataGridTextColumn Binding="{Binding Path=Escrow}" Header="Escrow" />
-                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" />
+                <DataGridTextColumn Binding="{Binding Path=Escrow, StringFormat=n}" Header="Escrow" />
+                <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=n}" Header="Price" />
                 <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
                 <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
             </DataGrid.Columns>
         </DataGrid>
+            <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="363" />
+                <ColumnDefinition Width="505" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                    <RowDefinition Height="28*" />
+                    <RowDefinition Height="27*" />
+                    <RowDefinition Height="24*" />
+                </Grid.RowDefinitions>
+            <Label Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Total Buy Order ISK"/>
+                    <TextBlock Text="{Binding TotalBuyOrders, StringFormat=n}" />
+                </StackPanel>
+            </Label>
+            <Label Grid.Row="1" Margin="0,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Total Sell Order ISK"/>
+                    <TextBlock Text="{Binding TotalSellOrders, StringFormat=n}"  />
+                </StackPanel>
+            </Label>
+            <Label Grid.Row="0" Grid.Column="1" Margin="0,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Remaining Buy Order ISK"/>
+                    <TextBlock Text="{Binding RemainingBuyOrders, StringFormat=n}"  />
+                </StackPanel>
+            </Label>
+            <Label Grid.Row="1" Grid.Column="1" Margin="0,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Remaining Sell Order ISK"/>
+                    <TextBlock Text="{Binding RemainingSellOrders, StringFormat=n}"  />
+                </StackPanel>
+            </Label>
+
+        </Grid>
+        
     </Grid>
 </UserControl>
