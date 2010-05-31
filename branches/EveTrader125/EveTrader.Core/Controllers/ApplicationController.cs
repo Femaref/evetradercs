@@ -24,6 +24,7 @@ namespace EveTrader.Core.Controllers
         private readonly DashboardController iDashboardController;
         private readonly WalletsController iWalletsController;
         private readonly MarketOrdersController iMarketOrdersController;
+        private readonly ApplicationLogController iApplicationLogController;
 
         private readonly CharacterUpdater iCharacterUpdater;
         private readonly CorporationUpdater iCorporationUpdater;
@@ -40,6 +41,7 @@ namespace EveTrader.Core.Controllers
             DashboardController dashboardController,
             WalletsController walletsController,
             MarketOrdersController marketOrdersController,
+            ApplicationLogController applicationLogController,
             CharacterUpdater charUpdater,
             CorporationUpdater corpUpdater)
         {
@@ -51,6 +53,7 @@ namespace EveTrader.Core.Controllers
             iDashboardController = dashboardController;
             iWalletsController = walletsController;
             iMarketOrdersController = marketOrdersController;
+            iApplicationLogController = applicationLogController;
 
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
@@ -67,6 +70,7 @@ namespace EveTrader.Core.Controllers
             iManageAccountsController.Initialize();
             iWalletsController.Initialize();
             iMarketOrdersController.Initialize();
+            iApplicationLogController.Initialize();
         }
 
         private void UpdateData(object o)

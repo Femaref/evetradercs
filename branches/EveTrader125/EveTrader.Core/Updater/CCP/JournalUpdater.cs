@@ -60,8 +60,11 @@ namespace EveTrader.Core.Updater.CCP
                 }
                 foreach (var item in data)
                 {
-                    item.Wallet = w;
-                    w.Journal.Add(item);
+                    if (w.Journal.OfType<ApiJournal>().Count(j => j.ExternalID == item.ExternalID) == 0)
+                    {
+                        item.Wallet = w;
+                        w.Journal.Add(item);
+                    }
                 }
             }
 

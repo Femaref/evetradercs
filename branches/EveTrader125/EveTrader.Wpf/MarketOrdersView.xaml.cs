@@ -26,6 +26,9 @@ namespace EveTrader.Wpf
         public MarketOrdersView()
         {
             InitializeComponent();
+            var x = (CollectionViewSource)this.Resources["iGroupedMarketOrders"];
+            x.GroupDescriptions.Add(new PropertyGroupDescription("StationID"));
+
         }
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -53,6 +53,8 @@ namespace EveTrader.Core.Network.Requests.CCP
             {
                 string output = reader.ReadToEnd();
                 iCachedResponseXml =  XDocument.Parse(output);
+                if (this.ErrorCode != 0)
+                    throw new RequestFailedException(this.ErrorCode, this.ErrorMessage);
                 return iCachedResponseXml;
             }
         }
@@ -88,6 +90,18 @@ namespace EveTrader.Core.Network.Requests.CCP
                     return 0;
             }
         }
+
+        public string ErrorMessage
+        {
+            get
+            {
+                if (this.CachedResponseXml.Descendants().Where(x => x.Name == "error").Count() > 0)
+                    return this.CachedResponseXml.Descendants().First(x=>x.Name == "error").Value;
+                else
+                    return "";
+            }
+        }
+
 
         public DateTime CurrentTime
         {

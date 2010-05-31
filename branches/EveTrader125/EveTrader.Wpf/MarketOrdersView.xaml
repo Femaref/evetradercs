@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:MarketOrdersViewModel}"
              xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" Height="Auto" Width="Auto">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="iGroupedMarketOrders" Source="{Binding Orders}"/>
+    </UserControl.Resources>
         <Grid HorizontalAlignment="Stretch"  Name="grid1" VerticalAlignment="Stretch" Height="Auto" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="19" />
@@ -13,7 +16,41 @@
         </Grid.RowDefinitions>
         <ComboBox Height="Auto" Name="comboBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <CheckBox Content="Hide Expired" Height="16" HorizontalAlignment="Left" Margin="383,3,0,0" Name="checkBox1" VerticalAlignment="Top" Grid.Row="0" IsChecked="{Binding HideExpired, Mode=TwoWay}"/>
-        <DataGrid Height="Auto" Width="Auto" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False"  ItemsSource="{Binding Orders}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true">
+        <DataGrid Height="Auto" Width="Auto" 
+                  Grid.Row="1" 
+                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true"
+                  AlternatingRowBackground="#FFECECEF" Background="White"
+                  ItemsSource="{Binding Source={StaticResource iGroupedMarketOrders}}"
+                  DataContext="{Binding}">
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander>
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Path=Name}" FontSize="13" FontWeight="Bold" />
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=ID}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding Path=ExternalID}" Header="ExternalID" />

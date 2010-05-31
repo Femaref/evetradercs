@@ -24,30 +24,6 @@
                     <MenuItem Header="All time" Command="{Binding FilterAllTimeCommand}"/>
                 </ContextMenu>
             </visi:Chart.ContextMenu>
-
-
-
-            <!--      <visi:Chart.Series>
-                <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Femaref" XValueType="Date" RenderAs="StackedColumn" DataSource="{Binding DailyInfo}" ToolTipText="Femaref">
-                    <visi:DataSeries.DataMappings>
-                        <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
-                        <visi:DataMapping MemberName="YValue" Path="Investment[Femaref]"></visi:DataMapping>
-                    </visi:DataSeries.DataMappings>
-                </visi:DataSeries>
-                <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Selena Karen" XValueType="Date" RenderAs="StackedColumn" DataSource="{Binding DailyInfo}" ToolTipText="Selena Karen">
-                    <visi:DataSeries.DataMappings>
-                        <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
-                        <visi:DataMapping MemberName="YValue" Path="Investment[Selena Karen]"></visi:DataMapping>
-                    </visi:DataSeries.DataMappings><Border />
-                </visi:DataSeries>
-                <visi:DataSeries XValueFormatString="dd.MM.yyyy" LegendText="Profit" XValueType="Date" RenderAs="Line" DataSource="{Binding DailyInfo}">
-                    <visi:DataSeries.DataMappings>
-                        <visi:DataMapping MemberName="XValue" Path="Key"></visi:DataMapping>
-                        <visi:DataMapping MemberName="YValue" Path="Profit"></visi:DataMapping>
-                    </visi:DataSeries.DataMappings>
-                </visi:DataSeries>
-            </visi:Chart.Series> -->
-
         </visi:Chart>
 
         <ListBox Grid.Column="1" ItemsSource="{Binding Details}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"/>

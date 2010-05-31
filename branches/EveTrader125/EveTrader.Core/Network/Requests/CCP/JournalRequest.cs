@@ -7,7 +7,7 @@ using EveTrader.Core.ClassExtenders;
 
 namespace EveTrader.Core.Network.Requests.CCP
 {
-    public class JournalRequest : ApiEntityRequestBase<IEnumerable<Journal>>
+    public class JournalRequest : ApiEntityRequestBase<IEnumerable<ApiJournal>>
     {
         protected readonly long iAccountKey;
         protected readonly long? iBeforeRefID;
@@ -28,7 +28,7 @@ namespace EveTrader.Core.Network.Requests.CCP
         {
             get { return ApiRequestPage.WalletJournal; }
         }
-        protected override IEnumerable<Journal> Parse(System.Xml.Linq.XDocument document)
+        protected override IEnumerable<ApiJournal> Parse(System.Xml.Linq.XDocument document)
         {
             if (document.ToString().Contains("error code="))
                 throw new ArgumentException(string.Format("Api error encountered: {0}", this.ErrorCode));

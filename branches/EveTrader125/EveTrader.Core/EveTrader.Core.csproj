@@ -54,12 +54,14 @@
     <Compile Include="ClassExtenders\StreamExtender.cs" />
     <Compile Include="ClassExtenders\StringExtender.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\DateTimeHelper.cs" />
+    <Compile Include="Model\MarketOrdersPartial.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Network\Requests\CCP\Base\ApiRequestBase.cs" />
     <Compile Include="Network\Requests\CCP\Base\ApiRequestPage.cs" />
     <Compile Include="Network\Requests\CCP\Base\ApiRequestTarget.cs" />
+    <Compile Include="Network\Requests\CCP\Base\RequestFailedException.cs" />
     <Compile Include="Network\Requests\CCP\CharacterListRequest.cs" />
     <Compile Include="Network\Requests\CCP\CharacterSheetRequest.cs" />
     <Compile Include="Network\Requests\CCP\CorporationSheetRequest.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
+    <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\DisplayDashboard.cs" />
     <Compile Include="ViewModel\DisplayWallets.cs" />
@@ -102,12 +106,12 @@
     <Compile Include="ViewModel\WalletsViewModel.cs" />
     <Compile Include="View\EntitySelectionChangedEventArgs.cs" />
     <Compile Include="View\IAccountEntityView.cs" />
+    <Compile Include="View\IApplicationLogView.cs" />
     <Compile Include="View\IDashboardView.cs" />
     <Compile Include="View\IMainWindowView.cs" />
     <Compile Include="View\IManageAccountsView.cs" />
     <Compile Include="View\IMarketOrdersView.cs" />
     <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
-    <Compile Include="ViewModel\AccountEntityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\TraderModel.Designer.cs">
       <AutoGen>True</AutoGen>

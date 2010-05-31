@@ -58,6 +58,15 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("MarketOrdersView");
             }
         }
+        public object ApplicationLogView
+        {
+            get { return iApplicationLogView; }
+            set
+            {
+                iApplicationLogView = value;
+                RaisePropertyChanged("ApplicationLogView");
+            }
+        }
 
         public event EventHandler ManageAccountsClicked;
 
@@ -73,6 +82,7 @@ namespace EveTrader.Core.ViewModel
             this.ViewCore.Show();
         }
         public event CancelEventHandler Closing;
+        private object iApplicationLogView;
         protected virtual void OnClosing(CancelEventArgs e)
         {
             if (Closing != null) { Closing(this, e); }
@@ -81,6 +91,8 @@ namespace EveTrader.Core.ViewModel
         {
             OnClosing(e);
         }
+
+
 
         
     }

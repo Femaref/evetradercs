@@ -26,7 +26,7 @@
         <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1">
             <TabItem Header="Dashboard">
                 <Grid>
-                    <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,1" Width="1148" />
+                    <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                 </Grid>
             </TabItem>
 			<TabItem Header="Wallets">
@@ -37,6 +37,9 @@
             <TabItem Header="Reports"></TabItem>
             <TabItem Header="MarketOrders">
                 <ContentControl Content="{Binding MarketOrdersView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="Application Log">
+                <ContentControl Content="{Binding ApplicationLogView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </TabItem>
 		</TabControl>
 

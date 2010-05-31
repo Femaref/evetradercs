@@ -59,8 +59,11 @@ namespace EveTrader.Core.Updater.CCP
                 }
                 foreach (var item in data)
                 {
-                    item.Wallet = w;
-                    w.Transactions.Add(item);
+                    if (w.Transactions.OfType<ApiTransactions>().Count(t => t.Date == item.Date && t.ExternalID == item.ExternalID) == 0)
+                    {
+                        item.Wallet = w;
+                        w.Transactions.Add(item);
+                    }
                 }
             }
 
