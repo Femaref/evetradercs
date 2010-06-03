@@ -18,7 +18,6 @@ namespace EveTrader.Core.Model
                 {
                     delta = 0;
                 }
-
                 return delta / daysPast;
             }
         }
@@ -48,12 +47,6 @@ namespace EveTrader.Core.Model
         //estimated time before complete buyout -> estimated time until order completed
         public decimal Etcb
         {
-            /*return marketOrder.VolumeRemaining / ReportHelper.GetAverageTransactionsCount(
-                walletTransactions,
-                marketOrder.Type,
-                marketOrder.TypeID,
-                marketOrder.StationID,
-                (DateTime.Now - marketOrder.Issued).Days);*/
             get
             {
                 return this.VolumeRemaining / this.AverageTransactionsPerDay;

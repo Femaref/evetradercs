@@ -48,19 +48,19 @@ namespace EveTrader.Core.ViewModel
             Details.Clear();
             if (e.BindingKey.Contains("Investment"))
             {
-                foreach (var grouping in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day && s.TransactionType == (long)TransactionType.Buy).GroupBy(s=> s.Wallet))
+                foreach (var grouping in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
                 {
-                    foreach(var subGroup in grouping.GroupBy(s=> s.TypeName))
+                    foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
                     {
 
                         Details.Add(string.Format("{0}: {1} {2}x{3} for a total of {4}", grouping.Key.Name, TransactionType.Buy.StringValue(), subGroup.Sum(t => t.Quantity), subGroup.Key, subGroup.Sum(t => t.Quantity * t.Price).ToString("n")));
                     }
-                   
-                    
+
+
                 }
                 return;
             }
-            foreach(var t in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day))
+            foreach (var t in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day))
             {
                 Details.Add(string.Format("{0}: {1} {2}x{3} for {4} each", t.Wallet.Name, ((TransactionType)t.TransactionType).StringValue(), t.Quantity, t.TypeName, t.Price.ToString("n")));
             }
@@ -68,7 +68,7 @@ namespace EveTrader.Core.ViewModel
 
         private void Filter(int days)
         {
-            if(days == -1)
+            if (days == -1)
                 iDateBefore = DateTime.MinValue;
             else
                 iDateBefore = DateTime.UtcNow.AddDays(-days);
@@ -99,26 +99,41 @@ namespace EveTrader.Core.ViewModel
             DailyInfo.Clear();
             //TODO: Datageneration
 
-            var data = (from w in iModel.Transactions
-                        let date = new DateTimeHelper() {Year = w.Date.Year, Month = w.Date.Month, Day = w.Date.Day}
-                        where w.Date > iDateBefore
-                        group w by date into grouped
-                        orderby grouped.Key.Year, grouped.Key.Month, grouped.Key.Day
-                        select grouped);
 
-            foreach (var grouping in data)
+            var investment = (from w in iModel.Transactions
+                              let date = new DateTimeHelper() { Year = w.Date.Year, Month = w.Date.Month, Day = w.Date.Day }
+                              where w.Date > iDateBefore
+                              group w by date into grouped
+                              orderby grouped.Key
+                              select grouped);
+
+            DateTime now = DateTime.UtcNow;
+            DateTime start = iDateBefore == DateTime.MinValue ? (DateTime)investment.First().Key : (DateTime)iDateBefore.Date;
+
+            //dt = earliest date
+            for (DateTime dt = start; dt.Date <= now.Date; dt = dt.AddDays(1))
+            //foreach (var grouping in investment)
             {
+
                 DisplayDashboard dd = new DisplayDashboard()
                 {
-                    Key = grouping.Key,
+                    Key = dt,
                     Profit = 0m,
-                    Investment = grouping.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price*t.Quantity),
+                    Investment = 0m,
                     Sales = new Dictionary<string, decimal>()
                 };
                 foreach (string s in CurrentWallets)
                 {
                     dd.Sales.Add(s, 0m);
                 }
+                
+                if (investment.Count(i => i.Key.Year == dt.Year && i.Key.Month == dt.Month && i.Key.Day == dt.Day) == 0)
+                {
+                    DailyInfo.Add(dd);
+                    continue;
+                }
+                var grouping = investment.First(i => i.Key.Year == dt.Year && i.Key.Month == dt.Month && i.Key.Day == dt.Day);
+                dd.Investment = grouping.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
 
                 var entityGroup = (from g in grouping
                                    where g.TransactionType == (long)TransactionType.Sell
@@ -126,7 +141,7 @@ namespace EveTrader.Core.ViewModel
                                    select grouped);
                 foreach (var groupedEntity in entityGroup)
                 {
-                    dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price*ge.Quantity);
+                    dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
                 }
                 DailyInfo.Add(dd);
             }
