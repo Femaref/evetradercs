@@ -80,7 +80,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false"  />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApiTransactions">
@@ -117,13 +117,13 @@
           <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="Ticker" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Npc" Type="bit" Nullable="false" />
-          <Property Name="ApiCharacterID" Type="integer" Nullable="false"/>
+          <Property Name="ApiCharacterID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomJournal">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false"  />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" Nullable="false" />
         </EntityType>
@@ -161,7 +161,8 @@
           <Property Name="Reason" Type="nvarchar" Nullable="false" />
           <Property Name="TaxReceiverID" Type="integer" Nullable="false" />
           <Property Name="TaxAmount" Type="decimal" Nullable="false" Precision="53" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="MarketOrders">
           <Key>
@@ -183,6 +184,7 @@
           <Property Name="Bid" Type="bit" Nullable="false" />
           <Property Name="Issued" Type="datetime" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
+          <Property Name="IssuedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -200,8 +202,9 @@
           <Property Name="StationName" Type="nvarchar" Nullable="false" />
           <Property Name="TransactionType" Type="integer" Nullable="false" />
           <Property Name="TransactionFor" Type="integer" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
           <Property Name="Ignored" Type="bit" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="WalletHistories">
           <Key>
@@ -468,6 +471,7 @@
           <Property Type="Decimal" Name="TaxAmount" Nullable="false" Precision="53" Scale="0" />
           <Property Type="DateTime" Name="Date" Nullable="false"/>
           <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Journal_0" FromRole="Journal" ToRole="Wallets" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" />
           </EntityType>
         <EntityType Name="MarketOrders">
           <Key>
@@ -487,7 +491,8 @@
           <Property Type="Boolean" Name="Bid" Nullable="false" />
           <Property Type="DateTime" Name="Issued" Nullable="false" />
           <Property Type="Int64" Name ="ExternalID" Nullable="false" />
-          <NavigationProperty Name="Entity" Relationship="EveTrader.Core.Model.FK_MarketOrders_0" FromRole="MarketOrders" ToRole="Entity" /></EntityType>
+          <NavigationProperty Name="Entity" Relationship="EveTrader.Core.Model.FK_MarketOrders_0" FromRole="MarketOrders" ToRole="Entity" />
+          <Property Type="DateTime" Name="IssuedDate" Nullable="false" /></EntityType>
         <EntityType Name="Transactions">
           <Key>
             <PropertyRef Name="ID" /></Key>
@@ -505,6 +510,7 @@
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Transactions_0" FromRole="Transactions" ToRole="Wallets" />
           <Property Type="Boolean" Name="Ignored" Nullable="false" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" />
           </EntityType>
         <EntityType Name="WalletHistories">
           <Key>
@@ -605,6 +611,7 @@
           <EntitySetMapping Name="Journal">
             <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Journal)">
               <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RefTypeID" ColumnName="RefTypeID" />
                 <ScalarProperty Name="OwnerName1" ColumnName="OwnerName1" />
@@ -637,6 +644,7 @@
           <EntitySetMapping Name="MarketOrders">
             <EntityTypeMapping TypeName="EveTrader.Core.Model.MarketOrders">
               <MappingFragment StoreEntitySet="MarketOrders">
+                <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
                 <ScalarProperty Name="Issued" ColumnName="Issued" />
                 <ScalarProperty Name="Bid" ColumnName="Bid" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -656,6 +664,7 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Transactions)">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="Ignored" ColumnName="Ignored" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

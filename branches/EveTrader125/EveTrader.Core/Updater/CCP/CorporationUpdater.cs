@@ -38,11 +38,28 @@ namespace EveTrader.Core.Updater.CCP
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            iCorpSheetUpdater.Update(entity);
+            try
+            {
+                iCorpSheetUpdater.Update(entity);
+            }
+            catch (UpdaterFailedException ex)
+            {
+                iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+            }
+
+            
 
             if (!entity.Npc)
             {
-                iAccountBalanceUpdater.Update(entity);
+                try
+                {
+                    iAccountBalanceUpdater.Update(entity);
+                }
+                catch (UpdaterFailedException ex)
+                {
+                    iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+                }
+               
                 iUpdaters.ForEach(u =>
                 {
                     try

@@ -14,11 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core.Test", "EveT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core.DataConverter", "EveTrader.Core.DataConverter\EveTrader.Core.DataConverter.csproj", "{FDA2F329-9062-48A2-AE08-65A3DEFC226B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplicationFramework", "Q:\Assembly\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj", "{27B67DFE-0BF1-4435-B036-E4C083EAEA03}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core.DataConverter.Test", "EveTrader.Core.DataConverter.Test\EveTrader.Core.DataConverter.Test.csproj", "{F21709ED-82F8-41EF-9041-8C5A867C6534}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Wpf", "EveTrader.Wpf\EveTrader.Wpf.csproj", "{EF465469-220C-4CDF-918D-07F7EFBA3794}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplicationFramework", "..\..\Assembly\WpfApplicationFramework-1.0.0.90\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj", "{27B67DFE-0BF1-4435-B036-E4C083EAEA03}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -41,10 +41,6 @@ Global
 		{FDA2F329-9062-48A2-AE08-65A3DEFC226B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDA2F329-9062-48A2-AE08-65A3DEFC226B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDA2F329-9062-48A2-AE08-65A3DEFC226B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F21709ED-82F8-41EF-9041-8C5A867C6534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F21709ED-82F8-41EF-9041-8C5A867C6534}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F21709ED-82F8-41EF-9041-8C5A867C6534}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +49,10 @@ Global
 		{EF465469-220C-4CDF-918D-07F7EFBA3794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF465469-220C-4CDF-918D-07F7EFBA3794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF465469-220C-4CDF-918D-07F7EFBA3794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27B67DFE-0BF1-4435-B036-E4C083EAEA03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -412,8 +412,9 @@ namespace EveTrader.Core.Model
         /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
         /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
         /// <param name="date">Initial value of the Date property.</param>
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
         /// <param name="externalID">Initial value of the ExternalID property.</param>
-        public static ApiJournal CreateApiJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.Int64 externalID)
+        public static ApiJournal CreateApiJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.DateTime dateTime, global::System.Int64 externalID)
         {
             ApiJournal apiJournal = new ApiJournal();
             apiJournal.ID = id;
@@ -430,6 +431,7 @@ namespace EveTrader.Core.Model
             apiJournal.TaxReceiverID = taxReceiverID;
             apiJournal.TaxAmount = taxAmount;
             apiJournal.Date = date;
+            apiJournal.DateTime = dateTime;
             apiJournal.ExternalID = externalID;
             return apiJournal;
         }
@@ -491,8 +493,9 @@ namespace EveTrader.Core.Model
         /// <param name="transactionFor">Initial value of the TransactionFor property.</param>
         /// <param name="date">Initial value of the Date property.</param>
         /// <param name="ignored">Initial value of the Ignored property.</param>
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
         /// <param name="externalID">Initial value of the ExternalID property.</param>
-        public static ApiTransactions CreateApiTransactions(global::System.Int64 id, global::System.Int64 quantity, global::System.String typeName, global::System.Int64 typeID, global::System.Decimal price, global::System.Int64 clientID, global::System.String clientName, global::System.Int64 stationID, global::System.String stationName, global::System.Int64 transactionType, global::System.Int64 transactionFor, global::System.DateTime date, global::System.Boolean ignored, global::System.Int64 externalID)
+        public static ApiTransactions CreateApiTransactions(global::System.Int64 id, global::System.Int64 quantity, global::System.String typeName, global::System.Int64 typeID, global::System.Decimal price, global::System.Int64 clientID, global::System.String clientName, global::System.Int64 stationID, global::System.String stationName, global::System.Int64 transactionType, global::System.Int64 transactionFor, global::System.DateTime date, global::System.Boolean ignored, global::System.DateTime dateTime, global::System.Int64 externalID)
         {
             ApiTransactions apiTransactions = new ApiTransactions();
             apiTransactions.ID = id;
@@ -508,6 +511,7 @@ namespace EveTrader.Core.Model
             apiTransactions.TransactionFor = transactionFor;
             apiTransactions.Date = date;
             apiTransactions.Ignored = ignored;
+            apiTransactions.DateTime = dateTime;
             apiTransactions.ExternalID = externalID;
             return apiTransactions;
         }
@@ -1011,9 +1015,10 @@ namespace EveTrader.Core.Model
         /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
         /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
         /// <param name="date">Initial value of the Date property.</param>
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
         /// <param name="created">Initial value of the Created property.</param>
         /// <param name="description">Initial value of the Description property.</param>
-        public static CustomJournal CreateCustomJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.DateTime created, global::System.String description)
+        public static CustomJournal CreateCustomJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.DateTime dateTime, global::System.DateTime created, global::System.String description)
         {
             CustomJournal customJournal = new CustomJournal();
             customJournal.ID = id;
@@ -1030,6 +1035,7 @@ namespace EveTrader.Core.Model
             customJournal.TaxReceiverID = taxReceiverID;
             customJournal.TaxAmount = taxAmount;
             customJournal.Date = date;
+            customJournal.DateTime = dateTime;
             customJournal.Created = created;
             customJournal.Description = description;
             return customJournal;
@@ -1116,8 +1122,9 @@ namespace EveTrader.Core.Model
         /// <param name="transactionFor">Initial value of the TransactionFor property.</param>
         /// <param name="date">Initial value of the Date property.</param>
         /// <param name="ignored">Initial value of the Ignored property.</param>
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
         /// <param name="created">Initial value of the Created property.</param>
-        public static CustomTransactions CreateCustomTransactions(global::System.Int64 id, global::System.Int64 quantity, global::System.String typeName, global::System.Int64 typeID, global::System.Decimal price, global::System.Int64 clientID, global::System.String clientName, global::System.Int64 stationID, global::System.String stationName, global::System.Int64 transactionType, global::System.Int64 transactionFor, global::System.DateTime date, global::System.Boolean ignored, global::System.DateTime created)
+        public static CustomTransactions CreateCustomTransactions(global::System.Int64 id, global::System.Int64 quantity, global::System.String typeName, global::System.Int64 typeID, global::System.Decimal price, global::System.Int64 clientID, global::System.String clientName, global::System.Int64 stationID, global::System.String stationName, global::System.Int64 transactionType, global::System.Int64 transactionFor, global::System.DateTime date, global::System.Boolean ignored, global::System.DateTime dateTime, global::System.DateTime created)
         {
             CustomTransactions customTransactions = new CustomTransactions();
             customTransactions.ID = id;
@@ -1133,6 +1140,7 @@ namespace EveTrader.Core.Model
             customTransactions.TransactionFor = transactionFor;
             customTransactions.Date = date;
             customTransactions.Ignored = ignored;
+            customTransactions.DateTime = dateTime;
             customTransactions.Created = created;
             return customTransactions;
         }
@@ -1389,7 +1397,8 @@ namespace EveTrader.Core.Model
         /// <param name="taxReceiverID">Initial value of the TaxReceiverID property.</param>
         /// <param name="taxAmount">Initial value of the TaxAmount property.</param>
         /// <param name="date">Initial value of the Date property.</param>
-        public static Journal CreateJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date)
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
+        public static Journal CreateJournal(global::System.Int64 id, global::System.Int64 refTypeID, global::System.String ownerName1, global::System.Int64 ownerID1, global::System.String ownerName2, global::System.Int64 ownerID2, global::System.String argName1, global::System.Int64 argID1, global::System.Decimal amount, global::System.Decimal balance, global::System.String reason, global::System.Int64 taxReceiverID, global::System.Decimal taxAmount, global::System.DateTime date, global::System.DateTime dateTime)
         {
             Journal journal = new Journal();
             journal.ID = id;
@@ -1406,6 +1415,7 @@ namespace EveTrader.Core.Model
             journal.TaxReceiverID = taxReceiverID;
             journal.TaxAmount = taxAmount;
             journal.Date = date;
+            journal.DateTime = dateTime;
             return journal;
         }
 
@@ -1750,6 +1760,30 @@ namespace EveTrader.Core.Model
         private global::System.DateTime _Date;
         partial void OnDateChanging(global::System.DateTime value);
         partial void OnDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private global::System.DateTime _DateTime;
+        partial void OnDateTimeChanging(global::System.DateTime value);
+        partial void OnDateTimeChanged();
 
         #endregion
     
@@ -1824,7 +1858,8 @@ namespace EveTrader.Core.Model
         /// <param name="bid">Initial value of the Bid property.</param>
         /// <param name="issued">Initial value of the Issued property.</param>
         /// <param name="externalID">Initial value of the ExternalID property.</param>
-        public static MarketOrders CreateMarketOrders(global::System.Int64 id, global::System.Int64 stationID, global::System.Int64 volumeEntered, global::System.Int64 volumeRemaining, global::System.Int64 minimumVolume, global::System.Int64 orderState, global::System.Int64 typeID, global::System.Int64 range, global::System.Int64 accountKey, global::System.Int64 duration, global::System.Decimal escrow, global::System.Decimal price, global::System.Boolean bid, global::System.DateTime issued, global::System.Int64 externalID)
+        /// <param name="issuedDate">Initial value of the IssuedDate property.</param>
+        public static MarketOrders CreateMarketOrders(global::System.Int64 id, global::System.Int64 stationID, global::System.Int64 volumeEntered, global::System.Int64 volumeRemaining, global::System.Int64 minimumVolume, global::System.Int64 orderState, global::System.Int64 typeID, global::System.Int64 range, global::System.Int64 accountKey, global::System.Int64 duration, global::System.Decimal escrow, global::System.Decimal price, global::System.Boolean bid, global::System.DateTime issued, global::System.Int64 externalID, global::System.DateTime issuedDate)
         {
             MarketOrders marketOrders = new MarketOrders();
             marketOrders.ID = id;
@@ -1842,6 +1877,7 @@ namespace EveTrader.Core.Model
             marketOrders.Bid = bid;
             marketOrders.Issued = issued;
             marketOrders.ExternalID = externalID;
+            marketOrders.IssuedDate = issuedDate;
             return marketOrders;
         }
 
@@ -2210,6 +2246,30 @@ namespace EveTrader.Core.Model
         private global::System.Int64 _ExternalID;
         partial void OnExternalIDChanging(global::System.Int64 value);
         partial void OnExternalIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime IssuedDate
+        {
+            get
+            {
+                return _IssuedDate;
+            }
+            set
+            {
+                OnIssuedDateChanging(value);
+                ReportPropertyChanging("IssuedDate");
+                _IssuedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IssuedDate");
+                OnIssuedDateChanged();
+            }
+        }
+        private global::System.DateTime _IssuedDate;
+        partial void OnIssuedDateChanging(global::System.DateTime value);
+        partial void OnIssuedDateChanged();
 
         #endregion
     
@@ -2284,7 +2344,8 @@ namespace EveTrader.Core.Model
         /// <param name="transactionFor">Initial value of the TransactionFor property.</param>
         /// <param name="date">Initial value of the Date property.</param>
         /// <param name="ignored">Initial value of the Ignored property.</param>
-        public static Transactions CreateTransactions(global::System.Int64 id, global::System.Int64 quantity, global::System.String typeName, global::System.Int64 typeID, global::System.Decimal price, global::System.Int64 clientID, global::System.String clientName, global::System.Int64 stationID, global::System.String stationName, global::System.Int64 transactionType, global::System.Int64 transactionFor, global::System.DateTime date, global::System.Boolean ignored)
+        /// <param name="dateTime">Initial value of the DateTime property.</param>
+        public static Transactions CreateTransactions(global::System.Int64 id, global::System.Int64 quantity, global::System.String typeName, global::System.Int64 typeID, global::System.Decimal price, global::System.Int64 clientID, global::System.String clientName, global::System.Int64 stationID, global::System.String stationName, global::System.Int64 transactionType, global::System.Int64 transactionFor, global::System.DateTime date, global::System.Boolean ignored, global::System.DateTime dateTime)
         {
             Transactions transactions = new Transactions();
             transactions.ID = id;
@@ -2300,6 +2361,7 @@ namespace EveTrader.Core.Model
             transactions.TransactionFor = transactionFor;
             transactions.Date = date;
             transactions.Ignored = ignored;
+            transactions.DateTime = dateTime;
             return transactions;
         }
 
@@ -2620,6 +2682,30 @@ namespace EveTrader.Core.Model
         private global::System.Boolean _Ignored;
         partial void OnIgnoredChanging(global::System.Boolean value);
         partial void OnIgnoredChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private global::System.DateTime _DateTime;
+        partial void OnDateTimeChanging(global::System.DateTime value);
+        partial void OnDateTimeChanged();
 
         #endregion
     

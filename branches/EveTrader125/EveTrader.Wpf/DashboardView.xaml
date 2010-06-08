@@ -9,13 +9,28 @@
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
 	Width="Auto" Height="Auto">
-
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.75*" />
             <ColumnDefinition Width="0.25*" />
         </Grid.ColumnDefinitions>
-        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
+        <Grid Grid.Row="0" Grid.Column="0" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Working, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.475*" />
+                <ColumnDefinition Width="0.05*" />
+                <ColumnDefinition Width="0.525*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.475*" />
+                <RowDefinition Height="0.05*" />
+                <RowDefinition Height="0.525*" />
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Maximum="{Binding Path=WorkingCount}" Value="{Binding Path=CurrentIndex}" Height="25" Width="300"/>
+        </Grid>
+        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1">
             <visi:Chart.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>

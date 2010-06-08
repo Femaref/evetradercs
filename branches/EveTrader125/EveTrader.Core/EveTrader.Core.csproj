@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MoreLinq">
+      <HintPath>..\..\..\Assembly\morelinq-1.0-beta\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -45,11 +48,13 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassExtenders\DateTimeExtender.cs" />
     <Compile Include="ClassExtenders\DecimalExtender.cs" />
     <Compile Include="ClassExtenders\DoubleExtender.cs" />
+    <Compile Include="ClassExtenders\EnumerableExtender.cs" />
     <Compile Include="ClassExtenders\EnumExtender.cs" />
     <Compile Include="ClassExtenders\StreamExtender.cs" />
     <Compile Include="ClassExtenders\StringExtender.cs" />
@@ -60,7 +65,6 @@
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
-    <Compile Include="Model\DateTimeHelper.cs" />
     <Compile Include="Model\MarketOrdersPartial.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
@@ -133,14 +137,14 @@
     <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Q:\Assembly\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
+    <Folder Include="Network\Requests\Central\" />
+    <Folder Include="Network\Requests\Metrics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Assembly\WpfApplicationFramework-1.0.0.90\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
       <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
       <Name>WpfApplicationFramework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Network\Requests\Central\" />
-    <Folder Include="Network\Requests\Metrics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

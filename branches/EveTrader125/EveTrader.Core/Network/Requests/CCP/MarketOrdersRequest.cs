@@ -42,7 +42,8 @@ namespace EveTrader.Core.Network.Requests.CCP
                 Escrow = r.Attribute("escrow").Value.ToDecimal(),
                 Price = r.Attribute("price").Value.ToDecimal(),
                 Bid = r.Attribute("bid").Value == "0",
-                Issued = r.Attribute("issued").Value.ToDateTime()
+                Issued = r.Attribute("issued").Value.ToDateTime(),
+                IssuedDate = r.Attribute("issued").Value.ToDateTime().Date
             });
 
             return orders;

@@ -37,7 +37,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 
             var records = root.Select(r => new ApiJournal
             {
-                Date = r.Attribute("date").Value.ToDateTime(),
+                Date = r.Attribute("date").Value.ToDateTime().Date,
+                DateTime = r.Attribute("date").Value.ToDateTime(),
                 ExternalID = r.Attribute("refID").Value.ToInt64(),
                 RefTypeID = r.Attribute("refTypeID").Value.ToInt64(),
                 Amount = r.Attribute("amount").Value.ToDecimal(),

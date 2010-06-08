@@ -176,6 +176,7 @@ namespace EveTrader.Core.DataConverter
                 journal.Element("Reason").Value,
                 journal.Element("TaxReceiverID").Value.ToInt64(),
                 journal.Element("TaxAmount").Value.ToDecimal(),
+                journal.Element("Date").Value.ToDateTime().Date,
                 journal.Element("Date").Value.ToDateTime(),
                 journal.Element("ReferenceID").Value.ToInt64());
 
@@ -195,8 +196,9 @@ namespace EveTrader.Core.DataConverter
                                 transaction.Element("StationName").Value,
                                 (long)Enum.Parse(typeof(TransactionType), transaction.Element("TransactionType").Value),
                                 (long)Enum.Parse(typeof(TransactionFor), transaction.Element("TransactionFor").Value),
-                                transaction.Element("TransactionDateTime").Value.ToDateTime(),
+                                transaction.Element("TransactionDateTime").Value.ToDateTime().Date,
                                 transaction.Element("Ignore").Value.ToBool(),
+                                transaction.Element("TransactionDateTime").Value.ToDateTime(),
                                 transaction.Element("TransactionID").Value.ToInt64());
         }
 
@@ -216,7 +218,8 @@ namespace EveTrader.Core.DataConverter
                                         marketOrders.Element("Price").Value.ToInt64(),
                                         marketOrders.Element("Type").Value.ToLower() == "buy",
                                         marketOrders.Element("Issued").Value.ToDateTime(),
-                                        marketOrders.Element("ID").Value.ToInt64());
+                                        marketOrders.Element("ID").Value.ToInt64(),
+                                        marketOrders.Element("Issued").Value.ToDateTime().Date);
         }
         private string CreateDatabase()
         {

@@ -205,7 +205,8 @@ CREATE TABLE [Transactions] (
 
 
 
-    [Date] datetime NOT NULL,
+    [DateTime] datetime NOT NULL,
+	[Date] datetime NOT NULL,
 
 
 
@@ -274,6 +275,7 @@ CREATE TABLE [Journal] (
 
     [TaxAmount] decimal NOT NULL,
 
+	[DateTime] DateTime NOT NULL,
 	[Date] DateTime NOT NULL,
 
     CONSTRAINT [FK_Journal_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID])
@@ -324,6 +326,7 @@ CREATE TABLE [MarketOrders] (
     [Bid] bit NOT NULL,
 
     [Issued] datetime NOT NULL,
+	[IssuedDate] datetime NOT NULL,
 
 	[ExternalID] integer  NOT NULL,
 

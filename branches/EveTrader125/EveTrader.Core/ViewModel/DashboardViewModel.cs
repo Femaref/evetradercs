@@ -10,6 +10,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using EveTrader.Core.ClassExtenders;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -80,8 +83,41 @@ namespace EveTrader.Core.ViewModel
         public ObservableCollection<string> CurrentWallets { get; private set; }
         public ObservableCollection<string> Details { get; private set; }
 
+        private int iWorkingCount = 0;
+        public int WorkingCount
+        {
+            get { return iWorkingCount; }
+            set
+            {
+                iWorkingCount = value;
+                RaisePropertyChanged("WorkingCount");
+            }
+        }
+
+        private int iCurrentIndex = 0;
+        public int CurrentIndex
+        {
+            get { return iCurrentIndex; }
+            set
+            {
+                iCurrentIndex = value;
+                RaisePropertyChanged("CurrentIndex");
+            }
+        }
+
+        private bool iWorking = false;
+        public bool Working
+        {
+            get { return iWorking; }
+            set
+            {
+                iWorking = value;
+                RaisePropertyChanged("Working");
+            }
+        }
 
         private DateTime iDateBefore = DateTime.MinValue;
+        
 
         public void RefreshWallets()
         {
@@ -99,53 +135,62 @@ namespace EveTrader.Core.ViewModel
             DailyInfo.Clear();
             //TODO: Datageneration
 
+            
 
             var investment = (from w in iModel.Transactions
-                              let date = new DateTimeHelper() { Year = w.Date.Year, Month = w.Date.Month, Day = w.Date.Day }
                               where w.Date > iDateBefore
-                              group w by date into grouped
+                              group w by w.Date into grouped
                               orderby grouped.Key
                               select grouped);
 
-            DateTime now = DateTime.UtcNow;
-            DateTime start = iDateBefore == DateTime.MinValue ? (DateTime)investment.First().Key : (DateTime)iDateBefore.Date;
+            Working = true;
+            WorkingCount = investment.Count();
+            CurrentIndex = 0;
 
-            //dt = earliest date
-            for (DateTime dt = start; dt.Date <= now.Date; dt = dt.AddDays(1))
-            //foreach (var grouping in investment)
-            {
+            List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
 
-                DisplayDashboard dd = new DisplayDashboard()
-                {
-                    Key = dt,
-                    Profit = 0m,
-                    Investment = 0m,
-                    Sales = new Dictionary<string, decimal>()
-                };
-                foreach (string s in CurrentWallets)
-                {
-                    dd.Sales.Add(s, 0m);
-                }
-                
-                if (investment.Count(i => i.Key.Year == dt.Year && i.Key.Month == dt.Month && i.Key.Day == dt.Day) == 0)
-                {
-                    DailyInfo.Add(dd);
-                    continue;
-                }
-                var grouping = investment.First(i => i.Key.Year == dt.Year && i.Key.Month == dt.Month && i.Key.Day == dt.Day);
-                dd.Investment = grouping.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
 
-                var entityGroup = (from g in grouping
-                                   where g.TransactionType == (long)TransactionType.Sell
-                                   group g by g.Wallet into grouped
-                                   select grouped);
-                foreach (var groupedEntity in entityGroup)
+
+            Dispatcher d = Dispatcher.FromThread(Thread.CurrentThread);
+
+            Thread workerThread = new Thread(() =>
                 {
-                    dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
-                }
-                DailyInfo.Add(dd);
-            }
+                    foreach (var i in investment)
+                    {
+                        DisplayDashboard dd = new DisplayDashboard()
+                        {
+                            Key = i.Key,
+                            Profit = 0m,
+                            Investment = 0m,
+                            Sales = new Dictionary<string, decimal>()
+                        };
+                        foreach (string s in CurrentWallets)
+                        {
+                            dd.Sales.Add(s, 0m);
+                        }
+
+                        dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
+                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round(gt.Price - iModel.Transactions.GetProductAverageBuyPrice(gt.TypeID) * gt.Quantity, 2))).FirstOrDefault();
+
+                        var entityGroup = (from g in i
+                                           where g.TransactionType == (long)TransactionType.Sell
+                                           group g by g.Wallet into grouped
+                                           select grouped);
+
+                        foreach (var groupedEntity in entityGroup)
+                        {
+                            dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
+                        }
+                        d.Invoke(new Action(() => {DailyInfo.Add(dd);}));
+                        CurrentIndex++;
+                    }
+                    Working = false;
+                });
+
+            workerThread.Start();
+
+            
         }
-
     }
 }
+
