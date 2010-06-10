@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Waf.Applications;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
+using System.Windows.Threading;
 
 namespace EveTrader.Wpf
 {
@@ -25,7 +26,23 @@ namespace EveTrader.Wpf
     {
         public ApplicationLogView()
         {
+            
+
             InitializeComponent();
         }
+
+        #region IExtendedView Members
+
+        public void Invoke(Action action)
+        {
+            this.Dispatcher.Invoke(action);
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            this.Dispatcher.BeginInvoke(action);
+        }
+
+        #endregion
     }
 }

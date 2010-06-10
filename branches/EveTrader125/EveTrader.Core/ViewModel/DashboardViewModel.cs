@@ -149,12 +149,9 @@ namespace EveTrader.Core.ViewModel
 
             List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
 
-
-
-            Dispatcher d = Dispatcher.FromThread(Thread.CurrentThread);
-
             Thread workerThread = new Thread(() =>
                 {
+                    List<DisplayDashboard> cache = new List<DisplayDashboard>();
                     foreach (var i in investment)
                     {
                         DisplayDashboard dd = new DisplayDashboard()
@@ -170,7 +167,7 @@ namespace EveTrader.Core.ViewModel
                         }
 
                         dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
-                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round(gt.Price - iModel.Transactions.GetProductAverageBuyPrice(gt.TypeID) * gt.Quantity, 2))).FirstOrDefault();
+                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round(gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID) * gt.Quantity, 2))).FirstOrDefault();
 
                         var entityGroup = (from g in i
                                            where g.TransactionType == (long)TransactionType.Sell
@@ -181,9 +178,11 @@ namespace EveTrader.Core.ViewModel
                         {
                             dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
                         }
-                        d.Invoke(new Action(() => {DailyInfo.Add(dd);}));
+
+                        cache.Add(dd);
                         CurrentIndex++;
                     }
+                    cache.ForEach(dd => this.ViewCore.BeginInvoke(new Action(() => { DailyInfo.Add(dd); })));
                     Working = false;
                 });
 

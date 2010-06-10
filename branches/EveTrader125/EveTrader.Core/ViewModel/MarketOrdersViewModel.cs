@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
+using EveTrader.Core.ViewModel.Display;
+using MoreLinq;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -31,12 +33,14 @@ namespace EveTrader.Core.ViewModel
         public ObservableCollection<Entities> CurrentEntities { get; set; }
 
         private ICommand iHideExpiredCommand;
+        private readonly StaticModel iStaticData;
 
         [ImportingConstructor]
-        public MarketOrdersViewModel(IMarketOrdersView view, TraderModel model) : base(view)
+        public MarketOrdersViewModel(IMarketOrdersView view, TraderModel model, StaticModel sm) : base(view)
         {
             iModel = model;
-            Orders = new ObservableCollection<MarketOrders>();
+            iStaticData = sm;
+            Orders = new ObservableCollection<DisplayMarketOrders>();
             CurrentEntities = new ObservableCollection<Entities>();
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs>(view_EntitySelectionChanged);
 
@@ -55,7 +59,7 @@ namespace EveTrader.Core.ViewModel
             SelectEntity(e.Selection);
         }
 
-        public ObservableCollection<MarketOrders> Orders { get; set; }
+        public ObservableCollection<DisplayMarketOrders> Orders { get; set; }
 
         public decimal TotalBuyOrders
         {
@@ -88,9 +92,21 @@ namespace EveTrader.Core.ViewModel
         {
             Orders.Clear();
             if (iHideExpired)
-                iCurrentEntity.MarketOrders.Where(iHideWhere).ToList().ForEach(x => Orders.Add(x));
+                iCurrentEntity.MarketOrders.Where(iHideWhere).ForEach(x =>
+                    {
+                        DisplayMarketOrders y = (DisplayMarketOrders)x;
+                        y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
+                        y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
+                        Orders.Add(y);
+                    });
             else
-                iCurrentEntity.MarketOrders.ToList().ForEach(x => Orders.Add(x));
+                iCurrentEntity.MarketOrders.ForEach(x =>
+                {
+                    DisplayMarketOrders y = (DisplayMarketOrders)x;
+                    y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
+                    y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
+                    Orders.Add(y);
+                });
 
             RaisePropertyChanged("TotalBuyOrders");
             RaisePropertyChanged("TotalSellOrders");

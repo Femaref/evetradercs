@@ -25,35 +25,42 @@ namespace EveTrader.Core.Controllers
         private readonly WalletsController iWalletsController;
         private readonly MarketOrdersController iMarketOrdersController;
         private readonly ApplicationLogController iApplicationLogController;
+        private readonly PriceCacheController iPriceCacheController;
 
         private readonly CharacterUpdater iCharacterUpdater;
         private readonly CorporationUpdater iCorporationUpdater;
 
         private readonly Timer iUpdateTimer;
+        private readonly StaticModel iStaticData;
+        
 
 
 
         [ImportingConstructor]
         public ApplicationController(MainWindowViewModel mainView,
             TraderModel tm,
+            StaticModel sm,
             CompositionContainer container,
             ManageAccountsController manageAccountsController,
             DashboardController dashboardController,
             WalletsController walletsController,
             MarketOrdersController marketOrdersController,
             ApplicationLogController applicationLogController,
+            PriceCacheController priceCacheController,
             CharacterUpdater charUpdater,
             CorporationUpdater corpUpdater)
         {
             iMainWindowViewModel = mainView;
 
             iModel = tm;
+            iStaticData = sm;
             iContainer = container;
             iManageAccountsController = manageAccountsController;
             iDashboardController = dashboardController;
             iWalletsController = walletsController;
             iMarketOrdersController = marketOrdersController;
             iApplicationLogController = applicationLogController;
+            iPriceCacheController = priceCacheController;
 
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
@@ -71,6 +78,7 @@ namespace EveTrader.Core.Controllers
             iWalletsController.Initialize();
             iMarketOrdersController.Initialize();
             iApplicationLogController.Initialize();
+            iPriceCacheController.Initialize();
         }
 
         private void UpdateData(object o)

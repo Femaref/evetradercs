@@ -18,10 +18,10 @@ namespace EveTrader.Core.View
         }
     }
 
-	public interface IDashboardView : IView
-	{
+    public interface IDashboardView : IExtendedView
+    {
         void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e);
         event EventHandler<DetailsRequestedEventArgs> DetailsRequested;
-	}
-	
+    }
+    
 }

@@ -9,21 +9,21 @@ using EveTrader.Core.ViewModel;
 namespace EveTrader.Core.Controllers
 {
     [Export]
-    public class MarketOrdersController : Controller
+    public class PriceCacheController : Controller
     {
         private MainWindowViewModel iMainView;
-        private MarketOrdersViewModel iMarketOrdersView;
+        private PriceCacheViewModel iPriceCacheView;
 
         [ImportingConstructor]
-        public MarketOrdersController(MainWindowViewModel mainView, MarketOrdersViewModel marketOrdersView)
+        public PriceCacheController(MainWindowViewModel mainView, PriceCacheViewModel priceCacheView)
         {
             iMainView = mainView;
-            iMarketOrdersView = marketOrdersView;
+            iPriceCacheView = priceCacheView;
         }
 
         public void Initialize()
         {
-            iMainView.MarketOrdersView = iMarketOrdersView.View;
+            iMainView.PriceCacheView = iPriceCacheView.View;
         }
     }
 }

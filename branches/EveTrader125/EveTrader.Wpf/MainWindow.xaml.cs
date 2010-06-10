@@ -16,19 +16,31 @@ using System.ComponentModel.Composition;
 
 namespace EveTrader.Wpf
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     [Export(typeof(IMainWindowView))]
-	public partial class MainWindow : Window, IMainWindowView
-	{
-		public MainWindow()
-		{
-			this.InitializeComponent();
-			
-			// Insert code required on object creation below this point.
-		}
+    public partial class MainWindow : Window, IMainWindowView
+    {
+        public MainWindow()
+        {
+            this.InitializeComponent();
+            
+            // Insert code required on object creation below this point.
+        }
 
+        #region IExtendedView Members
 
-	}
+        public void Invoke(Action action)
+        {
+            this.Dispatcher.Invoke(action);
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            this.Dispatcher.BeginInvoke(action);
+        }
+
+        #endregion
+    }
 }

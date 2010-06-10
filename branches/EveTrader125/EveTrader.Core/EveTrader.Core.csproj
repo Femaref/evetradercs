@@ -63,9 +63,16 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
+    <Compile Include="Controllers\PriceCacheController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\MarketOrdersPartial.cs" />
+    <Compile Include="Model\StaticModel.cs" />
+    <Compile Include="Model\StaticModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
@@ -103,11 +110,15 @@
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\DisplayDashboard.cs" />
+    <Compile Include="ViewModel\DisplayPriceCache.cs" />
     <Compile Include="ViewModel\DisplayWallets.cs" />
+    <Compile Include="ViewModel\Display\DisplayMarketOrders.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
+    <Compile Include="ViewModel\PriceCacheViewModel.cs" />
     <Compile Include="ViewModel\TransactionsViewModel.cs" />
     <Compile Include="ViewModel\WalletsViewModel.cs" />
+    <Compile Include="View\Base\IExtendedView.cs" />
     <Compile Include="View\EntitySelectionChangedEventArgs.cs" />
     <Compile Include="View\IAccountEntityView.cs" />
     <Compile Include="View\IApplicationLogView.cs" />
@@ -123,6 +134,7 @@
       <DependentUpon>TraderModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\TraderModelPartial.cs" />
+    <Compile Include="View\IPriceCacheView.cs" />
     <Compile Include="View\ITransactionsView.cs" />
     <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>
@@ -133,6 +145,10 @@
     <EntityDeploy Include="Model\TraderModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TraderModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model\StaticModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>StaticModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
   </ItemGroup>

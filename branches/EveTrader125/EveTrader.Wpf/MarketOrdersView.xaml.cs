@@ -27,7 +27,7 @@ namespace EveTrader.Wpf
         {
             InitializeComponent();
             var x = (CollectionViewSource)this.Resources["iGroupedMarketOrders"];
-            x.GroupDescriptions.Add(new PropertyGroupDescription("StationID"));
+            x.GroupDescriptions.Add(new PropertyGroupDescription("StationName"));
 
         }
 
@@ -44,5 +44,19 @@ namespace EveTrader.Wpf
             if (handler != null)
                 handler(this, new EntitySelectionChangedEventArgs(selection));
         }
+
+        #region IExtendedView Members
+
+        public void Invoke(Action action)
+        {
+            this.Dispatcher.Invoke(action);
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            this.Dispatcher.BeginInvoke(action);
+        }
+
+        #endregion
     }
 }

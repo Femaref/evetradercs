@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
@@ -16,15 +17,16 @@ using System.ComponentModel.Composition;
 namespace EveTrader.Wpf
 {
     /// <summary>
-    /// Interaction logic for ManageAccountsWindow.xaml
+    /// Interaction logic for PriceCacheView.xaml
     /// </summary>
-    [Export(typeof(IManageAccountsView)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class ManageAccountsWindow : Window, IManageAccountsView
+    [Export(typeof(IPriceCacheView))]
+    public partial class PriceCacheView : UserControl, IPriceCacheView
     {
-        public ManageAccountsWindow()
+        public PriceCacheView()
         {
             InitializeComponent();
         }
+
         #region IExtendedView Members
 
         public void Invoke(Action action)

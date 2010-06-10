@@ -6,7 +6,7 @@ using System.Waf.Applications;
 
 namespace EveTrader.Core.View
 {
-    public interface IMarketOrdersView : IView
+    public interface IMarketOrdersView : IExtendedView
     {
         event EventHandler<EntitySelectionChangedEventArgs> EntitySelectionChanged;
     }

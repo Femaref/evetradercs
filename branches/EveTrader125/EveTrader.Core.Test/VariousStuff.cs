@@ -16,6 +16,7 @@ namespace TestProject1
     public class VariousStuff
     {
         TraderModel t = new TraderModel();
+        StaticModel s = new StaticModel();
 
         [TestMethod]
         public void test()
@@ -167,6 +168,12 @@ namespace TestProject1
             TransactionsUpdater ju = new TransactionsUpdater(t);
 
             Assert.IsTrue(ju.Update(t.Entity.First(e => e.Name == "Femaref")));
+        }
+
+        [TestMethod]
+        public void StaticDbTest()
+        {
+            Assert.IsTrue(s.invTypes.Where(i => i.typeID == 34).First().typeName == "Tritanium");
         }
     }
 }

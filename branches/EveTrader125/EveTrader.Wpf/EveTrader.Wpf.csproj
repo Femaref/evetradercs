@@ -105,6 +105,9 @@
     <Compile Include="MarketOrdersView.xaml.cs">
       <DependentUpon>MarketOrdersView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PriceCacheView.xaml.cs">
+      <DependentUpon>PriceCacheView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MarketOrdersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PriceCacheView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

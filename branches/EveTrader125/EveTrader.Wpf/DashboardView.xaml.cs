@@ -30,7 +30,19 @@ namespace EveTrader.Wpf
             this.InitializeComponent();
         }
 
+        #region IExtendedView Members
 
+        public void Invoke(Action action)
+        {
+            this.Dispatcher.Invoke(action);
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            this.Dispatcher.BeginInvoke(action);
+        }
+
+        #endregion
 
 
         #region IDashboardView Members

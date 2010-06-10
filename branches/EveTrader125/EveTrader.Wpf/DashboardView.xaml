@@ -1,14 +1,14 @@
 ﻿<UserControl
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	x:Class="EveTrader.Wpf.DashboardView"
-	x:Name="UserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="EveTrader.Wpf.DashboardView"
+    x:Name="UserControl"
         xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
-	Width="Auto" Height="Auto">
+    Width="Auto" Height="Auto">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
@@ -20,7 +20,7 @@
         <Grid Grid.Row="0" Grid.Column="0" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Working, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.475*" />
-                <ColumnDefinition Width="0.05*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="0.525*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -28,9 +28,15 @@
                 <RowDefinition Height="0.05*" />
                 <RowDefinition Height="0.525*" />
             </Grid.RowDefinitions>
-            <ProgressBar Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Maximum="{Binding Path=WorkingCount}" Value="{Binding Path=CurrentIndex}" Height="25" Width="300"/>
+            <ProgressBar Grid.Row="1" Grid.Column="1" Maximum="{Binding Path=WorkingCount}" Value="{Binding Path=CurrentIndex}" Height="25" Width="300"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Path=CurrentIndex}"/>
+                <TextBlock Text=" of "/>
+                <TextBlock Text="{Binding Path=WorkingCount}"/>
+                <TextBlock Text=" days processed."/>
+            </StackPanel>
         </Grid>
-        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1">
+        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
             <visi:Chart.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>

@@ -33,6 +33,8 @@ namespace EveTrader.Core.Updater.CCP
 
         protected override bool InnerUpdate<U>(U entity)
         {
+            List<long> recacheTypes = new List<long>();
+
             TransactionsRequest tr = null;
             foreach (Wallets w in entity.Wallets)
             {
@@ -65,6 +67,26 @@ namespace EveTrader.Core.Updater.CCP
                         w.Transactions.Add(item);
                     }
                 }
+            }
+
+            iModel.SaveChanges();
+
+            foreach (long i in recacheTypes)
+            {
+
+                CachedPriceInfos cpi = null;
+                if (iModel.CachedPriceInfo.Count(c => c.TypeID == i) == 0)
+                {
+                    cpi = new CachedPriceInfos() { TypeID = i };
+                    iModel.CachedPriceInfo.AddObject(cpi);
+                }
+                else
+                    cpi = iModel.CachedPriceInfo.First(c => c.TypeID == i);
+
+                cpi.BuyPrice = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Buy).OrderByDescending(t => t.DateTime).Take(10).Average(t => t.Price);
+                cpi.SellPrice = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Sell).OrderByDescending(t => t.DateTime).Take(10).Average(t => t.Price);
+
+                iModel.WriteToLog(string.Format("Updated average prices for typeID {0}", cpi.TypeID), "TransactionUpdater.InnerUpdate()");
             }
 
             iModel.SaveChanges();

@@ -6,7 +6,7 @@ using System.Waf.Applications;
 
 namespace EveTrader.Core.View
 {
-    public interface IApplicationLogView : IView
+    public interface IApplicationLogView : IExtendedView
     {
     }
 }

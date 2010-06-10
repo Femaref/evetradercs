@@ -10,6 +10,7 @@
           <EntitySet Name="ApiJournal" EntityType="testModel.Store.ApiJournal" store:Type="Tables" />
           <EntitySet Name="ApiTransactions" EntityType="testModel.Store.ApiTransactions" store:Type="Tables" />
           <EntitySet Name="ApplicationLog" EntityType="testModel.Store.ApplicationLog" store:Type="Tables" />
+          <EntitySet Name="CachedPriceInfo" EntityType="testModel.Store.CachedPriceInfo" store:Type="Tables" />
           <EntitySet Name="Characters" EntityType="testModel.Store.Characters" store:Type="Tables" />
           <EntitySet Name="Corporations" EntityType="testModel.Store.Corporations" store:Type="Tables" />
           <EntitySet Name="CustomJournal" EntityType="testModel.Store.CustomJournal" store:Type="Tables" />
@@ -80,7 +81,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false"  />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApiTransactions">
@@ -98,6 +99,14 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Message" Type="nvarchar" Nullable="false" />
           <Property Name="CallingClass" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CachedPriceInfo">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="integer" Nullable="false" />
+          <Property Name="BuyPrice" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="SellPrice" Type="decimal" Nullable="false" Precision="53" />
         </EntityType>
         <EntityType Name="Characters">
           <Key>
@@ -162,7 +171,7 @@
           <Property Name="TaxReceiverID" Type="integer" Nullable="false" />
           <Property Name="TaxAmount" Type="decimal" Nullable="false" Precision="53" />
           <Property Name="DateTime" Type="datetime" Nullable="false" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MarketOrders">
           <Key>
@@ -183,8 +192,8 @@
           <Property Name="Price" Type="decimal" Nullable="false" Precision="53" />
           <Property Name="Bid" Type="bit" Nullable="false" />
           <Property Name="Issued" Type="datetime" Nullable="false" />
+          <Property Name="IssuedDate" Type="datetime" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
-          <Property Name="IssuedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -203,8 +212,8 @@
           <Property Name="TransactionType" Type="integer" Nullable="false" />
           <Property Name="TransactionFor" Type="integer" Nullable="false" />
           <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Ignored" Type="bit" Nullable="false" />
-          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="WalletHistories">
           <Key>
@@ -403,6 +412,7 @@
             <End Role="Wallets" EntitySet="Wallets" />
             <End Role="WalletHistories" EntitySet="WalletHistories" /></AssociationSet>
           <EntitySet Name="ApplicationLog" EntityType="EveTrader.Core.Model.ApplicationLog" />
+          <EntitySet Name="CachedPriceInfo" EntityType="EveTrader.Core.Model.CachedPriceInfos" />
           </EntityContainer>
         <EntityType Name="Characters" BaseType="EveTrader.Core.Model.Entities">
           <Property Type="String" Name="Race" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -456,7 +466,7 @@
         <EntityType Name="Journal">
           <Key>
             <PropertyRef Name="ID" /></Key>
-          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Int64" Name="RefTypeID" Nullable="false" />
           <Property Type="String" Name="OwnerName1" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="OwnerID1" Nullable="false" />
@@ -496,7 +506,7 @@
         <EntityType Name="Transactions">
           <Key>
             <PropertyRef Name="ID" /></Key>
-          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Int64" Name="Quantity" Nullable="false" />
           <Property Type="String" Name="TypeName" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="TypeID" Nullable="false" />
@@ -551,6 +561,14 @@
         <EntityType Name="CustomJournal" BaseType="EveTrader.Core.Model.Journal">
           <Property Type="DateTime" Name="Created" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CachedPriceInfos">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Type="Int64" Name="TypeID" Nullable="false" />
+          <Property Type="Decimal" Name="BuyPrice" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="SellPrice" Nullable="false" Precision="53" Scale="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -724,6 +742,15 @@
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CachedPriceInfo">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.CachedPriceInfos">
+              <MappingFragment StoreEntitySet="CachedPriceInfo">
+                <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+                <ScalarProperty Name="BuyPrice" ColumnName="BuyPrice" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -818,6 +845,7 @@
           <ConnectorPoint PointX="17" PointY="9.0553898111979159" />
           <ConnectorPoint PointX="17.75" PointY="9.0553898111979159" />
         </InheritanceConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.CachedPriceInfos" Width="1.875" PointX="0.75" PointY="0.75" Height="1.4279589843750031" />
         </Diagram></Diagrams>
   </Designer>
 </edmx:Edmx>

@@ -7,6 +7,7 @@ using EveTrader.Core.View;
 using System.ComponentModel.Composition;
 using System.ComponentModel;
 using System.Windows.Input;
+using EveTrader.Core.Model;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -14,6 +15,7 @@ namespace EveTrader.Core.ViewModel
     public class MainWindowViewModel : ViewModel<IMainWindowView>
     {
         private readonly ICommand iOpenManageAccountsCommand;
+        private readonly ICommand iRegeneratePriceCache;
 
         private object iDashboardView;
         private object iWalletsView;
@@ -22,6 +24,11 @@ namespace EveTrader.Core.ViewModel
         public ICommand OpenManageAccountsCommand
         {
             get { return iOpenManageAccountsCommand; }
+        }
+
+        public ICommand RegeneratePriceCacheCommand
+        {
+            get { return iRegeneratePriceCache; }
         }
         private void OpenManageAccounts()
         {
@@ -49,6 +56,16 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
+        public object PriceCacheView
+        {
+            get { return iPriceCache; }
+            set
+            {
+                iPriceCache = value;
+                RaisePropertyChanged("PriceCacheView");
+            }
+        }
+
         public object MarketOrdersView
         {
             get { return iMarketOrdersView; }
@@ -70,12 +87,17 @@ namespace EveTrader.Core.ViewModel
 
         public event EventHandler ManageAccountsClicked;
 
+        private readonly TraderModel iModel;
+
         [ImportingConstructor]
-        public MainWindowViewModel(IMainWindowView view): base(view)
+        public MainWindowViewModel(IMainWindowView view, TraderModel tm): base(view)
         {
             view.Closing += ViewClosing;
 
+            iModel = tm;
+
             iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
+            iRegeneratePriceCache = new DelegateCommand(() => iModel.RegeneratePriceCache());
         }
         public void Show()
         {
@@ -83,6 +105,7 @@ namespace EveTrader.Core.ViewModel
         }
         public event CancelEventHandler Closing;
         private object iApplicationLogView;
+        private object iPriceCache;
         protected virtual void OnClosing(CancelEventArgs e)
         {
             if (Closing != null) { Closing(this, e); }

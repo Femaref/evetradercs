@@ -203,6 +203,22 @@ namespace EveTrader.Core.Model
             }
         }
         private ObjectSet<ApplicationLog> _ApplicationLog;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<CachedPriceInfos> CachedPriceInfo
+        {
+            get
+            {
+                if ((_CachedPriceInfo == null))
+                {
+                    _CachedPriceInfo = base.CreateObjectSet<CachedPriceInfos>("CachedPriceInfo");
+                }
+                return _CachedPriceInfo;
+            }
+        }
+        private ObjectSet<CachedPriceInfos> _CachedPriceInfo;
 
         #endregion
         #region AddTo Methods
@@ -269,6 +285,14 @@ namespace EveTrader.Core.Model
         public void AddToApplicationLog(ApplicationLog applicationLog)
         {
             base.AddObject("ApplicationLog", applicationLog);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the CachedPriceInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCachedPriceInfo(CachedPriceInfos cachedPriceInfos)
+        {
+            base.AddObject("CachedPriceInfo", cachedPriceInfos);
         }
 
         #endregion
@@ -675,6 +699,113 @@ namespace EveTrader.Core.Model
         private global::System.String _CallingClass;
         partial void OnCallingClassChanging(global::System.String value);
         partial void OnCallingClassChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="CachedPriceInfos")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class CachedPriceInfos : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CachedPriceInfos object.
+        /// </summary>
+        /// <param name="typeID">Initial value of the TypeID property.</param>
+        /// <param name="buyPrice">Initial value of the BuyPrice property.</param>
+        /// <param name="sellPrice">Initial value of the SellPrice property.</param>
+        public static CachedPriceInfos CreateCachedPriceInfos(global::System.Int64 typeID, global::System.Decimal buyPrice, global::System.Decimal sellPrice)
+        {
+            CachedPriceInfos cachedPriceInfos = new CachedPriceInfos();
+            cachedPriceInfos.TypeID = typeID;
+            cachedPriceInfos.BuyPrice = buyPrice;
+            cachedPriceInfos.SellPrice = sellPrice;
+            return cachedPriceInfos;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 TypeID
+        {
+            get
+            {
+                return _TypeID;
+            }
+            set
+            {
+                if (_TypeID != value)
+                {
+                    OnTypeIDChanging(value);
+                    ReportPropertyChanging("TypeID");
+                    _TypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TypeID");
+                    OnTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _TypeID;
+        partial void OnTypeIDChanging(global::System.Int64 value);
+        partial void OnTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal BuyPrice
+        {
+            get
+            {
+                return _BuyPrice;
+            }
+            set
+            {
+                OnBuyPriceChanging(value);
+                ReportPropertyChanging("BuyPrice");
+                _BuyPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BuyPrice");
+                OnBuyPriceChanged();
+            }
+        }
+        private global::System.Decimal _BuyPrice;
+        partial void OnBuyPriceChanging(global::System.Decimal value);
+        partial void OnBuyPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal SellPrice
+        {
+            get
+            {
+                return _SellPrice;
+            }
+            set
+            {
+                OnSellPriceChanging(value);
+                ReportPropertyChanging("SellPrice");
+                _SellPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SellPrice");
+                OnSellPriceChanged();
+            }
+        }
+        private global::System.Decimal _SellPrice;
+        partial void OnSellPriceChanging(global::System.Decimal value);
+        partial void OnSellPriceChanged();
 
         #endregion
     

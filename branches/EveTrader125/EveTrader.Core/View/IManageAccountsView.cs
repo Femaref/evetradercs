@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace EveTrader.Core.View
 {
-    public interface IManageAccountsView : IView
+    public interface IManageAccountsView : IExtendedView
     {
         event CancelEventHandler Closing;
         void Show();

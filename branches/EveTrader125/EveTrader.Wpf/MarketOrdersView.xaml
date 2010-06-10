@@ -14,8 +14,8 @@
                 <RowDefinition Height="278" />
             <RowDefinition Height="79*" />
         </Grid.RowDefinitions>
-        <ComboBox Height="Auto" Name="comboBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <CheckBox Content="Hide Expired" Height="16" HorizontalAlignment="Left" Margin="383,3,0,0" Name="checkBox1" VerticalAlignment="Top" Grid.Row="0" IsChecked="{Binding HideExpired, Mode=TwoWay}"/>
+        <ComboBox Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <DataGrid Height="Auto" Width="Auto" 
                   Grid.Row="1" 
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
@@ -23,7 +23,22 @@
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true"
                   AlternatingRowBackground="#FFECECEF" Background="White"
                   ItemsSource="{Binding Source={StaticResource iGroupedMarketOrders}}"
-                  DataContext="{Binding}">
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=VolumeEntered}" Header="VolumeEntered" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining}" Header="VolumeRemaining" />
+                <DataGridTextColumn Binding="{Binding Path=MinimumVolume}" Header="MinimumVolume" />
+                <DataGridTextColumn Binding="{Binding Path=OrderState}" Header="OrderState" />
+                <DataGridTextColumn Binding="{Binding Path=TypeName}" Header="TypeName" />
+                <DataGridTextColumn Binding="{Binding Path=StationName}" Header="StationName" />
+                <DataGridTextColumn Binding="{Binding Path=Range}" Header="Range" />
+                <DataGridTextColumn Binding="{Binding Path=Duration}" Header="Duration" />
+                <DataGridTextColumn Binding="{Binding Path=Escrow}" Header="Escrow" />
+                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" />
+                <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
+                <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
+                <DataGridTextColumn Binding="{Binding Path=EntityName}" CanUserSort="False" Header="Entity" />
+            </DataGrid.Columns>
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -51,22 +66,6 @@
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </DataGrid.GroupStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=ID}" Header="ID" />
-                <DataGridTextColumn Binding="{Binding Path=ExternalID}" Header="ExternalID" />
-                <DataGridTextColumn Binding="{Binding Path=StationID}" Header="StationID" />
-                <DataGridTextColumn Binding="{Binding Path=VolumeEntered, StringFormat='##,0'}" Header="VolumeEntered" />
-                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining, StringFormat='##,0'}" Header="VolumeRemaining" />
-                <DataGridTextColumn Binding="{Binding Path=MinimumVolume, StringFormat='##,0'}" Header="MinimumVolume" />
-                <DataGridTextColumn Binding="{Binding Path=OrderState}" Header="OrderState" />
-                <DataGridTextColumn Binding="{Binding Path=TypeID}" Header="TypeID" />
-                <DataGridTextColumn Binding="{Binding Path=Range}" Header="Range" />
-                <DataGridTextColumn Binding="{Binding Path=Duration}" Header="Duration" />
-                <DataGridTextColumn Binding="{Binding Path=Escrow, StringFormat=n}" Header="Escrow" />
-                <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=n}" Header="Price" />
-                <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
-                <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
-            </DataGrid.Columns>
         </DataGrid>
             <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
