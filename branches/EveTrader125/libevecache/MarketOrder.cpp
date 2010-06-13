@@ -16,7 +16,7 @@ namespace EveCacheCLI
     EveCacheCLI::MarketOrder^ MarketOrder::fromEveCacheMarketOrder(EveCache::MarketOrder input)
     {
         EveCacheCLI::MarketOrder^ output = gcnew EveCacheCLI::MarketOrder();
-        output->Price = input.price();
+        output->Price = static_cast<Decimal>(input.price()/10000.0);
         output->VolumeRemaining = input.volRemaining();
         output->TypeID = input.type();
         output->Range = input.range();
