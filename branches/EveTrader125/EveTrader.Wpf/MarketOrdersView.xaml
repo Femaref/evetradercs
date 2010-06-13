@@ -4,19 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:MarketOrdersViewModel}"
-             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" Height="Auto" Width="Auto">
+             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <UserControl.Resources>
         <CollectionViewSource x:Key="iGroupedMarketOrders" Source="{Binding Orders}"/>
     </UserControl.Resources>
-        <Grid HorizontalAlignment="Stretch"  Name="grid1" VerticalAlignment="Stretch" Height="Auto" Width="Auto">
+        <Grid HorizontalAlignment="Stretch"  Name="grid1" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="19" />
-                <RowDefinition Height="278" />
-            <RowDefinition Height="79*" />
-        </Grid.RowDefinitions>
+                <RowDefinition Height="1000*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
         <CheckBox Content="Hide Expired" Height="16" HorizontalAlignment="Left" Margin="383,3,0,0" Name="checkBox1" VerticalAlignment="Top" Grid.Row="0" IsChecked="{Binding HideExpired, Mode=TwoWay}"/>
         <ComboBox Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
-        <DataGrid Height="Auto" Width="Auto" 
+        <DataGrid Height="Auto" Width="Auto"
                   Grid.Row="1" 
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                   AutoGenerateColumns="False"
@@ -25,19 +25,18 @@
                   ItemsSource="{Binding Source={StaticResource iGroupedMarketOrders}}"
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=VolumeEntered}" Header="VolumeEntered" />
-                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining}" Header="VolumeRemaining" />
-                <DataGridTextColumn Binding="{Binding Path=MinimumVolume}" Header="MinimumVolume" />
-                <DataGridTextColumn Binding="{Binding Path=OrderState}" Header="OrderState" />
                 <DataGridTextColumn Binding="{Binding Path=TypeName}" Header="TypeName" />
                 <DataGridTextColumn Binding="{Binding Path=StationName}" Header="StationName" />
+                <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
+                <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=N2}" Header="Price" />
+                <DataGridTextColumn Binding="{Binding Path=Escrow, StringFormat=N2}" Header="Escrow" />
+                <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeRemaining, StringFormat=N0}" Header="Remaining" />
+                <DataGridTextColumn Binding="{Binding Path=VolumeEntered, StringFormat=N0}" Header="Entered" />
+                <DataGridTextColumn Binding="{Binding Path=MinimumVolume, StringFormat=N0}" Header="Minimum" />
+                <DataGridTextColumn Binding="{Binding Path=OrderState}" Header="OrderState" />
                 <DataGridTextColumn Binding="{Binding Path=Range}" Header="Range" />
                 <DataGridTextColumn Binding="{Binding Path=Duration}" Header="Duration" />
-                <DataGridTextColumn Binding="{Binding Path=Escrow}" Header="Escrow" />
-                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" />
-                <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
-                <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
-                <DataGridTextColumn Binding="{Binding Path=EntityName}" CanUserSort="False" Header="Entity" />
             </DataGrid.Columns>
             <DataGrid.GroupStyle>
                 <GroupStyle>
@@ -69,13 +68,13 @@
         </DataGrid>
             <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="363" />
-                <ColumnDefinition Width="505" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                    <RowDefinition Height="28*" />
-                    <RowDefinition Height="27*" />
-                    <RowDefinition Height="24*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
             <Label Grid.Row="0">
                 <StackPanel Orientation="Horizontal">

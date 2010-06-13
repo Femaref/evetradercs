@@ -51,6 +51,10 @@
       <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
       <Name>EveTrader.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\libevecache\libevecache.vcxproj">
+      <Project>{3546F283-32F8-4508-9632-AF0431B933C9}</Project>
+      <Name>libevecache</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">

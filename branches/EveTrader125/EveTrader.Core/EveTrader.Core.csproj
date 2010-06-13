@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="libevecache">
+      <HintPath>..\..\libevecache\libevecache\Debug\libevecache.dll</HintPath>
+    </Reference>
     <Reference Include="MoreLinq">
       <HintPath>..\..\..\Assembly\morelinq-1.0-beta\MoreLinq.dll</HintPath>
     </Reference>

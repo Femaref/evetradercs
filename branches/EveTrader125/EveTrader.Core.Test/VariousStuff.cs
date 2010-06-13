@@ -8,6 +8,7 @@ using EveTrader.Core.Model;
 using EveTrader.Core.ViewModel;
 using EveTrader.Core.Network.Requests.CCP;
 using EveTrader.Core.Updater.CCP;
+using System.IO;
 namespace TestProject1
 {
 
@@ -174,6 +175,15 @@ namespace TestProject1
         public void StaticDbTest()
         {
             Assert.IsTrue(s.invTypes.Where(i => i.typeID == 34).First().typeName == "Tritanium");
+        }
+
+        [TestMethod]
+        public void ImportCacheFile()
+        {
+            EveCacheCLI.ManagedMarket mm = new EveCacheCLI.ManagedMarket(Path.Combine(@"F:\EVE\cache\MachoNet\87.237.38.200\244\CachedMethodCalls", "4c53.cache"));
+            EveCacheCLI.MarketOrderList mo = mm.GetOrders();
+
+            Assert.IsTrue(mo.Orders.Count() > 0);
         }
     }
 }
