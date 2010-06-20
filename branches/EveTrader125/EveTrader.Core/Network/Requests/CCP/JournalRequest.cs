@@ -12,8 +12,8 @@ namespace EveTrader.Core.Network.Requests.CCP
         protected readonly long iAccountKey;
         protected readonly long? iBeforeRefID;
 
-        public JournalRequest (Accounts a, long characterID, ApiRequestTarget target, long? beforeRefID, long accountKey = 1000)
-            : base(a, characterID, target)
+        public JournalRequest(Accounts a, long characterID, ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache, long? beforeRefID, long accountKey = 1000)
+            : base(a,characterID, target, stillCached, saveCache, loadCache)
         {
             iBeforeRefID = beforeRefID;
             iAccountKey = accountKey;
@@ -61,6 +61,11 @@ namespace EveTrader.Core.Network.Requests.CCP
             });
 
             return records;
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(1, 0, 0); }
         }
     }
 }

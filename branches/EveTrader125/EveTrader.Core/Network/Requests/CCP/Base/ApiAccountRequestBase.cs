@@ -22,8 +22,8 @@ namespace EveTrader.Core.Network.Requests.CCP
                 return output.Substring(0, output.Length-1);
             }
         }
-        public ApiAccountRequestBase(Accounts a, ApiRequestTarget target)
-            : base(target)
+        public ApiAccountRequestBase(Accounts a, ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+            : base(target, stillCached, saveCache, loadCache)
         {
             iAccount = a;
             this.iData.Add("userID", a.ID.ToString());

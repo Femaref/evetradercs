@@ -219,6 +219,22 @@ namespace EveTrader.Core.Model
             }
         }
         private ObjectSet<CachedPriceInfos> _CachedPriceInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ApiCache> ApiCache
+        {
+            get
+            {
+                if ((_ApiCache == null))
+                {
+                    _ApiCache = base.CreateObjectSet<ApiCache>("ApiCache");
+                }
+                return _ApiCache;
+            }
+        }
+        private ObjectSet<ApiCache> _ApiCache;
 
         #endregion
         #region AddTo Methods
@@ -293,6 +309,14 @@ namespace EveTrader.Core.Model
         public void AddToCachedPriceInfo(CachedPriceInfos cachedPriceInfos)
         {
             base.AddObject("CachedPriceInfo", cachedPriceInfos);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ApiCache EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToApiCache(ApiCache apiCache)
+        {
+            base.AddObject("ApiCache", apiCache);
         }
 
         #endregion
@@ -407,6 +431,139 @@ namespace EveTrader.Core.Model
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="ApiCache")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ApiCache : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ApiCache object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="requestString">Initial value of the RequestString property.</param>
+        /// <param name="requestDate">Initial value of the RequestDate property.</param>
+        /// <param name="data">Initial value of the Data property.</param>
+        public static ApiCache CreateApiCache(global::System.Int64 id, global::System.String requestString, global::System.DateTime requestDate, global::System.String data)
+        {
+            ApiCache apiCache = new ApiCache();
+            apiCache.ID = id;
+            apiCache.RequestString = requestString;
+            apiCache.RequestDate = requestDate;
+            apiCache.Data = data;
+            return apiCache;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String RequestString
+        {
+            get
+            {
+                return _RequestString;
+            }
+            set
+            {
+                OnRequestStringChanging(value);
+                ReportPropertyChanging("RequestString");
+                _RequestString = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("RequestString");
+                OnRequestStringChanged();
+            }
+        }
+        private global::System.String _RequestString;
+        partial void OnRequestStringChanging(global::System.String value);
+        partial void OnRequestStringChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime RequestDate
+        {
+            get
+            {
+                return _RequestDate;
+            }
+            set
+            {
+                OnRequestDateChanging(value);
+                ReportPropertyChanging("RequestDate");
+                _RequestDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RequestDate");
+                OnRequestDateChanged();
+            }
+        }
+        private global::System.DateTime _RequestDate;
+        partial void OnRequestDateChanging(global::System.DateTime value);
+        partial void OnRequestDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Data
+        {
+            get
+            {
+                return _Data;
+            }
+            set
+            {
+                OnDataChanging(value);
+                ReportPropertyChanging("Data");
+                _Data = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Data");
+                OnDataChanged();
+            }
+        }
+        private global::System.String _Data;
+        partial void OnDataChanging(global::System.String value);
+        partial void OnDataChanged();
+
+        #endregion
+    
     }
     
     /// <summary>

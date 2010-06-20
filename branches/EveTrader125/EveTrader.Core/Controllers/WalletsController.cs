@@ -19,10 +19,6 @@ namespace EveTrader.Core.Controllers
         {
             iMainView = mainView;
             iWalletsView = walletsView;
-        }
-
-        public void Initialize()
-        {
             iMainView.WalletsView = iWalletsView.View;
         }
     }

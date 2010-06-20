@@ -38,6 +38,49 @@ namespace EveTrader.Core.Model
 
             this.SaveChanges();
         }
+
+        public Func<string, TimeSpan, bool> StillCached
+        {
+            get
+            {
+                return (s, t) =>
+                    {
+                        var cache = this.ApiCache.Where(c => c.RequestString == s).FirstOrDefault();
+                        if (cache == null)
+                            return false;
+                        return (cache.RequestDate + t) > DateTime.UtcNow;
+                    };
+            }
+        }
+        public Action<string, DateTime, string> SaveCache
+        {
+            get
+            {
+                return (s, d, x) =>
+                {
+                    var cache = this.ApiCache.Where(c => c.RequestString == s).FirstOrDefault();
+                    if (cache == null)
+                    {
+                        cache = new ApiCache() { RequestString = s };
+                        this.ApiCache.AddObject(cache);
+                    }
+                    cache.RequestDate = d;
+                    cache.Data = x;
+                    this.SaveChanges();
+                };
+            }
+        }
+        public Func<string, string> LoadCache
+        {
+            get
+            {
+                return s =>
+                    {
+                        var cache = this.ApiCache.Where(c => c.RequestString == s).FirstOrDefault();
+                        return cache != null ? cache.Data : "";
+                    };
+            }
+        }
         
     }
 }

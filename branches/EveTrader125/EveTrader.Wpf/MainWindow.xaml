@@ -21,7 +21,7 @@
             <MenuItem Margin="0" Header="Main">
                 <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
                 <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
-                <MenuItem Header="Exit" Command="ApplicationCommands.Close"/>
+                <MenuItem Header="Exit" Command="Close"/>
             </MenuItem>
         </Menu>
         <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1">

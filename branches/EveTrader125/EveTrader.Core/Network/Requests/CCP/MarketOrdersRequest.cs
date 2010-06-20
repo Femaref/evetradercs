@@ -9,8 +9,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 {
     public class MarketOrdersRequest : ApiEntityRequestBase<IEnumerable<MarketOrders>>
     {
-        public MarketOrdersRequest(Accounts a, long characterID, ApiRequestTarget target)
-            : base(a, characterID, target)
+        public MarketOrdersRequest(Accounts a, long characterID, ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+            : base(a, characterID, target, stillCached, saveCache, loadCache)
         {
         }
 
@@ -47,6 +47,11 @@ namespace EveTrader.Core.Network.Requests.CCP
             });
 
             return orders;
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(1, 0, 0); }
         }
     }
 }

@@ -19,10 +19,6 @@ namespace EveTrader.Core.Controllers
         {
             iMainView = mainView;
             iMarketOrdersView = marketOrdersView;
-        }
-
-        public void Initialize()
-        {
             iMainView.MarketOrdersView = iMarketOrdersView.View;
         }
     }

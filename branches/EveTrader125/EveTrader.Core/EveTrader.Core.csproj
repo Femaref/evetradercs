@@ -64,9 +64,11 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\PriceCacheController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\MarketOrdersPartial.cs" />
@@ -113,9 +115,11 @@
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\DisplayDashboard.cs" />
+    <Compile Include="ViewModel\DisplayDetail.cs" />
     <Compile Include="ViewModel\DisplayPriceCache.cs" />
     <Compile Include="ViewModel\DisplayWallets.cs" />
     <Compile Include="ViewModel\Display\DisplayMarketOrders.cs" />
+    <Compile Include="ViewModel\JournalViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
     <Compile Include="ViewModel\PriceCacheViewModel.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="View\IAccountEntityView.cs" />
     <Compile Include="View\IApplicationLogView.cs" />
     <Compile Include="View\IDashboardView.cs" />
+    <Compile Include="View\IJournalView.cs" />
     <Compile Include="View\IMainWindowView.cs" />
     <Compile Include="View\IManageAccountsView.cs" />
     <Compile Include="View\IMarketOrdersView.cs" />

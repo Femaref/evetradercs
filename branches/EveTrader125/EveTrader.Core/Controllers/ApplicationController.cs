@@ -32,7 +32,8 @@ namespace EveTrader.Core.Controllers
 
         private readonly Timer iUpdateTimer;
         private readonly StaticModel iStaticData;
-        
+
+        private readonly List<Controller> iControllers = new List<Controller>();
 
 
 
@@ -68,25 +69,14 @@ namespace EveTrader.Core.Controllers
             iUpdateTimer = new Timer(new TimerCallback(UpdateData), null, 0, 60 * 60 * 1000);
 
             mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
-
-            this.Initialize();
         }
-        public void Initialize()
-        {
-            iDashboardController.Initialize();
-            iManageAccountsController.Initialize();
-            iWalletsController.Initialize();
-            iMarketOrdersController.Initialize();
-            iApplicationLogController.Initialize();
-            iPriceCacheController.Initialize();
-        }
-
         private void UpdateData(object o)
         {
             foreach (Characters c in iModel.Entity.OfType<Characters>())
                 iCharacterUpdater.Update(c);
             foreach (Corporations c in iModel.Entity.OfType<Corporations>())
                 iCorporationUpdater.Update(c);
+            
         }
 
         public void Run()

@@ -33,10 +33,5 @@ namespace EveTrader.Core.Controllers
         {
             
         }
-
-        public void Initialize()
-        {
-            
-        }
     }
 }

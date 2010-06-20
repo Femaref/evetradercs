@@ -22,7 +22,7 @@ namespace EveTrader.Core.Updater.CCP
 
         protected override bool InnerUpdate<U>(U entity)
         {
-            CharacterSheetRequest req = new CharacterSheetRequest(entity.Account, entity.ID);
+            CharacterSheetRequest req = new CharacterSheetRequest(entity.Account, entity.ID, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
 
             Characters c = req.Request();
 

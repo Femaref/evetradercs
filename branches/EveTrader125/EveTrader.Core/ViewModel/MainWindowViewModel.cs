@@ -117,6 +117,10 @@ namespace EveTrader.Core.ViewModel
 
 
 
-        
+
+
+        public object TransactionsView { get; set; }
+
+        public object JournalView { get; set; }
     }
 }

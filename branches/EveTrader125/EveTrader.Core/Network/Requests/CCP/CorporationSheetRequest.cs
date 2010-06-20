@@ -8,8 +8,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 {
     public class CorporationSheetRequest : ApiEntityRequestBase<Corporations>
     {
-        public CorporationSheetRequest(Accounts a, long characterID)
-            : base(a, characterID, ApiRequestTarget.Corporation)
+        public CorporationSheetRequest(Accounts a, long characterID, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+            : base(a, characterID, ApiRequestTarget.Corporation, stillCached, saveCache, loadCache)
         {
         }
         public override ApiRequestPage Page
@@ -60,6 +60,11 @@ namespace EveTrader.Core.Network.Requests.CCP
                 c.Wallets.Add(w);
             }
             return c;
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(6, 0, 0); }
         }
     }
 }

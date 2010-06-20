@@ -10,8 +10,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 {
     public class CharacterSheetRequest : ApiEntityRequestBase<Characters>
     {
-        public CharacterSheetRequest(Accounts a, long characterID)
-            : base(a, characterID, ApiRequestTarget.Character)
+        public CharacterSheetRequest(Accounts a, long characterID, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+            : base(a, characterID, ApiRequestTarget.Character, stillCached, saveCache, loadCache)
         {
         }
 
@@ -37,6 +37,11 @@ namespace EveTrader.Core.Network.Requests.CCP
             character.Balance = characterInfo.Element("balance").Value.ToDecimal();
 
             return character;
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(1, 0, 0); }
         }
     }
 }

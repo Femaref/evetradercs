@@ -12,8 +12,8 @@ namespace EveTrader.Core.Network.Requests.CCP
         protected readonly long? iBeforeTransID;
         protected readonly long iAccountKey;
 
-        public TransactionsRequest(Accounts a, long characterID, ApiRequestTarget target, long? beforeTransID, long accountKey = 1000)
-            : base(a, characterID, target)
+        public TransactionsRequest(Accounts a, long characterID, ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache, long? beforeTransID, long accountKey = 1000)
+            : base(a, characterID, target, stillCached, saveCache, loadCache)
         {
             iBeforeTransID = beforeTransID;
             iAccountKey = accountKey;
@@ -54,6 +54,11 @@ namespace EveTrader.Core.Network.Requests.CCP
             });
 
             return transactions;
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(1, 0, 0); }
         }
     }
 }

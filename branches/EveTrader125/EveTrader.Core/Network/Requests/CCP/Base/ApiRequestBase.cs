@@ -16,9 +16,12 @@ namespace EveTrader.Core.Network.Requests.CCP
 
         protected readonly ApiRequestTarget iTarget;
 
-        public ApiRequestBase(ApiRequestTarget target)
+        public ApiRequestBase(ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
         {
             iTarget = target;
+            iStillCached = stillCached;
+            iSaveCache = saveCache;
+            iLoadCache = loadCache;
         }
 
         public XDocument CachedResponseXml
@@ -32,6 +35,9 @@ namespace EveTrader.Core.Network.Requests.CCP
         {
             if (iCachedResponseXml != null)
                 return iCachedResponseXml;
+            if (iStillCached(this.Identifier.ToString(), this.CachingTime))
+                return XDocument.Parse(iLoadCache(this.Identifier.ToString()));
+
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(Identifier);
 
@@ -55,11 +61,15 @@ namespace EveTrader.Core.Network.Requests.CCP
                 iCachedResponseXml =  XDocument.Parse(output);
                 if (this.ErrorCode != 0)
                     throw new RequestFailedException(this.ErrorCode, this.ErrorMessage);
+                this.iSaveCache(this.Identifier.ToString() + "?" + this.Data, this.CurrentTime, iCachedResponseXml.ToString());
                 return iCachedResponseXml;
             }
         }
 
         private const string BaseIdentifier = @"http://api.eve-online.com/{0}/{1}.xml.aspx";
+        private Func<string, TimeSpan, bool> iStillCached;
+        private Action<string, DateTime, string> iSaveCache;
+        private Func<string, string> iLoadCache;
 
         public ApiRequestTarget Target
         {
@@ -133,5 +143,7 @@ namespace EveTrader.Core.Network.Requests.CCP
         }
 
         protected abstract T Parse(XDocument document);
+
+        public abstract TimeSpan CachingTime { get; }
     }
 }

@@ -22,8 +22,7 @@
                   AutoGenerateColumns="False"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true"
                   AlternatingRowBackground="#FFECECEF" Background="White"
-                  ItemsSource="{Binding Source={StaticResource iGroupedMarketOrders}}"
-                  >
+                  ItemsSource="{Binding Source={StaticResource iGroupedMarketOrders}}" GridLinesVisibility="None">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=TypeName}" Header="TypeName" />
                 <DataGridTextColumn Binding="{Binding Path=StationName}" Header="StationName" />
@@ -52,11 +51,11 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander>
+                                        <Expander  IsExpanded="True">
                                             <Expander.Header>
                                                 <TextBlock Text="{Binding Path=Name}" FontSize="13" FontWeight="Bold" />
                                             </Expander.Header>
-                                            <ItemsPresenter />
+                                            <ItemsPresenter Margin="10,0,0,0"/>
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>

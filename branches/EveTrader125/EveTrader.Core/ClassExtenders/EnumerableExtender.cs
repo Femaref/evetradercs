@@ -11,7 +11,10 @@ namespace EveTrader.Core.ClassExtenders
     {
         public static decimal AverageBuyPrice(this ObjectSet<Transactions> input, long typeID)
         {
-            return (input.Context as TraderModel).CachedPriceInfo.Where(c => c.TypeID == typeID).Select(c => c.BuyPrice).FirstOrDefault();
+            TraderModel tm = (input.Context as TraderModel);
+            if(tm == null)
+                return ((IEnumerable<Transactions>)input).AverageBuyPrice(typeID);
+            return tm.CachedPriceInfo.Where(c => c.TypeID == typeID).Select(c => c.BuyPrice).FirstOrDefault();
         }
 
         public static decimal AverageBuyPrice(this IEnumerable<Transactions> input, long typeID)

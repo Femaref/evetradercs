@@ -39,9 +39,9 @@ namespace EveTrader.Core.Updater.CCP
             foreach (Wallets w in entity.Wallets)
             {
                 if (entity is Characters)
-                    tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, 0, w.AccountKey);
+                    tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, 0, w.AccountKey);
                 if (entity is Corporations)
-                    tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, 0, w.AccountKey);
+                    tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, 0, w.AccountKey);
                 var data = tr.Request();
 
                 int beforeID = 0;
@@ -51,9 +51,9 @@ namespace EveTrader.Core.Updater.CCP
                 while (data.Count() == runs * 1000 && data.Min(t => t.Date) > DateTime.UtcNow.AddDays(-7))
                 {
                     if (entity is Characters)
-                        tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, beforeID, w.AccountKey);
+                        tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
                     if (entity is Corporations)
-                        tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, beforeID, w.AccountKey);
+                        tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
 
                     data = data.Cast<ApiTransactions>().Union(tr.Request().Cast<ApiTransactions>(), new TransactionsEqualityComparer());
 

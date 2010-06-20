@@ -19,11 +19,8 @@ namespace EveTrader.Core.Controllers
         {
             iMainView = mainView;
             iPriceCacheView = priceCacheView;
-        }
-
-        public void Initialize()
-        {
             iMainView.PriceCacheView = iPriceCacheView.View;
         }
+
     }
 }

@@ -9,8 +9,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 {
     public class AccountBalanceRequest : ApiEntityRequestBase<IEnumerable<Wallets>>
     {
-        public AccountBalanceRequest(Accounts a, long characterID, ApiRequestTarget target)
-            : base(a, characterID, target)
+        public AccountBalanceRequest(Accounts a, long characterID, ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+                      : base(a,characterID, target, stillCached, saveCache, loadCache)
         {
         }
 
@@ -37,6 +37,11 @@ namespace EveTrader.Core.Network.Requests.CCP
                                 AccountKey = x.Attribute("accountKey").Value.ToInt32()
                             });
             return balances;
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(0, 0, 10); }
         }
     }
 }

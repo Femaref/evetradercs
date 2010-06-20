@@ -81,6 +81,7 @@ namespace EveCacheCLI
             Parser *parser = new Parser(&i);
             parser->parse();
             this->iNode = parser->streams()[0];
+            delete parser;
     }
 
 }

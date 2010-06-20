@@ -9,8 +9,8 @@ namespace EveTrader.Core.Network.Requests.CCP
 {
     public class CharacterListRequest : ApiAccountRequestBase<IEnumerable<Characters>>
     {
-        public CharacterListRequest(Accounts a)
-            : base(a, ApiRequestTarget.Account)
+        public CharacterListRequest(Accounts a, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+      : base(a,ApiRequestTarget.Account, stillCached, saveCache, loadCache)
         {
         }
 
@@ -31,6 +31,11 @@ namespace EveTrader.Core.Network.Requests.CCP
                      Account = this.iAccount,
                      Corporation = new Corporations() { ID = r.Attribute("corporationID").Value.ToInt32(), Name = r.Attribute("corporationName").Value, Account = this.iAccount }
                  });
+        }
+
+        public override TimeSpan CachingTime
+        {
+            get { return new TimeSpan(0, 0, 0); }
         }
     }
 }

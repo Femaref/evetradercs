@@ -19,7 +19,7 @@ namespace EveTrader.Core.Updater.CCP
 
         protected override bool InnerUpdate<U>(U entity)
         {
-            CorporationSheetRequest csr = new CorporationSheetRequest(entity.Account, entity.ApiCharacterID);
+            CorporationSheetRequest csr = new CorporationSheetRequest(entity.Account, entity.ApiCharacterID, iModel.StillCached, iModel.SaveCache, iModel.LoadCache );
             Corporations c = csr.Request();
 
             entity.Name = c.Name;

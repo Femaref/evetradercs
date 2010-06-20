@@ -19,10 +19,6 @@ namespace EveTrader.Core.Controllers
         {
             iMainView = mainView;
             iDashboardView = dashboardView;
-        }
-
-        public void Initialize()
-        {
             iMainView.DashboardView = iDashboardView.View;
         }
     }

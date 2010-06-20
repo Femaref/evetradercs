@@ -19,10 +19,6 @@ namespace EveTrader.Core.Controllers
         {
             iMainView = mainView;
             iApplicationLogView= applicationLogView;
-        }
-
-        public void Initialize()
-        {
             iMainView.ApplicationLogView = iApplicationLogView.View;
         }
     }

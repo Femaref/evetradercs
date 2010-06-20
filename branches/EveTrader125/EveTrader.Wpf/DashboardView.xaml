@@ -47,7 +47,16 @@
             </visi:Chart.ContextMenu>
         </visi:Chart>
 
-        <ListBox Grid.Column="1" ItemsSource="{Binding Details}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"/>
+        <visi:Chart Height="Auto" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
+            <visi:Chart.Series>
+                <visi:DataSeries RenderAs="Column" DataSource="{Binding Investment}" LegendText="Column" Color="Red">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
+                        <visi:DataMapping MemberName="YValue" Path="Value"/>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+            </visi:Chart.Series>
+        </visi:Chart>
         
     </Grid>
 </UserControl>

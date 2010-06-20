@@ -22,9 +22,9 @@ namespace EveTrader.Core.Updater.CCP
             AccountBalanceRequest abr = null;
 
             if (entity is Characters)
-                abr = new AccountBalanceRequest(entity.Account, entity.ID, ApiRequestTarget.Character);
+                abr = new AccountBalanceRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
             if (entity is Corporations)
-                abr = new AccountBalanceRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation);
+                abr = new AccountBalanceRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
 
             var data = abr.Request();
 

@@ -33,7 +33,7 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             DailyInfo = new ObservableCollection<DisplayDashboard>();
             CurrentWallets = new ObservableCollection<string>();
-            Details = new ObservableCollection<string>();
+            Investment = new ObservableCollection<DisplayDetail>();
 
             CurrentWallets.CollectionChanged += view.ChartCollectionChanged;
             view.DetailsRequested += new EventHandler<DetailsRequestedEventArgs>(view_DetailsRequested);
@@ -48,25 +48,43 @@ namespace EveTrader.Core.ViewModel
 
         void view_DetailsRequested(object sender, DetailsRequestedEventArgs e)
         {
-            Details.Clear();
+            Investment.Clear();
+
             if (e.BindingKey.Contains("Investment"))
             {
-                foreach (var grouping in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
+                foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
                 {
                     foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
                     {
+                        Investment.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
 
-                        Details.Add(string.Format("{0}: {1} {2}x{3} for a total of {4}", grouping.Key.Name, TransactionType.Buy.StringValue(), subGroup.Sum(t => t.Quantity), subGroup.Key, subGroup.Sum(t => t.Quantity * t.Price).ToString("n")));
+                        //Details.Add(string.Format("{0}: {1} {2}x{3} for a total of {4}", grouping.Key.Name, TransactionType.Buy.StringValue(), , subGroup.Key, subGroup.Sum(t => t.Quantity * t.Price).ToString("n")));
                     }
 
 
                 }
                 return;
             }
-            foreach (var t in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day))
-            {
-                Details.Add(string.Format("{0}: {1} {2}x{3} for {4} each", t.Wallet.Name, ((TransactionType)t.TransactionType).StringValue(), t.Quantity, t.TypeName, t.Price.ToString("n")));
-            }
+
+            //Details.Clear();
+            //if (e.BindingKey.Contains("Investment"))
+            //{
+            //    foreach (var grouping in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
+            //    {
+            //        foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
+            //        {
+
+            //            Details.Add(string.Format("{0}: {1} {2}x{3} for a total of {4}", grouping.Key.Name, TransactionType.Buy.StringValue(), subGroup.Sum(t => t.Quantity), subGroup.Key, subGroup.Sum(t => t.Quantity * t.Price).ToString("n")));
+            //        }
+
+
+            //    }
+            //    return;
+            //}
+            //foreach (var t in iModel.Transactions.Where(s => s.Date.Year == e.Key.Year && s.Date.Month == e.Key.Month && s.Date.Day == e.Key.Day))
+            //{
+            //    Details.Add(string.Format("{0}: {1} {2}x{3} for {4} each", t.Wallet.Name, ((TransactionType)t.TransactionType).StringValue(), t.Quantity, t.TypeName, t.Price.ToString("n")));
+            //}
         }
 
         private void Filter(int days)
@@ -81,7 +99,7 @@ namespace EveTrader.Core.ViewModel
 
         public ObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
         public ObservableCollection<string> CurrentWallets { get; private set; }
-        public ObservableCollection<string> Details { get; private set; }
+        public ObservableCollection<DisplayDetail> Investment { get; private set; }
 
         private int iWorkingCount = 0;
         public int WorkingCount

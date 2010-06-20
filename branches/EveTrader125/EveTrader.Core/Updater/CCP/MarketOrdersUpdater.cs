@@ -22,9 +22,9 @@ namespace EveTrader.Core.Updater.CCP
             MarketOrdersRequest abr = null;
 
             if (entity is Characters)
-                abr = new MarketOrdersRequest(entity.Account, entity.ID, ApiRequestTarget.Character);
+                abr = new MarketOrdersRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
             if (entity is Corporations)
-                abr = new MarketOrdersRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation);
+                abr = new MarketOrdersRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
 
             var data = abr.Request();
 

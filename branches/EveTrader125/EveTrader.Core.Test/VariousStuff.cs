@@ -116,7 +116,7 @@ namespace TestProject1
         [TestMethod]
         public void CharacterListRequestTest()
         {
-            CharacterListRequest clr = new CharacterListRequest(t.Accounts.First(a => a.ID == 334887));
+            CharacterListRequest clr = new CharacterListRequest(t.Accounts.First(a => a.ID == 334887), t.StillCached, t.SaveCache, t.LoadCache);
             var x = clr.Request();
             Assert.IsTrue(x.Count() == 3);
         }

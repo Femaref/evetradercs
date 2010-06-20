@@ -7,6 +7,7 @@
     <Schema Namespace="testModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="testModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="testModel.Store.Accounts" store:Type="Tables" />
+          <EntitySet Name="ApiCache" EntityType="testModel.Store.ApiCache" store:Type="Tables" />
           <EntitySet Name="ApiJournal" EntityType="testModel.Store.ApiJournal" store:Type="Tables" />
           <EntitySet Name="ApiTransactions" EntityType="testModel.Store.ApiTransactions" store:Type="Tables" />
           <EntitySet Name="ApplicationLog" EntityType="testModel.Store.ApplicationLog" store:Type="Tables" />
@@ -77,6 +78,15 @@
           <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="ApiKey" Type="nvarchar" Nullable="false" />
         </EntityType>
+        <EntityType Name="ApiCache">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RequestString" Type="nvarchar" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="Data" Type="nvarchar" Nullable="false" />
+        </EntityType>
         <EntityType Name="ApiJournal">
           <Key>
             <PropertyRef Name="ID" />
@@ -88,7 +98,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false"  />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationLog">
@@ -413,6 +423,7 @@
             <End Role="WalletHistories" EntitySet="WalletHistories" /></AssociationSet>
           <EntitySet Name="ApplicationLog" EntityType="EveTrader.Core.Model.ApplicationLog" />
           <EntitySet Name="CachedPriceInfo" EntityType="EveTrader.Core.Model.CachedPriceInfos" />
+          <EntitySet Name="ApiCache" EntityType="EveTrader.Core.Model.ApiCache" />
           </EntityContainer>
         <EntityType Name="Characters" BaseType="EveTrader.Core.Model.Entities">
           <Property Type="String" Name="Race" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -569,6 +580,15 @@
           <Property Type="Int64" Name="TypeID" Nullable="false" />
           <Property Type="Decimal" Name="BuyPrice" Nullable="false" Precision="53" Scale="0" />
           <Property Type="Decimal" Name="SellPrice" Nullable="false" Precision="53" Scale="0" />
+        </EntityType>
+        <EntityType Name="ApiCache">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="RequestString" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="RequestDate" Nullable="false" />
+          <Property Type="String" Name="Data" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -751,6 +771,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ApiCache">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.ApiCache">
+              <MappingFragment StoreEntitySet="ApiCache">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="RequestString" ColumnName="RequestString" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -820,9 +850,9 @@
           <ConnectorPoint PointX="14.625" PointY="4.3678898111979159" />
           </AssociationConnector>
         <AssociationConnector Association="EveTrader.Core.Model.FK_WalletHistories_0">
-          <ConnectorPoint PointX="9.875" PointY="4.125" />
-          <ConnectorPoint PointX="9.875" PointY="1.2961531575520837" />
-          <ConnectorPoint PointX="11.375" PointY="1.2961531575520837" />
+          <ConnectorPoint PointX="9.65625" PointY="4.125" />
+          <ConnectorPoint PointX="9.65625" PointY="0.90625" />
+          <ConnectorPoint PointX="11.375" PointY="0.90625" />
           </AssociationConnector>
         <EntityTypeShape EntityType="EveTrader.Core.Model.ApiTransactions" Width="1.875" PointX="18" PointY="1.5" Height="1.099264322916667" />
         <EntityTypeShape EntityType="EveTrader.Core.Model.CustomTransactions" Width="1.875" PointX="18" PointY="3.375" Height="1.2636116536458335" />
@@ -846,6 +876,7 @@
           <ConnectorPoint PointX="17.75" PointY="9.0553898111979159" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="EveTrader.Core.Model.CachedPriceInfos" Width="1.875" PointX="0.75" PointY="0.75" Height="1.4279589843750031" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.ApiCache" Width="1.5" PointX="10.75" PointY="7.75" Height="1.5923063151041674" />
         </Diagram></Diagrams>
   </Designer>
 </edmx:Edmx>
