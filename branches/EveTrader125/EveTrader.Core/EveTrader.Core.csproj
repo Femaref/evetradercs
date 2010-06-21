@@ -114,9 +114,9 @@
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
-    <Compile Include="ViewModel\DisplayDashboard.cs" />
-    <Compile Include="ViewModel\DisplayDetail.cs" />
-    <Compile Include="ViewModel\DisplayPriceCache.cs" />
+    <Compile Include="ViewModel\Display\DisplayDashboard.cs" />
+    <Compile Include="ViewModel\Display\DisplayDetail.cs" />
+    <Compile Include="ViewModel\Display\DisplayPriceCache.cs" />
     <Compile Include="ViewModel\DisplayWallets.cs" />
     <Compile Include="ViewModel\Display\DisplayMarketOrders.cs" />
     <Compile Include="ViewModel\JournalViewModel.cs" />

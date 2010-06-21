@@ -87,8 +87,14 @@ namespace EveTrader.Wpf
                 }
             };
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
+            ds.MouseDoubleClick += new MouseButtonEventHandler(ds_MouseDoubleClick);
             ds.SetBinding(DataSeries.DataSourceProperty, new Binding("DailyInfo"));
             return ds;
+        }
+
+        void ds_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            iDetailChart.Focus();
         }
 
 
@@ -119,7 +125,7 @@ namespace EveTrader.Wpf
             };
 
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-
+            ds.MouseDoubleClick += new MouseButtonEventHandler(ds_MouseDoubleClick);
             ds.SetBinding(DataSeries.DataSourceProperty, new Binding("DailyInfo"));
             return ds;
         }

@@ -202,6 +202,7 @@
     <Resource Include="Images\Intelligence.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Converter\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
