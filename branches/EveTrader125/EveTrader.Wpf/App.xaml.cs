@@ -40,7 +40,8 @@ namespace EveTrader.Wpf
 #endif
 
             base.OnStartup(e);
-
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             AggregateCatalog catalog = new AggregateCatalog();
             // Add the WpfApplicationFramework assembly to the catalog
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Controller).Assembly));
@@ -55,6 +56,8 @@ namespace EveTrader.Wpf
             container.Compose(batch);
 
             controller = container.GetExportedValue<ApplicationController>();
+            sw.Stop();
+            Debug.WriteLine(sw.Elapsed.TotalSeconds);
             controller.Run();
         }
 

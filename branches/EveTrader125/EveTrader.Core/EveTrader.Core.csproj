@@ -71,6 +71,7 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
+    <Compile Include="Model\ISettingsProvider.cs" />
     <Compile Include="Model\MarketOrdersPartial.cs" />
     <Compile Include="Model\StaticModel.cs" />
     <Compile Include="Model\StaticModel.Designer.cs">
@@ -78,6 +79,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StaticModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Tables.cs" />
+    <Compile Include="Model\TablesChangedEventArgs.cs" />
     <Compile Include="Model\TransactionFor.cs" />
     <Compile Include="Model\MarketOrderState.cs" />
     <Compile Include="Model\TransactionType.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Network\Requests\CCP\JournalRequest.cs" />
     <Compile Include="Network\Requests\CCP\MarketOrdersRequest.cs" />
     <Compile Include="Network\Requests\CCP\TransactionsRequest.cs" />
+    <Compile Include="StopwatchAspect.cs" />
     <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterUpdater.cs" />
@@ -117,8 +121,8 @@
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />
     <Compile Include="ViewModel\Display\DisplayDetail.cs" />
     <Compile Include="ViewModel\Display\DisplayPriceCache.cs" />
-    <Compile Include="ViewModel\DisplayWallets.cs" />
     <Compile Include="ViewModel\Display\DisplayMarketOrders.cs" />
+    <Compile Include="ViewModel\Display\DisplayWallets.cs" />
     <Compile Include="ViewModel\JournalViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />

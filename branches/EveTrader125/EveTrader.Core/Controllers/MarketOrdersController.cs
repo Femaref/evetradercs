@@ -21,5 +21,10 @@ namespace EveTrader.Core.Controllers
             iMarketOrdersView = marketOrdersView;
             iMainView.MarketOrdersView = iMarketOrdersView.View;
         }
+
+        public void Refresh()
+        {
+            iMarketOrdersView.Refresh();
+        }
     }
 }

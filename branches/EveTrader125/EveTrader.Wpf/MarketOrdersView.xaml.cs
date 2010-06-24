@@ -33,16 +33,16 @@ namespace EveTrader.Wpf
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RaiseEntitySelectionChanged(e.AddedItems.Cast<Entities>().First().Name);
+            RaiseEntitySelectionChanged(e.AddedItems.Cast<Entities>().First());
         }
 
-        public event EventHandler<EntitySelectionChangedEventArgs> EntitySelectionChanged;
+        public event EventHandler<EntitySelectionChangedEventArgs<Entities>> EntitySelectionChanged;
 
-        private void RaiseEntitySelectionChanged(string selection)
+        private void RaiseEntitySelectionChanged(Entities input)
         {
             var handler = EntitySelectionChanged;
             if (handler != null)
-                handler(this, new EntitySelectionChangedEventArgs(selection));
+                handler(this, new EntitySelectionChangedEventArgs<Entities>(input));
         }
 
         #region IExtendedView Members

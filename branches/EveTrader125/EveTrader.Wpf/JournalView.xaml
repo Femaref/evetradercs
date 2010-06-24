@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="EveTrader.Wpf.JournalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf" d:DataContext="{d:DesignInstance vm:JournalViewModel}"
+             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="iGroupedJournal" Source="{Binding JournalEntries}"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="comboItem" 
+                 DataType="ComboBoxItem">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Entity.Name}"/>
+                    <TextBlock Text=": "/>
+                    <TextBlock Text="{Binding Name}"/>
+                </StackPanel>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1000*"/>
+        </Grid.RowDefinitions>
+        <ComboBox Grid.Row="0" Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentWallets}" IsSynchronizedWithCurrentItem="True" ItemTemplate="{StaticResource comboItem}"/>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Source={StaticResource iGroupedJournal}}" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
+                <DataGridTextColumn Binding="{Binding Path=RefTypeID}" Header="RefTypeID" />
+                <DataGridTextColumn Binding="{Binding Path=OwnerName1}" Header="OwnerName1" />
+                <DataGridTextColumn Binding="{Binding Path=OwnerID1}" Header="OwnerID1" />
+                <DataGridTextColumn Binding="{Binding Path=OwnerName2}" Header="OwnerName2" />
+                <DataGridTextColumn Binding="{Binding Path=OwnerID2}" Header="OwnerID2" />
+                <DataGridTextColumn Binding="{Binding Path=ArgName1}" Header="ArgName1" />
+                <DataGridTextColumn Binding="{Binding Path=ArgID1}" Header="ArgID1" />
+                <DataGridTextColumn Binding="{Binding Path=Amount}" Header="Amount" />
+                <DataGridTextColumn Binding="{Binding Path=Balance}" Header="Balance" />
+                <DataGridTextColumn Binding="{Binding Path=Reason}" Header="Reason" />
+                <DataGridTextColumn Binding="{Binding Path=TaxAmount}" Header="TaxAmount" />
+            </DataGrid.Columns>
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding Path=Name}" Margin="2,2,0,2" FontSize="13" FontWeight="Bold" />
+                                            <ItemsPresenter Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+        </DataGrid>
+    </Grid>
+</UserControl>

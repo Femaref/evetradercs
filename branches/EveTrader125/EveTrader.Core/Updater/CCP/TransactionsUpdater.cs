@@ -65,6 +65,7 @@ namespace EveTrader.Core.Updater.CCP
                     {
                         item.Wallet = w;
                         w.Transactions.Add(item);
+                        recacheTypes.Add(item.TypeID);
                     }
                 }
             }

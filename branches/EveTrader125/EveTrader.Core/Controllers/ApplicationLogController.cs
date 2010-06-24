@@ -21,5 +21,10 @@ namespace EveTrader.Core.Controllers
             iApplicationLogView= applicationLogView;
             iMainView.ApplicationLogView = iApplicationLogView.View;
         }
+
+        public void Refresh()
+        {
+            iApplicationLogView.Refresh();
+        }
     }
 }

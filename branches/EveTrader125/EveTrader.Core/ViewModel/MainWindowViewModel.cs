@@ -106,6 +106,9 @@ namespace EveTrader.Core.ViewModel
         public event CancelEventHandler Closing;
         private object iApplicationLogView;
         private object iPriceCache;
+        private object iTransactionsView;
+private  object iJournalView;
+
         protected virtual void OnClosing(CancelEventArgs e)
         {
             if (Closing != null) { Closing(this, e); }
@@ -119,8 +122,27 @@ namespace EveTrader.Core.ViewModel
 
 
 
-        public object TransactionsView { get; set; }
+        public object TransactionsView
+        {
+            get { return iTransactionsView; }
+            set
+            {
+                iTransactionsView = value;
+                RaisePropertyChanged("TransactionsView");
+            }
+        }
 
-        public object JournalView { get; set; }
+        public object JournalView
+        {
+            get
+            {
+                return iJournalView;
+            }
+            set
+            {
+                iJournalView = value;
+                RaisePropertyChanged("JournalView");
+            }
+        }
     }
 }

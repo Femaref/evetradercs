@@ -33,7 +33,9 @@
             <TabItem Header="Wallets">
                 <ContentControl Content="{Binding WalletsView}"/>
             </TabItem>
-            <TabItem Header="Journal"></TabItem>
+            <TabItem Header="Journal">
+                <ContentControl Content="{Binding JournalView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </TabItem>
             <TabItem Header="Transactions"></TabItem>
             <TabItem Header="Reports"></TabItem>
             <TabItem Header="MarketOrders">

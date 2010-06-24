@@ -96,8 +96,16 @@
     <Compile Include="ApplicationLogView.xaml.cs">
       <DependentUpon>ApplicationLogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AssemblySettingsProvider.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblySettingsProvider.tt</DependentUpon>
+    </Compile>
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JournalView.xaml.cs">
+      <DependentUpon>JournalView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManageAccountsWindow.xaml.cs">
       <DependentUpon>ManageAccountsWindow.xaml</DependentUpon>
@@ -112,10 +120,23 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Selectors\CurrencyColorSelector.cs" />
     <Compile Include="WalletsView.xaml.cs">
       <DependentUpon>WalletsView.xaml</DependentUpon>
     </Compile>
+    <None Include="AssemblySettingsProvider.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblySettingsProvider.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <Page Include="ApplicationLogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +144,10 @@
     <Page Include="DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JournalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +229,9 @@
   <ItemGroup>
     <Folder Include="Converter\" />
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

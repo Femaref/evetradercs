@@ -37,6 +37,9 @@
             </StackPanel>
         </Grid>
         <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
+            <visi:Chart.TrendLines>
+                <visi:TrendLine Enabled="True" Value="{Binding ProfitAverage}" Orientation="Horizontal" LineColor="Red" LineThickness="20000"/>
+            </visi:Chart.TrendLines>
             <visi:Chart.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>
@@ -48,6 +51,7 @@
         </visi:Chart>
 
         <visi:Chart  x:Name="iDetailChart" Height="Auto" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
+
             <visi:Chart.AxesX>
                 <visi:Axis>
                     <visi:Axis.AxisLabels>

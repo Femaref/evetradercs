@@ -42,10 +42,10 @@ namespace EveTrader.Core.ViewModel
             iStaticData = sm;
             Orders = new ObservableCollection<DisplayMarketOrders>();
             CurrentEntities = new ObservableCollection<Entities>();
-            view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs>(view_EntitySelectionChanged);
+            view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
 
             RefreshCurrentEntities();
-            SelectEntity(iModel.Entity.First());
+            SelectEntity(CurrentEntities.First());
         }
 
         private void RefreshCurrentEntities()
@@ -54,7 +54,7 @@ namespace EveTrader.Core.ViewModel
             iModel.Entity.Where(e => (e is Characters) || !(e as Corporations).Npc).ToList().ForEach(e => CurrentEntities.Add(e));
         }
 
-        void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs e)
+        void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Entities> e)
         {
             SelectEntity(e.Selection);
         }
@@ -90,14 +90,14 @@ namespace EveTrader.Core.ViewModel
         }
         public void Refresh()
         {
-            Orders.Clear();
+            this.ViewCore.Invoke(() => Orders.Clear());
             if (iHideExpired)
                 iCurrentEntity.MarketOrders.Where(iHideWhere).ForEach(x =>
                     {
                         DisplayMarketOrders y = (DisplayMarketOrders)x;
                         y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
                         y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                        Orders.Add(y);
+                        this.ViewCore.Invoke(() => Orders.Add(y));
                     });
             else
                 iCurrentEntity.MarketOrders.ForEach(x =>
@@ -105,7 +105,7 @@ namespace EveTrader.Core.ViewModel
                     DisplayMarketOrders y = (DisplayMarketOrders)x;
                     y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
                     y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                    Orders.Add(y);
+                    this.ViewCore.Invoke(() =>  Orders.Add(y));
                 });
 
             RaisePropertyChanged("TotalBuyOrders");

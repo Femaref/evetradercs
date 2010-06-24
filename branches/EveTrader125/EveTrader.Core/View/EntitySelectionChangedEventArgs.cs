@@ -5,11 +5,11 @@ using System.Text;
 
 namespace EveTrader.Core.View
 {
-    public class EntitySelectionChangedEventArgs : EventArgs
+    public class EntitySelectionChangedEventArgs<T> : EventArgs
     {
-        public string Selection { get; set; }
+        public T Selection { get; set; }
 
-        public EntitySelectionChangedEventArgs(string newSelection)
+        public EntitySelectionChangedEventArgs(T newSelection)
         {
             Selection = newSelection;
         }

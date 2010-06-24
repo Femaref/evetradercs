@@ -133,6 +133,11 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
+        public decimal ProfitAverage
+        {
+            get { return DailyInfo.Count != 0 ? DailyInfo.Average(d => d.Profit) : 0m ; }
+        }
+
         private DateTime iDateBefore = DateTime.MinValue;
         
 
@@ -149,7 +154,7 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            DailyInfo.Clear();
+            this.ViewCore.Invoke(() => DailyInfo.Clear());
             //TODO: Datageneration
 
             var investment = (from w in iModel.Transactions
@@ -198,6 +203,7 @@ namespace EveTrader.Core.ViewModel
                         CurrentIndex++;
                     }
                     cache.ForEach(dd => this.ViewCore.BeginInvoke(new Action(() => { DailyInfo.Add(dd); })));
+                    RaisePropertyChanged("ProfitAverage");
                     Working = false;
                 });
 

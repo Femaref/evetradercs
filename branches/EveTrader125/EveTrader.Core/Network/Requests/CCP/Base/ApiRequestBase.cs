@@ -35,8 +35,9 @@ namespace EveTrader.Core.Network.Requests.CCP
         {
             if (iCachedResponseXml != null)
                 return iCachedResponseXml;
-            if (iStillCached(this.Identifier.ToString(), this.CachingTime))
-                return XDocument.Parse(iLoadCache(this.Identifier.ToString()));
+
+            if (iStillCached(this.Identifier.ToString() + "?" + this.Data, this.CachingTime))
+                return XDocument.Parse(iLoadCache(this.Identifier.ToString() + "?" + this.Data));
 
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(Identifier);
@@ -58,7 +59,7 @@ namespace EveTrader.Core.Network.Requests.CCP
             using (StreamReader reader = new StreamReader(res.GetResponseStream()))
             {
                 string output = reader.ReadToEnd();
-                iCachedResponseXml =  XDocument.Parse(output);
+                iCachedResponseXml = XDocument.Parse(output);
                 if (this.ErrorCode != 0)
                     throw new RequestFailedException(this.ErrorCode, this.ErrorMessage);
                 this.iSaveCache(this.Identifier.ToString() + "?" + this.Data, this.CurrentTime, iCachedResponseXml.ToString());

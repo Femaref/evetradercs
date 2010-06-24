@@ -27,8 +27,8 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            Messages.Clear();
-            iModel.ApplicationLog.OrderByDescending(a => a.Date).Take(20).ToList().ForEach(a => Messages.Add(a));
+            this.ViewCore.Invoke(() => Messages.Clear());
+            iModel.ApplicationLog.OrderByDescending(a => a.Date).Take(20).ToList().ForEach(a => this.ViewCore.Invoke(() => Messages.Add(a)));
         }
 
     }

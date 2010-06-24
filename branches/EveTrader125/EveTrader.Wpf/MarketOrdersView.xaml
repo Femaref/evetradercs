@@ -15,7 +15,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
         <CheckBox Content="Hide Expired" Height="16" HorizontalAlignment="Left" Margin="383,3,0,0" Name="checkBox1" VerticalAlignment="Top" Grid.Row="0" IsChecked="{Binding HideExpired, Mode=TwoWay}"/>
-        <ComboBox Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True">
+
+        </ComboBox>
         <DataGrid Height="Auto" Width="Auto"
                   Grid.Row="1" 
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
