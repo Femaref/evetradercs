@@ -19,7 +19,6 @@ namespace EveTrader.Core.ViewModel
     {
         private TraderModel iModel;
 
-        private bool iHideExpired = false;
         private Func<MarketOrders, bool> iHideWhere = mo => mo.OrderState == (long)MarketOrderState.OpenActive;
 
         private Entities iCurrentEntity;
@@ -32,14 +31,15 @@ namespace EveTrader.Core.ViewModel
 
         public ObservableCollection<Entities> CurrentEntities { get; set; }
 
-        private ICommand iHideExpiredCommand;
         private readonly StaticModel iStaticData;
+        private readonly ISettingsProvider iSettings;
 
         [ImportingConstructor]
-        public MarketOrdersViewModel(IMarketOrdersView view, TraderModel model, StaticModel sm) : base(view)
+        public MarketOrdersViewModel(IMarketOrdersView view, TraderModel model, StaticModel sm, ISettingsProvider settings) : base(view)
         {
             iModel = model;
             iStaticData = sm;
+            iSettings = settings;
             Orders = new ObservableCollection<DisplayMarketOrders>();
             CurrentEntities = new ObservableCollection<Entities>();
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
@@ -80,10 +80,10 @@ namespace EveTrader.Core.ViewModel
 
         public bool HideExpired
         {
-            get { return iHideExpired; }
+            get { return iSettings.HideExpired; }
             set
             {
-                iHideExpired = value;
+                iSettings.HideExpired = value;
                 RaisePropertyChanged("HideExpired");
                 Refresh();
             }
@@ -91,7 +91,7 @@ namespace EveTrader.Core.ViewModel
         public void Refresh()
         {
             this.ViewCore.Invoke(() => Orders.Clear());
-            if (iHideExpired)
+            if (iSettings.HideExpired)
                 iCurrentEntity.MarketOrders.Where(iHideWhere).ForEach(x =>
                     {
                         DisplayMarketOrders y = (DisplayMarketOrders)x;
@@ -125,19 +125,6 @@ namespace EveTrader.Core.ViewModel
             iCurrentEntity = e;
             RaisePropertyChanged("CurrentEntity");
             Refresh();
-        }
-
-        public ICommand HideExpiredCommand
-        {
-            get { return iHideExpiredCommand; }
-            set
-            {
-                if (iHideExpiredCommand != value)
-                {
-                    iHideExpiredCommand = value;
-                    RaisePropertyChanged("HideExpiredCommand");
-                }
-            }
         }
     }
 }

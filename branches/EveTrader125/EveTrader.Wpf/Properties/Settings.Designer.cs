@@ -34,5 +34,17 @@ namespace EveTrader.Wpf.Properties {
                 this["AutoUpdate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideExpired {
+            get {
+                return ((bool)(this["HideExpired"]));
+            }
+            set {
+                this["HideExpired"] = value;
+            }
+        }
     }
 }

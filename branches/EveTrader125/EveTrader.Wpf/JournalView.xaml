@@ -35,10 +35,10 @@
                 <DataGridTextColumn Binding="{Binding Path=OwnerID2}" Header="OwnerID2" />
                 <DataGridTextColumn Binding="{Binding Path=ArgName1}" Header="ArgName1" />
                 <DataGridTextColumn Binding="{Binding Path=ArgID1}" Header="ArgID1" />
-                <DataGridTextColumn Binding="{Binding Path=Amount}" Header="Amount" />
-                <DataGridTextColumn Binding="{Binding Path=Balance}" Header="Balance" />
+                <DataGridTextColumn Binding="{Binding Path=Amount, StringFormat=n}" Header="Amount" />
+                <DataGridTextColumn Binding="{Binding Path=Balance, StringFormat=n}" Header="Balance" />
                 <DataGridTextColumn Binding="{Binding Path=Reason}" Header="Reason" />
-                <DataGridTextColumn Binding="{Binding Path=TaxAmount}" Header="TaxAmount" />
+                <DataGridTextColumn Binding="{Binding Path=TaxAmount, StringFormat=n}" Header="TaxAmount" />
             </DataGrid.Columns>
             <DataGrid.GroupStyle>
                 <GroupStyle>

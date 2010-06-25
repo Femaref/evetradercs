@@ -21,6 +21,7 @@
             <MenuItem Margin="0" Header="Main">
                 <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
                 <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
+                <MenuItem Header="Update API Data"/>
                 <MenuItem Header="Exit" Command="Close"/>
             </MenuItem>
         </Menu>

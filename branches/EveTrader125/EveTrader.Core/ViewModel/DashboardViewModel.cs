@@ -78,7 +78,7 @@ namespace EveTrader.Core.ViewModel
             {
                 foreach (var grouping in iModel.Transactions.Where(t => t.TransactionType == (long)TransactionType.Sell && t.Date == e.Key).GroupBy(t => t.TypeName))
                 {
-                        var val = grouping.Sum(gt => Math.Round(gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID) * gt.Quantity, 2));
+                        var val = grouping.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2));
                         Profit.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", grouping.Sum(t => t.Quantity), grouping.Key), Value = val });
                 }
             }
@@ -187,7 +187,7 @@ namespace EveTrader.Core.ViewModel
                         }
 
                         dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
-                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round(gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID) * gt.Quantity, 2))).FirstOrDefault();
+                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2))).FirstOrDefault();
 
                         var entityGroup = (from g in i
                                            where g.TransactionType == (long)TransactionType.Sell

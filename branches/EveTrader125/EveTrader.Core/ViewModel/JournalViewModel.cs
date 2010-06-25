@@ -9,6 +9,7 @@ using EveTrader.Core.Model;
 using System.Collections.ObjectModel;
 using MoreLinq;
 using System.Threading;
+using System.Data.Objects.SqlClient;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -65,7 +66,11 @@ namespace EveTrader.Core.ViewModel
 
             Action a = () =>
                 {
-                    List<Journal> cache = CurrentWallet.Journal.OrderByDescending(j => j.DateTime).ToList();
+                    //j.DateTime > SqlFunctions.DateAdd("week", -1, SqlFunctions.GetUtcDate())
+                    List<Journal> cache = CurrentWallet.Journal
+                        .Where(j => j.DateTime > DateTime.UtcNow.AddDays(-7))
+                        .OrderByDescending(j => j.DateTime)
+                        .ToList();
                     cache.ForEach(j => ViewCore.Invoke(() => JournalEntries.Add(j)));
                 };
 

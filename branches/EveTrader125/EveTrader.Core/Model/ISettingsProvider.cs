@@ -8,5 +8,6 @@ namespace EveTrader.Core.Model
     public interface ISettingsProvider
     {
         bool AutoUpdate { get; set; }
+        bool HideExpired { get; set; }
     }
 }
