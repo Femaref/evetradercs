@@ -1,5 +1,8 @@
 #summary Prelimary Changelogs for 1.2.5
 
+*Known Issues*
+
+  * Changing between tabs can lock the application up, especially if there is a lot of data to be rendered (Journal/Transactions/Market Orders tabs are experiencing this a lot)
 
 *Changes*
 
