@@ -8,6 +8,10 @@ using EveTrader.Core.Model;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
+using EveTrader.Core.Network.Requests.CCP;
+using EveTrader.Core.Collections.ObjectModel;
+using EveTrader.Core.ViewModel.Display;
+using MoreLinq;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -16,16 +20,74 @@ namespace EveTrader.Core.ViewModel
         private readonly TraderModel iModel;
 
         public event CancelEventHandler Closing;
-        public ObservableCollection<Characters> CurrentCharacters { get; private set; }
+        private bool iDataRequestable = false;
+        public SmartObservableCollection<Characters> CurrentCharacters { get; private set; }
+
+        public SmartObservableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
+
+        public bool DataPresent
+        {
+            get
+            {
+                return RequestedCharacters.Count() > 0;
+            }
+        }
+
+        public bool DataRequestable
+        {
+            get
+            {
+                return iDataRequestable;
+            }
+            set
+            {
+                iDataRequestable = value;
+                RaisePropertyChanged("DataRequestable");
+            }
+        }
 
 
         public ManageAccountsViewModel(IManageAccountsView view, TraderModel tm)
             : base(view)
         {
             iModel = tm;
-            CurrentCharacters = new ObservableCollection<Characters>();
+            CurrentCharacters = new SmartObservableCollection<Characters>(view.Invoke);
+            RequestedCharacters = new SmartObservableCollection<Selectable<Characters>>(view.Invoke);
+            DataRequestable = true;
             view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
+            view.DataRequested += new EventHandler<CharacterDataRequestedEventArgs>(view_DataRequested);
+            view.AddCharacters += new EventHandler(view_AddCharacters);
             Refresh();
+        }
+
+        void view_AddCharacters(object sender, EventArgs e)
+        {
+            RequestedCharacters.Where(s => s.IsSelected).ForEach(s => iModel.Entity.AddObject(s.Item));
+            iModel.SaveChanges();
+
+            RequestedCharacters.Clear();
+            DataRequestable = false;
+            RaisePropertyChanged("DataPresent");
+        }
+
+        void view_DataRequested(object sender, CharacterDataRequestedEventArgs e)
+        {
+            var account = iModel.Accounts.Where(a => a.ID == e.UserID).FirstOrDefault();
+            if (account == null)
+            {
+                account = new Accounts() { ID = e.UserID, ApiKey = e.ApiKey };
+                iModel.Accounts.AddObject(account);
+            }
+            if (account.ApiKey != e.ApiKey)
+                account.ApiKey = e.ApiKey;
+
+            CharacterListRequest clr = new CharacterListRequest(account, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
+            var requestedCharacters = clr.Request().Select(c => new Selectable<Characters>(c, false));
+
+            RequestedCharacters.AddRange(requestedCharacters);
+
+            DataRequestable = false;
+            RaisePropertyChanged("DataPresent");
         }
 
         void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -48,88 +110,7 @@ namespace EveTrader.Core.ViewModel
 
         public void Shutdown()
         {
-            iModel.Dispose();
-        }
-
-        public bool AddAccount(Accounts account)
-        {
-            try
-            {
-                iModel.AddToAccounts(account);
-                Refresh();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.AddAccount");
-                return false;
-            }
-        }
-        public bool AddAccount(long userID, string apikey)
-        {
-            return AddAccount(Model.Accounts.CreateAccounts(userID, apikey));
-
-        }
-        public bool RemoveAccount(long userID)
-        {
-            return RemoveAccount(iModel.Accounts.Where(a => a.ID == userID).First());
-        }
-        public bool RemoveAccount(Accounts account)
-        {
-            try
-            {
-                iModel.DeleteObject(account);
-                iModel.SaveChanges();
-                Refresh();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.RemoveAccount");
-                return false;
-            }
-        }
-
-        public bool AddEntity(Entities entity, Accounts account)
-        {
-            try
-            {
-                account.Entities.Add(entity);
-                iModel.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.AddEntity");
-                return false;
-            }
-        }
-        public bool AddEntity(Entities entity, long userID)
-        {
-            var account = iModel.Accounts.Where(a => a.ID == userID);
-            if (account.Count() == 0)
-                return false;
-            return AddEntity(entity, account.First());
-        }
-        public bool RemoveEntity(Entities entity, Accounts account)
-        {
-            try
-            {
-                account.Entities.Remove(entity);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                iModel.WriteToLog(ex.ToString(), "AccountEntityViewModel.RemoveAccount");
-                return false;
-            }
-        }
-        public bool RemoveEntity(Entities entity, long userID)
-        {
-            var account = iModel.Accounts.Where(a => a.ID == userID);
-            if (account.Count() == 0)
-                return false;
-            return RemoveEntity(entity, account.First());
+            this.ViewCore.Close();
         }
 
         public void Refresh()

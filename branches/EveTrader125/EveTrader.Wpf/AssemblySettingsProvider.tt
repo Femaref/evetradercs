@@ -1,7 +1,7 @@
 <#@ template debug="true" hostspecific="false" language="C#" #>
 <#@ output extension="cs" #>
 <#@ assembly name="Q:\Projects\evetradercs\EveTrader.Wpf\bin\Debug\System.ComponentModel.Composition.dll" #>
-<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="Q:\Projects\evetradercs\EveTrader.Core\bin\EveTrader.Core.dll" #>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="Q:\Projects\evetradercs\EveTrader.Core\bin\Debug\EveTrader.Core.dll" #>
 <#@ import namespace="EveTrader.Core.Model"#>
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.ComponentModel.Composition"#>

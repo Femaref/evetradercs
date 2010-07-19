@@ -128,3 +128,4 @@ namespace EveTrader.Core.ViewModel
         }
     }
 }
+

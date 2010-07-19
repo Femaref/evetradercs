@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using MoreLinq;
 using System.Threading;
 using System.Data.Objects.SqlClient;
+using EveTrader.Core.Collections.ObjectModel;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -19,20 +20,21 @@ namespace EveTrader.Core.ViewModel
         private readonly TraderModel iModel;
 
         private Wallets iCurrentWallet;
+        private ISettingsProvider iSettings;
 
 
         public Wallets CurrentWallet
         {
             get { return iCurrentWallet; }
         }
-        public ObservableCollection<Wallets> CurrentWallets { get; set; }
+        public SmartObservableCollection<Wallets> CurrentWallets { get; set; }
 
-        public ObservableCollection<Journal> JournalEntries { get; set; }
+        public SmartObservableCollection<Journal> JournalEntries { get; set; }
 
         private void RefreshCurrentWallets()
         {
-            ViewCore.Invoke(() => CurrentWallets.Clear());
-            iModel.Wallets.ForEach(w => ViewCore.Invoke(() => CurrentWallets.Add(w)));
+            CurrentWallets.Clear();
+            CurrentWallets.AddRange(iModel.Wallets);
         }
         void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
         {
@@ -48,12 +50,13 @@ namespace EveTrader.Core.ViewModel
         }
 
         [ImportingConstructor]
-        public JournalViewModel(IJournalView view, TraderModel tm)
+        public JournalViewModel(IJournalView view, TraderModel tm, ISettingsProvider settings)
             : base(view)
         {
             iModel = tm;
-            JournalEntries = new ObservableCollection<Journal>();
-            CurrentWallets = new ObservableCollection<Wallets>();
+            iSettings = settings;
+            JournalEntries = new SmartObservableCollection<Journal>(ViewCore.BeginInvoke);
+            CurrentWallets = new SmartObservableCollection<Wallets>(ViewCore.BeginInvoke);
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(view_EntitySelectionChanged);
 
             RefreshCurrentWallets();
@@ -62,16 +65,14 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            ViewCore.Invoke(() => JournalEntries.Clear());
+            JournalEntries.Clear();
 
             Action a = () =>
                 {
-                    //j.DateTime > SqlFunctions.DateAdd("week", -1, SqlFunctions.GetUtcDate())
-                    List<Journal> cache = CurrentWallet.Journal
-                        .Where(j => j.DateTime > DateTime.UtcNow.AddDays(-7))
-                        .OrderByDescending(j => j.DateTime)
-                        .ToList();
-                    cache.ForEach(j => ViewCore.Invoke(() => JournalEntries.Add(j)));
+                    var cache = CurrentWallet.Journal
+                        .Where(j => j.DateTime > (DateTime.UtcNow - iSettings.JournalTimeframe))
+                        .OrderByDescending(j => j.DateTime);
+                    JournalEntries.AddRange(cache);
                 };
 
             Thread t = new Thread(new ThreadStart(a));

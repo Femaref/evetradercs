@@ -101,6 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblySettingsProvider.tt</DependentUpon>
     </Compile>
+    <Compile Include="Converter\BidConverter.cs" />
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
@@ -227,7 +228,6 @@
     <Resource Include="Images\Intelligence.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converter\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>

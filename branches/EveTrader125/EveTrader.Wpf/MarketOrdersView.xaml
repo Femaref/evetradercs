@@ -4,9 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:MarketOrdersViewModel}"
-             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" 
+             xmlns:conv="clr-namespace:EveTrader.Wpf.Converter"
+             Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <UserControl.Resources>
         <CollectionViewSource x:Key="iGroupedMarketOrders" Source="{Binding Orders}"/>
+        <conv:BidConverter x:Key="bidConverter" />
     </UserControl.Resources>
         <Grid HorizontalAlignment="Stretch"  Name="grid1" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -31,7 +34,7 @@
                 <DataGridTextColumn Binding="{Binding Path=Issued}" Header="Issued" />
                 <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=N2}" Header="Price" />
                 <DataGridTextColumn Binding="{Binding Path=Escrow, StringFormat=N2}" Header="Escrow" />
-                <DataGridCheckBoxColumn Binding="{Binding Path=Bid}" Header="Bid" />
+                <DataGridTextColumn Binding="{Binding Path=Bid, Converter={StaticResource bidConverter}}" Header="Bid" />
                 <DataGridTextColumn Binding="{Binding Path=VolumeRemaining, StringFormat=N0}" Header="Remaining" />
                 <DataGridTextColumn Binding="{Binding Path=VolumeEntered, StringFormat=N0}" Header="Entered" />
                 <DataGridTextColumn Binding="{Binding Path=MinimumVolume, StringFormat=N0}" Header="Minimum" />

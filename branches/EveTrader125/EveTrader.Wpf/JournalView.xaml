@@ -55,7 +55,7 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding Path=Name}" Margin="2,2,0,2" FontSize="13" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding Path=Name,StringFormat=D}" Margin="2,2,0,2" FontSize="13" FontWeight="Bold" />
                                             <ItemsPresenter Margin="10,0,0,0"/>
                                         </StackPanel>
                                     </ControlTemplate>

@@ -10,6 +10,7 @@ using MoreLinq;
 
 namespace EveTrader.Core.Model
 {
+    [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.NonShared)]
     [Export(typeof(TraderModel))]
     public partial class TraderModel
     {
@@ -80,49 +81,32 @@ namespace EveTrader.Core.Model
             this.SaveChanges();
         }
 
-        public Func<string, TimeSpan, bool> StillCached
+        public bool StillCached(string requestString, TimeSpan cachingTimer)
         {
-            get
-            {
-                return (requestString, cachingTimer) =>
-                    {
-                        var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
-                        if (cache == null)
-                            return false;
-                        //RequestDate + cachingTimer has to be later than UtcNow for the document to still be cached
-                        return (cache.RequestDate + cachingTimer) > DateTime.UtcNow;
-                    };
-            }
+            var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
+            if (cache == null)
+                return false;
+            //RequestDate + cachingTimer has to be later than UtcNow for the document to still be cached
+            return (cache.RequestDate + cachingTimer) > DateTime.UtcNow;
         }
-        public Action<string, DateTime, string> SaveCache
+
+        public void SaveCache(string requestString, DateTime requestDate, string data)
         {
-            get
+            var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
+            if (cache == null)
             {
-                return (requestString, requestDate, data) =>
-                {
-                    var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
-                    if (cache == null)
-                    {
-                        cache = new ApiCache() { RequestString = requestString };
-                        this.ApiCache.AddObject(cache);
-                    }
-                    cache.RequestDate = requestDate;
-                    cache.Data = data;
-                    this.SaveChanges();
-                };
+                cache = new ApiCache() { RequestString = requestString };
+                this.ApiCache.AddObject(cache);
             }
+            cache.RequestDate = requestDate;
+            cache.Data = data;
+            this.SaveChanges();
         }
-        public Func<string, string> LoadCache
+
+        public string LoadCache(string requestString)
         {
-            get
-            {
-                return requestString =>
-                    {
-                        var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
-                        return cache != null ? cache.Data : "";
-                    };
-            }
-        }
-        
+            var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
+            return cache != null ? cache.Data : "";
+        }        
     }
 }

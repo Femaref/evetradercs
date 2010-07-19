@@ -9,5 +9,6 @@ namespace EveTrader.Core.Model
     {
         bool AutoUpdate { get; set; }
         bool HideExpired { get; set; }
+        TimeSpan JournalTimeframe { get; set; }
     }
 }

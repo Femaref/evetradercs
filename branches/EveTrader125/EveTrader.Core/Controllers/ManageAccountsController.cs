@@ -15,6 +15,7 @@ namespace EveTrader.Core.Controllers
     public class ManageAccountsController : Controller
     {
         private readonly CompositionContainer iContainer;
+        private ManageAccountsViewModel iViewModel;
 
         [ImportingConstructor]
         public ManageAccountsController(CompositionContainer container)
@@ -25,13 +26,14 @@ namespace EveTrader.Core.Controllers
 
         public void Show()
         {
-            ManageAccountsViewModel model = new ManageAccountsViewModel(iContainer.GetExportedValue<IManageAccountsView>(), iContainer.GetExportedValue<TraderModel>());
-            model.Show();
+            iViewModel = new ManageAccountsViewModel(iContainer.GetExportedValue<IManageAccountsView>(), iContainer.GetExportedValue<TraderModel>());
+           iViewModel.Show();
         }
 
         public void Shutdown()
         {
-            
+            if (iViewModel != null)
+                iViewModel.Shutdown();
         }
     }
 }

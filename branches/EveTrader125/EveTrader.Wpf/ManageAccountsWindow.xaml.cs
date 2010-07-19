@@ -38,5 +38,55 @@ namespace EveTrader.Wpf
         }
 
         #endregion
+
+        private void iSubmitDetails_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseDataRequested(long.Parse(iUserID.Text), iApiKey.Text);
+        }
+
+        #region IManageAccountsView Members
+
+        private void RaiseDataRequested(long userID, string apikey)
+        {
+            var handler = DataRequested;
+            if (handler != null)
+            {
+                handler(this, new CharacterDataRequestedEventArgs(userID, apikey));
+            }
+        }
+
+        public event EventHandler<CharacterDataRequestedEventArgs> DataRequested;
+
+        private void RaiseAbortRequest()
+        {
+            var handler = AbortRequest;
+
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
+
+        public event EventHandler AbortRequest;
+
+        private void RaiseAddCharacters()
+        {
+            var handler = AddCharacters;
+
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
+
+        public event EventHandler AddCharacters;
+        #endregion
+
+
+        private void iAbortRequest_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseAbortRequest();
+        }
+
+        private void iAddCharacters_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseAddCharacters();
+        }
     }
 }

@@ -46,5 +46,17 @@ namespace EveTrader.Wpf.Properties {
                 this["HideExpired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7.00:00:00")]
+        public global::System.TimeSpan JournalTimeframe {
+            get {
+                return ((global::System.TimeSpan)(this["JournalTimeframe"]));
+            }
+            set {
+                this["JournalTimeframe"] = value;
+            }
+        }
     }
 }

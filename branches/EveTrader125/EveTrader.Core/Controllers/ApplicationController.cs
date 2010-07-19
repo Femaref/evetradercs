@@ -108,6 +108,7 @@ namespace EveTrader.Core.Controllers
 
         public void Shutdown()
         {
+            iManageAccountsController.Shutdown();
             iModel.Dispose();
         }
     }
