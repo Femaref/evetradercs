@@ -8,6 +8,7 @@ using EveTrader.Core.Model;
 using System.Collections.ObjectModel;
 using MoreLinq;
 using System.ComponentModel.Composition;
+using EveTrader.Core.ViewModel.Display;
 
 namespace EveTrader.Core.ViewModel
 {

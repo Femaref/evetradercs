@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.ViewModel.Display
 {
     public class DisplayDashboard
     {

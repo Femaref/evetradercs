@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using EveTrader.Core.ViewModel.Display;
 
 namespace EveTrader.Core.ViewModel
 {

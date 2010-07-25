@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.ViewModel.Display
 {
     public class DisplayDetail
     {

@@ -9,6 +9,7 @@ using EveTrader.Core.ViewModel;
 using EveTrader.Core.Network.Requests.CCP;
 using EveTrader.Core.Updater.CCP;
 using System.IO;
+using EveTrader.Core.ViewModel.Display;
 namespace TestProject1
 {
 

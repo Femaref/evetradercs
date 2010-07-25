@@ -10,5 +10,8 @@ namespace EveTrader.Core.Model
         bool AutoUpdate { get; set; }
         bool HideExpired { get; set; }
         TimeSpan JournalTimeframe { get; set; }
+        DateTime ReportStartDate { get; set; }
+        DateTime ReportEndDate { get; set; }
+        bool ReportApplyDateFilter { get; set; }
     }
 }

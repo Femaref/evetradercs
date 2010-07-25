@@ -13,6 +13,7 @@ using EveTrader.Core.ClassExtenders;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Threading;
+using EveTrader.Core.ViewModel.Display;
 
 namespace EveTrader.Core.ViewModel
 {

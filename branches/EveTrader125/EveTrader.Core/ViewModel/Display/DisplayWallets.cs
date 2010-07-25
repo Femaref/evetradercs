@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.ViewModel.Display
 {
     [DebuggerDisplay("Name: {Name} Balance: {Balance}")]
     public class DisplayWallets

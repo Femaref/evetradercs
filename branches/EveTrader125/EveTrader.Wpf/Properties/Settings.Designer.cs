@@ -58,5 +58,41 @@ namespace EveTrader.Wpf.Properties {
                 this["JournalTimeframe"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000-01-01")]
+        public global::System.DateTime ReportStartDate {
+            get {
+                return ((global::System.DateTime)(this["ReportStartDate"]));
+            }
+            set {
+                this["ReportStartDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000-01-01")]
+        public global::System.DateTime ReportEndDate {
+            get {
+                return ((global::System.DateTime)(this["ReportEndDate"]));
+            }
+            set {
+                this["ReportEndDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReportApplyDateFilter {
+            get {
+                return ((bool)(this["ReportApplyDateFilter"]));
+            }
+            set {
+                this["ReportApplyDateFilter"] = value;
+            }
+        }
     }
 }

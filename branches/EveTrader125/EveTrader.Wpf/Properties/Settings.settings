@@ -11,5 +11,14 @@
     <Setting Name="JournalTimeframe" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">7.00:00:00</Value>
     </Setting>
+    <Setting Name="ReportStartDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2000-01-01</Value>
+    </Setting>
+    <Setting Name="ReportEndDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">3000-01-01</Value>
+    </Setting>
+    <Setting Name="ReportApplyDateFilter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

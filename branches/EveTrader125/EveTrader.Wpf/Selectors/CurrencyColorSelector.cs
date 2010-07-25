@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 using EveTrader.Core.ViewModel;
+using EveTrader.Core.ViewModel.Display;
 
 namespace EveTrader.Wpf.Selectors
 {

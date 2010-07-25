@@ -107,7 +107,7 @@ namespace EveTrader.Core.ViewModel
         private object iApplicationLogView;
         private object iPriceCache;
         private object iTransactionsView;
-private  object iJournalView;
+        private  object iJournalView;
 
         protected virtual void OnClosing(CancelEventArgs e)
         {

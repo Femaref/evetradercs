@@ -28,6 +28,7 @@ namespace EveTrader.Core.ViewModel
             get { return iCurrentWallet; }
         }
         public SmartObservableCollection<Wallets> CurrentWallets { get; set; }
+        private object iCurrentWalletLocker = new object();
 
         public SmartObservableCollection<Journal> JournalEntries { get; set; }
 
@@ -38,13 +39,22 @@ namespace EveTrader.Core.ViewModel
         }
         void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
         {
-            SelectWallet(e.Selection);
+            Action a = () =>
+            {
+                SelectWallet(e.Selection);
+            };
+
+            Thread t = new Thread(new ThreadStart(a));
+            t.Start();
         }
 
         private void SelectWallet(Wallets w)
         {
-            iCurrentWallet = w;
-            RaisePropertyChanged("CurrentWallet");
+            lock (iCurrentWalletLocker)
+            {
+                iCurrentWallet = w;
+                RaisePropertyChanged("CurrentWallet");
+            }
 
             Refresh();
         }
@@ -69,10 +79,13 @@ namespace EveTrader.Core.ViewModel
 
             Action a = () =>
                 {
-                    var cache = CurrentWallet.Journal
-                        .Where(j => j.DateTime > (DateTime.UtcNow - iSettings.JournalTimeframe))
-                        .OrderByDescending(j => j.DateTime);
-                    JournalEntries.AddRange(cache);
+                    lock (iCurrentWalletLocker)
+                    {
+                        var cache = CurrentWallet.Journal
+                            .Where(j => j.DateTime > (DateTime.UtcNow - iSettings.JournalTimeframe))
+                            .OrderByDescending(j => j.DateTime);
+                        JournalEntries.AddRange(cache);
+                    }
                 };
 
             Thread t = new Thread(new ThreadStart(a));

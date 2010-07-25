@@ -109,4 +109,17 @@ namespace EveTrader.Core.Model
             return cache != null ? cache.Data : "";
         }        
     }
+
+    public partial class Wallets
+    {
+        public string DisplayName
+        {
+            get
+            {
+                if (this.Entity is Corporations)
+                    return string.Format("{0}: {1}", this.Entity.Name, this.Name);
+                return this.Name;
+            }
+        }
+    }
 }

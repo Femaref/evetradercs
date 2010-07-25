@@ -34,7 +34,7 @@
             <TabItem Header="Wallets">
                 <ContentControl Content="{Binding WalletsView}"/>
             </TabItem>
-            <TabItem Header="Journal">
+            <TabItem Header="Journal" ToolTip="The journal tab can lock up the application for some time." ToolTipService.InitialShowDelay="0">
                 <ContentControl Content="{Binding JournalView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </TabItem>
             <TabItem Header="Transactions"></TabItem>

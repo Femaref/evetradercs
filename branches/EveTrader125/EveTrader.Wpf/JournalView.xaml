@@ -10,21 +10,11 @@
         <CollectionViewSource x:Key="iGroupedJournal" Source="{Binding JournalEntries}"/>
     </UserControl.Resources>
     <Grid>
-        <Grid.Resources>
-            <DataTemplate x:Key="comboItem" 
-                 DataType="ComboBoxItem">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Entity.Name}"/>
-                    <TextBlock Text=": "/>
-                    <TextBlock Text="{Binding Name}"/>
-                </StackPanel>
-            </DataTemplate>
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1000*"/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Row="0" Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentWallets}" IsSynchronizedWithCurrentItem="True" ItemTemplate="{StaticResource comboItem}"/>
+        <ComboBox Grid.Row="0" Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentWallets}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="DisplayName"/>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Source={StaticResource iGroupedJournal}}" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />

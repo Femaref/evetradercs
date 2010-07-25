@@ -118,6 +118,7 @@
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
+    <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />
     <Compile Include="ViewModel\Display\DisplayDetail.cs" />
@@ -150,6 +151,7 @@
     </Compile>
     <Compile Include="Model\TraderModelPartial.cs" />
     <Compile Include="View\IPriceCacheView.cs" />
+    <Compile Include="View\IReportView.cs" />
     <Compile Include="View\ITransactionsView.cs" />
     <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>
