@@ -42,30 +42,35 @@ namespace EveTrader.Core.Updater.CCP
                     tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, 0, w.AccountKey);
                 if (entity is Corporations)
                     tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, 0, w.AccountKey);
-                var data = tr.Request();
 
-                int beforeID = 0;
-
-
-                int runs = 1;
-                while (data.Count() == runs * 1000 && data.Min(t => t.Date) > DateTime.UtcNow.AddDays(-7))
+                if (tr.UpdateAvailable)
                 {
-                    if (entity is Characters)
-                        tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
-                    if (entity is Corporations)
-                        tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
 
-                    data = data.Cast<ApiTransactions>().Union(tr.Request().Cast<ApiTransactions>(), new TransactionsEqualityComparer());
+                    var data = tr.Request();
 
-                    runs++;
-                }
-                foreach (var item in data)
-                {
-                    if (w.Transactions.OfType<ApiTransactions>().Count(t => t.Date == item.Date && t.ExternalID == item.ExternalID) == 0)
+                    int beforeID = 0;
+
+
+                    int runs = 1;
+                    while (data.Count() == runs * 1000 && data.Min(t => t.Date) > DateTime.UtcNow.AddDays(-7))
                     {
-                        item.Wallet = w;
-                        w.Transactions.Add(item);
-                        recacheTypes.Add(item.TypeID);
+                        if (entity is Characters)
+                            tr = new TransactionsRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
+                        if (entity is Corporations)
+                            tr = new TransactionsRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
+
+                        data = data.Cast<ApiTransactions>().Union(tr.Request().Cast<ApiTransactions>(), new TransactionsEqualityComparer());
+
+                        runs++;
+                    }
+                    foreach (var item in data)
+                    {
+                        if (w.Transactions.OfType<ApiTransactions>().Count(t => t.Date == item.Date && t.ExternalID == item.ExternalID) == 0)
+                        {
+                            item.Wallet = w;
+                            w.Transactions.Add(item);
+                            recacheTypes.Add(item.TypeID);
+                        }
                     }
                 }
             }
@@ -84,8 +89,10 @@ namespace EveTrader.Core.Updater.CCP
                 else
                     cpi = iModel.CachedPriceInfo.First(c => c.TypeID == i);
 
-                cpi.BuyPrice = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Buy).OrderByDescending(t => t.DateTime).Take(10).Average(t => t.Price);
-                cpi.SellPrice = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Sell).OrderByDescending(t => t.DateTime).Take(10).Average(t => t.Price);
+                var buyQuery = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Buy).OrderByDescending(t => t.DateTime).Take(10);
+                cpi.BuyPrice = buyQuery.Count() > 0 ? buyQuery.Average(t => t.Price) : 0m;
+                var sellQuery = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Sell).OrderByDescending(t => t.DateTime).Take(10);
+                cpi.SellPrice = sellQuery.Count() > 0 ? sellQuery.Average(t => t.Price) : 0m;
 
                 iModel.WriteToLog(string.Format("Updated average prices for typeID {0}", cpi.TypeID), "TransactionUpdater.InnerUpdate()");
             }

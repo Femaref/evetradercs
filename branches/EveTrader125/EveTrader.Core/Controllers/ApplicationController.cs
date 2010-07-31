@@ -28,13 +28,13 @@ namespace EveTrader.Core.Controllers
         private readonly MarketOrdersController iMarketOrdersController;
         private readonly ApplicationLogController iApplicationLogController;
         private readonly PriceCacheController iPriceCacheController;
+        private readonly ReportController iReportController;
 
         private readonly ISettingsProvider iSettings;
 
         private readonly CharacterUpdater iCharacterUpdater;
         private readonly CorporationUpdater iCorporationUpdater;
 
-        private readonly Timer iUpdateTimer;
         private readonly StaticModel iStaticData;
 
         private readonly List<Controller> iControllers = new List<Controller>();
@@ -54,6 +54,7 @@ namespace EveTrader.Core.Controllers
             ApplicationLogController applicationLogController,
             PriceCacheController priceCacheController,
             JournalController journalController,
+            ReportController reportController,
             ISettingsProvider settingsProvider,
             CharacterUpdater charUpdater,
             CorporationUpdater corpUpdater)
@@ -71,16 +72,12 @@ namespace EveTrader.Core.Controllers
             iApplicationLogController = applicationLogController;
             iPriceCacheController = priceCacheController;
             iJournalController = journalController;
+            iReportController = reportController;
 
             iSettings = settingsProvider;
 
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
-            if (iSettings.AutoUpdate)
-            {
-                iUpdateTimer = new Timer(new TimerCallback(UpdateData), null, 0, 60 * 60 * 1000);
-                iModel.WriteToLog("Auto update activated", MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name+"()");
-            }
 
             mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
         }
@@ -89,16 +86,6 @@ namespace EveTrader.Core.Controllers
         {
             if ((e.ChangedTables & Tables.ApplicationLog) == Tables.ApplicationLog)
                 iApplicationLogController.Refresh();
-        }
-        private void UpdateData(object o)
-        {
-            foreach (Characters c in iModel.Entity.OfType<Characters>())
-                iCharacterUpdater.Update(c);
-            foreach (Corporations c in iModel.Entity.OfType<Corporations>())
-                iCorporationUpdater.Update(c);
-
-            iDashboardController.Refresh();
-            iMarketOrdersController.Refresh();
         }
 
         public void Run()

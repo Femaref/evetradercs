@@ -24,19 +24,22 @@ namespace EveTrader.Core.Updater.CCP
         {
             CharacterSheetRequest req = new CharacterSheetRequest(entity.Account, entity.ID, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
 
-            Characters c = req.Request();
+            if (req.UpdateAvailable)
+            {
 
-            entity.Name = c.Name;
-            entity.Race = c.Race;
-            entity.Balance = c.Balance;
-            entity.Bloodline = c.Bloodline;
-            entity.Gender = c.Gender;
-            iCorporationUpdater.Update(c.Corporation.ID, entity.Account, entity.ID);
-            entity.Corporation = iModel.Entity.OfType<Corporations>().First(s => s.ID == c.Corporation.ID);
+                Characters c = req.Request();
+
+                entity.Name = c.Name;
+                entity.Race = c.Race;
+                entity.Balance = c.Balance;
+                entity.Bloodline = c.Bloodline;
+                entity.Gender = c.Gender;
+                iCorporationUpdater.Update(c.Corporation.ID, entity.Account, entity.ID);
+                entity.Corporation = iModel.Entity.OfType<Corporations>().First(s => s.ID == c.Corporation.ID);
 
 
-            iModel.SaveChanges();
-
+                iModel.SaveChanges();
+            }
             return true;
         }
     }

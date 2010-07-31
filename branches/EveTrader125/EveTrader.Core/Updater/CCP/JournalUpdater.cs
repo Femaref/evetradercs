@@ -41,29 +41,34 @@ namespace EveTrader.Core.Updater.CCP
                     tr = new JournalRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, 0, w.AccountKey);
                 if (entity is Corporations)
                     tr = new JournalRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, 0, w.AccountKey);
-                var data = tr.Request();
 
-                int beforeID = 0;
-
-
-                int runs = 1;
-                while (data.Count() == runs * 1000 && data.Min(t => t.Date) > DateTime.UtcNow.AddDays(-7))
+                if (tr.UpdateAvailable)
                 {
-                    if (entity is Characters)
-                        tr = new JournalRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
-                    if (entity is Corporations)
-                        tr = new JournalRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
 
-                    data = data.Cast<ApiJournal>().Union(tr.Request().Cast<ApiJournal>(), new JournalEqualityComparer());
+                    var data = tr.Request();
 
-                    runs++;
-                }
-                foreach (var item in data)
-                {
-                    if (w.Journal.OfType<ApiJournal>().Count(j => j.ExternalID == item.ExternalID) == 0)
+                    int beforeID = 0;
+
+
+                    int runs = 1;
+                    while (data.Count() == runs * 1000 && data.Min(t => t.Date) > DateTime.UtcNow.AddDays(-7))
                     {
-                        item.Wallet = w;
-                        w.Journal.Add(item);
+                        if (entity is Characters)
+                            tr = new JournalRequest(entity.Account, entity.ID, ApiRequestTarget.Character, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
+                        if (entity is Corporations)
+                            tr = new JournalRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache, beforeID, w.AccountKey);
+
+                        data = data.Cast<ApiJournal>().Union(tr.Request().Cast<ApiJournal>(), new JournalEqualityComparer());
+
+                        runs++;
+                    }
+                    foreach (var item in data)
+                    {
+                        if (w.Journal.OfType<ApiJournal>().Count(j => j.ExternalID == item.ExternalID) == 0)
+                        {
+                            item.Wallet = w;
+                            w.Journal.Add(item);
+                        }
                     }
                 }
             }

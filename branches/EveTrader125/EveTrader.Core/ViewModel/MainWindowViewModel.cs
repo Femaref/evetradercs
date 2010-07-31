@@ -8,6 +8,8 @@ using System.ComponentModel.Composition;
 using System.ComponentModel;
 using System.Windows.Input;
 using EveTrader.Core.Model;
+using EveTrader.Core.Controllers;
+using System.Threading;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -16,10 +18,15 @@ namespace EveTrader.Core.ViewModel
     {
         private readonly ICommand iOpenManageAccountsCommand;
         private readonly ICommand iRegeneratePriceCache;
+        private readonly ICommand iFetchApiDataCommand;
+
+        private readonly TraderModel iModel;
 
         private object iDashboardView;
         private object iWalletsView;
         private object iMarketOrdersView;
+
+        private bool iUpdating = false;
 
         public ICommand OpenManageAccountsCommand
         {
@@ -30,11 +37,55 @@ namespace EveTrader.Core.ViewModel
         {
             get { return iRegeneratePriceCache; }
         }
+
+        public ICommand FetchApiDataCommand
+        {
+            get { return iFetchApiDataCommand; }
+        }
+
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
+        
         private void OpenManageAccounts()
         {
             EventHandler handler = ManageAccountsClicked;
             if (handler != null)
                 handler(this, new EventArgs());
+        }
+        private void FetchApiData()
+        {
+            Action updater = () =>
+                {
+                    this.Updating = true;
+                    iUpdateService.Update();
+                    this.Updating = false;
+                };
+
+            Thread t = new Thread(new ThreadStart(updater));
+            t.Start();
+        }
+
+        private void RegeneratePriceCache()
+        {
+            Action updater = () =>
+            {
+                this.Updating = true;
+                iModel.RegeneratePriceCache();
+                this.Updating = false;
+            };
+
+            Thread t = new Thread(new ThreadStart(updater));
+            t.Start();
         }
 
         public object DashboardView
@@ -85,43 +136,6 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
-        public event EventHandler ManageAccountsClicked;
-
-        private readonly TraderModel iModel;
-
-        [ImportingConstructor]
-        public MainWindowViewModel(IMainWindowView view, TraderModel tm): base(view)
-        {
-            view.Closing += ViewClosing;
-
-            iModel = tm;
-
-            iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
-            iRegeneratePriceCache = new DelegateCommand(() => iModel.RegeneratePriceCache());
-        }
-        public void Show()
-        {
-            this.ViewCore.Show();
-        }
-        public event CancelEventHandler Closing;
-        private object iApplicationLogView;
-        private object iPriceCache;
-        private object iTransactionsView;
-        private  object iJournalView;
-
-        protected virtual void OnClosing(CancelEventArgs e)
-        {
-            if (Closing != null) { Closing(this, e); }
-        }
-        private void ViewClosing(object sender, CancelEventArgs e)
-        {
-            OnClosing(e);
-        }
-
-
-
-
-
         public object TransactionsView
         {
             get { return iTransactionsView; }
@@ -131,7 +145,6 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("TransactionsView");
             }
         }
-
         public object JournalView
         {
             get
@@ -144,5 +157,59 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("JournalView");
             }
         }
+
+        public object ReportView
+        {
+            get
+            {
+                return iReportView;
+            }
+            set
+            {
+                iReportView = value;
+                RaisePropertyChanged("ReportView");
+            }
+        }
+
+        public event EventHandler ManageAccountsClicked;
+
+        
+
+        [ImportingConstructor]
+        public MainWindowViewModel(IMainWindowView view, TraderModel tm, UpdateService us)
+            : base(view)
+        {
+            view.Closing += ViewClosing;
+
+            iModel = tm;
+            iUpdateService = us;
+
+            iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
+            iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
+            iFetchApiDataCommand = new DelegateCommand(FetchApiData);
+        }
+        public void Show()
+        {
+            this.ViewCore.Show();
+        }
+
+        public event CancelEventHandler Closing;
+        private object iApplicationLogView;
+        private object iPriceCache;
+        private object iTransactionsView;
+        private object iJournalView;
+        private readonly UpdateService iUpdateService;
+        private object iReportView;
+
+        protected virtual void OnClosing(CancelEventArgs e)
+        {
+            if (Closing != null) { Closing(this, e); }
+        }
+        private void ViewClosing(object sender, CancelEventArgs e)
+        {
+            OnClosing(e);
+        }
+
+        
     }
 }

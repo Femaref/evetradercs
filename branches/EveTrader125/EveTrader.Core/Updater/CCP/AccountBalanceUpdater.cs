@@ -26,23 +26,26 @@ namespace EveTrader.Core.Updater.CCP
             if (entity is Corporations)
                 abr = new AccountBalanceRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
 
-            var data = abr.Request();
-
-            foreach (Wallets w in data)
+            if (abr.UpdateAvailable)
             {
-                var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
-                if (current == null)
-                {
-                    entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = w.Balance, Name = "", Entity = entity, ID = 0 });
-                }
-                else
-                {
-                    current.Balance = w.Balance;
-                }
-                current.WalletHistory.Add(WalletHistories.CreateWalletHistories(0, w.Balance, abr.CurrentTime));
-            }
+                var data = abr.Request();
 
-            iModel.SaveChanges();
+                foreach (Wallets w in data)
+                {
+                    var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
+                    if (current == null)
+                    {
+                        entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = w.Balance, Name = "", Entity = entity, ID = 0 });
+                    }
+                    else
+                    {
+                        current.Balance = w.Balance;
+                    }
+                    current.WalletHistory.Add(WalletHistories.CreateWalletHistories(0, w.Balance, abr.CurrentTime));
+                }
+
+                iModel.SaveChanges();
+            }
             return true;
         }
     }

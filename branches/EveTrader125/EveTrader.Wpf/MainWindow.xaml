@@ -5,12 +5,15 @@
     xmlns:utility="clr-namespace:System.Collections.ObjectModel;assembly=System"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf" d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
-     xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+    xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+    xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
     x:Class="EveTrader.Wpf.MainWindow"
     x:Name="Window"
     Title="EveTrader"
     Width="1181.5" Height="697" Icon="/EveTrader.Wpf;component/Images/Intelligence.ico">
-
+    <Window.Resources>
+           <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="19*"/>
@@ -21,11 +24,15 @@
             <MenuItem Margin="0" Header="Main">
                 <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
                 <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
-                <MenuItem Header="Update API Data"/>
+                <MenuItem Header="Update API Data" Command="{Binding FetchApiDataCommand}"/>
                 <MenuItem Header="Exit" Command="Close"/>
             </MenuItem>
         </Menu>
-        <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1">
+
+        <Grid Grid.Row="1" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Updating, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ctrl:ProgressIndicator Height="300" Width="300" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsRunning="{Binding Updating}" />
+        </Grid>
+        <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1" Panel.ZIndex="1">
             <TabItem Header="Dashboard">
                 <Grid>
                     <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
@@ -38,7 +45,9 @@
                 <ContentControl Content="{Binding JournalView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </TabItem>
             <TabItem Header="Transactions"></TabItem>
-            <TabItem Header="Reports"></TabItem>
+            <TabItem Header="Reports">
+                <ContentControl Content="{Binding ReportView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
             <TabItem Header="MarketOrders">
                 <ContentControl Content="{Binding MarketOrdersView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </TabItem>

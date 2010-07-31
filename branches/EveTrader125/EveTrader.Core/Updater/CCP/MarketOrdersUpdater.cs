@@ -26,27 +26,29 @@ namespace EveTrader.Core.Updater.CCP
             if (entity is Corporations)
                 abr = new MarketOrdersRequest(entity.Account, (entity as Corporations).ApiCharacterID, ApiRequestTarget.Corporation, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
 
-            var data = abr.Request();
-
-            foreach (var item in data)
+            if (abr.UpdateAvailable)
             {
-                var current = entity.MarketOrders.FirstOrDefault(mo => mo.ExternalID == item.ExternalID && mo.TypeID == item.TypeID);
-                if (current == null)
-                {
-                    item.Entity = entity;
-                    entity.MarketOrders.Add(item);
-                }
-                else
-                {
-                    current.Duration = item.Duration;
-                    current.Escrow = item.Escrow;
-                    current.OrderState = item.OrderState;
-                    current.Price = item.Price;
-                    current.VolumeRemaining = item.VolumeRemaining;
-                }
-            }
-            iModel.SaveChanges();
+                var data = abr.Request();
 
+                foreach (var item in data)
+                {
+                    var current = entity.MarketOrders.FirstOrDefault(mo => mo.ExternalID == item.ExternalID && mo.TypeID == item.TypeID);
+                    if (current == null)
+                    {
+                        item.Entity = entity;
+                        entity.MarketOrders.Add(item);
+                    }
+                    else
+                    {
+                        current.Duration = item.Duration;
+                        current.Escrow = item.Escrow;
+                        current.OrderState = item.OrderState;
+                        current.Price = item.Price;
+                        current.VolumeRemaining = item.VolumeRemaining;
+                    }
+                }
+                iModel.SaveChanges();
+            }
             return true;
         }
     }

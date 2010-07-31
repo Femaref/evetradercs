@@ -43,6 +43,8 @@ namespace EveTrader.Wpf
             this.Dispatcher.BeginInvoke(action);
         }
 
+        #endregion
+
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RaiseEntitySelectionChanged(e.AddedItems.Cast<Wallets>().First());
@@ -56,6 +58,6 @@ namespace EveTrader.Wpf
 
         public event EventHandler<EntitySelectionChangedEventArgs<Wallets>> EntitySelectionChanged;
 
-        #endregion
+        
     }
 }

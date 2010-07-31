@@ -29,6 +29,22 @@ namespace EveTrader.Core.Network.Requests.CCP
             get { return GetRequestXml(); }
         }
 
+        public bool UpdateAvailable
+        {
+            get
+            {
+                return !StillCached;
+            }
+        }
+
+        protected bool StillCached
+        {
+            get
+            {
+                return iStillCached(this.Identifier.ToString() + "?" + this.Data, this.CachingTime);
+            }
+        }
+
         private XDocument iCachedResponseXml = null;
 
         private XDocument GetRequestXml()
@@ -36,8 +52,8 @@ namespace EveTrader.Core.Network.Requests.CCP
             if (iCachedResponseXml != null)
                 return iCachedResponseXml;
 
-            if (iStillCached(this.Identifier.ToString() + "?" + this.Data, this.CachingTime))
-                return XDocument.Parse(iLoadCache(this.Identifier.ToString() + "?" + this.Data));
+            if (this.StillCached)
+                return XDocument.Parse(this.LoadCache());
 
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(Identifier);
@@ -62,15 +78,28 @@ namespace EveTrader.Core.Network.Requests.CCP
                 iCachedResponseXml = XDocument.Parse(output);
                 if (this.ErrorCode != 0)
                     throw new RequestFailedException(this.ErrorCode, this.ErrorMessage);
-                this.iSaveCache(this.Identifier.ToString() + "?" + this.Data, this.CurrentTime, iCachedResponseXml.ToString());
+                this.SaveCache(this.CurrentTime, iCachedResponseXml.ToString());
                 return iCachedResponseXml;
             }
         }
 
         private const string BaseIdentifier = @"http://api.eve-online.com/{0}/{1}.xml.aspx";
+
+
         private Func<string, TimeSpan, bool> iStillCached;
         private Action<string, DateTime, string> iSaveCache;
+
+        private void SaveCache (DateTime time, string data)
+        {
+            this.iSaveCache(this.Identifier.ToString() + "?" + this.Data, time, data);
+        }
+
         private Func<string, string> iLoadCache;
+
+        private string LoadCache()
+        {
+            return iLoadCache(this.Identifier.ToString() + "?" + this.Data);
+        }
 
         public ApiRequestTarget Target
         {

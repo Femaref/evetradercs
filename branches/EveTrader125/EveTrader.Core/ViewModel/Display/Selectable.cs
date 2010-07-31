@@ -20,5 +20,10 @@ namespace EveTrader.Core.ViewModel.Display
         {
             return new Selectable<T>(input, false);
         }
+
+        public static implicit operator T (Selectable<T> input)
+        {
+            return input.Item;
+        }
     }
 }

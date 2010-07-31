@@ -10,7 +10,7 @@ using MoreLinq;
 
 namespace EveTrader.Core.Model
 {
-    [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.NonShared)]
+ //   [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.NonShared)]
     [Export(typeof(TraderModel))]
     public partial class TraderModel
     {

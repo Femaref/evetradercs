@@ -68,7 +68,9 @@
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\PriceCacheController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Controllers\UpdateService.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\ISettingsProvider.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
+    <Compile Include="ViewModel\Display\DisplayReport.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />

@@ -21,28 +21,30 @@ namespace EveTrader.Core.Updater.CCP
         {
             CorporationSheetRequest csr = new CorporationSheetRequest(entity.Account, entity.ApiCharacterID, iModel.StillCached, iModel.SaveCache, iModel.LoadCache );
             Corporations c = csr.Request();
-
-            entity.Name = c.Name;
-            entity.Npc = c.ID <= 1000182;
-            entity.Ticker = c.Ticker;
-
-            if (c.ID > 1000182)
+            if (csr.UpdateAvailable)
             {
-                foreach (Wallets w in c.Wallets)
+
+                entity.Name = c.Name;
+                entity.Npc = c.ID <= 1000182;
+                entity.Ticker = c.Ticker;
+
+                if (c.ID > 1000182)
                 {
-                    var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
-                    if (current == null)
+                    foreach (Wallets w in c.Wallets)
                     {
-                        entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = 0, ID = 0, Name = w.Name, Entity = entity });
-                    }
-                    else
-                    {
-                        current.Name = w.Name;
+                        var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
+                        if (current == null)
+                        {
+                            entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = 0, ID = 0, Name = w.Name, Entity = entity });
+                        }
+                        else
+                        {
+                            current.Name = w.Name;
+                        }
                     }
                 }
+                iModel.SaveChanges();
             }
-            iModel.SaveChanges();
-
             return true;
         }
     }

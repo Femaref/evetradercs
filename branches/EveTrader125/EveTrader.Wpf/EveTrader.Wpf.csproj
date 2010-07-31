@@ -101,6 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblySettingsProvider.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProgressIndicator.cs" />
     <Compile Include="Converter\BidConverter.cs" />
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -126,6 +127,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ReportView.xaml.cs">
+      <DependentUpon>ReportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Selectors\CurrencyColorSelector.cs" />
     <Compile Include="WalletsView.xaml.cs">
       <DependentUpon>WalletsView.xaml</DependentUpon>
@@ -141,6 +145,14 @@
     <Page Include="ApplicationLogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
