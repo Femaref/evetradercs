@@ -65,8 +65,11 @@ namespace EveTrader.Core.Updater.CCP
                     }
                     foreach (var item in data)
                     {
-                        if (w.Transactions.OfType<ApiTransactions>().Count(t => t.Date == item.Date && t.ExternalID == item.ExternalID) == 0)
+                        if (!w.Transactions.OfType<ApiTransactions>().Any(t => t.Date == item.Date && t.ExternalID == item.ExternalID))
                         {
+                            if ((entity is Characters) && item.TransactionFor == (long)TransactionFor.Corporation)
+                                continue;
+
                             item.Wallet = w;
                             w.Transactions.Add(item);
                             recacheTypes.Add(item.TypeID);

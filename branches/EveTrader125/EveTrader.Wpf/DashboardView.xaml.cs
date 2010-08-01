@@ -15,6 +15,8 @@ using System.ComponentModel.Composition;
 using System.Collections.Specialized;
 using Visifire.Charts;
 using System.Collections;
+using System.Threading;
+using System.ComponentModel;
 
 namespace EveTrader.Wpf
 {
@@ -132,12 +134,12 @@ namespace EveTrader.Wpf
 
         void ds_MouseMove(object sender, MouseEventArgs e)
         {
-            OnDetailsRequested((sender as DataPoint).XValue as DateTime?, (sender as DataPoint).Parent.DataMappings[1].Path);
+            RaiseDetailsRequested((sender as DataPoint).XValue as DateTime?, (sender as DataPoint).Parent.DataMappings[1].Path);
         }
 
         public event EventHandler<DetailsRequestedEventArgs> DetailsRequested;
 
-        private void OnDetailsRequested(DateTime? key, string bindingKey)
+        private void RaiseDetailsRequested(DateTime? key, string bindingKey)
         {
             EventHandler<DetailsRequestedEventArgs> handler = DetailsRequested;
 

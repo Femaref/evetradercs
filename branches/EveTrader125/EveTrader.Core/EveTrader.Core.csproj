@@ -129,6 +129,7 @@
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayReport.cs" />
     <Compile Include="ViewModel\Display\DisplayWalletHistory.cs" />
+    <Compile Include="ViewModel\Display\SelectedChangedEventArgs.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />

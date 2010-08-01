@@ -93,6 +93,29 @@ namespace EveTrader.Core.ViewModel
             BuyerReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(ViewCore.BeginInvoke);
 
+
+            RefreshEntities();
+            Refresh();
+        }
+
+        private void RefreshEntities()
+        {
+            foreach (Entities e in iModel.Entity.OfType<Characters>())
+            {
+                Selectable<Entities> cache = new Selectable<Entities>(e, false);
+                cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
+                Entities.Add(cache);
+            }
+            foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
+            {
+                Selectable<Entities> cache = new Selectable<Entities>(e, false);
+                cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
+                Entities.Add(cache);
+            }
+        }
+
+        void entities_SelectedChanged(object sender, SelectedChangedEventArgs e)
+        {
             Refresh();
         }
 
@@ -175,9 +198,9 @@ namespace EveTrader.Core.ViewModel
                         };*/
                     }
 
-                    StationReport.AddRange(this.Combine(currentStation));
-                    ItemReport.AddRange(this.Combine(currentItem));
-                    BuyerReport.AddRange(this.Combine(currentBuyer));
+                    StationReport.AddRange(this.Combine(currentStation).OrderBy(d => d.PureProfit));
+                    ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
+                    BuyerReport.AddRange(this.Combine(currentBuyer).OrderBy(d => d.PureProfit));
 
 
 

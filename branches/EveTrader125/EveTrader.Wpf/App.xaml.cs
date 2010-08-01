@@ -46,6 +46,9 @@ namespace EveTrader.Wpf
             if (!fi.Exists || fi.Length == 0)
                 TraderModel.CreateDatabase(fi.FullName);
 
+            TraderModel tm = new TraderModel();
+            tm.Prune();
+
 
             base.OnStartup(e);
             Stopwatch sw = new Stopwatch();
@@ -62,7 +65,7 @@ namespace EveTrader.Wpf
             CompositionBatch batch = new CompositionBatch();
             batch.AddExportedValue(container);
             container.Compose(batch);
-
+            
             controller = container.GetExportedValue<ApplicationController>();
             sw.Stop();
             Debug.WriteLine(sw.Elapsed.TotalSeconds);

@@ -140,6 +140,21 @@ namespace EveTrader.Core.Model
             }
             return pathToFile;
         }
+
+        public void Prune()
+        {
+            PruneTransactions();
+        }
+
+
+        private void PruneTransactions()
+        {
+            var wrongTransactions = this.Transactions.Where(t => t.TransactionFor == (long)TransactionFor.Corporation && (t.Wallet.Entity is Characters));
+            foreach (var t in wrongTransactions)
+                this.Transactions.DeleteObject(t);
+
+            this.SaveChanges();
+        }
     }
 
     public partial class Wallets
