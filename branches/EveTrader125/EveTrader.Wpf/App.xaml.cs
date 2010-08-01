@@ -12,6 +12,9 @@ using System.Waf.Applications;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Waf;
+using EveTrader.Core.DataConverter;
+using System.IO;
+using EveTrader.Core.Model;
 
 namespace EveTrader.Wpf
 {
@@ -38,6 +41,11 @@ namespace EveTrader.Wpf
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
+            FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+
+            if (!fi.Exists || fi.Length == 0)
+                TraderModel.CreateDatabase(fi.FullName);
+
 
             base.OnStartup(e);
             Stopwatch sw = new Stopwatch();

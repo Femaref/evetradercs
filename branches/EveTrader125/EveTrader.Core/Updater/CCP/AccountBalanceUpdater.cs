@@ -35,7 +35,13 @@ namespace EveTrader.Core.Updater.CCP
                     var current = entity.Wallets.FirstOrDefault(ew => ew.AccountKey == w.AccountKey);
                     if (current == null)
                     {
-                        entity.Wallets.Add(new Wallets() { AccountKey = w.AccountKey, Balance = w.Balance, Name = "", Entity = entity, ID = 0 });
+                        string name = "";
+                        if (entity is Characters)
+                            name = entity.Name;
+                        if (entity is Corporations)
+                            name = string.Format("{0} {1}", entity.Name, w.AccountKey);
+                        current = new Wallets() { AccountKey = w.AccountKey, Balance = w.Balance, Name = name, Entity = entity, ID = 0 };
+                        entity.Wallets.Add(current);
                     }
                     else
                     {

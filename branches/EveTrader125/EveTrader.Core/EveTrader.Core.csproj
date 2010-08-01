@@ -45,6 +45,8 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86" />
+    <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -100,6 +102,11 @@
     <Compile Include="Network\Requests\CCP\MarketOrdersRequest.cs" />
     <Compile Include="Network\Requests\CCP\TransactionsRequest.cs" />
     <Compile Include="Collections\SmartObservableCollection.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StopwatchAspect.cs" />
     <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
@@ -121,6 +128,7 @@
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayReport.cs" />
+    <Compile Include="ViewModel\Display\DisplayWalletHistory.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />
@@ -181,6 +189,15 @@
       <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
       <Name>WpfApplicationFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tables.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

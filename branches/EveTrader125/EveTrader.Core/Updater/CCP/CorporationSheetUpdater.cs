@@ -20,10 +20,9 @@ namespace EveTrader.Core.Updater.CCP
         protected override bool InnerUpdate<U>(U entity)
         {
             CorporationSheetRequest csr = new CorporationSheetRequest(entity.Account, entity.ApiCharacterID, iModel.StillCached, iModel.SaveCache, iModel.LoadCache );
-            Corporations c = csr.Request();
             if (csr.UpdateAvailable)
             {
-
+                Corporations c = csr.Request();
                 entity.Name = c.Name;
                 entity.Npc = c.ID <= 1000182;
                 entity.Ticker = c.Ticker;

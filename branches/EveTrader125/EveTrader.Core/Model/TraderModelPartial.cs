@@ -7,6 +7,8 @@ using System.Reflection;
 using System.ComponentModel.Composition;
 using System.Data.Objects;
 using MoreLinq;
+using System.IO;
+using System.Data.SQLite;
 
 namespace EveTrader.Core.Model
 {
@@ -107,7 +109,37 @@ namespace EveTrader.Core.Model
         {
             var cache = this.ApiCache.Where(c => c.RequestString == requestString).FirstOrDefault();
             return cache != null ? cache.Data : "";
-        }        
+        }
+
+        public new static string CreateDatabase()
+        {
+            return CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+        }
+        public static string CreateDatabase(string path)
+        {
+            string pathToFile = Path.Combine(path, "EveTrader.db");
+
+            FileInfo fi = new FileInfo(pathToFile);
+
+            if (!fi.Exists || fi.Length == 0)
+            {
+                string connection = string.Format("Data Source={0};Version=3;", pathToFile);
+                string db_schema = Properties.Resources.tables;
+
+                using (SQLiteConnection cn = new SQLiteConnection(connection))
+                {
+                    using (SQLiteCommand cmd = cn.CreateCommand())
+                    {
+                        cmd.CommandText = db_schema;
+                        cmd.CommandType = System.Data.CommandType.Text;
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+            }
+            return pathToFile;
+        }
     }
 
     public partial class Wallets

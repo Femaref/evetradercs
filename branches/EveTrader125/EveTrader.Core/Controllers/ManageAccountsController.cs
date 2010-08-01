@@ -8,6 +8,7 @@ using EveTrader.Core.ViewModel;
 using System.ComponentModel.Composition.Hosting;
 using EveTrader.Core.View;
 using EveTrader.Core.Model;
+using EveTrader.Core.Updater.CCP;
 
 namespace EveTrader.Core.Controllers
 {
@@ -26,7 +27,11 @@ namespace EveTrader.Core.Controllers
 
         public void Show()
         {
-            iViewModel = new ManageAccountsViewModel(iContainer.GetExportedValue<IManageAccountsView>(), iContainer.GetExportedValue<TraderModel>());
+            iViewModel = new ManageAccountsViewModel(
+                iContainer.GetExportedValue<IManageAccountsView>(), 
+                iContainer.GetExportedValue<TraderModel>(), 
+                iContainer.GetExportedValue<UpdateService>(),
+                iContainer.GetExportedValue<EntityFactory>());
            iViewModel.Show();
         }
 

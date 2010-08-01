@@ -223,27 +223,11 @@ namespace EveTrader.Core.DataConverter
         }
         private string CreateDatabase()
         {
-            return CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+            return TraderModel.CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
         }
         private string CreateDatabase(string path)
         {
-            string pathToFile = Path.Combine(path, "EveTrader.db");
-            if (File.Exists(pathToFile))
-                return pathToFile;
-            string connection = string.Format("Data Source={0};Version=3;", pathToFile);
-            string db_schema = Properties.Resources.tables;
-
-            using (SQLiteConnection cn = new SQLiteConnection(connection))
-            {
-                using (SQLiteCommand cmd = cn.CreateCommand())
-                {
-                    cmd.CommandText = db_schema;
-                    cmd.CommandType = System.Data.CommandType.Text;
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            return pathToFile;
+            return TraderModel.CreateDatabase(path);
         }
     }
 }

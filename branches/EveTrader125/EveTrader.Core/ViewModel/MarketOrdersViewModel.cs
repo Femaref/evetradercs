@@ -45,7 +45,7 @@ namespace EveTrader.Core.ViewModel
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
 
             RefreshCurrentEntities();
-            SelectEntity(CurrentEntities.First());
+            SelectEntity(CurrentEntities.FirstOrDefault());
         }
 
         private void RefreshCurrentEntities()
@@ -122,6 +122,9 @@ namespace EveTrader.Core.ViewModel
         }
         private void SelectEntity(Entities e)
         {
+            if (e == null)
+                return;
+
             iCurrentEntity = e;
             RaisePropertyChanged("CurrentEntity");
             Refresh();

@@ -29,7 +29,7 @@ namespace EveTrader.Core.Network.Requests.CCP
                      ID = r.Attribute("characterID").Value.ToInt32(),
                      Name = r.Attribute("name").Value,
                      Account = this.iAccount,
-                     Corporation = new Corporations() { ID = r.Attribute("corporationID").Value.ToInt32(), Name = r.Attribute("corporationName").Value, Account = this.iAccount }
+                     Corporation = new Corporations() { ID = r.Attribute("corporationID").Value.ToInt32(), Name = r.Attribute("corporationName").Value, Account = this.iAccount, Ticker="" }
                  });
         }
 

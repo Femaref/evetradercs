@@ -50,6 +50,9 @@ namespace EveTrader.Core.ViewModel
 
         private void SelectWallet(Wallets w)
         {
+            if (w == null)
+                return;
+
             lock (iCurrentWalletLocker)
             {
                 iCurrentWallet = w;
@@ -70,7 +73,7 @@ namespace EveTrader.Core.ViewModel
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(view_EntitySelectionChanged);
 
             RefreshCurrentWallets();
-            SelectWallet(CurrentWallets.First());
+            SelectWallet(CurrentWallets.FirstOrDefault());
         }
 
         public void Refresh()

@@ -20,9 +20,10 @@ namespace EveTrader.Core.Updater.CCP
 
         public Characters CreateCharacter(long id, Accounts a)
         {
-            if (iModel.Entity.OfType<Corporations>().Count(c => c.ID == 0) == 0)
+            if (!iModel.Entity.OfType<Corporations>().Any(c => c.ID == 0))
             {
-                iModel.Entity.AddObject(new Corporations() {ID = 0, Name = "Placeholder corporation", Npc = true, Ticker = "" });
+                Corporations c = new Corporations() { ID = 0, Name = "Placeholder corporation", Npc = true, Ticker = "test" };
+                iModel.Entity.AddObject(c);
                 iModel.SaveChanges();
             }
 

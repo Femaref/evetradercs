@@ -77,6 +77,7 @@ namespace EveTrader.Core.ViewModel
         public SmartObservableCollection<DisplayReport> StationReport { get; set; }
         public SmartObservableCollection<DisplayReport> ItemReport { get; set; }
         public SmartObservableCollection<DisplayReport> BuyerReport { get; set; }
+        public SmartObservableCollection<DisplayWalletHistory> WalletHistories { get; set; }
 
         [ImportingConstructor]
         public ReportViewModel(IReportView view, TraderModel tm, ISettingsProvider settings)
@@ -90,6 +91,9 @@ namespace EveTrader.Core.ViewModel
             StationReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             ItemReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             BuyerReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
+            WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(ViewCore.BeginInvoke);
+
+            Refresh();
         }
 
         private IEnumerable<DisplayReport> GroupedTransactions(IEnumerable<Transactions> input, Func<Transactions, string> groupBy)
@@ -146,6 +150,15 @@ namespace EveTrader.Core.ViewModel
                         currentItem.Add(itemData);
                         currentBuyer.Add(buyerData);
 
+                        
+                    //wallet history
+
+                        WalletHistories.AddRange(e.Wallets.Select(w => new DisplayWalletHistory()
+                        {
+                            Name = w.DisplayName,
+                            Histories = w.WalletHistory
+                        }));
+
 
                         /*            IEnumerable<ReportChartItem> reportData =
                         from wt in filteredWalletTransactions
@@ -165,6 +178,9 @@ namespace EveTrader.Core.ViewModel
                     StationReport.AddRange(this.Combine(currentStation));
                     ItemReport.AddRange(this.Combine(currentItem));
                     BuyerReport.AddRange(this.Combine(currentBuyer));
+
+
+
 
                     this.Updating = false;
                 };

@@ -12,15 +12,20 @@ using EveTrader.Core.Network.Requests.CCP;
 using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
+using EveTrader.Core.Controllers;
+using EveTrader.Core.Updater.CCP;
 
 namespace EveTrader.Core.ViewModel
 {
     public class ManageAccountsViewModel : ViewModel<IManageAccountsView>
     {
         private readonly TraderModel iModel;
+        private readonly UpdateService iUpdater;
+        private readonly EntityFactory iFactory;
 
         public event CancelEventHandler Closing;
         private bool iDataRequestable = false;
+        
         public SmartObservableCollection<Characters> CurrentCharacters { get; private set; }
 
         public SmartObservableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
@@ -47,23 +52,47 @@ namespace EveTrader.Core.ViewModel
         }
 
 
-        public ManageAccountsViewModel(IManageAccountsView view, TraderModel tm)
+        public ManageAccountsViewModel(IManageAccountsView view, TraderModel tm, UpdateService us, EntityFactory ef)
             : base(view)
         {
             iModel = tm;
+            iUpdater = us;
+            iFactory = ef;
+
             CurrentCharacters = new SmartObservableCollection<Characters>(view.Invoke);
             RequestedCharacters = new SmartObservableCollection<Selectable<Characters>>(view.Invoke);
             DataRequestable = true;
             view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
             view.DataRequested += new EventHandler<CharacterDataRequestedEventArgs>(view_DataRequested);
             view.AddCharacters += new EventHandler(view_AddCharacters);
+            view.AbortRequest += new EventHandler(view_AbortRequest);
             Refresh();
+        }
+
+        void view_AbortRequest(object sender, EventArgs e)
+        {
+            RequestedCharacters.Clear();
+            DataRequestable = false;
+            RaisePropertyChanged("DataPresent");
         }
 
         void view_AddCharacters(object sender, EventArgs e)
         {
-            RequestedCharacters.Where(s => s.IsSelected).ForEach(s => iModel.Entity.AddObject(s.Item));
-            iModel.SaveChanges();
+            long id = RequestedCharacters.First().Item.Account.ID;
+            Accounts account = iModel.Accounts.First(a => a.ID == id);
+            account.Entities.Clear();
+            foreach (Characters c in RequestedCharacters.Where(s => s.IsSelected))
+            {
+                Characters cache = iFactory.CreateCharacter(c.ID, account);
+                cache.Corporation = iFactory.CreateCorporation(c.Corporation.ID, account, c.ID);
+                iModel.SaveChanges();
+
+                iUpdater.Update(cache);
+                iUpdater.Update(cache.Corporation);
+            }
+            
+
+
 
             RequestedCharacters.Clear();
             DataRequestable = false;
@@ -80,8 +109,9 @@ namespace EveTrader.Core.ViewModel
             }
             if (account.ApiKey != e.ApiKey)
                 account.ApiKey = e.ApiKey;
+            iModel.SaveChanges();
 
-            CharacterListRequest clr = new CharacterListRequest(account, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
+            CharacterListRequest clr = new CharacterListRequest(new Accounts() { ID = account.ID, ApiKey = account.ApiKey }, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
             var requestedCharacters = clr.Request().Select(c => new Selectable<Characters>(c, false));
 
             RequestedCharacters.AddRange(requestedCharacters);

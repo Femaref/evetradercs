@@ -27,6 +27,7 @@ namespace EveTrader.Core.ViewModel
         private object iMarketOrdersView;
 
         private bool iUpdating = false;
+        private string iUpdatingText = "";
 
         public ICommand OpenManageAccountsCommand
         {
@@ -55,6 +56,18 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("Updating");
             }
         }
+        public string UpdatingText
+        {
+            get
+            {
+                return iUpdatingText;
+            }
+            set
+            {
+                iUpdatingText = value;
+                RaisePropertyChanged("UpdatingText");
+            }
+        }
         
         private void OpenManageAccounts()
         {
@@ -64,8 +77,11 @@ namespace EveTrader.Core.ViewModel
         }
         private void FetchApiData()
         {
+            if (this.Updating)
+                return;
             Action updater = () =>
                 {
+                    this.UpdatingText = "Updating CCP Api data...";
                     this.Updating = true;
                     iUpdateService.Update();
                     this.Updating = false;
@@ -77,8 +93,11 @@ namespace EveTrader.Core.ViewModel
 
         private void RegeneratePriceCache()
         {
+            if (this.Updating)
+                return;
             Action updater = () =>
             {
+                this.UpdatingText = "Regenerating Price Cache...";
                 this.Updating = true;
                 iModel.RegeneratePriceCache();
                 this.Updating = false;

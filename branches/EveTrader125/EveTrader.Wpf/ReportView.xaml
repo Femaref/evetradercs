@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d"  d:DataContext="{d:DesignInstance vm:JournalViewModel}"
+             mc:Ignorable="d"  d:DataContext="{d:DesignInstance vm:ReportViewModel}"
              xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+             xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -30,6 +31,11 @@
         </Grid>
         
 
-        <TabControl Grid.Row="1" Panel.ZIndex="1"></TabControl>
+        <TabControl Grid.Row="1" Panel.ZIndex="1">
+            <TabItem x:Name="iItemsReport" Header="Items"></TabItem>
+            <TabItem x:Name="iStationsReport" Header="Stations"></TabItem>
+            <TabItem x:Name="iBuyersReport" Header="Buyers"></TabItem>
+            <TabItem x:Name="iHistory" Header="Wallet Histories"></TabItem>            
+        </TabControl>
     </Grid>
 </UserControl>

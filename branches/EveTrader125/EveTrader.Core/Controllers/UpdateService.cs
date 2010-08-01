@@ -52,6 +52,14 @@ namespace EveTrader.Core.Controllers
             ActivateTimer();
         }
 
+        public void Update(Entities e)
+        {
+            if (e is Characters)
+                iCharacterUpdater.Update(e as Characters);
+            if (e is Corporations)
+                iCorporationUpdater.Update(e as Corporations);
+        }
+
         public bool AutoUpdate
         {
             get
