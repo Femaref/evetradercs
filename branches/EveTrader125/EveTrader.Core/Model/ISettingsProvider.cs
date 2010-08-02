@@ -12,6 +12,7 @@ namespace EveTrader.Core.Model
         TimeSpan JournalTimeframe { get; set; }
         DateTime ReportStartDate { get; set; }
         DateTime ReportEndDate { get; set; }
-        bool ReportApplyDateFilter { get; set; }
+        bool ReportApplyStartFilter { get; set; }
+        bool ReportApplyEndFilter { get; set; }
     }
 }

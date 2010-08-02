@@ -17,7 +17,10 @@
     <Setting Name="ReportEndDate" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">3000-01-01</Value>
     </Setting>
-    <Setting Name="ReportApplyDateFilter" Type="System.Boolean" Scope="User">
+    <Setting Name="ReportApplyStartFilter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReportApplyEndFilter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

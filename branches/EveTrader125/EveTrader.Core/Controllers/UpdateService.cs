@@ -10,8 +10,8 @@ using System.Threading;
 
 namespace EveTrader.Core.Controllers
 {
-    [Export]
-    public class UpdateService
+    [Export(typeof(IUpdateService))]
+    public class UpdateService : IUpdateService
     {
         private readonly CharacterUpdater iCharacterUpdater;
         private readonly CorporationUpdater iCorporationUpdater;
@@ -49,6 +49,8 @@ namespace EveTrader.Core.Controllers
             foreach (Corporations c in iModel.Entity.OfType<Corporations>())
                 iCorporationUpdater.Update(c);
 
+            RaiseUpdated(iModel.Entity);
+
             ActivateTimer();
         }
 
@@ -58,6 +60,8 @@ namespace EveTrader.Core.Controllers
                 iCharacterUpdater.Update(e as Characters);
             if (e is Corporations)
                 iCorporationUpdater.Update(e as Corporations);
+
+            RaiseUpdated(e);
         }
 
         public bool AutoUpdate
@@ -71,6 +75,24 @@ namespace EveTrader.Core.Controllers
                 iSettings.AutoUpdate = value;
                 ActivateTimer();
             }
+        }
+
+
+        public event EventHandler<EntitiesUpdatedEventArgs> Updated;
+
+
+        private void RaiseUpdated(IEnumerable<Entities> updated)
+        {
+            var handler = Updated;
+            if (handler != null)
+                handler(this, new EntitiesUpdatedEventArgs(updated));
+        }
+
+        private void RaiseUpdated(Entities updated)
+        {
+            var handler = Updated;
+            if (handler != null)
+                handler(this, new EntitiesUpdatedEventArgs(new Entities[] { updated }));
         }
     }
 }

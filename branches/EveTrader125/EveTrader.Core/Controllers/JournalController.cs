@@ -15,12 +15,14 @@ namespace EveTrader.Core.Controllers
         private readonly JournalViewModel iJournalView;
 
         [ImportingConstructor]
-        public JournalController(MainWindowViewModel mainView, JournalViewModel journalView)
+        public JournalController(MainWindowViewModel mainView, JournalViewModel journalView, IUpdateService updater)
         {
             iMainView = mainView;
             iJournalView = journalView;
 
             iMainView.JournalView = iJournalView.View;
+
+            updater.Updated += iJournalView.DataIncoming;
         }
     }
 }

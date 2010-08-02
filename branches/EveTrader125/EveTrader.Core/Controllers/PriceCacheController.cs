@@ -15,11 +15,13 @@ namespace EveTrader.Core.Controllers
         private PriceCacheViewModel iPriceCacheView;
 
         [ImportingConstructor]
-        public PriceCacheController(MainWindowViewModel mainView, PriceCacheViewModel priceCacheView)
+        public PriceCacheController(MainWindowViewModel mainView, PriceCacheViewModel priceCacheView, IUpdateService updater)
         {
             iMainView = mainView;
             iPriceCacheView = priceCacheView;
             iMainView.PriceCacheView = iPriceCacheView.View;
+
+            updater.Updated += iPriceCacheView.DataIncoming;
         }
 
     }

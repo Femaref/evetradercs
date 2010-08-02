@@ -15,11 +15,13 @@ namespace EveTrader.Core.Controllers
         private WalletsViewModel iWalletsView;
 
         [ImportingConstructor]
-        public WalletsController(MainWindowViewModel mainView, WalletsViewModel walletsView)
+        public WalletsController(MainWindowViewModel mainView, WalletsViewModel walletsView, IUpdateService updater)
         {
             iMainView = mainView;
             iWalletsView = walletsView;
             iMainView.WalletsView = iWalletsView.View;
+
+            updater.Updated += iWalletsView.DataIncoming;
         }
     }
 }

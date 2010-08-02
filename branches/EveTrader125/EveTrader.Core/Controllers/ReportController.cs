@@ -15,11 +15,13 @@ namespace EveTrader.Core.Controllers
         ReportViewModel iReportView;
 
         [ImportingConstructor]
-        public ReportController(MainWindowViewModel mainView, ReportViewModel reportView)
+        public ReportController(MainWindowViewModel mainView, ReportViewModel reportView, IUpdateService updater)
         {
             iMainView = mainView;
             iReportView = reportView;
             iMainView.ReportView = iReportView.View;
+
+            updater.Updated += iReportView.DataIncoming;
         }
 
         public void Refresh()

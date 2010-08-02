@@ -15,11 +15,14 @@ namespace EveTrader.Core.Controllers
         DashboardViewModel iDashboardView;
 
         [ImportingConstructor]
-        public DashboardController(MainWindowViewModel mainView, DashboardViewModel dashboardView)
+        public DashboardController(MainWindowViewModel mainView, DashboardViewModel dashboardView, IUpdateService updater)
         {
+
             iMainView = mainView;
             iDashboardView = dashboardView;
             iMainView.DashboardView = iDashboardView.View;
+
+            updater.Updated += iDashboardView.DataIncoming;
         }
 
         public void Refresh()

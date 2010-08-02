@@ -9,16 +9,17 @@ using System.Collections.ObjectModel;
 using MoreLinq;
 using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Collections.ObjectModel;
 
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class PriceCacheViewModel : ViewModel<IPriceCacheView>
+    public class PriceCacheViewModel : ViewModel<IPriceCacheView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
         private readonly StaticModel iStaticData;
 
-        public ObservableCollection<DisplayPriceCache> Prices { get; set; }
+        public SmartObservableCollection<DisplayPriceCache> Prices { get; set; }
 
         [ImportingConstructor]
         public PriceCacheViewModel(IPriceCacheView view, TraderModel tm, StaticModel sm)
@@ -27,7 +28,7 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iStaticData = sm;
 
-            Prices = new ObservableCollection<DisplayPriceCache>();
+            Prices = new SmartObservableCollection<DisplayPriceCache>(view.BeginInvoke);
 
             Refresh();
         }
@@ -50,6 +51,11 @@ namespace EveTrader.Core.ViewModel
             x.OrderBy(c => c.TypeName).ForEach(c => Prices.Add(c));
 
 
+        }
+
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            Refresh();
         }
     }
 }

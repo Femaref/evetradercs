@@ -195,7 +195,7 @@ namespace EveTrader.Core.ViewModel
         
 
         [ImportingConstructor]
-        public MainWindowViewModel(IMainWindowView view, TraderModel tm, UpdateService us)
+        public MainWindowViewModel(IMainWindowView view, TraderModel tm, IUpdateService us)
             : base(view)
         {
             view.Closing += ViewClosing;
@@ -217,7 +217,7 @@ namespace EveTrader.Core.ViewModel
         private object iPriceCache;
         private object iTransactionsView;
         private object iJournalView;
-        private readonly UpdateService iUpdateService;
+        private readonly IUpdateService iUpdateService;
         private object iReportView;
 
         protected virtual void OnClosing(CancelEventArgs e)

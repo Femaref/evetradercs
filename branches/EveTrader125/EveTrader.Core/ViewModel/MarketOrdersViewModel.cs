@@ -11,11 +11,12 @@ using EveTrader.Core.View;
 using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
+using EveTrader.Core.Collections.ObjectModel;
 
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class MarketOrdersViewModel : ViewModel<IMarketOrdersView>
+    public class MarketOrdersViewModel : ViewModel<IMarketOrdersView>, IRefreshableViewModel
     {
         private TraderModel iModel;
 
@@ -29,7 +30,7 @@ namespace EveTrader.Core.ViewModel
             get { return iCurrentEntity; }
         }
 
-        public ObservableCollection<Entities> CurrentEntities { get; set; }
+        public SmartObservableCollection<Entities> CurrentEntities { get; set; }
 
         private readonly StaticModel iStaticData;
         private readonly ISettingsProvider iSettings;
@@ -40,8 +41,8 @@ namespace EveTrader.Core.ViewModel
             iModel = model;
             iStaticData = sm;
             iSettings = settings;
-            Orders = new ObservableCollection<DisplayMarketOrders>();
-            CurrentEntities = new ObservableCollection<Entities>();
+            Orders = new SmartObservableCollection<DisplayMarketOrders>(view.BeginInvoke);
+            CurrentEntities = new SmartObservableCollection<Entities>(view.BeginInvoke);
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
 
             RefreshCurrentEntities();
@@ -59,7 +60,7 @@ namespace EveTrader.Core.ViewModel
             SelectEntity(e.Selection);
         }
 
-        public ObservableCollection<DisplayMarketOrders> Orders { get; set; }
+        public SmartObservableCollection<DisplayMarketOrders> Orders { get; set; }
 
         public decimal TotalBuyOrders
         {
@@ -128,6 +129,14 @@ namespace EveTrader.Core.ViewModel
             iCurrentEntity = e;
             RaisePropertyChanged("CurrentEntity");
             Refresh();
+        }
+
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            RefreshCurrentEntities();
+
+            if (e.UpdatedEntities.Any(en => en.Name == CurrentEntity.Name))
+                Refresh();
         }
     }
 }

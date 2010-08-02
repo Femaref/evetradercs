@@ -10,15 +10,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Collections.ObjectModel;
 
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class WalletsViewModel : ViewModel<IWalletsView>
+    public class WalletsViewModel : ViewModel<IWalletsView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
 
-        public ObservableCollection<DisplayWallets> EntityWallets { get; private set; }
+        public SmartObservableCollection<DisplayWallets> EntityWallets { get; private set; }
 
 
         [ImportingConstructor]
@@ -26,7 +27,7 @@ namespace EveTrader.Core.ViewModel
             : base(view)
         {
             iModel = tm;
-            EntityWallets = new ObservableCollection<DisplayWallets>();
+            EntityWallets = new SmartObservableCollection<DisplayWallets>(view.BeginInvoke);
             Refresh();
         }
 
@@ -46,6 +47,11 @@ namespace EveTrader.Core.ViewModel
                     }
                 }
             }
+        }
+
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            Refresh();
         }
     }
 }

@@ -66,6 +66,8 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EntitiesUpdatedEventArgs.cs" />
+    <Compile Include="Controllers\IUpdateService.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="ViewModel\Display\DisplaySingleHistory.cs" />
     <Compile Include="ViewModel\Display\DisplayWalletHistory.cs" />
     <Compile Include="ViewModel\Display\SelectedChangedEventArgs.cs" />
+    <Compile Include="ViewModel\IRefreshableViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />

@@ -10,7 +10,7 @@ using EveTrader.Core.Model;
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class TransactionsViewModel : ViewModel<ITransactionsView>
+    public class TransactionsViewModel : ViewModel<ITransactionsView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
 
@@ -19,6 +19,16 @@ namespace EveTrader.Core.ViewModel
             : base(view)
         {
             iModel = tm;
+        }
+
+        public void Refresh()
+        {
+
+        }
+
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

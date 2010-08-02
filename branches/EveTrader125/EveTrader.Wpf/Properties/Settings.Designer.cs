@@ -86,12 +86,24 @@ namespace EveTrader.Wpf.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ReportApplyDateFilter {
+        public bool ReportApplyStartFilter {
             get {
-                return ((bool)(this["ReportApplyDateFilter"]));
+                return ((bool)(this["ReportApplyStartFilter"]));
             }
             set {
-                this["ReportApplyDateFilter"] = value;
+                this["ReportApplyStartFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReportApplyEndFilter {
+            get {
+                return ((bool)(this["ReportApplyEndFilter"]));
+            }
+            set {
+                this["ReportApplyEndFilter"] = value;
             }
         }
     }

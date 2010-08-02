@@ -15,7 +15,7 @@ using EveTrader.Core.Collections.ObjectModel;
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class JournalViewModel : ViewModel<IJournalView>
+    public class JournalViewModel : ViewModel<IJournalView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
 
@@ -93,6 +93,14 @@ namespace EveTrader.Core.ViewModel
 
             Thread t = new Thread(new ThreadStart(a));
             t.Start();
+        }
+
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            RefreshCurrentWallets();
+
+            if (e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name))
+                Refresh();
         }
     }
 }

@@ -15,11 +15,13 @@ namespace EveTrader.Core.Controllers
         private MarketOrdersViewModel iMarketOrdersView;
 
         [ImportingConstructor]
-        public MarketOrdersController(MainWindowViewModel mainView, MarketOrdersViewModel marketOrdersView)
+        public MarketOrdersController(MainWindowViewModel mainView, MarketOrdersViewModel marketOrdersView, IUpdateService updater)
         {
             iMainView = mainView;
             iMarketOrdersView = marketOrdersView;
             iMainView.MarketOrdersView = iMarketOrdersView.View;
+
+            updater.Updated += iMarketOrdersView.DataIncoming;
         }
 
         public void Refresh()

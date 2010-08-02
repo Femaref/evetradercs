@@ -15,7 +15,7 @@ using System.Threading;
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class ReportViewModel : ViewModel<IReportView>
+    public class ReportViewModel : ViewModel<IReportView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
         private readonly ISettingsProvider iSettings;
@@ -31,6 +31,8 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.ReportStartDate = value;
                 RaisePropertyChanged("StartDate");
+                if (ApplyStartFilter)
+                    Refresh();
             }
         }
         public DateTime EndDate
@@ -43,19 +45,35 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.ReportEndDate = value;
                 RaisePropertyChanged("EndDate");
-
+                if (ApplyEndFilter)
+                    Refresh();
             }
         }
-        public bool ApplyDateFilter
+        public bool ApplyStartFilter
         {
             get
             {
-                return iSettings.ReportApplyDateFilter;
+                return iSettings.ReportApplyStartFilter;
             }
             set
             {
-                iSettings.ReportApplyDateFilter = value;
-                RaisePropertyChanged("ApplyDateFilter");
+                iSettings.ReportApplyStartFilter = value;
+                RaisePropertyChanged("ApplyStartFilter");
+                Refresh();
+            }
+        }
+
+        public bool ApplyEndFilter
+        {
+            get
+            {
+                return iSettings.ReportApplyEndFilter;
+            }
+            set
+            {
+                iSettings.ReportApplyEndFilter = value;
+                RaisePropertyChanged("ApplyEndFilter");
+                Refresh();
             }
         }
 
@@ -88,7 +106,7 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iSettings = settings;
 
-            
+
 
             Entities = new SmartObservableCollection<Selectable<Entities>>(ViewCore.BeginInvoke);
 
@@ -139,7 +157,7 @@ namespace EveTrader.Core.ViewModel
                     });
         }
 
-        private IEnumerable<DisplayReport> Combine (IEnumerable<IEnumerable<DisplayReport>> input)
+        private IEnumerable<DisplayReport> Combine(IEnumerable<IEnumerable<DisplayReport>> input)
         {
             return input.SelectMany(d => d.GroupBy(dr => dr.Key)).Select(d => new DisplayReport()
             {
@@ -167,11 +185,21 @@ namespace EveTrader.Core.ViewModel
                         List<IEnumerable<DisplayReport>> currentItem = new List<IEnumerable<DisplayReport>>();
                         List<IEnumerable<DisplayReport>> currentBuyer = new List<IEnumerable<DisplayReport>>();
 
+                        Func<Transactions, bool> filter = (t) => true;
+                        if (ApplyStartFilter && ApplyEndFilter)
+                            filter = (t) => t.Date >= StartDate && t.Date <= EndDate;
+                        else if (ApplyStartFilter)
+                            filter = (t) => t.Date >= StartDate;
+                        else
+                            filter = (t) => t.Date <= EndDate;
+
+
+
                         foreach (Entities e in Entities.Where(s => s.IsSelected))
                         {
                             //filtered: wt => wt.TransactionDateTime.Date >= iFromDate && wt.TransactionType == WalletTransactionType.Sell
 
-                            var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.Date >= this.StartDate && wt.Date < this.EndDate && wt.TransactionType == (long)TransactionType.Sell);
+                            var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.TransactionType == (long)TransactionType.Sell).Where(filter);
 
                             var stationData = this.GroupedTransactions(filteredTransactions, t => t.StationName);
                             var itemData = this.GroupedTransactions(filteredTransactions, t => t.TypeName);
@@ -187,7 +215,7 @@ namespace EveTrader.Core.ViewModel
                             WalletHistories.AddRange(e.Wallets.Select(w => new DisplayWalletHistory()
                             {
                                 Name = w.DisplayName,
-                                Histories = w.WalletHistory.Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance=wh.Balance})
+                                Histories = w.WalletHistory.Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance = wh.Balance })
                             }));
 
 
@@ -210,9 +238,6 @@ namespace EveTrader.Core.ViewModel
                         ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
                         BuyerReport.AddRange(this.Combine(currentBuyer).OrderBy(d => d.PureProfit));
 
-
-
-
                         this.Updating = false;
                     }
                 };
@@ -220,6 +245,14 @@ namespace EveTrader.Core.ViewModel
             Thread updaterThread = new Thread(new ThreadStart(updater));
             updaterThread.Start();
         }
-        
+
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            RefreshEntities();
+
+            if (e.UpdatedEntities.Any(en => Entities.Where(ce => ce.IsSelected).Any(ce => ce.Item.Name == en.Name)))
+                Refresh();
+        }
+
     }
 }

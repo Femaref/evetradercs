@@ -33,7 +33,8 @@ namespace EveTrader.Wpf
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RaiseEntitySelectionChanged(e.AddedItems.Cast<Entities>().First());
+            if(e.AddedItems.Count == 1)
+                RaiseEntitySelectionChanged(e.AddedItems.Cast<Entities>().First());
         }
 
         public event EventHandler<EntitySelectionChangedEventArgs<Entities>> EntitySelectionChanged;

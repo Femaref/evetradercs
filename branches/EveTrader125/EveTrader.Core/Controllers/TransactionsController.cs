@@ -15,12 +15,14 @@ namespace EveTrader.Core.Controllers
         private readonly TransactionsViewModel iTransactionsView;
 
         [ImportingConstructor]
-        public TransactionsController(MainWindowViewModel mainView, TransactionsViewModel transactionsView)
+        public TransactionsController(MainWindowViewModel mainView, TransactionsViewModel transactionsView, IUpdateService updater)
         {
             iMainView = mainView;
             iTransactionsView = transactionsView;
 
             iMainView.TransactionsView = iTransactionsView.View;
+
+            updater.Updated += iTransactionsView.DataIncoming;
         }
     }
 }

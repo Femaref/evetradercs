@@ -19,7 +19,7 @@ using EveTrader.Core.Collections.ObjectModel;
 namespace EveTrader.Core.ViewModel
 {
     [Export]
-    public class DashboardViewModel : ViewModel<IDashboardView>
+    public class DashboardViewModel : ViewModel<IDashboardView>, IRefreshableViewModel
     {
         private TraderModel iModel;
 
@@ -194,7 +194,7 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            this.ViewCore.Invoke(() => DailyInfo.Clear());
+            DailyInfo.Clear();
             //TODO: Datageneration
 
             var investment = (from w in iModel.Transactions
@@ -242,14 +242,17 @@ namespace EveTrader.Core.ViewModel
                         cache.Add(dd);
                         CurrentIndex++;
                     }
-                    cache.ForEach(dd => this.ViewCore.BeginInvoke(new Action(() => { DailyInfo.Add(dd); })));
+                    cache.ForEach(dd => DailyInfo.Add(dd));
                     RaisePropertyChanged("ProfitAverage");
                     Working = false;
                 });
 
             workerThread.Start();
-
-            
+        }
+        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        {
+            RefreshWallets();
+            Refresh();
         }
     }
 }

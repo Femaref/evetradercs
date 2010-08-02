@@ -11,15 +11,17 @@ namespace EveTrader.Core.Controllers
     [Export]
     public class ApplicationLogController : Controller
     {
-                MainWindowViewModel iMainView;
+        MainWindowViewModel iMainView;
         ApplicationLogViewModel iApplicationLogView;
 
         [ImportingConstructor]
-        public ApplicationLogController(MainWindowViewModel mainView, ApplicationLogViewModel applicationLogView)
+        public ApplicationLogController(MainWindowViewModel mainView, ApplicationLogViewModel applicationLogView, IUpdateService updater)
         {
             iMainView = mainView;
-            iApplicationLogView= applicationLogView;
+            iApplicationLogView = applicationLogView;
             iMainView.ApplicationLogView = iApplicationLogView.View;
+
+            updater.Updated += iApplicationLogView.DataIncoming;
         }
 
         public void Refresh()
