@@ -73,6 +73,8 @@ namespace EveTrader.Core.ViewModel
         }
 
 
+        private object iUpdaterLock = new object();
+
         public SmartObservableCollection<Selectable<Entities>> Entities { get; set; }
         public SmartObservableCollection<DisplayReport> StationReport { get; set; }
         public SmartObservableCollection<DisplayReport> ItemReport { get; set; }
@@ -86,6 +88,8 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iSettings = settings;
 
+            
+
             Entities = new SmartObservableCollection<Selectable<Entities>>(ViewCore.BeginInvoke);
 
             StationReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
@@ -93,6 +97,7 @@ namespace EveTrader.Core.ViewModel
             BuyerReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(ViewCore.BeginInvoke);
 
+            WalletHistories.CollectionChanged += view.ChartCollectionChanged;
 
             RefreshEntities();
             Refresh();
@@ -149,63 +154,67 @@ namespace EveTrader.Core.ViewModel
         {
             Action updater = () =>
                 {
-                    this.Updating = true;
-
-                    StationReport.Clear();
-                    ItemReport.Clear();
-                    BuyerReport.Clear();
-
-                    List<IEnumerable<DisplayReport>> currentStation = new List<IEnumerable<DisplayReport>>();
-                    List<IEnumerable<DisplayReport>> currentItem = new List<IEnumerable<DisplayReport>>();
-                    List<IEnumerable<DisplayReport>> currentBuyer = new List<IEnumerable<DisplayReport>>();
-
-                    foreach (Entities e in Entities.Where(s => s.IsSelected))
+                    lock (iUpdaterLock)
                     {
-                        //filtered: wt => wt.TransactionDateTime.Date >= iFromDate && wt.TransactionType == WalletTransactionType.Sell
+                        this.Updating = true;
 
-                        var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.Date >= this.StartDate && wt.Date < this.EndDate && wt.TransactionType == (long)TransactionType.Sell);
+                        StationReport.Clear();
+                        ItemReport.Clear();
+                        BuyerReport.Clear();
+                        WalletHistories.Clear();
 
-                        var stationData = this.GroupedTransactions(filteredTransactions, t => t.StationName);
-                        var itemData = this.GroupedTransactions(filteredTransactions, t => t.TypeName);
-                        var buyerData = this.GroupedTransactions(filteredTransactions, t => t.ClientName);
+                        List<IEnumerable<DisplayReport>> currentStation = new List<IEnumerable<DisplayReport>>();
+                        List<IEnumerable<DisplayReport>> currentItem = new List<IEnumerable<DisplayReport>>();
+                        List<IEnumerable<DisplayReport>> currentBuyer = new List<IEnumerable<DisplayReport>>();
 
-                        currentStation.Add(stationData);
-                        currentItem.Add(itemData);
-                        currentBuyer.Add(buyerData);
-
-                        
-                    //wallet history
-
-                        WalletHistories.AddRange(e.Wallets.Select(w => new DisplayWalletHistory()
+                        foreach (Entities e in Entities.Where(s => s.IsSelected))
                         {
-                            Name = w.DisplayName,
-                            Histories = w.WalletHistory
-                        }));
+                            //filtered: wt => wt.TransactionDateTime.Date >= iFromDate && wt.TransactionType == WalletTransactionType.Sell
+
+                            var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.Date >= this.StartDate && wt.Date < this.EndDate && wt.TransactionType == (long)TransactionType.Sell);
+
+                            var stationData = this.GroupedTransactions(filteredTransactions, t => t.StationName);
+                            var itemData = this.GroupedTransactions(filteredTransactions, t => t.TypeName);
+                            var buyerData = this.GroupedTransactions(filteredTransactions, t => t.ClientName);
+
+                            currentStation.Add(stationData);
+                            currentItem.Add(itemData);
+                            currentBuyer.Add(buyerData);
 
 
-                        /*            IEnumerable<ReportChartItem> reportData =
-                        from wt in filteredWalletTransactions
-                        group wt by wt.TypeName into g
-                        select new ReportChartItem
-                        {
-                            Label = string.Format(
-                                "{0} x{1}", 
-                                g.Key, 
-                                g.Sum(gi => gi.Quantity)),
-                            GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
-                            PureProfit = Math.Round(g.Sum(gi => ((gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))) * gi.Quantity) / 1000000), 2),
-                            SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
-                        };*/
+                            //wallet history
+
+                            WalletHistories.AddRange(e.Wallets.Select(w => new DisplayWalletHistory()
+                            {
+                                Name = w.DisplayName,
+                                Histories = w.WalletHistory.Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance=wh.Balance})
+                            }));
+
+
+                            /*            IEnumerable<ReportChartItem> reportData =
+                            from wt in filteredWalletTransactions
+                            group wt by wt.TypeName into g
+                            select new ReportChartItem
+                            {
+                                Label = string.Format(
+                                    "{0} x{1}", 
+                                    g.Key, 
+                                    g.Sum(gi => gi.Quantity)),
+                                GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
+                                PureProfit = Math.Round(g.Sum(gi => ((gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))) * gi.Quantity) / 1000000), 2),
+                                SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
+                            };*/
+                        }
+
+                        StationReport.AddRange(this.Combine(currentStation).OrderBy(d => d.PureProfit));
+                        ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
+                        BuyerReport.AddRange(this.Combine(currentBuyer).OrderBy(d => d.PureProfit));
+
+
+
+
+                        this.Updating = false;
                     }
-
-                    StationReport.AddRange(this.Combine(currentStation).OrderBy(d => d.PureProfit));
-                    ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
-                    BuyerReport.AddRange(this.Combine(currentBuyer).OrderBy(d => d.PureProfit));
-
-
-
-
-                    this.Updating = false;
                 };
 
             Thread updaterThread = new Thread(new ThreadStart(updater));

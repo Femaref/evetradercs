@@ -128,6 +128,7 @@
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayReport.cs" />
+    <Compile Include="ViewModel\Display\DisplaySingleHistory.cs" />
     <Compile Include="ViewModel\Display\DisplayWalletHistory.cs" />
     <Compile Include="ViewModel\Display\SelectedChangedEventArgs.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />

@@ -6,6 +6,7 @@
              mc:Ignorable="d"  d:DataContext="{d:DesignInstance vm:ReportViewModel}"
              xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+             xmlns:converter="clr-namespace:EveTrader.Wpf.Converter"
              xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -36,10 +37,14 @@
                 <DatePicker Grid.Column="0" Text="Start Date" SelectedDate="{Binding StartDate}" HorizontalAlignment="Center" Width="100" />
                 <CheckBox Grid.Column="1" Content="Apply Datefilter" IsChecked="{Binding ApplyDateFilter}" Height="Auto" x:Name="iApplyDateFilter"/>
                 <DatePicker Grid.Column="2" Text="End Date" SelectedDate="{Binding EndDate}" HorizontalAlignment="Center" Width="100"/>
-                <ComboBox Grid.Column="3" Text="Select Entities" ItemsSource="{Binding Entities}" ItemTemplate="{StaticResource iSelectEntityTemplate}">
-
+                <ComboBox Grid.Column="3" ItemsSource="{Binding Entities}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Item.Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
-            </Grid>
+                </Grid>
             <TabControl Grid.Row="1" Panel.ZIndex="1">
                 <TabItem Header="Items">
                     <visi:Chart x:Name="iItemsReport">
@@ -61,10 +66,38 @@
                 </TabItem>
                 <TabItem  Header="Stations">
                     <visi:Chart x:Name="iStationsReport">
+                        <visi:Chart.Series>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding StationReport}" LegendText="Profit" Color="Green">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding StationReport}" LegendText="Sales" Color="Yellow">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                        </visi:Chart.Series>
                     </visi:Chart>
                 </TabItem>
                 <TabItem  Header="Buyers">
                     <visi:Chart x:Name="iBuyersReport">
+                        <visi:Chart.Series>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding BuyerReport}" LegendText="Profit" Color="Green">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding BuyerReport}" LegendText="Sales" Color="Yellow">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                        </visi:Chart.Series>
                     </visi:Chart>
                 </TabItem>
                 <TabItem  Header="Wallet Histories">

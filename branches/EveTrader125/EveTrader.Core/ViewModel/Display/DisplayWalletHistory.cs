@@ -9,6 +9,6 @@ namespace EveTrader.Core.ViewModel.Display
     public class DisplayWalletHistory
     {
         public string Name { get; set; }
-        public IEnumerable<WalletHistories> Histories { get; set; }
+        public IEnumerable<DisplaySingleHistory> Histories { get; set; }
     }
 }
