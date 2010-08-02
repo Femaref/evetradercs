@@ -20,10 +20,14 @@
 
 *New Features*
 
-  * Possibility of Custom Transactions and Journalentries (by this easier for producers and traders who do contracts to use the tool)
   * Groupable Transactions by TypeName and Station
   * Full support of Corporation Wallets
+  * Viewable Price Cache with all item values used in calculations
 
 
 *Drawing Board*
-  * combining multiple wallets and/or entities into one ViewGroup, combining all their data
+  * Combining multiple wallets and/or entities into one ViewGroup, combining all their data
+  * Possibility of Custom Transactions and Journalentries (by this easier for producers and traders who do contracts to use the tool)
+  * Possibility to set custom prices in the price cache
+  * Fetching price data from eve metrics/eve central
+  * Importing price data from cache files of the eve client
