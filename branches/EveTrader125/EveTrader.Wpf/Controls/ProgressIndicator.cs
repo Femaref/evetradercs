@@ -17,6 +17,9 @@ using System.Windows.Threading;
 
 namespace EveTrader.Wpf.Controls
 {
+    /// <summary>
+    /// original code from http://www.eggheadcafe.com/tutorials/aspnet/4d89b4cb-ba59-4362-ab0a-cc047643fd42/wpf-circular-progress-ind.aspx
+    /// </summary>
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     public class ProgressIndicator : RangeBase
     {

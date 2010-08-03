@@ -251,6 +251,8 @@ namespace EveTrader.Core.ViewModel
 
                         iModel.Connection.Close();
 
+                        RefreshWallets();
+
                         RaisePropertyChanged("ProfitAverage");
                         Working = false;
                     }
