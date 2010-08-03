@@ -12,7 +12,7 @@ namespace EveTrader.Core.Updater.CCP
     public class MarketOrdersUpdater : UpdaterBase<Entities>, IMarketOrdersUpdater
     {
         [ImportingConstructor]
-        public MarketOrdersUpdater(TraderModel tm)
+        public MarketOrdersUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
             : base(tm)
         {
         }

@@ -16,7 +16,7 @@ namespace EveTrader.Core.Updater.CCP
         private readonly IAccountBalanceUpdater iAccountBalanceUpdater;
 
         [ImportingConstructor]
-        public CorporationUpdater(TraderModel tm, EntityFactory ef,
+        public CorporationUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm, EntityFactory ef,
             ICorporationSheetUpdater corpSheetUpdater,
             IAccountBalanceUpdater accountBalanceUpdater,
             IJournalUpdater journalUpdater,

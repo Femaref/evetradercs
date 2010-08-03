@@ -52,7 +52,7 @@ namespace EveTrader.Core.ViewModel
         }
 
 
-        public ManageAccountsViewModel(IManageAccountsView view, TraderModel tm, UpdateService us, EntityFactory ef)
+        public ManageAccountsViewModel(IManageAccountsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, UpdateService us, EntityFactory ef)
             : base(view)
         {
             iModel = tm;

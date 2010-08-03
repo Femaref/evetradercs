@@ -26,7 +26,7 @@ namespace EveTrader.Core.Updater.CCP
     public class JournalUpdater : UpdaterBase<Entities>, IJournalUpdater
     {
         [ImportingConstructor]
-        public JournalUpdater(TraderModel tm)
+        public JournalUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
             : base(tm)
         {
         }

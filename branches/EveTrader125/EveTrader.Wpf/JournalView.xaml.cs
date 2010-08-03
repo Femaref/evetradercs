@@ -47,7 +47,8 @@ namespace EveTrader.Wpf
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RaiseEntitySelectionChanged(e.AddedItems.Cast<Wallets>().First());
+            if (e.AddedItems.Count == 1)
+                RaiseEntitySelectionChanged(e.AddedItems.Cast<Wallets>().First());
         }
         private void RaiseEntitySelectionChanged(Wallets selection)
         {

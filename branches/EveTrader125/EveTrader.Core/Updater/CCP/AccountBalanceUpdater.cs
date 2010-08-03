@@ -12,7 +12,7 @@ namespace EveTrader.Core.Updater.CCP
     public class AccountBalanceUpdater : UpdaterBase<Entities>, IAccountBalanceUpdater
     {
         [ImportingConstructor]
-        public AccountBalanceUpdater(TraderModel tm)
+        public AccountBalanceUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
             : base(tm)
         {
         }

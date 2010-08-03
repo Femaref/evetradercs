@@ -12,7 +12,7 @@ using System.Data.SQLite;
 
 namespace EveTrader.Core.Model
 {
- //   [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.NonShared)]
+    [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.Any)]
     [Export(typeof(TraderModel))]
     public partial class TraderModel
     {

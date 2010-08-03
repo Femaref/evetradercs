@@ -14,7 +14,7 @@ namespace EveTrader.Core.Updater.CCP
         private readonly CorporationUpdater iCorporationUpdater;
 
         [ImportingConstructor]
-        public CharacterSheetUpdater(TraderModel tm, CorporationUpdater corpUpdater)
+        public CharacterSheetUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm, CorporationUpdater corpUpdater)
             : base(tm)
         {
             iCorporationUpdater = corpUpdater;

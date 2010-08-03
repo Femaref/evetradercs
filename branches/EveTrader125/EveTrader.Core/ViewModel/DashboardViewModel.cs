@@ -29,9 +29,10 @@ namespace EveTrader.Core.ViewModel
         public ICommand FilterAllTimeCommand { get; private set; }
 
         private object iDetailLock = new object();
+        private object iUpdaterLock = new object();
 
         [ImportingConstructor]
-        public DashboardViewModel(IDashboardView view, TraderModel tm)
+        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm)
             : base(view)
         {
             iModel = tm;
@@ -183,11 +184,10 @@ namespace EveTrader.Core.ViewModel
 
         public void RefreshWallets()
         {
-            CurrentWallets.Clear();
-
-            foreach (Wallets w in iModel.Wallets)
+            lock (iUpdaterLock)
             {
-                CurrentWallets.Add(w.Name);
+                CurrentWallets.Clear();
+                CurrentWallets.AddRange(iModel.Wallets.Select(w => w.Name));
             }
         }
 
@@ -196,56 +196,64 @@ namespace EveTrader.Core.ViewModel
         {
             Thread workerThread = new Thread(() =>
                 {
-                    DailyInfo.Clear();
-
-                    var investment = (from w in iModel.Transactions
-                                      where w.Date > iDateBefore
-                                      group w by w.Date into grouped
-                                      orderby grouped.Key
-                                      select grouped);
-
-                    Working = true;
-                    WorkingCount = investment.Count();
-                    CurrentIndex = 0;
-
-                    List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
-
-
-
-                    List<DisplayDashboard> cache = new List<DisplayDashboard>();
-                    foreach (var i in investment)
+                    lock (iUpdaterLock)
                     {
-                        DisplayDashboard dd = new DisplayDashboard()
+                        DailyInfo.Clear();
+
+                        iModel.Connection.Open();
+
+                        var investment = (from w in iModel.Transactions
+                                          where w.Date > iDateBefore
+                                          group w by w.Date into grouped
+                                          orderby grouped.Key
+                                          select grouped);
+
+                        Working = true;
+                        WorkingCount = investment.Count();
+                        CurrentIndex = 0;
+
+                        List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
+
+
+
+                        List<DisplayDashboard> cache = new List<DisplayDashboard>();
+                        foreach (var i in investment)
                         {
-                            Key = i.Key,
-                            Profit = 0m,
-                            Investment = 0m,
-                            Sales = new Dictionary<string, decimal>()
-                        };
-                        foreach (string s in CurrentWallets)
-                        {
-                            dd.Sales.Add(s, 0m);
+                            DisplayDashboard dd = new DisplayDashboard()
+                            {
+                                Key = i.Key,
+                                Profit = 0m,
+                                Investment = 0m,
+                                Sales = new Dictionary<string, decimal>()
+                            };
+                            foreach (string s in CurrentWallets)
+                            {
+                                dd.Sales.Add(s, 0m);
+                            }
+
+                            dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
+                            dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2))).FirstOrDefault();
+
+                            var entityGroup = (from g in i
+                                               where g.TransactionType == (long)TransactionType.Sell
+                                               group g by g.Wallet into grouped
+                                               select grouped);
+
+                            foreach (var groupedEntity in entityGroup)
+                            {
+                                dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
+                            }
+
+                            cache.Add(dd);
+                            CurrentIndex++;
                         }
+                        DailyInfo.AddRange(cache);
 
-                        dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
-                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2))).FirstOrDefault();
+                        iModel.Connection.Close();
 
-                        var entityGroup = (from g in i
-                                           where g.TransactionType == (long)TransactionType.Sell
-                                           group g by g.Wallet into grouped
-                                           select grouped);
-
-                        foreach (var groupedEntity in entityGroup)
-                        {
-                            dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
-                        }
-
-                        cache.Add(dd);
-                        CurrentIndex++;
+                        RaisePropertyChanged("ProfitAverage");
+                        Working = false;
                     }
-                    cache.ForEach(dd => DailyInfo.Add(dd));
-                    RaisePropertyChanged("ProfitAverage");
-                    Working = false;
                 });
 
             workerThread.Start();

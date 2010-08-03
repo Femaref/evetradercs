@@ -195,7 +195,7 @@ namespace EveTrader.Core.ViewModel
         
 
         [ImportingConstructor]
-        public MainWindowViewModel(IMainWindowView view, TraderModel tm, IUpdateService us)
+        public MainWindowViewModel(IMainWindowView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IUpdateService us)
             : base(view)
         {
             view.Closing += ViewClosing;

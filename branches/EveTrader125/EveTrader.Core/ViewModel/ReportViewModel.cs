@@ -109,7 +109,7 @@ namespace EveTrader.Core.ViewModel
         public SmartObservableCollection<DisplayWalletHistory> WalletHistories { get; set; }
 
         [ImportingConstructor]
-        public ReportViewModel(IReportView view, TraderModel tm, ISettingsProvider settings)
+        public ReportViewModel(IReportView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
             : base(view)
         {
             iModel = tm;

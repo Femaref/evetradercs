@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Model
 {
+    [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.NonShared)]
     [Export(typeof(StaticModel))]
     public partial class StaticModel
     {

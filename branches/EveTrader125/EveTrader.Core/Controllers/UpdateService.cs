@@ -18,6 +18,7 @@ namespace EveTrader.Core.Controllers
         private readonly TraderModel iModel;
         private readonly ISettingsProvider iSettings;
         private Timer iTimer;
+        private bool iBigUpdate = false;
 
         [ImportingConstructor]
         public UpdateService(CharacterUpdater characterUpdater, CorporationUpdater corporationUpdater, TraderModel tm, ISettingsProvider settings)
@@ -41,14 +42,14 @@ namespace EveTrader.Core.Controllers
 
         public void Update()
         {
-
             iTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
-            foreach (Characters c in iModel.Entity.OfType<Characters>())
-                iCharacterUpdater.Update(c);
-            foreach (Corporations c in iModel.Entity.OfType<Corporations>())
-                iCorporationUpdater.Update(c);
+            iBigUpdate = true;
 
+            foreach (Entities e in iModel.Entity)
+                this.Update(e);
+
+            iBigUpdate = false;
             RaiseUpdated(iModel.Entity);
 
             ActivateTimer();
@@ -83,16 +84,24 @@ namespace EveTrader.Core.Controllers
 
         private void RaiseUpdated(IEnumerable<Entities> updated)
         {
+            if (iBigUpdate)
+                return;
+
             var handler = Updated;
             if (handler != null)
+            {
                 handler(this, new EntitiesUpdatedEventArgs(updated));
+                //Action a = () => handler(this, new EntitiesUpdatedEventArgs(updated));
+                //Thread t = new Thread(new ThreadStart(a));
+                //t.Start();
+            }
+            
+               
         }
 
         private void RaiseUpdated(Entities updated)
         {
-            var handler = Updated;
-            if (handler != null)
-                handler(this, new EntitiesUpdatedEventArgs(new Entities[] { updated }));
+            RaiseUpdated(new Entities[] { updated });
         }
     }
 }

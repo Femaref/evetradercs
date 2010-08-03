@@ -13,7 +13,7 @@ namespace EveTrader.Core.Updater.CCP
         private readonly TraderModel iModel;
 
         [ImportingConstructor]
-        public EntityFactory(TraderModel tm)
+        public EntityFactory([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
         {
             iModel = tm;
         }

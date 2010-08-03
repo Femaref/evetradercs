@@ -23,7 +23,7 @@ namespace EveTrader.Core.ViewModel
 
 
         [ImportingConstructor]
-        public WalletsViewModel(IWalletsView view, TraderModel tm)
+        public WalletsViewModel(IWalletsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm)
             : base(view)
         {
             iModel = tm;

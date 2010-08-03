@@ -15,7 +15,7 @@ namespace EveTrader.Core.ViewModel
         private readonly TraderModel iModel;
 
         [ImportingConstructor]
-        public TransactionsViewModel(ITransactionsView view, TraderModel tm)
+        public TransactionsViewModel(ITransactionsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm)
             : base(view)
         {
             iModel = tm;

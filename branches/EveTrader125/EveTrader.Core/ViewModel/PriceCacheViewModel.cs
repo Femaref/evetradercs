@@ -10,6 +10,7 @@ using MoreLinq;
 using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
+using System.Threading;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -18,11 +19,12 @@ namespace EveTrader.Core.ViewModel
     {
         private readonly TraderModel iModel;
         private readonly StaticModel iStaticData;
+        private object iUpdaterLock = new object();
 
         public SmartObservableCollection<DisplayPriceCache> Prices { get; set; }
 
         [ImportingConstructor]
-        public PriceCacheViewModel(IPriceCacheView view, TraderModel tm, StaticModel sm)
+        public PriceCacheViewModel(IPriceCacheView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, StaticModel sm)
             : base(view)
         {
             iModel = tm;
@@ -35,21 +37,28 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            Prices.Clear();
-
-            var x = iModel.CachedPriceInfo.Select(c => new DisplayPriceCache()
+            Action updater = () =>
                 {
-                    TypeID = c.TypeID,
-                    BuyPrice = c.BuyPrice,
-                    SellPrice = c.SellPrice
-                }).ToList();
-            x.ForEach(c =>
-            {
-                c.TypeName = iStaticData.invTypes.First(ty => ty.typeID == c.TypeID).typeName;
-                
-            });
-            x.OrderBy(c => c.TypeName).ForEach(c => Prices.Add(c));
+                    lock (iUpdaterLock)
+                    {
+                        Prices.Clear();
 
+                        var x = iModel.CachedPriceInfo.Select(c => new DisplayPriceCache()
+                            {
+                                TypeID = c.TypeID,
+                                BuyPrice = c.BuyPrice,
+                                SellPrice = c.SellPrice
+                            }).ToList();
+                        x.ForEach(c =>
+                        {
+                            c.TypeName = iStaticData.invTypes.First(ty => ty.typeID == c.TypeID).typeName;
+
+                        });
+                        x.OrderBy(c => c.TypeName).ForEach(c => Prices.Add(c));
+                    }
+                };
+            Thread updaterThread = new Thread(new ThreadStart(updater));
+            updaterThread.Start();
 
         }
 

@@ -48,7 +48,8 @@ namespace EveTrader.Wpf
 
             TraderModel tm = new TraderModel();
             tm.Prune();
-
+            tm.MetadataWorkspace.LoadFromAssembly(typeof(TraderModel).Assembly);
+            tm.Dispose();
 
             base.OnStartup(e);
             Stopwatch sw = new Stopwatch();
@@ -63,6 +64,8 @@ namespace EveTrader.Wpf
 
             CompositionContainer container = new CompositionContainer(catalog);
             CompositionBatch batch = new CompositionBatch();
+
+
             batch.AddExportedValue(container);
             container.Compose(batch);
             

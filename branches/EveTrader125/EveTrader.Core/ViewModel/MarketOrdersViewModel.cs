@@ -12,6 +12,7 @@ using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
 using EveTrader.Core.Collections.ObjectModel;
+using System.Threading;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -34,9 +35,26 @@ namespace EveTrader.Core.ViewModel
 
         private readonly StaticModel iStaticData;
         private readonly ISettingsProvider iSettings;
+        private bool iUpdating = false;
+
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
+
+        private object iUpdaterLock = new object();
 
         [ImportingConstructor]
-        public MarketOrdersViewModel(IMarketOrdersView view, TraderModel model, StaticModel sm, ISettingsProvider settings) : base(view)
+        public MarketOrdersViewModel(IMarketOrdersView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel model, StaticModel sm, ISettingsProvider settings)
+            : base(view)
         {
             iModel = model;
             iStaticData = sm;
@@ -91,28 +109,45 @@ namespace EveTrader.Core.ViewModel
         }
         public void Refresh()
         {
-            this.ViewCore.Invoke(() => Orders.Clear());
-            if (iSettings.HideExpired)
-                iCurrentEntity.MarketOrders.Where(iHideWhere).ForEach(x =>
-                    {
-                        DisplayMarketOrders y = (DisplayMarketOrders)x;
-                        y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
-                        y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                        this.ViewCore.Invoke(() => Orders.Add(y));
-                    });
-            else
-                iCurrentEntity.MarketOrders.ForEach(x =>
-                {
-                    DisplayMarketOrders y = (DisplayMarketOrders)x;
-                    y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
-                    y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                    Orders.Add(y);
-                });
 
-            RaisePropertyChanged("TotalBuyOrders");
-            RaisePropertyChanged("TotalSellOrders");
-            RaisePropertyChanged("RemainingBuyOrders");
-            RaisePropertyChanged("RemainingBuyOrders");
+            Action updater = () =>
+            {
+                lock (iUpdaterLock)
+                {
+                    this.Updating = true;
+                    Orders.Clear();
+
+                    IEnumerable<DisplayMarketOrders> output = null;
+
+                    if (iSettings.HideExpired)
+                        output = iCurrentEntity.MarketOrders.Where(iHideWhere).Select(x =>
+                            {
+                                DisplayMarketOrders y = (DisplayMarketOrders)x;
+                                y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
+                                y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
+                                return y;
+                            });
+                    else
+                        output = iCurrentEntity.MarketOrders.Select(x =>
+                            {
+                                DisplayMarketOrders y = (DisplayMarketOrders)x;
+                                y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
+                                y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
+                                return y;
+                            });
+
+                    Orders.AddRange(output);
+
+                    this.Updating = false;
+                    RaisePropertyChanged("TotalBuyOrders");
+                    RaisePropertyChanged("TotalSellOrders");
+                    RaisePropertyChanged("RemainingBuyOrders");
+                    RaisePropertyChanged("RemainingBuyOrders");
+                }
+                
+            };
+            Thread updaterThread = new Thread(new ThreadStart(updater));
+            updaterThread.Start();
 
         }
         private void SelectEntity(string name)

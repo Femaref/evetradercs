@@ -58,22 +58,18 @@ namespace EveTrader.Wpf
 
         public void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Reset)
-            {
-                this.iPrimaryChart.Series.Clear();
-                this.iPrimaryChart.Series.Add(CreateLine("Profit", "Profit", 99));
-                this.iPrimaryChart.Series.Add(CreateLine("Investment", "Investment", 100));
-            }
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                var test = e.NewItems;
+            this.iPrimaryChart.Series.Clear();
+            this.iPrimaryChart.Series.Add(CreateLine("Profit", "Profit", 99));
+            this.iPrimaryChart.Series.Add(CreateLine("Investment", "Investment", 100));
 
-                foreach (var s in test)
-                {
-                    this.iPrimaryChart.Series.Add(CreateStackedColumn(s as string, "Sales"));
-                }
+            var col = (sender as IEnumerable<string>);
+
+            foreach (var s in col)
+            {
+                this.iPrimaryChart.Series.Add(CreateStackedColumn(s, "Sales"));
             }
         }
+        
         private DataSeries CreateLine(string title, string bindingProperty, int zindex)
         {
             DataSeries ds = new DataSeries()

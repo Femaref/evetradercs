@@ -25,7 +25,7 @@ namespace EveTrader.Core.Updater.CCP
     public class TransactionsUpdater : UpdaterBase<Entities>, ITransactionsUpdater
     {
         [ImportingConstructor]
-        public TransactionsUpdater(TraderModel tm)
+        public TransactionsUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
             : base(tm)
         {
         }

@@ -12,7 +12,7 @@ namespace EveTrader.Core.Updater.CCP
     public  class CorporationSheetUpdater : UpdaterBase<Corporations>, ICorporationSheetUpdater
     {
         [ImportingConstructor]
-        public CorporationSheetUpdater(TraderModel tm)
+        public CorporationSheetUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
             : base(tm)
         {
         }
