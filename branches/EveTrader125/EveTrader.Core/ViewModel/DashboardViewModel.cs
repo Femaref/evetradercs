@@ -194,23 +194,24 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            DailyInfo.Clear();
-            //TODO: Datageneration
-
-            var investment = (from w in iModel.Transactions
-                              where w.Date > iDateBefore
-                              group w by w.Date into grouped
-                              orderby grouped.Key
-                              select grouped);
-
-            Working = true;
-            WorkingCount = investment.Count();
-            CurrentIndex = 0;
-
-            List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
-
             Thread workerThread = new Thread(() =>
                 {
+                    DailyInfo.Clear();
+
+                    var investment = (from w in iModel.Transactions
+                                      where w.Date > iDateBefore
+                                      group w by w.Date into grouped
+                                      orderby grouped.Key
+                                      select grouped);
+
+                    Working = true;
+                    WorkingCount = investment.Count();
+                    CurrentIndex = 0;
+
+                    List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
+
+
+
                     List<DisplayDashboard> cache = new List<DisplayDashboard>();
                     foreach (var i in investment)
                     {

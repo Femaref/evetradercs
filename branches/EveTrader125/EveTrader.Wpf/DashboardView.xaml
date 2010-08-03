@@ -39,7 +39,7 @@
         </Grid>
         <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
             <visi:Chart.TrendLines>
-                <visi:TrendLine Enabled="True" Value="{Binding ProfitAverage}" Orientation="Horizontal" LineColor="Red" LineThickness="20000"/>
+                <visi:TrendLine Enabled="True" Orientation="Horizontal" LineColor="Red" LineThickness="20"/>
             </visi:Chart.TrendLines>
             <visi:Chart.ContextMenu>
                 <ContextMenu>

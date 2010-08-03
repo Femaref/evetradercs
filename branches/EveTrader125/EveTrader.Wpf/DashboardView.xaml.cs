@@ -30,6 +30,13 @@ namespace EveTrader.Wpf
         public DashboardView()
         {
             this.InitializeComponent();
+
+            Binding binding = new Binding("ProfitAverage");
+            binding.Source = this.DataContext;
+            binding.Mode = BindingMode.OneWay;
+            TrendLine trendLine = iPrimaryChart.TrendLines[0];
+
+            trendLine.SetBinding(TrendLine.ValueProperty, binding); 
         }
 
         #region IExtendedView Members
@@ -59,7 +66,9 @@ namespace EveTrader.Wpf
             }
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (var s in e.NewItems)
+                var test = e.NewItems;
+
+                foreach (var s in test)
                 {
                     this.iPrimaryChart.Series.Add(CreateStackedColumn(s as string, "Sales"));
                 }
@@ -90,7 +99,9 @@ namespace EveTrader.Wpf
             };
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
             ds.MouseDoubleClick += new MouseButtonEventHandler(ds_MouseDoubleClick);
-            ds.SetBinding(DataSeries.DataSourceProperty, new Binding("DailyInfo"));
+            Binding b = new Binding("DailyInfo");
+            b.Source = this.DataContext;
+            ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }
 
@@ -128,7 +139,9 @@ namespace EveTrader.Wpf
 
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
             ds.MouseDoubleClick += new MouseButtonEventHandler(ds_MouseDoubleClick);
-            ds.SetBinding(DataSeries.DataSourceProperty, new Binding("DailyInfo"));
+            Binding b = new Binding("DailyInfo");
+            b.Source = this.DataContext;
+            ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }
 

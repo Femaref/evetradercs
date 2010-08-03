@@ -41,7 +41,7 @@ namespace EveTrader.Core.Network.Requests.CCP
 
         public override TimeSpan CachingTime
         {
-            get { return new TimeSpan(0, 0, 10); }
+            get { return new TimeSpan(0, 10, 0); }
         }
     }
 }

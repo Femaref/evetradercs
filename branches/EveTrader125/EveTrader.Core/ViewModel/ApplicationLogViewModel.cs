@@ -28,8 +28,8 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            this.ViewCore.Invoke(() => Messages.Clear());
-            iModel.ApplicationLog.OrderByDescending(a => a.Date).Take(20).ToList().ForEach(a => this.ViewCore.Invoke(() => Messages.Add(a)));
+            Messages.Clear();
+            Messages.AddRange(iModel.ApplicationLog.OrderByDescending(a => a.Date).Take(20));
         }
 
         public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)

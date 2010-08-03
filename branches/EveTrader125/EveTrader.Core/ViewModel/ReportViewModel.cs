@@ -21,6 +21,8 @@ namespace EveTrader.Core.ViewModel
         private readonly ISettingsProvider iSettings;
         private bool iUpdating = false;
 
+        private string iConcatedEntities = "";
+
         public DateTime StartDate
         {
             get
@@ -90,6 +92,13 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
+        public string ConcatedEntities
+        {
+            get
+            {
+                return iConcatedEntities;
+            }
+        }
 
         private object iUpdaterLock = new object();
 
@@ -180,6 +189,7 @@ namespace EveTrader.Core.ViewModel
                         ItemReport.Clear();
                         BuyerReport.Clear();
                         WalletHistories.Clear();
+                        iConcatedEntities = "";
 
                         List<IEnumerable<DisplayReport>> currentStation = new List<IEnumerable<DisplayReport>>();
                         List<IEnumerable<DisplayReport>> currentItem = new List<IEnumerable<DisplayReport>>();
@@ -198,6 +208,8 @@ namespace EveTrader.Core.ViewModel
                         foreach (Entities e in Entities.Where(s => s.IsSelected))
                         {
                             //filtered: wt => wt.TransactionDateTime.Date >= iFromDate && wt.TransactionType == WalletTransactionType.Sell
+
+                            iConcatedEntities += e.Name + ",";
 
                             var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.TransactionType == (long)TransactionType.Sell).Where(filter);
 
@@ -233,6 +245,11 @@ namespace EveTrader.Core.ViewModel
                                 SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                             };*/
                         }
+                        if (iConcatedEntities.Length > 0)
+                            iConcatedEntities = iConcatedEntities.Substring(0, iConcatedEntities.Length - 1);
+
+                        RaisePropertyChanged("ConcatedEntities");
+
 
                         StationReport.AddRange(this.Combine(currentStation).OrderBy(d => d.PureProfit));
                         ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));

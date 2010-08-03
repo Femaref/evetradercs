@@ -67,7 +67,9 @@ namespace EveTrader.Wpf
                     }
                 }
             };
-            ds.SetBinding(DataSeries.DataSourceProperty, new Binding(string.Format("WalletHistories[{0}].Histories", bindingIndex)));
+            Binding b = new Binding(string.Format("WalletHistories[{0}].Histories", bindingIndex));
+            b.Source = this.DataContext;
+            ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }
 
@@ -76,28 +78,6 @@ namespace EveTrader.Wpf
 
         public void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Reset)
-            {
-                iHistory.Series.Clear();
-
-                var col = (sender as SmartObservableCollection<DisplayWalletHistory>);
-                for (int i = 0; i < col.Count; i++)
-                {
-                    iHistory.Series.Add(CreateLine(col[i].Name, i));
-                }
-            }
-            if(e.Action == NotifyCollectionChangedAction.Add)
-            {
-                DisplayWalletHistory dwh = (DisplayWalletHistory)e.NewItems[0];
-                iHistory.Series.Add(CreateLine(dwh.Name, e.NewStartingIndex));
-            }
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                DisplayWalletHistory dwh = (DisplayWalletHistory)e.NewItems[0];
-                DataSeries d = iHistory.Series.Where(ds => ds.LegendText == dwh.Name).First();
-                iHistory.Series.Remove(d);
-            }
-                
         }
 
         #endregion

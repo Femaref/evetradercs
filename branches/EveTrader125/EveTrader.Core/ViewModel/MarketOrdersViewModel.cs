@@ -106,7 +106,7 @@ namespace EveTrader.Core.ViewModel
                     DisplayMarketOrders y = (DisplayMarketOrders)x;
                     y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
                     y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                    this.ViewCore.Invoke(() =>  Orders.Add(y));
+                    Orders.Add(y);
                 });
 
             RaisePropertyChanged("TotalBuyOrders");
