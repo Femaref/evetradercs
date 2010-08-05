@@ -17,6 +17,7 @@ using Visifire.Charts;
 using System.Collections.Specialized;
 using EveTrader.Core.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
+using EveTrader.Core.Model;
 
 namespace EveTrader.Wpf
 {
@@ -45,7 +46,7 @@ namespace EveTrader.Wpf
 
         #endregion
 
-        private DataSeries CreateLine(string title, int bindingIndex)
+        private DataSeries CreateLine(string title, long bindingIndex)
         {
             DataSeries ds = new DataSeries()
             {
@@ -78,6 +79,12 @@ namespace EveTrader.Wpf
 
         public void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            iHistory.Series.Clear();
+
+            var col = (sender as IList<KeyValuePair<long, string>>);
+
+            foreach(var kvp in col)
+                iHistory.Series.Add(CreateLine(kvp.Value, kvp.Key));
         }
 
         #endregion

@@ -128,7 +128,7 @@ namespace EveTrader.Wpf
                     new DataMapping() 
                     {
                         MemberName ="YValue",
-                        Path = string.Format("{0}[{1}]", bindingProperty,entity)
+                        Path = string.Format("{0}[{1}]", bindingProperty, entity)
                     }
                 }
             };

@@ -107,6 +107,7 @@ namespace EveTrader.Core.ViewModel
         public SmartObservableCollection<DisplayReport> ItemReport { get; set; }
         public SmartObservableCollection<DisplayReport> BuyerReport { get; set; }
         public SmartObservableCollection<DisplayWalletHistory> WalletHistories { get; set; }
+        public SmartObservableCollection<KeyValuePair<long, string>> Wallets { get; set; }
 
         [ImportingConstructor]
         public ReportViewModel(IReportView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
@@ -122,9 +123,10 @@ namespace EveTrader.Core.ViewModel
             StationReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             ItemReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             BuyerReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
-            WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(ViewCore.BeginInvoke);
+            WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(view.BeginInvoke);
+            Wallets = new SmartObservableCollection<KeyValuePair<long, string>>(view.BeginInvoke);
 
-            WalletHistories.CollectionChanged += view.ChartCollectionChanged;
+            Wallets.CollectionChanged += view.ChartCollectionChanged;
 
             RefreshEntities();
             Refresh();
@@ -132,17 +134,43 @@ namespace EveTrader.Core.ViewModel
 
         private void RefreshEntities()
         {
-            foreach (Entities e in iModel.Entity.OfType<Characters>())
+            lock (iUpdaterLock)
             {
-                Selectable<Entities> cache = new Selectable<Entities>(e, false);
-                cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
-                Entities.Add(cache);
+                var entitiesCache = Entities.ToList();
+
+                Entities.Clear();
+                
+                foreach (Entities e in iModel.Entity.OfType<Characters>())
+                {
+                    bool selected = false;
+                    var prevEntity = entitiesCache.FirstOrDefault(s => s.Item.ID == e.ID);
+                    if (prevEntity != null)
+                        selected = prevEntity.IsSelected;
+
+                    Selectable<Entities> cache = new Selectable<Entities>(e, selected);
+                    cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
+                    Entities.Add(cache);
+                }
+                foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
+                {
+                    bool selected = false;
+                    var prevEntity = entitiesCache.FirstOrDefault(s => s.Item.ID == e.ID);
+                    if (prevEntity != null)
+                        selected = prevEntity.IsSelected;
+
+                    Selectable<Entities> cache = new Selectable<Entities>(e, selected);
+                    cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
+                    Entities.Add(cache);
+                }
             }
-            foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
+        }
+
+        private void RefreshWallets()
+        {
+            lock (iUpdaterLock)
             {
-                Selectable<Entities> cache = new Selectable<Entities>(e, false);
-                cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
-                Entities.Add(cache);
+                Wallets.Clear();
+                Wallets.AddRange(WalletHistories.Select(wh => new KeyValuePair<long, string>(WalletHistories.IndexOf(wh), wh.Name)).ToList());
             }
         }
 
@@ -185,6 +213,8 @@ namespace EveTrader.Core.ViewModel
                     {
                         this.Updating = true;
 
+                        iModel.Connection.Open();
+
                         StationReport.Clear();
                         ItemReport.Clear();
                         BuyerReport.Clear();
@@ -194,6 +224,7 @@ namespace EveTrader.Core.ViewModel
                         List<IEnumerable<DisplayReport>> currentStation = new List<IEnumerable<DisplayReport>>();
                         List<IEnumerable<DisplayReport>> currentItem = new List<IEnumerable<DisplayReport>>();
                         List<IEnumerable<DisplayReport>> currentBuyer = new List<IEnumerable<DisplayReport>>();
+                        
 
                         Func<Transactions, bool> filter = (t) => true;
                         if (ApplyStartFilter && ApplyEndFilter)
@@ -203,7 +234,14 @@ namespace EveTrader.Core.ViewModel
                         else
                             filter = (t) => t.Date <= EndDate;
 
-
+                        //filter
+                        Func<WalletHistories, bool> historyFilter = null;
+                        if (ApplyStartFilter && ApplyEndFilter)
+                            historyFilter = (wh) => wh.Date >= StartDate && wh.Date <= EndDate;
+                        else if (ApplyStartFilter)
+                            historyFilter = (wh) => wh.Date >= StartDate;
+                        else
+                            historyFilter = (wh) => wh.Date <= EndDate;
 
                         foreach (Entities e in Entities.Where(s => s.IsSelected))
                         {
@@ -223,12 +261,18 @@ namespace EveTrader.Core.ViewModel
 
 
                             //wallet history
+                            List<DisplayWalletHistory> cache = new List<DisplayWalletHistory>();
 
-                            WalletHistories.AddRange(e.Wallets.Select(w => new DisplayWalletHistory()
+                            foreach (Wallets w in e.Wallets)
                             {
-                                Name = w.DisplayName,
-                                Histories = w.WalletHistory.Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance = wh.Balance })
-                            }));
+                                var dwh = new DisplayWalletHistory()
+                                     {
+                                         Name = w.DisplayName,
+                                         Histories = w.WalletHistory.Where(historyFilter).Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance = wh.Balance })
+                                     };
+                                cache.Add(dwh);
+                            }
+                            WalletHistories.AddRange(cache);
 
 
                             /*            IEnumerable<ReportChartItem> reportData =
@@ -250,10 +294,13 @@ namespace EveTrader.Core.ViewModel
 
                         RaisePropertyChanged("ConcatedEntities");
 
+                        RefreshWallets();
 
                         StationReport.AddRange(this.Combine(currentStation).OrderBy(d => d.PureProfit));
                         ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
                         BuyerReport.AddRange(this.Combine(currentBuyer).OrderBy(d => d.PureProfit));
+
+                        iModel.Connection.Close();
 
                         this.Updating = false;
                     }
@@ -270,6 +317,5 @@ namespace EveTrader.Core.ViewModel
             if (e.UpdatedEntities.Any(en => Entities.Where(ce => ce.IsSelected).Any(ce => ce.Item.Name == en.Name)))
                 Refresh();
         }
-
     }
 }

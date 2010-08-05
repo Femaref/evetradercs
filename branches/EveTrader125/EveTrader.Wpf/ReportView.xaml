@@ -103,10 +103,7 @@
                     </visi:Chart>
                 </TabItem>
                 <TabItem  Header="Wallet Histories">
-                    <TextBlock Text="Currently out of service." HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <!--<visi:Chart x:Name="iHistory">
-                        
-                    </visi:Chart>-->
+                    <visi:Chart x:Name="iHistory"/>
                 </TabItem>            
             </TabControl>
         </Grid>
