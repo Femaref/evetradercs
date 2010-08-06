@@ -22,44 +22,68 @@ namespace EveTrader.Core.ViewModel
         private Wallets iCurrentWallet;
         private ISettingsProvider iSettings;
 
+        private object iCurrentWalletLocker = new object();
+
+        public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
+        public SmartObservableCollection<Journal> JournalEntries { get; private set; }
 
         public Wallets CurrentWallet
         {
             get { return iCurrentWallet; }
         }
-        public SmartObservableCollection<Wallets> CurrentWallets { get; set; }
-        private object iCurrentWalletLocker = new object();
-
-        public SmartObservableCollection<Journal> JournalEntries { get; set; }
-
-        private void RefreshCurrentWallets()
+        public bool ApplyStartFilter
         {
-            CurrentWallets.Clear();
-            CurrentWallets.AddRange(iModel.Wallets);
-        }
-        void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
-        {
-            Action a = () =>
+            get
             {
-                SelectWallet(e.Selection);
-            };
-
-            Thread t = new Thread(new ThreadStart(a));
-            t.Start();
-        }
-
-        private void SelectWallet(Wallets w)
-        {
-            if (w == null)
-                return;
-
-            lock (iCurrentWalletLocker)
-            {
-                iCurrentWallet = w;
-                RaisePropertyChanged("CurrentWallet");
+                return iSettings.JournalApplyStartFilter;
             }
-
-            Refresh();
+            set
+            {
+                iSettings.JournalApplyStartFilter = value;
+                RaisePropertyChanged("ApplyStartFilter");
+                Refresh();
+            }
+        }
+        public bool ApplyEndFilter
+        {
+            get
+            {
+                return iSettings.JournalApplyEndFilter;
+            }
+            set
+            {
+                iSettings.JournalApplyEndFilter = value;
+                RaisePropertyChanged("ApplyEndFilter");
+                Refresh();
+            }
+        }
+        public DateTime StartDate
+        {
+            get
+            {
+                return iSettings.JournalStartDate;
+            }
+            set
+            {
+                iSettings.JournalStartDate = value;
+                RaisePropertyChanged("StartDate");
+                if (ApplyStartFilter)
+                    Refresh();
+            }
+        }
+        public DateTime EndDate
+        {
+            get
+            {
+                return iSettings.JournalEndDate;
+            }
+            set
+            {
+                iSettings.JournalEndDate = value;
+                RaisePropertyChanged("StartDate");
+                if (ApplyEndFilter)
+                    Refresh();
+            }
         }
 
         [ImportingConstructor]
@@ -76,17 +100,43 @@ namespace EveTrader.Core.ViewModel
             SelectWallet(CurrentWallets.FirstOrDefault());
         }
 
+        private void SelectWallet(Wallets w)
+        {
+            if (w == null)
+                return;
+
+            lock (iCurrentWalletLocker)
+            {
+                iCurrentWallet = w;
+                RaisePropertyChanged("CurrentWallet");
+            }
+
+            Refresh();
+        }
+        private void RefreshCurrentWallets()
+        {
+            CurrentWallets.Clear();
+            CurrentWallets.AddRange(iModel.Wallets);
+        }
         public void Refresh()
         {
-            JournalEntries.Clear();
-
             Action a = () =>
                 {
                     lock (iCurrentWalletLocker)
                     {
+                        JournalEntries.Clear();
+
+                        Func<Journal, bool> filter = (j) => true;
+                        if (ApplyStartFilter && ApplyEndFilter)
+                            filter = (j) => j.Date >= StartDate && j.Date <= EndDate;
+                        else if (ApplyStartFilter)
+                            filter = (j) => j.Date >= StartDate;
+                        else
+                            filter = (j) => j.Date <= EndDate;
+
                         var cache = CurrentWallet.Journal
-                            .Where(j => j.DateTime > (DateTime.UtcNow - iSettings.JournalTimeframe))
-                            .OrderByDescending(j => j.DateTime);
+                            .Where(filter)
+                            .OrderByDescending(j => j.DateTime).ToList();
                         JournalEntries.AddRange(cache);
                     }
                 };
@@ -101,6 +151,16 @@ namespace EveTrader.Core.ViewModel
 
             if (e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name))
                 Refresh();
+        }
+        public void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
+        {
+            Action a = () =>
+            {
+                SelectWallet(e.Selection);
+            };
+
+            Thread t = new Thread(new ThreadStart(a));
+            t.Start();
         }
     }
 }

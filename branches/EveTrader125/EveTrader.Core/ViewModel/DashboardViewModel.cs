@@ -21,15 +21,62 @@ namespace EveTrader.Core.ViewModel
     [Export]
     public class DashboardViewModel : ViewModel<IDashboardView>, IRefreshableViewModel
     {
-        private TraderModel iModel;
+        private readonly TraderModel iModel;
+
+        private object iDetailLock = new object();
+        private object iUpdaterLock = new object();
+        private int iWorkingCount = 0;
+        private int iCurrentIndex = 0;
+        private bool iWorking = false;
+        private bool iDetailsUpdating = false;
+        private DateTime iDateBefore = DateTime.MinValue;
+        private DateTime iCurrentKey = new DateTime();
+        private string iCurrentBindingKey = "";
+        
 
         public ICommand FilterWeekCommand { get; private set; }
         public ICommand FilterTwoWeeksCommand { get; private set; }
         public ICommand FilterMonthCommand { get; private set; }
         public ICommand FilterAllTimeCommand { get; private set; }
 
-        private object iDetailLock = new object();
-        private object iUpdaterLock = new object();
+        public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
+        public SmartObservableCollection<string> CurrentWallets { get; private set; }
+        public SmartObservableCollection<DisplayDetail> Investment { get; private set; }
+        public SmartObservableCollection<DisplayDetail> Sales { get; private set; }
+        public SmartObservableCollection<DisplayDetail> Profit { get; private set; }
+
+        public int WorkingCount
+        {
+            get { return iWorkingCount; }
+            set
+            {
+                iWorkingCount = value;
+                RaisePropertyChanged("WorkingCount");
+            }
+        }
+        public int CurrentIndex
+        {
+            get { return iCurrentIndex; }
+            set
+            {
+                iCurrentIndex = value;
+                RaisePropertyChanged("CurrentIndex");
+            }
+        }
+        public bool Working
+        {
+            get { return iWorking; }
+            set
+            {
+                iWorking = value;
+                RaisePropertyChanged("Working");
+            }
+        }
+        public decimal ProfitAverage
+        {
+            get { return DailyInfo.Count != 0 ? DailyInfo.Average(d => d.Profit) : 0m; }
+        }
+
 
         [ImportingConstructor]
         public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm)
@@ -53,9 +100,91 @@ namespace EveTrader.Core.ViewModel
             Filter(7);
         }
 
+        private void Filter(int days)
+        {
+            if (days == -1)
+                iDateBefore = DateTime.MinValue;
+            else
+                iDateBefore = DateTime.UtcNow.AddDays(-days);
 
-        private DateTime iCurrentKey = new DateTime();
-        private string iCurrentBindingKey = "";
+            Refresh();
+        }
+        public void RefreshWallets()
+        {
+            lock (iUpdaterLock)
+            {
+                CurrentWallets.Clear();
+                CurrentWallets.AddRange(iModel.Wallets.Select(w => w.Name).ToList());
+            }
+        }
+        public void Refresh()
+        {
+            Thread workerThread = new Thread(() =>
+            {
+                lock (iUpdaterLock)
+                {
+                    DailyInfo.Clear();
+
+                    iModel.Connection.Open();
+
+                    var investment = (from w in iModel.Transactions
+                                      where w.Date > iDateBefore
+                                      group w by w.Date into grouped
+                                      orderby grouped.Key
+                                      select grouped);
+
+                    Working = true;
+                    WorkingCount = investment.Count();
+                    CurrentIndex = 0;
+
+                    List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
+
+
+
+                    List<DisplayDashboard> cache = new List<DisplayDashboard>();
+                    foreach (var i in investment)
+                    {
+                        DisplayDashboard dd = new DisplayDashboard()
+                        {
+                            Key = i.Key,
+                            Profit = 0m,
+                            Investment = 0m,
+                            Sales = new Dictionary<string, decimal>()
+                        };
+                        foreach (string s in CurrentWallets)
+                        {
+                            dd.Sales.Add(s, 0m);
+                        }
+
+                        dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
+                        dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2))).FirstOrDefault();
+
+                        var entityGroup = (from g in i
+                                           where g.TransactionType == (long)TransactionType.Sell
+                                           group g by g.Wallet into grouped
+                                           select grouped);
+
+                        foreach (var groupedEntity in entityGroup)
+                        {
+                            dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
+                        }
+
+                        cache.Add(dd);
+                        CurrentIndex++;
+                    }
+                    DailyInfo.AddRange(cache);
+
+                    iModel.Connection.Close();
+
+                    RefreshWallets();
+
+                    RaisePropertyChanged("ProfitAverage");
+                    Working = false;
+                }
+            });
+
+            workerThread.Start();
+        }
 
         public bool DetailsUpdating
         {
@@ -69,8 +198,7 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("DetailsUpdating");
             }
         }
-
-        void view_DetailsRequested(object sender, DetailsRequestedEventArgs e)
+        private void view_DetailsRequested(object sender, DetailsRequestedEventArgs e)
         {
             Action updater = () =>
             {
@@ -122,143 +250,6 @@ namespace EveTrader.Core.ViewModel
 
             Thread detailThread = new Thread(new ThreadStart(updater));
             detailThread.Start();
-        }
-
-        private void Filter(int days)
-        {
-            if (days == -1)
-                iDateBefore = DateTime.MinValue;
-            else
-                iDateBefore = DateTime.UtcNow.AddDays(-days);
-
-            Refresh();
-        }
-
-        public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
-        public SmartObservableCollection<string> CurrentWallets { get; private set; }
-        public SmartObservableCollection<DisplayDetail> Investment { get; private set; }
-        public SmartObservableCollection<DisplayDetail> Sales { get; private set; }
-        public SmartObservableCollection<DisplayDetail> Profit { get; private set; }
-
-        private int iWorkingCount = 0;
-        public int WorkingCount
-        {
-            get { return iWorkingCount; }
-            set
-            {
-                iWorkingCount = value;
-                RaisePropertyChanged("WorkingCount");
-            }
-        }
-
-        private int iCurrentIndex = 0;
-        public int CurrentIndex
-        {
-            get { return iCurrentIndex; }
-            set
-            {
-                iCurrentIndex = value;
-                RaisePropertyChanged("CurrentIndex");
-            }
-        }
-
-        private bool iWorking = false;
-        public bool Working
-        {
-            get { return iWorking; }
-            set
-            {
-                iWorking = value;
-                RaisePropertyChanged("Working");
-            }
-        }
-
-        public decimal ProfitAverage
-        {
-            get { return DailyInfo.Count != 0 ? DailyInfo.Average(d => d.Profit) : 0m ; }
-        }
-
-        private DateTime iDateBefore = DateTime.MinValue;
-        private bool iDetailsUpdating;
-        
-
-        public void RefreshWallets()
-        {
-            lock (iUpdaterLock)
-            {
-                CurrentWallets.Clear();
-                CurrentWallets.AddRange(iModel.Wallets.Select(w => w.Name).ToList());
-            }
-        }
-
-
-        public void Refresh()
-        {
-            Thread workerThread = new Thread(() =>
-                {
-                    lock (iUpdaterLock)
-                    {
-                        DailyInfo.Clear();
-
-                        iModel.Connection.Open();
-
-                        var investment = (from w in iModel.Transactions
-                                          where w.Date > iDateBefore
-                                          group w by w.Date into grouped
-                                          orderby grouped.Key
-                                          select grouped);
-
-                        Working = true;
-                        WorkingCount = investment.Count();
-                        CurrentIndex = 0;
-
-                        List<DisplayDashboard> transformedInvestment = new List<DisplayDashboard>();
-
-
-
-                        List<DisplayDashboard> cache = new List<DisplayDashboard>();
-                        foreach (var i in investment)
-                        {
-                            DisplayDashboard dd = new DisplayDashboard()
-                            {
-                                Key = i.Key,
-                                Profit = 0m,
-                                Investment = 0m,
-                                Sales = new Dictionary<string, decimal>()
-                            };
-                            foreach (string s in CurrentWallets)
-                            {
-                                dd.Sales.Add(s, 0m);
-                            }
-
-                            dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
-                            dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2))).FirstOrDefault();
-
-                            var entityGroup = (from g in i
-                                               where g.TransactionType == (long)TransactionType.Sell
-                                               group g by g.Wallet into grouped
-                                               select grouped);
-
-                            foreach (var groupedEntity in entityGroup)
-                            {
-                                dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
-                            }
-
-                            cache.Add(dd);
-                            CurrentIndex++;
-                        }
-                        DailyInfo.AddRange(cache);
-
-                        iModel.Connection.Close();
-
-                        RefreshWallets();
-
-                        RaisePropertyChanged("ProfitAverage");
-                        Working = false;
-                    }
-                });
-
-            workerThread.Start();
         }
         public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
         {

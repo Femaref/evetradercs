@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
+using System.Diagnostics;
 
 namespace EveTrader.Core.ViewModel.Display
 {
+    [DebuggerDisplay("ID: {ID}, TypeID: {TypeID}")]
     public class DisplayMarketOrders
     {
         public string StationName { get; set; }

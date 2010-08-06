@@ -20,16 +20,13 @@ namespace EveTrader.Core.ViewModel
     public class ManageAccountsViewModel : ViewModel<IManageAccountsView>
     {
         private readonly TraderModel iModel;
-        private readonly UpdateService iUpdater;
+        private readonly IUpdateService iUpdater;
         private readonly EntityFactory iFactory;
 
-        public event CancelEventHandler Closing;
         private bool iDataRequestable = false;
         
         public SmartObservableCollection<Characters> CurrentCharacters { get; private set; }
-
         public SmartObservableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
-
         public bool DataPresent
         {
             get
@@ -37,7 +34,6 @@ namespace EveTrader.Core.ViewModel
                 return RequestedCharacters.Count() > 0;
             }
         }
-
         public bool DataRequestable
         {
             get
@@ -52,7 +48,7 @@ namespace EveTrader.Core.ViewModel
         }
 
 
-        public ManageAccountsViewModel(IManageAccountsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, UpdateService us, EntityFactory ef)
+        public ManageAccountsViewModel(IManageAccountsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IUpdateService us, EntityFactory ef)
             : base(view)
         {
             iModel = tm;
@@ -69,14 +65,27 @@ namespace EveTrader.Core.ViewModel
             Refresh();
         }
 
-        void view_AbortRequest(object sender, EventArgs e)
+        public void Show()
+        {
+            this.ViewCore.Show();
+        }
+        public void Shutdown()
+        {
+            this.ViewCore.Close();
+        }
+        public void Refresh()
+        {
+            CurrentCharacters.Clear();
+            iModel.Entity.OfType<Characters>().ToList().ForEach(x => CurrentCharacters.Add(x));
+        }
+
+        private void view_AbortRequest(object sender, EventArgs e)
         {
             RequestedCharacters.Clear();
             DataRequestable = false;
             RaisePropertyChanged("DataPresent");
         }
-
-        void view_AddCharacters(object sender, EventArgs e)
+        private void view_AddCharacters(object sender, EventArgs e)
         {
             long id = RequestedCharacters.First().Item.Account.ID;
             Accounts account = iModel.Accounts.First(a => a.ID == id);
@@ -98,8 +107,7 @@ namespace EveTrader.Core.ViewModel
             DataRequestable = false;
             RaisePropertyChanged("DataPresent");
         }
-
-        void view_DataRequested(object sender, CharacterDataRequestedEventArgs e)
+        private void view_DataRequested(object sender, CharacterDataRequestedEventArgs e)
         {
             var account = iModel.Accounts.Where(a => a.ID == e.UserID).FirstOrDefault();
             if (account == null)
@@ -119,12 +127,10 @@ namespace EveTrader.Core.ViewModel
             DataRequestable = false;
             RaisePropertyChanged("DataPresent");
         }
-
-        void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             OnClosing(e);
         }
-
         private void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             CancelEventHandler handler = Closing;
@@ -132,21 +138,6 @@ namespace EveTrader.Core.ViewModel
                 handler(this, e);
         }
 
-
-        public void Show()
-        {
-            this.ViewCore.Show();
-        }
-
-        public void Shutdown()
-        {
-            this.ViewCore.Close();
-        }
-
-        public void Refresh()
-        {
-            CurrentCharacters.Clear();
-            iModel.Entity.OfType<Characters>().ToList().ForEach(x => CurrentCharacters.Add(x));
-        }
+        public event CancelEventHandler Closing;
     }
 }

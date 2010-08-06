@@ -105,6 +105,9 @@
       <DependentUpon>ExceptionDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ProgressIndicator.cs" />
+    <Compile Include="Controls\TimeframeSelector.xaml.cs">
+      <DependentUpon>TimeframeSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\BidConverter.cs" />
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -153,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ExceptionDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TimeframeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

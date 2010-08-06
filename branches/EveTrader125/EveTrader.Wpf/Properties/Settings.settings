@@ -8,14 +8,11 @@
     <Setting Name="HideExpired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="JournalTimeframe" Type="System.TimeSpan" Scope="User">
-      <Value Profile="(Default)">7.00:00:00</Value>
-    </Setting>
     <Setting Name="ReportStartDate" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">2000-01-01</Value>
     </Setting>
     <Setting Name="ReportEndDate" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">3000-01-01</Value>
+      <Value Profile="(Default)">2020-01-01</Value>
     </Setting>
     <Setting Name="ReportApplyStartFilter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -23,8 +20,29 @@
     <Setting Name="ReportApplyEndFilter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="TransactionTimeframe" Type="System.TimeSpan" Scope="User">
-      <Value Profile="(Default)">7.00:00:00</Value>
+    <Setting Name="JournalStartDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2000-01-01</Value>
+    </Setting>
+    <Setting Name="JournalEndDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2020-01-01</Value>
+    </Setting>
+    <Setting Name="JournalApplyStartFilter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="JournalApplyEndFilter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TransactionsStartDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2000-01-01</Value>
+    </Setting>
+    <Setting Name="TransactionsEndDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2020-01-01</Value>
+    </Setting>
+    <Setting Name="TransactionsApplyStartFilter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TransactionsApplyEndFilter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

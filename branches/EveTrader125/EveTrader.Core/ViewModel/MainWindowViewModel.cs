@@ -21,29 +21,31 @@ namespace EveTrader.Core.ViewModel
         private readonly ICommand iFetchApiDataCommand;
 
         private readonly TraderModel iModel;
+        private readonly IUpdateService iUpdateService;
 
+        private bool iUpdating = false;
+        private string iUpdatingText = ""; 
         private object iDashboardView;
         private object iWalletsView;
         private object iMarketOrdersView;
-
-        private bool iUpdating = false;
-        private string iUpdatingText = "";
+        private object iApplicationLogView;
+        private object iPriceCache;
+        private object iTransactionsView;
+        private object iJournalView;
+        private object iReportView;
 
         public ICommand OpenManageAccountsCommand
         {
             get { return iOpenManageAccountsCommand; }
         }
-
         public ICommand RegeneratePriceCacheCommand
         {
             get { return iRegeneratePriceCache; }
         }
-
         public ICommand FetchApiDataCommand
         {
             get { return iFetchApiDataCommand; }
         }
-
         public bool Updating
         {
             get
@@ -68,45 +70,6 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("UpdatingText");
             }
         }
-        
-        private void OpenManageAccounts()
-        {
-            EventHandler handler = ManageAccountsClicked;
-            if (handler != null)
-                handler(this, new EventArgs());
-        }
-        private void FetchApiData()
-        {
-            if (this.Updating)
-                return;
-            Action updater = () =>
-                {
-                    this.UpdatingText = "Updating CCP Api data...";
-                    this.Updating = true;
-                    iUpdateService.Update();
-                    this.Updating = false;
-                };
-
-            Thread t = new Thread(new ThreadStart(updater));
-            t.Start();
-        }
-
-        private void RegeneratePriceCache()
-        {
-            if (this.Updating)
-                return;
-            Action updater = () =>
-            {
-                this.UpdatingText = "Regenerating Price Cache...";
-                this.Updating = true;
-                iModel.RegeneratePriceCache();
-                this.Updating = false;
-            };
-
-            Thread t = new Thread(new ThreadStart(updater));
-            t.Start();
-        }
-
         public object DashboardView
         {
             get { return iDashboardView; }
@@ -125,7 +88,6 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("WalletsView");
             }
         }
-
         public object PriceCacheView
         {
             get { return iPriceCache; }
@@ -135,7 +97,6 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("PriceCacheView");
             }
         }
-
         public object MarketOrdersView
         {
             get { return iMarketOrdersView; }
@@ -154,7 +115,6 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("ApplicationLogView");
             }
         }
-
         public object TransactionsView
         {
             get { return iTransactionsView; }
@@ -176,7 +136,6 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("JournalView");
             }
         }
-
         public object ReportView
         {
             get
@@ -189,11 +148,7 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("ReportView");
             }
         }
-
-        public event EventHandler ManageAccountsClicked;
-
-        
-
+      
         [ImportingConstructor]
         public MainWindowViewModel(IMainWindowView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IUpdateService us)
             : base(view)
@@ -207,18 +162,48 @@ namespace EveTrader.Core.ViewModel
             iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
             iFetchApiDataCommand = new DelegateCommand(FetchApiData);
         }
+
         public void Show()
         {
             this.ViewCore.Show();
         }
 
-        public event CancelEventHandler Closing;
-        private object iApplicationLogView;
-        private object iPriceCache;
-        private object iTransactionsView;
-        private object iJournalView;
-        private readonly IUpdateService iUpdateService;
-        private object iReportView;
+        private void OpenManageAccounts()
+        {
+            EventHandler handler = ManageAccountsClicked;
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
+        private void FetchApiData()
+        {
+            if (this.Updating)
+                return;
+            Action updater = () =>
+            {
+                this.UpdatingText = "Updating CCP Api data...";
+                this.Updating = true;
+                iUpdateService.Update();
+                this.Updating = false;
+            };
+
+            Thread t = new Thread(new ThreadStart(updater));
+            t.Start();
+        }
+        private void RegeneratePriceCache()
+        {
+            if (this.Updating)
+                return;
+            Action updater = () =>
+            {
+                this.UpdatingText = "Regenerating Price Cache...";
+                this.Updating = true;
+                iModel.RegeneratePriceCache();
+                this.Updating = false;
+            };
+
+            Thread t = new Thread(new ThreadStart(updater));
+            t.Start();
+        }
 
         protected virtual void OnClosing(CancelEventArgs e)
         {
@@ -229,6 +214,7 @@ namespace EveTrader.Core.ViewModel
             OnClosing(e);
         }
 
-        
+        public event CancelEventHandler Closing;
+        public event EventHandler ManageAccountsClicked;
     }
 }

@@ -18,23 +18,23 @@
         </Grid>
         <Grid Panel.ZIndex="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding ElementName=iApplyStartFilter, Path=Height}" />
+                <RowDefinition Height="{Binding ElementName=iTimeframeSelector, Path=Height}" />
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="{Binding ElementName=iApplyStartFilter, Path=Width}"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="{Binding ElementName=iApplyStartFilter, Path=Width}"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <DatePicker Grid.Column="0" Text="Start Date" SelectedDate="{Binding StartDate}" HorizontalAlignment="Center" Width="100" />
-                <CheckBox Grid.Column="1" Content="Apply Start Date filter" IsChecked="{Binding ApplyStartFilter}" Height="Auto" x:Name="iApplyStartFilter"/>
-                <DatePicker Grid.Column="2" Text="End Date" SelectedDate="{Binding EndDate}" HorizontalAlignment="Center" Width="100"/>
-                <CheckBox Grid.Column="3" Content="Apply End Date filter" IsChecked="{Binding ApplyEndFilter}" Height="Auto" x:Name="iApplyEndFilter"/>
-                <ComboBox x:Name="test" Grid.Column="4" ItemsSource="{Binding Entities}" Width="100">
+                <ctrl:TimeframeSelector Grid.Column="0" HorizontalAlignment="Center" x:Name="iTimeframeSelector"
+                                        StartDate="{Binding StartDate}" 
+                                        EndDate="{Binding EndDate}" 
+                                        EnableStartFilter="{Binding ApplyStartFilter}"
+                                        EnableEndFilter="{Binding ApplyEndFilter}"
+                                        Margin="5,0,5,5"
+                                        />
+                <ComboBox x:Name="test" Grid.Column="1" ItemsSource="{Binding Entities}" Width="100" HorizontalAlignment="Right">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Item.Name}"/>

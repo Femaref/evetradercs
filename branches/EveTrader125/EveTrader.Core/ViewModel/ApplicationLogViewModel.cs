@@ -16,7 +16,7 @@ namespace EveTrader.Core.ViewModel
     {
         private readonly TraderModel iModel;
 
-        public SmartObservableCollection<ApplicationLog> Messages {get; set;}
+        public SmartObservableCollection<ApplicationLog> Messages {get; private set;}
 
         [ImportingConstructor]
         public ApplicationLogViewModel(IApplicationLogView view, [Import(RequiredCreationPolicy=CreationPolicy.NonShared)] TraderModel tm)

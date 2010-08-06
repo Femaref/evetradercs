@@ -49,18 +49,6 @@ namespace EveTrader.Wpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7.00:00:00")]
-        public global::System.TimeSpan JournalTimeframe {
-            get {
-                return ((global::System.TimeSpan)(this["JournalTimeframe"]));
-            }
-            set {
-                this["JournalTimeframe"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2000-01-01")]
         public global::System.DateTime ReportStartDate {
             get {
@@ -73,7 +61,7 @@ namespace EveTrader.Wpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3000-01-01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2020-01-01")]
         public global::System.DateTime ReportEndDate {
             get {
                 return ((global::System.DateTime)(this["ReportEndDate"]));
@@ -109,13 +97,97 @@ namespace EveTrader.Wpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7.00:00:00")]
-        public global::System.TimeSpan TransactionTimeframe {
+        [global::System.Configuration.DefaultSettingValueAttribute("2000-01-01")]
+        public global::System.DateTime JournalStartDate {
             get {
-                return ((global::System.TimeSpan)(this["TransactionTimeframe"]));
+                return ((global::System.DateTime)(this["JournalStartDate"]));
             }
             set {
-                this["TransactionTimeframe"] = value;
+                this["JournalStartDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2020-01-01")]
+        public global::System.DateTime JournalEndDate {
+            get {
+                return ((global::System.DateTime)(this["JournalEndDate"]));
+            }
+            set {
+                this["JournalEndDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool JournalApplyStartFilter {
+            get {
+                return ((bool)(this["JournalApplyStartFilter"]));
+            }
+            set {
+                this["JournalApplyStartFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool JournalApplyEndFilter {
+            get {
+                return ((bool)(this["JournalApplyEndFilter"]));
+            }
+            set {
+                this["JournalApplyEndFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000-01-01")]
+        public global::System.DateTime TransactionsStartDate {
+            get {
+                return ((global::System.DateTime)(this["TransactionsStartDate"]));
+            }
+            set {
+                this["TransactionsStartDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2020-01-01")]
+        public global::System.DateTime TransactionsEndDate {
+            get {
+                return ((global::System.DateTime)(this["TransactionsEndDate"]));
+            }
+            set {
+                this["TransactionsEndDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TransactionsApplyStartFilter {
+            get {
+                return ((bool)(this["TransactionsApplyStartFilter"]));
+            }
+            set {
+                this["TransactionsApplyStartFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TransactionsApplyEndFilter {
+            get {
+                return ((bool)(this["TransactionsApplyEndFilter"]));
+            }
+            set {
+                this["TransactionsApplyEndFilter"] = value;
             }
         }
     }

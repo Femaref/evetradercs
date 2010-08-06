@@ -30,7 +30,7 @@ namespace EveTrader.Core.Controllers
             iViewModel = new ManageAccountsViewModel(
                 iContainer.GetExportedValue<IManageAccountsView>(), 
                 iContainer.GetExportedValue<TraderModel>(), 
-                iContainer.GetExportedValue<UpdateService>(),
+                iContainer.GetExportedValue<IUpdateService>(),
                 iContainer.GetExportedValue<EntityFactory>());
            iViewModel.Show();
         }
