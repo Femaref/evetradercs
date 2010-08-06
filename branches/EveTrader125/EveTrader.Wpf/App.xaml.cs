@@ -100,7 +100,7 @@ namespace EveTrader.Wpf
 
             if (!isTerminating)
             {
-
+                
             }
         }
     }

@@ -44,7 +44,9 @@
             <TabItem Header="Journal" ToolTip="The journal tab can lock up the application for some time." ToolTipService.InitialShowDelay="0">
                 <ContentControl Content="{Binding JournalView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </TabItem>
-            <TabItem Header="Transactions"></TabItem>
+            <TabItem Header="Transactions" ToolTip="The transactions tab can lock up the application for some time." ToolTipService.InitialShowDelay="0">
+                <ContentControl Content="{Binding TransactionsView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
             <TabItem Header="Reports">
                 <ContentControl Content="{Binding ReportView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </TabItem>

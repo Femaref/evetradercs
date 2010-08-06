@@ -106,5 +106,17 @@ namespace EveTrader.Wpf.Properties {
                 this["ReportApplyEndFilter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7.00:00:00")]
+        public global::System.TimeSpan TransactionTimeframe {
+            get {
+                return ((global::System.TimeSpan)(this["TransactionTimeframe"]));
+            }
+            set {
+                this["TransactionTimeframe"] = value;
+            }
+        }
     }
 }

@@ -29,6 +29,8 @@ namespace EveTrader.Core.Controllers
         private readonly ApplicationLogController iApplicationLogController;
         private readonly PriceCacheController iPriceCacheController;
         private readonly ReportController iReportController;
+        private readonly JournalController iJournalController;
+        private readonly TransactionsController iTransactionsController;
 
         private readonly ISettingsProvider iSettings;
 
@@ -38,7 +40,7 @@ namespace EveTrader.Core.Controllers
         private readonly StaticModel iStaticData;
 
         private readonly List<Controller> iControllers = new List<Controller>();
-        private JournalController iJournalController;
+       
 
 
 
@@ -54,6 +56,7 @@ namespace EveTrader.Core.Controllers
             ApplicationLogController applicationLogController,
             PriceCacheController priceCacheController,
             JournalController journalController,
+            TransactionsController transactionsController,
             ReportController reportController,
             ISettingsProvider settingsProvider,
             CharacterUpdater charUpdater,
@@ -72,6 +75,7 @@ namespace EveTrader.Core.Controllers
             iApplicationLogController = applicationLogController;
             iPriceCacheController = priceCacheController;
             iJournalController = journalController;
+            iTransactionsController = transactionsController;
             iReportController = reportController;
 
             iSettings = settingsProvider;

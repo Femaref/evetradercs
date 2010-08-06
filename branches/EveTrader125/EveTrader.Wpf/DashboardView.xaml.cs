@@ -17,6 +17,7 @@ using Visifire.Charts;
 using System.Collections;
 using System.Threading;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace EveTrader.Wpf
 {
@@ -94,18 +95,11 @@ namespace EveTrader.Wpf
                 }
             };
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            ds.MouseDoubleClick += new MouseButtonEventHandler(ds_MouseDoubleClick);
             Binding b = new Binding("DailyInfo");
             b.Source = this.DataContext;
             ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }
-
-        void ds_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            iDetailChart.Focus();
-        }
-
 
         private DataSeries CreateStackedColumn(string entity, string bindingProperty)
         {
@@ -134,7 +128,6 @@ namespace EveTrader.Wpf
             };
 
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            ds.MouseDoubleClick += new MouseButtonEventHandler(ds_MouseDoubleClick);
             Binding b = new Binding("DailyInfo");
             b.Source = this.DataContext;
             ds.SetBinding(DataSeries.DataSourceProperty, b);

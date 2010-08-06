@@ -10,12 +10,7 @@
              xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-
-        <DataTemplate x:Key="iSelectEntityTemplate">
-            <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Item.Name}"/>
-        </DataTemplate>
-        
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>      
     </UserControl.Resources>
     <Grid>
         <Grid Panel.ZIndex="2" Opacity="0.75" Background="White" Visibility="{Binding Path=Updating, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -39,7 +34,7 @@
                 <CheckBox Grid.Column="1" Content="Apply Start Date filter" IsChecked="{Binding ApplyStartFilter}" Height="Auto" x:Name="iApplyStartFilter"/>
                 <DatePicker Grid.Column="2" Text="End Date" SelectedDate="{Binding EndDate}" HorizontalAlignment="Center" Width="100"/>
                 <CheckBox Grid.Column="3" Content="Apply End Date filter" IsChecked="{Binding ApplyEndFilter}" Height="Auto" x:Name="iApplyEndFilter"/>
-                <ComboBox Grid.Column="4" ItemsSource="{Binding Entities}" Width="100">
+                <ComboBox x:Name="test" Grid.Column="4" ItemsSource="{Binding Entities}" Width="100">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Item.Name}"/>
