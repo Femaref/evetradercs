@@ -2,7 +2,9 @@
 
 *Known Issues*
 
-  * Changing between tabs can lock the application up, especially if there is a lot of data to be rendered (Journal/Transactions/Market Orders tabs are experiencing this a lot)
+  * Changing between tabs can lock the application up, especially if there is a lot of data to be rendered (Journal/Transactions/Market Orders tabs are experiencing this a lot).
+This mostly happends after startup.
+  * Sometimes, a hiccup can occur in the application (ie. clicking a checkbox too fast). At most times, the application will recover, just redo what you wanted to do. If the application crashes, send the error log to me, it might help. Loss of data is very unlikely to occur.
 
 *Changes*
 
