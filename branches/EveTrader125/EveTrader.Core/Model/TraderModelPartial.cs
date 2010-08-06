@@ -9,6 +9,7 @@ using System.Data.Objects;
 using MoreLinq;
 using System.IO;
 using System.Data.SQLite;
+using System.Data.EntityClient;
 
 namespace EveTrader.Core.Model
 {
@@ -16,6 +17,14 @@ namespace EveTrader.Core.Model
     [Export(typeof(TraderModel))]
     public partial class TraderModel
     {
+        [ImportingConstructor]
+        public TraderModel([Import("TraderModelConnection")] EntityConnectionStringBuilder sb)
+            : base(new EntityConnection(sb.ToString()), "TraderModel")
+        {
+            this.ContextOptions.LazyLoadingEnabled = true;
+            OnContextCreated();
+        }
+
         partial void OnContextCreated()
         {
             this.SavingChanges += new EventHandler(TraderModel_SavingChanges);

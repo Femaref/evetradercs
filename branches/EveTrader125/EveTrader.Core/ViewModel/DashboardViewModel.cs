@@ -119,7 +119,7 @@ namespace EveTrader.Core.ViewModel
         }
         public void Refresh()
         {
-            Thread workerThread = new Thread(() =>
+            Action updater = () =>
             {
                 lock (iUpdaterLock)
                 {
@@ -181,8 +181,8 @@ namespace EveTrader.Core.ViewModel
                     RaisePropertyChanged("ProfitAverage");
                     Working = false;
                 }
-            });
-
+            };
+            Thread workerThread = new Thread(new ThreadStart(updater));
             workerThread.Start();
         }
 

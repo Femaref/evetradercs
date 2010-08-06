@@ -15,6 +15,8 @@ using System.Waf;
 using EveTrader.Core.DataConverter;
 using System.IO;
 using EveTrader.Core.Model;
+using System.Data.SQLite;
+using System.Data.EntityClient;
 
 namespace EveTrader.Wpf
 {
@@ -41,15 +43,34 @@ namespace EveTrader.Wpf
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
-            FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+            FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
 
             if (!fi.Exists || fi.Length == 0)
                 TraderModel.CreateDatabase(fi.FullName);
 
-            TraderModel tm = new TraderModel();
+            SQLiteConnectionStringBuilder traderModelSqliteBuilder = new SQLiteConnectionStringBuilder();
+            traderModelSqliteBuilder.DataSource = fi.FullName;
+
+            EntityConnectionStringBuilder traderModelEntityBuilder = new EntityConnectionStringBuilder();
+            traderModelEntityBuilder.Provider = "System.Data.SQLite";
+            traderModelEntityBuilder.ProviderConnectionString = traderModelSqliteBuilder.ToString();
+            traderModelEntityBuilder.Metadata = @"res://*/Model.TraderModel.csdl|res://*/Model.TraderModel.ssdl|res://*/Model.TraderModel.msl";
+
+            TraderModel tm = new TraderModel(traderModelEntityBuilder);
             tm.Prune();
             tm.MetadataWorkspace.LoadFromAssembly(typeof(TraderModel).Assembly);
             tm.Dispose();
+
+            FileInfo si = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "static.db"));
+
+            SQLiteConnectionStringBuilder staticModelSqliteBuilder = new SQLiteConnectionStringBuilder();
+            staticModelSqliteBuilder.DataSource = si.FullName;
+
+            EntityConnectionStringBuilder staticModelEntityBuilder = new EntityConnectionStringBuilder();
+            staticModelEntityBuilder.Provider = "System.Data.SQLite";
+            staticModelEntityBuilder.ProviderConnectionString = staticModelSqliteBuilder.ToString();
+            staticModelEntityBuilder.Metadata = @"res://*/Model.StaticModel.csdl|res://*/Model.StaticModel.ssdl|res://*/Model.StaticModel.msl";
+
 
             base.OnStartup(e);
             Stopwatch sw = new Stopwatch();
@@ -67,6 +88,8 @@ namespace EveTrader.Wpf
 
 
             batch.AddExportedValue(container);
+            batch.AddExportedValue("TraderModelConnection", traderModelEntityBuilder);
+            batch.AddExportedValue("StaticModelConnection", staticModelEntityBuilder);
             container.Compose(batch);
             
             controller = container.GetExportedValue<ApplicationController>();
