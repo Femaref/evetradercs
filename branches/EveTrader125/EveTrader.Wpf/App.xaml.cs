@@ -43,7 +43,23 @@ namespace EveTrader.Wpf
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
+            DirectoryInfo appdata = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
             FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
+            FileInfo settingsInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "settings.xml"));
+
+            if (settingsInfo.Exists && settingsInfo.Length > 0)
+            {
+                var result = MessageBox.Show("settings.xml found. Do you want to convert the data? This can take some time", "Convert data", MessageBoxButton.YesNo);
+                if (appdata.EnumerateDirectories("backup").Count() == 0)
+                    appdata.CreateSubdirectory("backup");
+                settingsInfo.MoveTo(Path.Combine(appdata.FullName, "backup", "settings.xml"));
+                if (result == MessageBoxResult.Yes)
+                {
+                    XmlToSqlite xts = new XmlToSqlite(settingsInfo.FullName);
+                    xts.Convert();
+                }
+                settingsInfo.Delete();
+            }
 
             if (!fi.Exists || fi.Length == 0)
                 TraderModel.CreateDatabase(fi.FullName);
