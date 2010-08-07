@@ -46,23 +46,33 @@ namespace EveTrader.Wpf
             DirectoryInfo appdata = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
             FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
             FileInfo settingsInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "settings.xml"));
+            FileInfo staticInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "static.db"));
+            FileInfo staticRessourceInfo = new FileInfo("static.db");
 
             if (settingsInfo.Exists && settingsInfo.Length > 0)
             {
+                string fileTime = DateTime.Now.ToFileTime().ToString();
+                string backupPath = string.Format("backup_{0}", fileTime);
+                if (!Directory.Exists(Path.Combine(appdata.FullName, backupPath)))
+                    appdata.CreateSubdirectory(backupPath);
+                settingsInfo.MoveTo(Path.Combine(appdata.FullName, backupPath, "settings.xml"));
+
                 var result = MessageBox.Show("settings.xml found. Do you want to convert the data? This can take some time", "Convert data", MessageBoxButton.YesNo);
-                if (appdata.EnumerateDirectories("backup").Count() == 0)
-                    appdata.CreateSubdirectory("backup");
-                settingsInfo.MoveTo(Path.Combine(appdata.FullName, "backup", "settings.xml"));
                 if (result == MessageBoxResult.Yes)
                 {
                     XmlToSqlite xts = new XmlToSqlite(settingsInfo.FullName);
                     xts.Convert();
                 }
+
                 settingsInfo.Delete();
             }
 
             if (!fi.Exists || fi.Length == 0)
                 TraderModel.CreateDatabase(fi.FullName);
+
+            if (!staticInfo.Exists)
+                staticRessourceInfo.MoveTo(staticInfo.FullName);
+
 
             SQLiteConnectionStringBuilder traderModelSqliteBuilder = new SQLiteConnectionStringBuilder();
             traderModelSqliteBuilder.DataSource = fi.FullName;
@@ -136,6 +146,9 @@ namespace EveTrader.Wpf
             if (e == null) { return; }
 
             Trace.TraceError(e.ToString());
+
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader",string.Format("{0}.log", DateTime.UtcNow.ToFileTimeUtc()));
+            File.WriteAllText(filePath, e.ToString());
 
             if (!isTerminating)
             {
