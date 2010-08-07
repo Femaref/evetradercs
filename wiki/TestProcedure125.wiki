@@ -8,6 +8,10 @@ the application will produce crashlogs in My Documents\EveTrader, those will be 
 
 your original settings.xml will be present in a backup folder below %appdata%\EveTrader, DO NOT DELETE IT. It is possible there will be a change of database structure between beta and release. Those changes might require to reimport the data.
 
+=Notes=
+  * Journal, Transactions and Market Orders tab will freeze the whole application when refreshing (ie. changing Timeframe). I'm still working on this.
+  * Wallet History chart will need an extra refresh (ie. unchecking and rechecking a timeframe delimiter checkbox) to display data
+
 =Test 1a=
   # navigate to the folder %appdata%\EveTrader
   # backup settings.xml (you will need this file later) and remove UISettings.xml, the folder should be empty now, if not, backup any other data as well
