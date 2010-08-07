@@ -9,25 +9,25 @@ the application will produce crashlogs in My Documents\EveTrader, those will be 
 your original settings.xml will be present in a backup folder below %appdata%\EveTrader, DO NOT DELETE IT. It is possible there will be a change of database structure between beta and release. Those changes might require to reimport the data.
 
 =Test 1a=
-# navigate to the folder %appdata%\EveTrader
-# backup settings.xml (you will need this file later) and remove UISettings.xml, the folder should be empty now, if not, backup any other data as well
-# start the application
+  # navigate to the folder %appdata%\EveTrader
+  # backup settings.xml (you will need this file later) and remove UISettings.xml, the folder should be empty now, if not, backup any other data as well
+  # start the application
 
 *Expected behaviour:* the application should start, every window should be empty
 
 =Test 1b=
-# go to Main -> Manage Characters, and add an account, followed up by selecting character(s) and adding them
+  # go to Main -> Manage Characters, and add an account, followed up by selecting character(s) and adding them
 
 *Expected behaviour:* the character should be added, it's information should be downloaded and displayed after a brief (depending on the size of the information) in the respective tabs
 
 =Test 2a=
-# empty the folder %appdata%\EveTrader again, and restore the settings.xml file
-# start the application, a messagebox will pop up, asking if you want to convert the data, select "yes".
-# after a brief time of data conversion (it will appear as if the application closed totally, this is not the case) the application will appear on screen, and wether or not you used version 1.2.4 in the last days, the Dashboard will display information
+  # empty the folder %appdata%\EveTrader again, and restore the settings.xml file
+  # start the application, a messagebox will pop up, asking if you want to convert the data, select "yes".
+  # after a brief time of data conversion (it will appear as if the application closed totally, this is not the case) the application will appear on screen, and wether or not you used version 1.2.4 in the last days, the Dashboard will display information
 
 *Expected behaviour:* all your data present in the settings.xml should be displayed, you can now update via Main -> Update CCP Api data. If you did Test 1 before, you will need to wait a while until you can proceed using the application due to api cache timers.
 
 =Test 3=
-# use the application
+  # use the application
 
 *Expected behaviour:* no bugs :-P
