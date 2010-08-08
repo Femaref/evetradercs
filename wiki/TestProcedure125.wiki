@@ -10,7 +10,8 @@ your original settings.xml will be present in a backup folder below %appdata%\Ev
 
 =Notes=
   * Journal, Transactions and Market Orders tab will freeze the whole application when refreshing (ie. changing Timeframe). I'm still working on this.
-  * Wallet History chart will need an extra refresh (ie. unchecking and rechecking a timeframe delimiter checkbox) to display data
+  * report charts might need an extra refresh (ie. unchecking and rechecking a timeframe delimiter checkbox) to display data
+  * the dropdown on the report tab isn't really sophisticated. This will change, I'm not sure if it will happen until release though.
 
 =Test 1a=
   # navigate to the folder %appdata%\EveTrader
