@@ -151,10 +151,12 @@ namespace EveTrader.Wpf
 
             Trace.TraceError(e.ToString());
 
-            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader")))
-                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader"));
+            DirectoryInfo myDoc = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader"));
 
-            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader",string.Format("{0}.log", DateTime.UtcNow.ToFileTimeUtc()));
+            if (!myDoc.Exists)
+                myDoc.Create();
+
+            string filePath = Path.Combine(myDoc.FullName, string.Format("{0}.log", DateTime.UtcNow.ToFileTimeUtc()));
             File.WriteAllText(filePath, e.ToString());
 
             if (!isTerminating)

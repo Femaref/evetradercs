@@ -241,6 +241,8 @@ namespace EveTrader.Core.ViewModel
                 var entitiesCache = Entities.ToList();
 
                 Entities.Clear();
+
+                List<Selectable<Entities>> creationCache = new List<Selectable<Entities>>();
                 
                 foreach (Entities e in iModel.Entity.OfType<Characters>())
                 {
@@ -251,7 +253,7 @@ namespace EveTrader.Core.ViewModel
 
                     Selectable<Entities> cache = new Selectable<Entities>(e, selected);
                     cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
-                    Entities.Add(cache);
+                    creationCache.Add(cache);
                 }
                 foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
                 {
@@ -262,8 +264,10 @@ namespace EveTrader.Core.ViewModel
 
                     Selectable<Entities> cache = new Selectable<Entities>(e, selected);
                     cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
-                    Entities.Add(cache);
+                    creationCache.Add(cache);
                 }
+
+                Entities.AddRange(creationCache);
             }
         }
         private void RefreshWallets()
