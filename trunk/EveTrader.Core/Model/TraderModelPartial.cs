@@ -143,7 +143,6 @@ namespace EveTrader.Core.Model
                         cmd.ExecuteNonQuery();
                     }
                 }
-
             }
             return path;
         }
