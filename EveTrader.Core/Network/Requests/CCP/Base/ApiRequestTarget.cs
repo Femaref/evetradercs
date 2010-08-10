@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using EveTrader.Core.ClassExtenders;
+
+namespace EveTrader.Core.Network.Requests.CCP
+{
+    public enum ApiRequestTarget
+    {
+        [EnumStringValue("char")]
+        Character,
+        [EnumStringValue("corp")]
+        Corporation,
+        [EnumStringValue("account")]
+        Account
+    }
+}

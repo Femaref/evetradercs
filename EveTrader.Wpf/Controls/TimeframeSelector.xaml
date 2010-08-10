@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="EveTrader.Wpf.Controls.TimeframeSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+             mc:Ignorable="d"
+             Loaded="TimeframeSelector_Loaded"
+             >
+       <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{Binding ElementName=iEnableStartFilter, Path=Width}"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{Binding ElementName=iEnableEndFilter, Path=Width}"/>
+            </Grid.ColumnDefinitions>
+            <DatePicker Grid.Column="0" x:Name="iStartDate"
+                        Text="Start Date" 
+                        HorizontalAlignment="Center" 
+                        Width="100" Margin="5,0" Padding="2" />
+            <CheckBox Grid.Column="1" x:Name="iEnableStartFilter" 
+                      Content="Apply Start Date filter" 
+                      VerticalAlignment="Center" 
+                      Height="Auto" Padding="2,0,0,0" Margin="5,0" />
+            <DatePicker Grid.Column="2" x:Name="iEndDate"
+                        Text="End Date"
+                        HorizontalAlignment="Center"
+                        Width="100" Margin="5,0" />
+            <CheckBox Grid.Column="3" x:Name="iEnableEndFilter" 
+                      Content="Apply End Date filter" 
+                      VerticalAlignment="Center" 
+                      Height="Auto" Padding="2,0,0,0" Margin="5,0" />
+        </Grid>
+</UserControl>

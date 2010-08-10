@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF60FE10-88C7-499F-86F3-7078BF22C156}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EveTrader.Core</RootNamespace>
+    <AssemblyName>EveTrader.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="libevecache">
+      <HintPath>..\..\libevecache\libevecache\Debug\libevecache.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreLinq">
+      <HintPath>..\..\..\Assembly\morelinq-1.0-beta\MoreLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86" />
+    <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassExtenders\DateTimeExtender.cs" />
+    <Compile Include="ClassExtenders\DecimalExtender.cs" />
+    <Compile Include="ClassExtenders\DoubleExtender.cs" />
+    <Compile Include="ClassExtenders\EnumerableExtender.cs" />
+    <Compile Include="ClassExtenders\EnumExtender.cs" />
+    <Compile Include="ClassExtenders\StreamExtender.cs" />
+    <Compile Include="ClassExtenders\StringExtender.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ApplicationLogController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EntitiesUpdatedEventArgs.cs" />
+    <Compile Include="Controllers\IUpdateService.cs" />
+    <Compile Include="Controllers\JournalController.cs" />
+    <Compile Include="Controllers\ManageAccountsController.cs" />
+    <Compile Include="Controllers\MarketOrdersController.cs" />
+    <Compile Include="Controllers\PriceCacheController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Controllers\UpdateService.cs" />
+    <Compile Include="Controllers\WalletsController.cs" />
+    <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
+    <Compile Include="Model\ISettingsProvider.cs" />
+    <Compile Include="Model\MarketOrdersPartial.cs" />
+    <Compile Include="Model\StaticModel.cs" />
+    <Compile Include="Model\StaticModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tables.cs" />
+    <Compile Include="Model\TablesChangedEventArgs.cs" />
+    <Compile Include="Model\TransactionFor.cs" />
+    <Compile Include="Model\MarketOrderState.cs" />
+    <Compile Include="Model\TransactionType.cs" />
+    <Compile Include="Network\Requests\CCP\AccountBalanceRequest.cs" />
+    <Compile Include="Network\Requests\CCP\Base\ApiAccountRequestBase.cs" />
+    <Compile Include="Network\Requests\CCP\Base\ApiEntityRequestBase.cs" />
+    <Compile Include="Network\Requests\CCP\Base\ApiRequestBase.cs" />
+    <Compile Include="Network\Requests\CCP\Base\ApiRequestPage.cs" />
+    <Compile Include="Network\Requests\CCP\Base\ApiRequestTarget.cs" />
+    <Compile Include="Network\Requests\CCP\Base\RequestFailedException.cs" />
+    <Compile Include="Network\Requests\CCP\CharacterListRequest.cs" />
+    <Compile Include="Network\Requests\CCP\CharacterSheetRequest.cs" />
+    <Compile Include="Network\Requests\CCP\CorporationSheetRequest.cs" />
+    <Compile Include="Network\Requests\CCP\JournalRequest.cs" />
+    <Compile Include="Network\Requests\CCP\MarketOrdersRequest.cs" />
+    <Compile Include="Network\Requests\CCP\TransactionsRequest.cs" />
+    <Compile Include="Collections\SmartObservableCollection.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StopwatchAspect.cs" />
+    <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
+    <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\CharacterUpdater.cs" />
+    <Compile Include="Updater\CCP\CorporationSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\CorporationUpdater.cs" />
+    <Compile Include="Updater\CCP\EntityFactory.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IAccountBalanceUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\ICharacterSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\ICorporationSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IEntityUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IJournalUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IMarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\ITransactionsUpdater.cs" />
+    <Compile Include="Updater\CCP\JournalUpdater.cs" />
+    <Compile Include="Updater\CCP\MarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
+    <Compile Include="Updater\CCP\UpdaterBase.cs" />
+    <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
+    <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
+    <Compile Include="ViewModel\Display\DisplayReport.cs" />
+    <Compile Include="ViewModel\Display\DisplaySingleHistory.cs" />
+    <Compile Include="ViewModel\Display\DisplayWalletHistory.cs" />
+    <Compile Include="ViewModel\Display\SelectedChangedEventArgs.cs" />
+    <Compile Include="ViewModel\IRefreshableViewModel.cs" />
+    <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\Display\DisplayDashboard.cs" />
+    <Compile Include="ViewModel\Display\DisplayDetail.cs" />
+    <Compile Include="ViewModel\Display\DisplayPriceCache.cs" />
+    <Compile Include="ViewModel\Display\DisplayMarketOrders.cs" />
+    <Compile Include="ViewModel\Display\DisplayWallets.cs" />
+    <Compile Include="ViewModel\Display\Selectable.cs" />
+    <Compile Include="ViewModel\JournalViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
+    <Compile Include="ViewModel\PriceCacheViewModel.cs" />
+    <Compile Include="ViewModel\TransactionsViewModel.cs" />
+    <Compile Include="ViewModel\WalletsViewModel.cs" />
+    <Compile Include="View\CharacterDataRequestedEventArgs.cs" />
+    <Compile Include="View\Base\IExtendedView.cs" />
+    <Compile Include="View\EntitySelectionChangedEventArgs.cs" />
+    <Compile Include="View\IAccountEntityView.cs" />
+    <Compile Include="View\IApplicationLogView.cs" />
+    <Compile Include="View\IDashboardView.cs" />
+    <Compile Include="View\IJournalView.cs" />
+    <Compile Include="View\IMainWindowView.cs" />
+    <Compile Include="View\IManageAccountsView.cs" />
+    <Compile Include="View\IMarketOrdersView.cs" />
+    <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\TraderModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TraderModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TraderModelPartial.cs" />
+    <Compile Include="View\IPriceCacheView.cs" />
+    <Compile Include="View\IReportView.cs" />
+    <Compile Include="View\ITransactionsView.cs" />
+    <Compile Include="View\IWalletsView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model\TraderModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TraderModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model\StaticModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>StaticModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Network\Requests\Central\" />
+    <Folder Include="Network\Requests\Metrics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Assembly\WpfApplicationFramework-1.0.0.90\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
+      <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
+      <Name>WpfApplicationFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tables.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
