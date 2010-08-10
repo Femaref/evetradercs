@@ -36,7 +36,7 @@ namespace EveTrader.Wpf
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            
 #if (DEBUG != true)
             // Don't handle the exceptions in Debug mode because otherwise the Debugger wouldn't
             // jump into the code when an exception occurs.
@@ -48,6 +48,10 @@ namespace EveTrader.Wpf
             FileInfo settingsInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "settings.xml"));
             FileInfo staticInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "static.db"));
             FileInfo staticRessourceInfo = new FileInfo("static.db");
+
+            if (!appdata.Exists)
+                appdata.Create();
+
 
             if (settingsInfo.Exists && settingsInfo.Length > 0)
             {
@@ -146,6 +150,9 @@ namespace EveTrader.Wpf
             if (e == null) { return; }
 
             Trace.TraceError(e.ToString());
+
+            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader")))
+                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader"));
 
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EveTrader",string.Format("{0}.log", DateTime.UtcNow.ToFileTimeUtc()));
             File.WriteAllText(filePath, e.ToString());

@@ -21,7 +21,6 @@
                 <RowDefinition Height="{Binding ElementName=iTimeframeSelector, Path=Height}" />
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
