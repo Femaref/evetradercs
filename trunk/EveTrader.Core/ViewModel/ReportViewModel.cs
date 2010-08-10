@@ -281,7 +281,8 @@ namespace EveTrader.Core.ViewModel
                     .GroupBy(groupBy)
                     .Select(g => new DisplayReport()
                     {
-                        Key = string.Format("{0} x{1}", g.Key, g.Sum(gi => gi.Quantity)),
+                        Key = g.Key,
+                        Quantity = g.Sum(gi => gi.Quantity),
                         GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
                         //PureProfit = Math.Round(g.Sum(gi => ((gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))) * gi.Quantity) / 1000000), 2),
                         PureProfit = Math.Round(g.Sum(gi => ((gi.Price - iModel.Transactions.AverageBuyPrice(gi.TypeID)) * gi.Quantity) / 1000000), 2),
@@ -291,7 +292,7 @@ namespace EveTrader.Core.ViewModel
         }
         private IEnumerable<DisplayReport> Combine(IEnumerable<IEnumerable<DisplayReport>> input)
         {
-            return input.SelectMany(d => d.GroupBy(dr => dr.Key)).Select(d => new DisplayReport()
+            return input.SelectMany(d => d).GroupBy(d => d.Key).Select(d => new DisplayReport()
             {
                 Key = d.Key,
                 GrossSales = d.Sum(dr => dr.GrossSales),

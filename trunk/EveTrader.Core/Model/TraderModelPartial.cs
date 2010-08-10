@@ -122,17 +122,15 @@ namespace EveTrader.Core.Model
 
         public new static string CreateDatabase()
         {
-            return CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+            return CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
         }
         public static string CreateDatabase(string path)
         {
-            string pathToFile = Path.Combine(path, "EveTrader.db");
-
-            FileInfo fi = new FileInfo(pathToFile);
+            FileInfo fi = new FileInfo(path);
 
             if (!fi.Exists || fi.Length == 0)
             {
-                string connection = string.Format("Data Source={0};Version=3;", pathToFile);
+                string connection = string.Format("Data Source={0};Version=3;", path);
                 string db_schema = Properties.Resources.tables;
 
                 using (SQLiteConnection cn = new SQLiteConnection(connection))
@@ -147,7 +145,7 @@ namespace EveTrader.Core.Model
                 }
 
             }
-            return pathToFile;
+            return path;
         }
 
         public void Prune()
