@@ -91,23 +91,31 @@ namespace EveTrader.Core.ViewModel
 
         private void RefreshCurrentEntities()
         {
-            CurrentEntities.Clear();
-            iModel.Entity.Where(e => (e is Characters) || !(e as Corporations).Npc).ToList().ForEach(e => CurrentEntities.Add(e));
+            lock (iUpdaterLock)
+            {
+                CurrentEntities.Clear();
+                CurrentEntities.AddRange(iModel.Entity.Where(e => (e is Characters) || !(e as Corporations).Npc).ToList());
+            }
         }
         private void SelectEntity(string name)
         {
-            iCurrentEntity = iModel.Entity.Where(e => e.Name == name).First();
-            RaisePropertyChanged("CurrentEntity");
-            Refresh();
+            lock (iUpdaterLock)
+            {
+                iCurrentEntity = iModel.Entity.Where(e => e.Name == name).FirstOrDefault();
+                RaisePropertyChanged("CurrentEntity");
+                Refresh();
+            }
         }
         private void SelectEntity(Entities e)
         {
             if (e == null)
                 return;
-
-            iCurrentEntity = e;
-            RaisePropertyChanged("CurrentEntity");
-            Refresh();
+            lock (iUpdaterLock)
+            {
+                iCurrentEntity = e;
+                RaisePropertyChanged("CurrentEntity");
+                Refresh();
+            }
         }
 
         public void Refresh()
@@ -120,26 +128,28 @@ namespace EveTrader.Core.ViewModel
                     this.Updating = true;
                     Orders.Clear();
 
-                    IEnumerable<DisplayMarketOrders> output = null;
+                    IEnumerable<DisplayMarketOrders> output = new List<DisplayMarketOrders>();
 
-                    if (iSettings.HideExpired)
-                        output = iCurrentEntity.MarketOrders.Where(iHideWhere).Select(x =>
-                        {
-                            DisplayMarketOrders y = (DisplayMarketOrders)x;
-                            y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
-                            y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                            return y;
-                        });
-                    else
-                        output = iCurrentEntity.MarketOrders.Select(x =>
-                        {
-                            DisplayMarketOrders y = (DisplayMarketOrders)x;
-                            y.TypeName = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).First().typeName;
-                            y.StationName = iStaticData.staStations.Where(s => s.stationID == y.StationID).First().stationName;
-                            return y;
-                        });
+                    if (iCurrentEntity != null)
+                    {
+                        IEnumerable<MarketOrders> cache = null;
+                        if (iSettings.HideExpired)
+                            cache = iCurrentEntity.MarketOrders.Where(iHideWhere);
+                        else
+                            cache = iCurrentEntity.MarketOrders;
 
-                    Orders.AddRange(output);
+                        output = cache.Select(x =>
+                            {
+                                DisplayMarketOrders y = (DisplayMarketOrders)x;
+                                var type = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).FirstOrDefault();
+                                var station = iStaticData.staStations.Where(s => s.stationID == y.StationID).FirstOrDefault();
+                                y.TypeName = type != null ? type.typeName : "Unknown Type";
+                                y.StationName = station != null ? station.stationName : "Unknown Station";
+                                return y;
+                            });
+
+                        Orders.AddRange(output);
+                    }
 
                     this.Updating = false;
                     RaisePropertyChanged("TotalBuyOrders");
@@ -162,7 +172,7 @@ namespace EveTrader.Core.ViewModel
         {
             RefreshCurrentEntities();
 
-            if (e.UpdatedEntities.Any(en => en.Name == CurrentEntity.Name))
+            if (CurrentEntity != null && e.UpdatedEntities.Any(en => en.Name == CurrentEntity.Name))
                 Refresh();
         }
     }

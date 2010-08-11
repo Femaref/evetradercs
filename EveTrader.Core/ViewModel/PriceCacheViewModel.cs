@@ -55,7 +55,7 @@ namespace EveTrader.Core.ViewModel
                             c.TypeName = iStaticData.invTypes.First(ty => ty.typeID == c.TypeID).typeName;
 
                         });
-                        x.OrderBy(c => c.TypeName).ForEach(c => Prices.Add(c));
+                        Prices.AddRange(x.OrderBy(c => c.TypeName));
                     }
                 };
             Thread updaterThread = new Thread(new ThreadStart(updater));

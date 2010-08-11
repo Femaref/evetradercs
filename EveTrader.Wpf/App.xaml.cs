@@ -17,6 +17,7 @@ using System.IO;
 using EveTrader.Core.Model;
 using System.Data.SQLite;
 using System.Data.EntityClient;
+using System.EnterpriseServices.Internal;
 
 namespace EveTrader.Wpf
 {
@@ -43,6 +44,11 @@ namespace EveTrader.Wpf
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
+
+            Publish p = new Publish();
+           // p.GacInstall("System.Data.SQLite.dll");
+
+
             DirectoryInfo appdata = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
             FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
             FileInfo settingsInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "settings.xml"));
@@ -59,7 +65,8 @@ namespace EveTrader.Wpf
                 string backupPath = string.Format("backup_{0}", fileTime);
                 if (!Directory.Exists(Path.Combine(appdata.FullName, backupPath)))
                     appdata.CreateSubdirectory(backupPath);
-                settingsInfo.MoveTo(Path.Combine(appdata.FullName, backupPath, "settings.xml"));
+
+                File.Copy(settingsInfo.FullName, Path.Combine(appdata.FullName, backupPath, "settings.xml"));
 
                 var result = MessageBox.Show("settings.xml found. Do you want to convert the data? This can take some time", "Convert data", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
@@ -75,7 +82,7 @@ namespace EveTrader.Wpf
                 TraderModel.CreateDatabase(fi.FullName);
 
             if (!staticInfo.Exists)
-                staticRessourceInfo.MoveTo(staticInfo.FullName);
+                File.Copy(staticRessourceInfo.FullName, staticInfo.FullName);
 
 
             SQLiteConnectionStringBuilder traderModelSqliteBuilder = new SQLiteConnectionStringBuilder();

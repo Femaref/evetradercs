@@ -223,7 +223,7 @@ namespace EveTrader.Core.DataConverter
         }
         private string CreateDatabase()
         {
-            return TraderModel.CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+            return TraderModel.CreateDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
         }
         private string CreateDatabase(string path)
         {
