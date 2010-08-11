@@ -44,7 +44,10 @@ namespace EveTrader.Core.ViewModel
                         foreach (Entities e in iModel.Entity)
                         {
                             if (e is Characters)
-                                EntityWallets.Add(new DisplayWallets() { Name = e.Name, Balance = e.Wallets.First().Balance });
+                            {
+                                Wallets w = e.Wallets.FirstOrDefault();
+                                EntityWallets.Add(new DisplayWallets() { Name = e.Name, Balance = w != null ? w.Balance : 0m });
+                            }
                             if (e is Corporations)
                             {
                                 foreach (Wallets w in e.Wallets)

@@ -147,7 +147,7 @@ namespace EveTrader.Core.ViewModel
         {
             RefreshCurrentWallets();
 
-            if (e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name))
+            if (CurrentWallet != null && e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name))
                 Refresh();
         }
         private void ViewCore_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
