@@ -152,7 +152,6 @@ namespace EveTrader.Core.Model
             PruneTransactions();
         }
 
-
         private void PruneTransactions()
         {
             var wrongTransactions = this.Transactions.Where(t => t.TransactionFor == (long)TransactionFor.Corporation && (t.Wallet.Entity is Characters));

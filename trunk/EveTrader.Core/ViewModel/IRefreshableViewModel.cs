@@ -9,6 +9,6 @@ namespace EveTrader.Core.ViewModel
     public interface IRefreshableViewModel
     {
         void Refresh();
-        void DataIncoming(object sender, EntitiesUpdatedEventArgs e);
+        void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e);
     }
 }

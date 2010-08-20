@@ -1,7 +1,7 @@
 ﻿using System;
 using EveTrader.Core.Model;
 
-namespace EveTrader.Core.Controllers
+namespace EveTrader.Core.Services
 {
     public interface IUpdateService
     {

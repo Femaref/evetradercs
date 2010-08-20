@@ -14,5 +14,10 @@ namespace EveTrader.Core.ViewModel.Display
         public decimal Profit { get; set; }
         public decimal Investment { get; set; }
         public Dictionary<string,decimal> Sales { get; set; }
+
+        public DisplayDashboard()
+        {
+            Sales = new Dictionary<string, decimal>();
+        }
     }
 }

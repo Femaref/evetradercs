@@ -9,6 +9,7 @@ using System.ComponentModel.Composition.Hosting;
 using EveTrader.Core.View;
 using EveTrader.Core.Model;
 using EveTrader.Core.Updater.CCP;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Controllers
 {

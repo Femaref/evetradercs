@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Model;
 
-namespace EveTrader.Core.Controllers
+namespace EveTrader.Core.Services
 {
     public class EntitiesUpdatedEventArgs : EventArgs
     {

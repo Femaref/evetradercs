@@ -120,55 +120,53 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-
-            Action updater = () =>
+            Thread updaterThread = new Thread(new ThreadStart(this.ThreadedRefresh));
+            updaterThread.Name = "MarketOrdersRefresh";
+            updaterThread.Start();
+        }
+        private void ThreadedRefresh()
+        {
+            lock (iUpdaterLock)
             {
-                lock (iUpdaterLock)
+                this.Updating = true;
+                Orders.Clear();
+
+                IEnumerable<DisplayMarketOrders> output = new List<DisplayMarketOrders>();
+
+                if (iCurrentEntity != null)
                 {
-                    this.Updating = true;
-                    Orders.Clear();
+                    IEnumerable<MarketOrders> cache = null;
+                    if (iSettings.HideExpired)
+                        cache = iCurrentEntity.MarketOrders.Where(iHideWhere);
+                    else
+                        cache = iCurrentEntity.MarketOrders;
 
-                    IEnumerable<DisplayMarketOrders> output = new List<DisplayMarketOrders>();
-
-                    if (iCurrentEntity != null)
+                    output = cache.Select(x =>
                     {
-                        IEnumerable<MarketOrders> cache = null;
-                        if (iSettings.HideExpired)
-                            cache = iCurrentEntity.MarketOrders.Where(iHideWhere);
-                        else
-                            cache = iCurrentEntity.MarketOrders;
+                        DisplayMarketOrders y = (DisplayMarketOrders)x;
+                        var type = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).FirstOrDefault();
+                        var station = iStaticData.staStations.Where(s => s.stationID == y.StationID).FirstOrDefault();
+                        y.TypeName = type != null ? type.typeName : "Unknown Type";
+                        y.StationName = station != null ? station.stationName : "Unknown Station";
+                        return y;
+                    });
 
-                        output = cache.Select(x =>
-                            {
-                                DisplayMarketOrders y = (DisplayMarketOrders)x;
-                                var type = iStaticData.invTypes.Where(t => t.typeID == y.TypeID).FirstOrDefault();
-                                var station = iStaticData.staStations.Where(s => s.stationID == y.StationID).FirstOrDefault();
-                                y.TypeName = type != null ? type.typeName : "Unknown Type";
-                                y.StationName = station != null ? station.stationName : "Unknown Station";
-                                return y;
-                            });
-
-                        Orders.AddRange(output);
-                    }
-
-                    this.Updating = false;
-                    RaisePropertyChanged("TotalBuyOrders");
-                    RaisePropertyChanged("TotalSellOrders");
-                    RaisePropertyChanged("RemainingBuyOrders");
-                    RaisePropertyChanged("RemainingBuyOrders");
+                    Orders.AddRange(output);
                 }
 
-            };
-            Thread updaterThread = new Thread(new ThreadStart(updater));
-            updaterThread.Start();
-
+                this.Updating = false;
+                RaisePropertyChanged("TotalBuyOrders");
+                RaisePropertyChanged("TotalSellOrders");
+                RaisePropertyChanged("RemainingBuyOrders");
+                RaisePropertyChanged("RemainingBuyOrders");
+            }
         }
 
         private void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Entities> e)
         {
             SelectEntity(e.Selection);
         }
-        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             RefreshCurrentEntities();
 

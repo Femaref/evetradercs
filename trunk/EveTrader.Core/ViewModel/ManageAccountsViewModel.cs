@@ -14,6 +14,7 @@ using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
 using EveTrader.Core.Controllers;
 using EveTrader.Core.Updater.CCP;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.ViewModel
 {

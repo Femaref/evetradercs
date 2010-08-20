@@ -16,7 +16,7 @@ namespace EveTrader.Core.Network.Requests.CCP
 
         protected readonly ApiRequestTarget iTarget;
 
-        public ApiRequestBase(ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
+        protected ApiRequestBase(ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
         {
             iTarget = target;
             iStillCached = stillCached;

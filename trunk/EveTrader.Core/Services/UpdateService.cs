@@ -8,7 +8,7 @@ using EveTrader.Core.Model;
 using System.Threading;
 
 
-namespace EveTrader.Core.Controllers
+namespace EveTrader.Core.Services
 {
     [Export(typeof(IUpdateService))]
     public class UpdateService : IUpdateService

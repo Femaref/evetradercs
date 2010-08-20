@@ -35,34 +35,35 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            Action updater = () =>
-                {
-                    lock (iUpdaterLock)
-                    {
-                        EntityWallets.Clear();
-
-                        foreach (Entities e in iModel.Entity)
-                        {
-                            if (e is Characters)
-                            {
-                                Wallets w = e.Wallets.FirstOrDefault();
-                                EntityWallets.Add(new DisplayWallets() { Name = e.Name, Balance = w != null ? w.Balance : 0m });
-                            }
-                            if (e is Corporations)
-                            {
-                                foreach (Wallets w in e.Wallets)
-                                {
-                                    EntityWallets.Add(new DisplayWallets() { Name = string.Format("{0}: {1}", e.Name, w.Name), Balance = w.Balance });
-                                }
-                            }
-                        }
-                    }
-                };
-            Thread updaterThread = new Thread(new ThreadStart(updater));
+            Thread updaterThread = new Thread(new ThreadStart(this.ThreadedRefresh));
+            updaterThread.Name = "WalletsUpdater";
             updaterThread.Start();
         }
+        private void ThreadedRefresh()
+        {
+            lock (iUpdaterLock)
+            {
+                EntityWallets.Clear();
 
-        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+                foreach (Entities e in iModel.Entity)
+                {
+                    if (e is Characters)
+                    {
+                        Wallets w = e.Wallets.FirstOrDefault();
+                        EntityWallets.Add(new DisplayWallets() { Name = e.Name, Balance = w != null ? w.Balance : 0m });
+                    }
+                    if (e is Corporations)
+                    {
+                        foreach (Wallets w in e.Wallets)
+                        {
+                            EntityWallets.Add(new DisplayWallets() { Name = string.Format("{0}: {1}", e.Name, w.Name), Balance = w.Balance });
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             Refresh();
         }

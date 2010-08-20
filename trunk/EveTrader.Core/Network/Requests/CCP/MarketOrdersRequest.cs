@@ -41,7 +41,7 @@ namespace EveTrader.Core.Network.Requests.CCP
                 Duration = r.Attribute("duration").Value.ToInt64(),
                 Escrow = r.Attribute("escrow").Value.ToDecimal(),
                 Price = r.Attribute("price").Value.ToDecimal(),
-                Bid = r.Attribute("bid").Value == "0",
+                Bid = r.Attribute("bid").Value == "1",
                 Issued = r.Attribute("issued").Value.ToDateTime(),
                 IssuedDate = r.Attribute("issued").Value.ToDateTime().Date
             });

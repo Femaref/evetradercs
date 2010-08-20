@@ -8,6 +8,7 @@ using System.ComponentModel.Composition;
 using EveTrader.Core.Model;
 using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
+using System.Diagnostics;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -99,8 +100,12 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            Action a = () =>
-            {
+            Thread updaterThread = new Thread(new ThreadStart(this.ThreadedRefresh));
+            updaterThread.Name = "TransactionsRefresh";
+            updaterThread.Start();
+        }
+        private void ThreadedRefresh()
+        {
                 lock (iCurrentWalletLocker)
                 {
                     Transactions.Clear();
@@ -117,10 +122,6 @@ namespace EveTrader.Core.ViewModel
                         .OrderByDescending(j => j.DateTime).ToList();
                     Transactions.AddRange(cache);
                 }
-            };
-
-            Thread updaterThread = new Thread(new ThreadStart(a));
-            updaterThread.Start();
         }
 
         private void RefreshCurrentWallets()
@@ -143,7 +144,7 @@ namespace EveTrader.Core.ViewModel
         }
 
 
-        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             RefreshCurrentWallets();
 
@@ -158,6 +159,7 @@ namespace EveTrader.Core.ViewModel
             };
 
             Thread t = new Thread(new ThreadStart(a));
+            t.Name = "SelectTransactionWallet";
             t.Start();
         }
     }

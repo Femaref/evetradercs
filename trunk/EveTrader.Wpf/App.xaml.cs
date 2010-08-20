@@ -44,30 +44,26 @@ namespace EveTrader.Wpf
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
+            DirectoryInfo appData = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+            FileInfo databaseInfo = new FileInfo(Path.Combine(appData.FullName, "EveTrader.db"));
+            FileInfo settingsInfo = new FileInfo(Path.Combine(appData.FullName, "settings.xml"));
+            FileInfo staticDatabase = new FileInfo(Path.Combine(appData.FullName, "static.db"));
+            FileInfo staticDatabaseRessource = new FileInfo("static.db");
 
-            Publish p = new Publish();
-           // p.GacInstall("System.Data.SQLite.dll");
-
-
-            DirectoryInfo appdata = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
-            FileInfo fi = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "EveTrader.db"));
-            FileInfo settingsInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "settings.xml"));
-            FileInfo staticInfo = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "static.db"));
-            FileInfo staticRessourceInfo = new FileInfo("static.db");
-
-            if (!appdata.Exists)
-                appdata.Create();
-
+            if (!appData.Exists)
+                appData.Create();
 
             if (settingsInfo.Exists && settingsInfo.Length > 0)
             {
                 string fileTime = DateTime.Now.ToFileTime().ToString();
                 string backupPath = string.Format("backup_{0}", fileTime);
-                if (!Directory.Exists(Path.Combine(appdata.FullName, backupPath)))
-                    appdata.CreateSubdirectory(backupPath);
+                if (!Directory.Exists(Path.Combine(appData.FullName, backupPath)))
+                    appData.CreateSubdirectory(backupPath);
 
-                File.Copy(settingsInfo.FullName, Path.Combine(appdata.FullName, backupPath, "settings.xml"));
+                File.Copy(settingsInfo.FullName, Path.Combine(appData.FullName, backupPath, "settings.xml"));
 
+
+                //refactor to a more detailed window with progressbar etc
                 var result = MessageBox.Show("settings.xml found. Do you want to convert the data? This can take some time", "Convert data", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -78,40 +74,28 @@ namespace EveTrader.Wpf
                 settingsInfo.Delete();
             }
 
-            if (!fi.Exists || fi.Length == 0)
-                TraderModel.CreateDatabase(fi.FullName);
+            //if no database exists, create a fresh one
+            if (!databaseInfo.Exists || databaseInfo.Length == 0)
+                TraderModel.CreateDatabase(databaseInfo.FullName);
 
-            if (!staticInfo.Exists)
-                File.Copy(staticRessourceInfo.FullName, staticInfo.FullName);
+            //copy over static.db
+            if (!staticDatabase.Exists)
+                File.Copy(staticDatabaseRessource.FullName, staticDatabase.FullName);
 
 
-            SQLiteConnectionStringBuilder traderModelSqliteBuilder = new SQLiteConnectionStringBuilder();
-            traderModelSqliteBuilder.DataSource = fi.FullName;
+            EntityConnectionStringBuilder traderModelEntityBuilder = CreateConnectionBuilder(databaseInfo.FullName, @"res://*/Model.TraderModel.csdl|res://*/Model.TraderModel.ssdl|res://*/Model.TraderModel.msl");
 
-            EntityConnectionStringBuilder traderModelEntityBuilder = new EntityConnectionStringBuilder();
-            traderModelEntityBuilder.Provider = "System.Data.SQLite";
-            traderModelEntityBuilder.ProviderConnectionString = traderModelSqliteBuilder.ToString();
-            traderModelEntityBuilder.Metadata = @"res://*/Model.TraderModel.csdl|res://*/Model.TraderModel.ssdl|res://*/Model.TraderModel.msl";
+            //Prune incomplete entities, wrongly created transactions etc
+            using (TraderModel tm = new TraderModel(traderModelEntityBuilder))
+                tm.Prune();
 
-            TraderModel tm = new TraderModel(traderModelEntityBuilder);
-            tm.Prune();
-            tm.MetadataWorkspace.LoadFromAssembly(typeof(TraderModel).Assembly);
-            tm.Dispose();
-
-            FileInfo si = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "static.db"));
-
-            SQLiteConnectionStringBuilder staticModelSqliteBuilder = new SQLiteConnectionStringBuilder();
-            staticModelSqliteBuilder.DataSource = si.FullName;
-
-            EntityConnectionStringBuilder staticModelEntityBuilder = new EntityConnectionStringBuilder();
-            staticModelEntityBuilder.Provider = "System.Data.SQLite";
-            staticModelEntityBuilder.ProviderConnectionString = staticModelSqliteBuilder.ToString();
-            staticModelEntityBuilder.Metadata = @"res://*/Model.StaticModel.csdl|res://*/Model.StaticModel.ssdl|res://*/Model.StaticModel.msl";
-
+            EntityConnectionStringBuilder staticModelEntityBuilder = CreateConnectionBuilder(staticDatabase.FullName, @"res://*/Model.StaticModel.csdl|res://*/Model.StaticModel.ssdl|res://*/Model.StaticModel.msl");
 
             base.OnStartup(e);
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
+
             AggregateCatalog catalog = new AggregateCatalog();
             // Add the WpfApplicationFramework assembly to the catalog
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Controller).Assembly));
@@ -125,14 +109,32 @@ namespace EveTrader.Wpf
 
 
             batch.AddExportedValue(container);
+
+            //add connections to the batch
             batch.AddExportedValue("TraderModelConnection", traderModelEntityBuilder);
             batch.AddExportedValue("StaticModelConnection", staticModelEntityBuilder);
+
             container.Compose(batch);
             
             controller = container.GetExportedValue<ApplicationController>();
+
             sw.Stop();
             Debug.WriteLine(sw.Elapsed.TotalSeconds);
+
             controller.Run();
+        }
+
+        private EntityConnectionStringBuilder CreateConnectionBuilder(string source, string metadata)
+        {
+            SQLiteConnectionStringBuilder sqliteBuilder = new SQLiteConnectionStringBuilder();
+            sqliteBuilder.DataSource = source;
+
+            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder();
+            entityBuilder.Provider = "System.Data.SQLite";
+            entityBuilder.ProviderConnectionString = sqliteBuilder.ToString();
+            entityBuilder.Metadata = metadata;
+
+            return entityBuilder;
         }
 
         protected override void OnExit(ExitEventArgs e)

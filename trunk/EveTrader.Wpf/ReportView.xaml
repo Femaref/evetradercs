@@ -33,7 +33,7 @@
                                         EnableEndFilter="{Binding ApplyEndFilter}"
                                         Margin="5,0,5,5"
                                         />
-                <ComboBox x:Name="test" Grid.Column="1" ItemsSource="{Binding Entities}" Width="100" HorizontalAlignment="Right">
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Entities}" Width="100" HorizontalAlignment="Right">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Item.Name}"/>

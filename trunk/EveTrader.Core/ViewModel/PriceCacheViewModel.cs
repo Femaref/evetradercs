@@ -38,32 +38,33 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            Action updater = () =>
-                {
-                    lock (iUpdaterLock)
-                    {
-                        Prices.Clear();
-
-                        var x = iModel.CachedPriceInfo.Select(c => new DisplayPriceCache()
-                            {
-                                TypeID = c.TypeID,
-                                BuyPrice = c.BuyPrice,
-                                SellPrice = c.SellPrice
-                            }).ToList();
-                        x.ForEach(c =>
-                        {
-                            c.TypeName = iStaticData.invTypes.First(ty => ty.typeID == c.TypeID).typeName;
-
-                        });
-                        Prices.AddRange(x.OrderBy(c => c.TypeName));
-                    }
-                };
-            Thread updaterThread = new Thread(new ThreadStart(updater));
+            Thread updaterThread = new Thread(new ThreadStart(this.ThreadedRefresh));
+            updaterThread.Name = "PriceCacheRefresh";
             updaterThread.Start();
 
         }
+        private void ThreadedRefresh()
+        {
+            lock (iUpdaterLock)
+            {
+                Prices.Clear();
 
-        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+                var x = iModel.CachedPriceInfo.Select(c => new DisplayPriceCache()
+                {
+                    TypeID = c.TypeID,
+                    BuyPrice = c.BuyPrice,
+                    SellPrice = c.SellPrice
+                }).ToList();
+                x.ForEach(c =>
+                {
+                    c.TypeName = iStaticData.invTypes.First(ty => ty.typeID == c.TypeID).typeName;
+
+                });
+                Prices.AddRange(x.OrderBy(c => c.TypeName));
+            }
+        }
+
+        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             Refresh();
         }

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using EveTrader.Core.Model;
 using EveTrader.Core.Controllers;
 using System.Threading;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.ViewModel
 {
