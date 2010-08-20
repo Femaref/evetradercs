@@ -8,6 +8,7 @@ using EveTrader.Core.Model;
 using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
 using EveTrader.Core.Collections.ObjectModel;
+using System.Threading;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -15,6 +16,8 @@ namespace EveTrader.Core.ViewModel
     public class ApplicationLogViewModel : ViewModel<IApplicationLogView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
+
+        private object iUpdaterLock = new object();
 
         public SmartObservableCollection<ApplicationLog> Messages {get; private set;}
 
@@ -29,11 +32,20 @@ namespace EveTrader.Core.ViewModel
 
         public void Refresh()
         {
-            Messages.Clear();
-            Messages.AddRange(iModel.ApplicationLog.OrderByDescending(a => a.Date).Take(20));
+            Thread t = new Thread(new ThreadStart(this.ThreadedRefresh));
+            t.Name = "ApplicationLogRefresh";
+            t.Start();
+        }
+        private void ThreadedRefresh()
+        {
+            lock (iUpdaterLock)
+            {
+                Messages.Clear();
+                Messages.AddRange(iModel.ApplicationLog.OrderByDescending(a => a.Date).Take(20));
+            }
         }
 
-        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             Refresh();
         }

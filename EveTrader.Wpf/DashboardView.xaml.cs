@@ -136,7 +136,8 @@ namespace EveTrader.Wpf
 
         void ds_MouseMove(object sender, MouseEventArgs e)
         {
-            RaiseDetailsRequested((sender as DataPoint).XValue as DateTime?, (sender as DataPoint).Parent.DataMappings[1].Path);
+            DataPoint dp = (sender as DataPoint);
+            RaiseDetailsRequested(dp.XValue as DateTime?, dp.Parent.DataMappings[1].Path);
         }
 
         public event EventHandler<DetailsRequestedEventArgs> DetailsRequested;

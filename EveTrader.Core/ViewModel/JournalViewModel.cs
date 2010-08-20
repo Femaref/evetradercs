@@ -120,39 +120,39 @@ namespace EveTrader.Core.ViewModel
         }
         public void Refresh()
         {
-            Action a = () =>
-                {
-                    lock (iCurrentWalletLocker)
-                    {
-                        JournalEntries.Clear();
-
-                        Func<Journal, bool> filter = (j) => true;
-                        if (ApplyStartFilter && ApplyEndFilter)
-                            filter = (j) => j.Date >= StartDate && j.Date <= EndDate;
-                        else if (ApplyStartFilter)
-                            filter = (j) => j.Date >= StartDate;
-                        else
-                            filter = (j) => j.Date <= EndDate;
-
-                        var cache = CurrentWallet.Journal
-                            .Where(filter)
-                            .OrderByDescending(j => j.DateTime).ToList();
-                        JournalEntries.AddRange(cache);
-                    }
-                };
-
-            Thread t = new Thread(new ThreadStart(a));
+            Thread t = new Thread(new ThreadStart(this.ThreadedRefresh));
+            t.Name = "JournalRefresh";
             t.Start();
         }
+        private void ThreadedRefresh()
+        {
+            lock (iCurrentWalletLocker)
+            {
+                JournalEntries.Clear();
 
-        public void DataIncoming(object sender, Controllers.EntitiesUpdatedEventArgs e)
+                Func<Journal, bool> filter = (j) => true;
+                if (ApplyStartFilter && ApplyEndFilter)
+                    filter = (j) => j.Date >= StartDate && j.Date <= EndDate;
+                else if (ApplyStartFilter)
+                    filter = (j) => j.Date >= StartDate;
+                else
+                    filter = (j) => j.Date <= EndDate;
+
+                var cache = CurrentWallet.Journal
+                    .Where(filter)
+                    .OrderByDescending(j => j.DateTime).ToList();
+                JournalEntries.AddRange(cache);
+            }
+        }
+
+        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             RefreshCurrentWallets();
 
             if (CurrentWallet != null && e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name))
                 Refresh();
         }
-        public void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
+        private void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
         {
             Action a = () =>
             {
@@ -160,6 +160,7 @@ namespace EveTrader.Core.ViewModel
             };
 
             Thread t = new Thread(new ThreadStart(a));
+            t.Name = "SelectJournalWallet";
             t.Start();
         }
     }

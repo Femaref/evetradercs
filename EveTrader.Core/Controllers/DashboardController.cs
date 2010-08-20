@@ -5,6 +5,7 @@ using System.Text;
 using System.Waf.Applications;
 using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Controllers
 {

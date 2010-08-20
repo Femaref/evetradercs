@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Threading;
 
 namespace EveTrader.Core.Collections.ObjectModel
 {
@@ -30,12 +31,16 @@ namespace EveTrader.Core.Collections.ObjectModel
 
         private bool iSuspendCollectionChangeNotification;
         private Action<Action> iDispatchingAction;
+
         [DebuggerStepThrough]
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (!iSuspendCollectionChangeNotification)
             {
-                iDispatchingAction(() => base.OnCollectionChanged(e));
+                iDispatchingAction(() =>
+                {
+                    base.OnCollectionChanged(e);
+                });
             }
         }
         [DebuggerStepThrough]
@@ -53,7 +58,6 @@ namespace EveTrader.Core.Collections.ObjectModel
         public void AddRange(IEnumerable<T> items)
         {
             this.SuspendCollectionChangeNotification();
-            int index = base.Count;
             try
             {
                 foreach (var i in items)

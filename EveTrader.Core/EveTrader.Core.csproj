@@ -66,15 +66,15 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\EntitiesUpdatedEventArgs.cs" />
-    <Compile Include="Controllers\IUpdateService.cs" />
+    <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
+    <Compile Include="Services\IUpdateService.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\PriceCacheController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
-    <Compile Include="Controllers\UpdateService.cs" />
+    <Compile Include="Services\UpdateService.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\ISettingsProvider.cs" />
@@ -109,7 +109,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StopwatchAspect.cs" />
     <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterUpdater.cs" />
