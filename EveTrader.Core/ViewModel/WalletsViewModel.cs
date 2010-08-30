@@ -21,8 +21,21 @@ namespace EveTrader.Core.ViewModel
         private readonly TraderModel iModel;
 
         private object iUpdaterLock = new object();
+        private bool iUpdating;
 
         public SmartObservableCollection<DisplayWallets> EntityWallets { get; private set; }
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
 
         [ImportingConstructor]
         public WalletsViewModel(IWalletsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm)

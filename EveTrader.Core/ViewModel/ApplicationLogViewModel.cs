@@ -18,8 +18,21 @@ namespace EveTrader.Core.ViewModel
         private readonly TraderModel iModel;
 
         private object iUpdaterLock = new object();
+        private bool iUpdating;
 
         public SmartObservableCollection<ApplicationLog> Messages {get; private set;}
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
 
         [ImportingConstructor]
         public ApplicationLogViewModel(IApplicationLogView view, [Import(RequiredCreationPolicy=CreationPolicy.NonShared)] TraderModel tm)

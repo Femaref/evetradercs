@@ -32,6 +32,7 @@ namespace EveTrader.Core.ViewModel
         private DateTime iDateBefore = DateTime.MinValue;
         private DateTime iCurrentKey = new DateTime();
         private string iCurrentBindingKey = "";
+        private bool iUpdating;
         
 
         public ICommand FilterWeekCommand { get; private set; }
@@ -44,6 +45,18 @@ namespace EveTrader.Core.ViewModel
         public SmartObservableCollection<DisplayDetail> Investment { get; private set; }
         public SmartObservableCollection<DisplayDetail> Sales { get; private set; }
         public SmartObservableCollection<DisplayDetail> Profit { get; private set; }
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
 
         public int WorkingCount
         {

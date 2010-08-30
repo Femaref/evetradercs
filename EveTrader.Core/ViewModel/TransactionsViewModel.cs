@@ -21,6 +21,7 @@ namespace EveTrader.Core.ViewModel
 
         private Wallets iCurrentWallet;
         private ISettingsProvider iSettings;
+        private bool iUpdating;
 
         public SmartObservableCollection<Transactions> Transactions { get; private set; }
         public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
@@ -80,6 +81,18 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("StartDate");
                 if (ApplyEndFilter)
                     Refresh();
+            }
+        }
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
             }
         }
 
