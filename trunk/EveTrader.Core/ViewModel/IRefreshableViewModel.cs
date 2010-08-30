@@ -10,5 +10,6 @@ namespace EveTrader.Core.ViewModel
     {
         void Refresh();
         void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e);
+        bool Updating { get; }
     }
 }

@@ -9,9 +9,11 @@
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
     xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+    xmlns:data="clr-namespace:EveTrader.Wpf.Data"
     Width="Auto" Height="Auto">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <data:UpdatingCollectionViewSource x:Key="iDashboardData" Updating="{Binding Updating}" Source="{Binding DailyInfo}"/>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>

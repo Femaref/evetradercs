@@ -23,6 +23,7 @@ namespace EveTrader.Core.ViewModel
         private ISettingsProvider iSettings;
 
         private object iCurrentWalletLocker = new object();
+        private bool iUpdating;
 
         public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
         public SmartObservableCollection<Journal> JournalEntries { get; private set; }
@@ -83,6 +84,18 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("StartDate");
                 if (ApplyEndFilter)
                     Refresh();
+            }
+        }
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
             }
         }
 

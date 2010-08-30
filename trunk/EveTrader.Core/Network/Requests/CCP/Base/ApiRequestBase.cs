@@ -10,11 +10,17 @@ using EveTrader.Core.ClassExtenders;
 
 namespace EveTrader.Core.Network.Requests.CCP
 {
+    /// <summary>
+    /// Provides infrastructure to query Eve API
+    /// </summary>
+    /// <typeparam name="T">Specifies the output</typeparam>
     public abstract class ApiRequestBase<T>
     {
         protected Dictionary<string, string> iData = new Dictionary<string, string>();
-
-        protected readonly ApiRequestTarget iTarget;
+        private XDocument iCachedResponseXml = null;
+        private readonly ApiRequestTarget iTarget;
+        private Func<string, TimeSpan, bool> iStillCached;
+        private Action<string, DateTime, string> iSaveCache;
 
         protected ApiRequestBase(ApiRequestTarget target, Func<string, TimeSpan, bool> stillCached, Action<string, DateTime, string> saveCache, Func<string, string> loadCache)
         {
@@ -45,8 +51,6 @@ namespace EveTrader.Core.Network.Requests.CCP
             }
         }
 
-        private XDocument iCachedResponseXml = null;
-
         private XDocument GetRequestXml()
         {
             if (iCachedResponseXml != null)
@@ -55,13 +59,11 @@ namespace EveTrader.Core.Network.Requests.CCP
             if (this.StillCached)
                 return XDocument.Parse(this.LoadCache());
 
-
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(Identifier);
 
             req.UserAgent = "EveTrader/1.2.5";
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
-
 
             byte[] postData = Encoding.Default.GetBytes(this.Data);
             req.ContentLength = postData.Length;
@@ -85,11 +87,7 @@ namespace EveTrader.Core.Network.Requests.CCP
 
         private const string BaseIdentifier = @"http://api.eve-online.com/{0}/{1}.xml.aspx";
 
-
-        private Func<string, TimeSpan, bool> iStillCached;
-        private Action<string, DateTime, string> iSaveCache;
-
-        private void SaveCache (DateTime time, string data)
+        private void SaveCache(DateTime time, string data)
         {
             this.iSaveCache(this.Identifier.ToString() + "?" + this.Data, time, data);
         }
@@ -105,6 +103,7 @@ namespace EveTrader.Core.Network.Requests.CCP
         {
             get { return iTarget; }
         }
+
         public abstract ApiRequestPage Page { get; }
 
         public Uri Identifier
@@ -115,8 +114,7 @@ namespace EveTrader.Core.Network.Requests.CCP
                     string.Format(
                                 BaseIdentifier,
                                 Target.StringValue(),
-                                Page.StringValue())
-                    );
+                                Page.StringValue()));
             }
         }
 
@@ -136,12 +134,11 @@ namespace EveTrader.Core.Network.Requests.CCP
             get
             {
                 if (this.CachedResponseXml.Descendants().Where(x => x.Name == "error").Count() > 0)
-                    return this.CachedResponseXml.Descendants().First(x=>x.Name == "error").Value;
+                    return this.CachedResponseXml.Descendants().First(x => x.Name == "error").Value;
                 else
                     return "";
             }
         }
-
 
         public DateTime CurrentTime
         {

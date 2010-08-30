@@ -21,8 +21,21 @@ namespace EveTrader.Core.ViewModel
         private readonly StaticModel iStaticData;
 
         private object iUpdaterLock = new object();
+        private bool iUpdating;
 
         public SmartObservableCollection<DisplayPriceCache> Prices { get; private set; }
+        public bool Updating
+        {
+            get
+            {
+                return iUpdating;
+            }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
 
         [ImportingConstructor]
         public PriceCacheViewModel(IPriceCacheView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, StaticModel sm)

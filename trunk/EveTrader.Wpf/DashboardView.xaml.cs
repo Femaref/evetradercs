@@ -37,6 +37,7 @@ namespace EveTrader.Wpf
             binding.Mode = BindingMode.OneWay;
             TrendLine trendLine = iPrimaryChart.TrendLines[0];
 
+
             trendLine.SetBinding(TrendLine.ValueProperty, binding); 
         }
 
@@ -95,8 +96,8 @@ namespace EveTrader.Wpf
                 }
             };
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            Binding b = new Binding("DailyInfo");
-            b.Source = this.DataContext;
+            Binding b = new Binding("");
+            b.Source = this.Resources["iDashboardData"];
             ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }
@@ -128,8 +129,8 @@ namespace EveTrader.Wpf
             };
 
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            Binding b = new Binding("DailyInfo");
-            b.Source = this.DataContext;
+            Binding b = new Binding("");
+            b.Source = this.Resources["iDashboardData"];
             ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }

@@ -1,18 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Waf.Applications;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Waf.Applications;
+using System.Windows.Input;
 using EveTrader.Core.Model;
+using EveTrader.Core.Updater.CCP;
 using EveTrader.Core.View;
 using EveTrader.Core.ViewModel;
-using System.Windows.Input;
-using System.ComponentModel.Composition.Hosting;
-using EveTrader.Core.Updater.CCP;
-using System.Threading;
-using System.Reflection;
 
 namespace EveTrader.Core.Controllers
 {
@@ -41,11 +40,9 @@ namespace EveTrader.Core.Controllers
 
         private readonly List<Controller> iControllers = new List<Controller>();
        
-
-
-
         [ImportingConstructor]
-        public ApplicationController(MainWindowViewModel mainView,
+        public ApplicationController(
+            MainWindowViewModel mainView,
             TraderModel tm,
             StaticModel sm,
             CompositionContainer container,
@@ -86,7 +83,7 @@ namespace EveTrader.Core.Controllers
             mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
         }
 
-        void iModel_TablesChanged(object sender, TablesChangedEventArgs e)
+        private void iModel_TablesChanged(object sender, TablesChangedEventArgs e)
         {
             if ((e.ChangedTables & Tables.ApplicationLog) == Tables.ApplicationLog)
                 iApplicationLogController.Refresh();
