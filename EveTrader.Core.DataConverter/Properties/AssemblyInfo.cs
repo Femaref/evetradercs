@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Elvian Empire")]
-[assembly: AssemblyProduct("EveTrader.Core.DataConverter")]
+[assembly: AssemblyProduct("EveTrader")]
 [assembly: AssemblyCopyright("Copyright © Elvian Empire 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -15,14 +15,67 @@ using MoreLinq;
 using EveTrader.Core.Controllers;
 using EveTrader.Core.Updater.CCP;
 using EveTrader.Core.Services;
+using System.Windows.Input;
 
 namespace EveTrader.Core.ViewModel
 {
-    public class ManageAccountsViewModel : ViewModel<IManageAccountsView>
+    public class ManageAccountsViewModel : ViewModel<IManageAccountsView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
         private readonly IUpdateService iUpdater;
         private readonly EntityFactory iFactory;
+
+        private ICommand iRequestDataCommand;
+        private ICommand iAbortRequestCommand;
+        private ICommand iAddCharactersCommand;
+
+        private object iUpdaterLock = new object();
+
+        public ICommand RequestDataCommand
+        {
+            get { return iRequestDataCommand; }
+        }
+        public ICommand AbortRequestCommand
+        {
+            get { return iAbortRequestCommand; }
+        }
+
+        public ICommand AddCharactersCommand
+        {
+            get { return iAddCharactersCommand; }
+        }
+
+        private long iCurrentUserID;
+
+        public long CurrentUserID
+        {
+            get { return iCurrentUserID; }
+            set
+            {
+                lock (iUpdaterLock)
+                {
+                    iCurrentUserID = value;
+                    RaisePropertyChanged("CurrentUserID");
+                }
+            }
+        }
+
+        private string iCurrentApiKey;
+
+        public string CurrentApiKey
+        {
+            get { return iCurrentApiKey; }
+            set
+            {
+                lock (iUpdaterLock)
+                {
+                    iCurrentApiKey = value;
+                    RaisePropertyChanged("CurrentApiKey");
+                }
+            }
+        }
+
+
 
         private bool iDataRequestable = false;
         
@@ -41,7 +94,7 @@ namespace EveTrader.Core.ViewModel
             {
                 return iDataRequestable;
             }
-            set
+            private set
             {
                 iDataRequestable = value;
                 RaisePropertyChanged("DataRequestable");
@@ -60,9 +113,11 @@ namespace EveTrader.Core.ViewModel
             RequestedCharacters = new SmartObservableCollection<Selectable<Characters>>(view.Invoke);
             DataRequestable = true;
             view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
-            view.DataRequested += new EventHandler<CharacterDataRequestedEventArgs>(view_DataRequested);
-            view.AddCharacters += new EventHandler(view_AddCharacters);
-            view.AbortRequest += new EventHandler(view_AbortRequest);
+
+            iRequestDataCommand = new DelegateCommand(RequestData, () => DataRequestable);
+            iAbortRequestCommand = new DelegateCommand(AbortRequest);
+            iAddCharactersCommand = new DelegateCommand(AddCharacters, () => DataPresent);
+
             Refresh();
         }
 
@@ -80,53 +135,58 @@ namespace EveTrader.Core.ViewModel
             iModel.Entity.OfType<Characters>().ToList().ForEach(x => CurrentCharacters.Add(x));
         }
 
-        private void view_AbortRequest(object sender, EventArgs e)
+        private void RequestData()
         {
-            RequestedCharacters.Clear();
-            DataRequestable = false;
-            RaisePropertyChanged("DataPresent");
-        }
-        private void view_AddCharacters(object sender, EventArgs e)
-        {
-            long id = RequestedCharacters.First().Item.Account.ID;
-            Accounts account = iModel.Accounts.First(a => a.ID == id);
-            account.Entities.Clear();
-            foreach (Characters c in RequestedCharacters.Where(s => s.IsSelected))
+            lock (iUpdaterLock)
             {
-                Characters cache = iFactory.CreateCharacter(c.ID, account);
-                cache.Corporation = iFactory.CreateCorporation(c.Corporation.ID, account, c.ID);
+                var account = iModel.Accounts.Where(a => a.ID == CurrentUserID).FirstOrDefault();
+                if (account == null)
+                {
+                    account = new Accounts() { ID = CurrentUserID, ApiKey = CurrentApiKey };
+                    iModel.Accounts.AddObject(account);
+                }
+                if (account.ApiKey != CurrentApiKey)
+                    account.ApiKey = CurrentApiKey;
                 iModel.SaveChanges();
 
-                iUpdater.Update(cache);
-                iUpdater.Update(cache.Corporation);
+                CharacterListRequest clr = new CharacterListRequest(new Accounts() { ID = account.ID, ApiKey = account.ApiKey }, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
+                var requestedCharacters = clr.Request().Select(c => new Selectable<Characters>(c, false));
+
+                RequestedCharacters.AddRange(requestedCharacters);
+
+                DataRequestable = false;
+                RaisePropertyChanged("DataPresent");
             }
-            
-
-
-
-            RequestedCharacters.Clear();
-            DataRequestable = false;
-            RaisePropertyChanged("DataPresent");
         }
-        private void view_DataRequested(object sender, CharacterDataRequestedEventArgs e)
+        private void AbortRequest()
         {
-            var account = iModel.Accounts.Where(a => a.ID == e.UserID).FirstOrDefault();
-            if (account == null)
+            lock (iUpdaterLock)
             {
-                account = new Accounts() { ID = e.UserID, ApiKey = e.ApiKey };
-                iModel.Accounts.AddObject(account);
+                RequestedCharacters.Clear();
+                DataRequestable = false;
+                RaisePropertyChanged("DataPresent");
             }
-            if (account.ApiKey != e.ApiKey)
-                account.ApiKey = e.ApiKey;
-            iModel.SaveChanges();
+        }
+        private void AddCharacters()
+        {
+            lock (iUpdaterLock)
+            {
+                long id = RequestedCharacters.First().Item.Account.ID;
+                Accounts account = iModel.Accounts.First(a => a.ID == id);
+                account.Entities.Clear();
+                foreach (Characters c in RequestedCharacters.Where(s => s.IsSelected))
+                {
+                    Characters cache = iFactory.CreateCharacter(c.ID, account);
+                    cache.Corporation = iFactory.CreateCorporation(c.Corporation.ID, account, c.ID);
+                    iModel.SaveChanges();
 
-            CharacterListRequest clr = new CharacterListRequest(new Accounts() { ID = account.ID, ApiKey = account.ApiKey }, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
-            var requestedCharacters = clr.Request().Select(c => new Selectable<Characters>(c, false));
-
-            RequestedCharacters.AddRange(requestedCharacters);
-
-            DataRequestable = false;
-            RaisePropertyChanged("DataPresent");
+                    iUpdater.Update(cache);
+                    iUpdater.Update(cache.Corporation);
+                }
+                RequestedCharacters.Clear();
+                DataRequestable = false;
+                RaisePropertyChanged("DataPresent");
+            }
         }
         private void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -140,5 +200,20 @@ namespace EveTrader.Core.ViewModel
         }
 
         public event CancelEventHandler Closing;
+
+        #region IRefreshableViewModel Members
+
+
+        public void DataIncoming(object sender, EntitiesUpdatedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Updating
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }

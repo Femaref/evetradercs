@@ -190,5 +190,32 @@ namespace EveTrader.Wpf.Properties {
                 this["TransactionsApplyEndFilter"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://femaref.killmail.de/evetrader/")]
+        public string BaseUri {
+            get {
+                return ((string)(this["BaseUri"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("binary.xml")]
+        public string BinaryUri {
+            get {
+                return ((string)(this["BinaryUri"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("static.xml")]
+        public string StaticUri {
+            get {
+                return ((string)(this["StaticUri"]));
+            }
+        }
     }
 }
