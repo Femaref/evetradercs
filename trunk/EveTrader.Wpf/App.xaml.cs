@@ -117,8 +117,8 @@ namespace EveTrader.Wpf
 
             container.Compose(batch);
 
-            var updater = container.GetExportedValue<IApplicationUpdateService>();
-            updater.CheckUpdate();
+           // var updater = container.GetExportedValue<IApplicationUpdateService>();
+           // updater.CheckUpdate();
             
             controller = container.GetExportedValue<ApplicationController>();
 

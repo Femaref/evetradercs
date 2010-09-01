@@ -17,6 +17,10 @@ namespace EveTrader.Core.Services
         private IApplicationUpdateInfo iUpdateInfo;
         private Uri iBasePath;
 
+        private List<UpdateFile> iFiles = new List<UpdateFile>();
+
+        private object iUpdaterLock = new object();
+
         [ImportingConstructor]
         public ApplicationUpdateService(IApplicationUpdateInfo info)
         {
@@ -28,31 +32,32 @@ namespace EveTrader.Core.Services
 
         public IEnumerable<UpdateFile> CheckUpdate()
         {
-            List<UpdateFile> output = new List<UpdateFile>();
-
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            Uri binaryXmlPath;
-
-            Uri.TryCreate(iBasePath, iUpdateInfo.BinaryUri, out binaryXmlPath);
-
-            var ass = assemblies.Where(a => !a.IsDynamic && Path.GetFileName(a.Location) == "EveTrader.Wpf.exe").SingleOrDefault();
-
-            var files = ParseXml(binaryXmlPath);
-
-            foreach (UpdateFile uf in files)
+            lock (iUpdaterLock)
             {
-                Assembly currentAssembly = assemblies.Where(a => !a.IsDynamic && Path.GetFileName(a.Location) == uf.Name).SingleOrDefault();
-                string version = currentAssembly.GetAttribute<AssemblyFileVersionAttribute>().Version;
+                iFiles.Clear();
 
-                Version current = new Version(version);
-                Version target = new Version(uf.Version);
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-                if (target > current)
-                    output.Add(uf);
+                Uri binaryXmlPath;
+
+                Uri.TryCreate(iBasePath, iUpdateInfo.BinaryUri, out binaryXmlPath);
+
+                var files = ParseXml(binaryXmlPath);
+
+                foreach (UpdateFile uf in files)
+                {
+                    Assembly currentAssembly = assemblies.Where(a => !a.IsDynamic && Path.GetFileName(a.Location) == uf.Name).SingleOrDefault();
+                    string version = currentAssembly.GetAttribute<AssemblyFileVersionAttribute>().Version;
+
+                    Version current = new Version(version);
+                    Version target = new Version(uf.Version);
+
+                    if (target > current)
+                        iFiles.Add(uf);
+                }
+
+                return iFiles;
             }
-
-            return output;
         }
 
         private IEnumerable<UpdateFile> ParseXml(Uri binaryXmlPath)
@@ -62,9 +67,9 @@ namespace EveTrader.Core.Services
             return new List<UpdateFile>();
         }
 
-        private string DownloadXml(Uri binaryXmlPath)
+        private string DownloadXml(Uri xmlUri)
         {
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(binaryXmlPath);
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(xmlUri);
             req.Method = "GET";
             req.UserAgent = "EveTrader";
             req.MediaType = "text/xml";
@@ -72,12 +77,60 @@ namespace EveTrader.Core.Services
             using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
             using (StreamReader reader = new StreamReader(res.GetResponseStream()))
             {
-                    return reader.ReadToEnd();
+                return reader.ReadToEnd();
+            }
+        }
+
+        private byte[] DownloadBinary(Uri binaryUri)
+        {
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(binaryUri);
+            req.Method = "GET";
+            req.UserAgent = "EveTrader";
+            req.MediaType = "text/xml";
+
+            using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
+            using (Stream s = res.GetResponseStream())
+            {
+                byte[] buffer = new byte[res.ContentLength];
+                s.Read(buffer, 0, (int)res.ContentLength);
+                return buffer;
             }
         }
 
         public void Update()
         {
+            lock (iUpdaterLock)
+            {
+                DirectoryInfo tempPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "EveTrader"));
+                try
+                {
+                    if (!tempPath.Exists)
+                        tempPath.Create();
+
+                    foreach (UpdateFile uf in this.iFiles)
+                    {
+                        Uri binaryPath;
+                        Uri.TryCreate(iBasePath, uf.RelativePath, out binaryPath);
+
+                        byte[] data = DownloadBinary(binaryPath);
+
+                        FileInfo filePath = new FileInfo(Path.Combine(tempPath.FullName, uf.Name));
+
+                        using(FileStream fs = new FileStream(filePath.FullName, FileMode.Create))
+                        using (BinaryWriter bw = new BinaryWriter(fs))
+                        {
+                            bw.Write(data);
+                        }
+                        string destPath = Path.Combine(this.iUpdateInfo.ApplicationPath, uf.Name);
+
+                        filePath.MoveTo(destPath);
+                    }
+                }
+                finally
+                {
+                    tempPath.Delete(true);
+                }
+            }
         }
 
         #endregion
