@@ -10,5 +10,6 @@ namespace EveTrader.Core.Services
         string BaseUri { get; }
         string BinaryUri { get; }
         string StaticUri { get; }
+        string ApplicationPath { get; }
     }
 }

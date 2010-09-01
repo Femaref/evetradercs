@@ -15,6 +15,9 @@
 #>
 using EveTrader.Core.Services;
 using System.ComponentModel.Composition;
+using System.Reflection;
+using System.IO;
+
 namespace EveTrader.Wpf
 {
 	[Export(typeof(IApplicationUpdateInfo))]
@@ -25,6 +28,8 @@ namespace EveTrader.Wpf
 var properties = typeof(IApplicationUpdateInfo).GetProperties();
 foreach(PropertyInfo p in properties)
 { 
+	if(p.Name == "ApplicationPath")
+		continue;
 #>		
 		public <#=p.PropertyType#> <#=p.Name#>
 		{
@@ -52,5 +57,12 @@ foreach(PropertyInfo p in properties)
 		}		
 <#	
 }#>
+		public string ApplicationPath
+		{
+			get
+			{
+				 return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			}
+		}
 	}
 }
