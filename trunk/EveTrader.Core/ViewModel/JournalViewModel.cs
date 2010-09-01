@@ -141,6 +141,7 @@ namespace EveTrader.Core.ViewModel
         {
             lock (iCurrentWalletLocker)
             {
+                Updating = true;
                 JournalEntries.Clear();
 
                 Func<Journal, bool> filter = (j) => true;
@@ -155,6 +156,7 @@ namespace EveTrader.Core.ViewModel
                     .Where(filter)
                     .OrderByDescending(j => j.DateTime).ToList();
                 JournalEntries.AddRange(cache);
+                Updating = false;
             }
         }
 

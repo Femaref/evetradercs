@@ -12,7 +12,7 @@
     <AssemblyName>EveTrader.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AlwaysCompileMarkupFilesInSeparateDomain>false</AlwaysCompileMarkupFilesInSeparateDomain>
-    <ApplicationIcon>Application.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Intelligence.ico</ApplicationIcon>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -57,6 +57,17 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FullPush|AnyCPU'">
+    <OutputPath>bin\FullPush\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -98,6 +109,11 @@
     </Compile>
     <Compile Include="ApplicationLogView.xaml.cs">
       <DependentUpon>ApplicationLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUpdateInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicationUpdateInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="AssemblySettingsProvider.cs">
       <AutoGen>True</AutoGen>
@@ -150,6 +166,10 @@
     <Compile Include="WalletsView.xaml.cs">
       <DependentUpon>WalletsView.xaml</DependentUpon>
     </Compile>
+    <None Include="ApplicationUpdateInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ApplicationUpdateInfo.cs</LastGenOutput>
+    </None>
     <None Include="AssemblySettingsProvider.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblySettingsProvider.cs</LastGenOutput>

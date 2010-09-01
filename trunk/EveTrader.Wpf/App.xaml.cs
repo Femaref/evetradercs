@@ -18,6 +18,7 @@ using EveTrader.Core.Model;
 using System.Data.SQLite;
 using System.Data.EntityClient;
 using System.EnterpriseServices.Internal;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Wpf
 {
@@ -115,6 +116,9 @@ namespace EveTrader.Wpf
             batch.AddExportedValue("StaticModelConnection", staticModelEntityBuilder);
 
             container.Compose(batch);
+
+            var updater = container.GetExportedValue<IApplicationUpdateService>();
+            updater.CheckUpdate();
             
             controller = container.GetExportedValue<ApplicationController>();
 

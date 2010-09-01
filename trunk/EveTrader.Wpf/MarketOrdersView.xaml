@@ -81,28 +81,16 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
             <Label Grid.Row="0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Total Buy Order ISK "/>
-                    <TextBlock Text="{Binding TotalBuyOrders, StringFormat=n}" />
-                </StackPanel>
+                    <TextBlock Text="{Binding TotalBuyOrders, StringFormat=Total Buy Order ISK: {0:n}, FallbackValue=0.00}" />
             </Label>
             <Label Grid.Row="1" Margin="0,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Total Sell Order ISK "/>
-                    <TextBlock Text="{Binding TotalSellOrders, StringFormat=n}"  />
-                </StackPanel>
+                    <TextBlock Text="{Binding TotalSellOrders, StringFormat=Total Sell Order ISK: {0:n}, FallbackValue=0.00}"  />
             </Label>
             <Label Grid.Row="0" Grid.Column="1" Margin="0,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Remaining Buy Order ISK "/>
-                    <TextBlock Text="{Binding RemainingBuyOrders, StringFormat=n}"  />
-                </StackPanel>
+                    <TextBlock Text="{Binding RemainingBuyOrders, StringFormat=Remaining Buy Order ISK: {0:n}, FallbackValue=0.00}"  />
             </Label>
             <Label Grid.Row="1" Grid.Column="1" Margin="0,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Remaining Sell Order ISK "/>
-                    <TextBlock Text="{Binding RemainingSellOrders, StringFormat=n}"  />
-                </StackPanel>
+                    <TextBlock Text="{Binding RemainingSellOrders, StringFormat=Remaining Sell Order ISK: {0:n}, FallbackValue=0.00}"  />
             </Label>
         </Grid>
     </Grid>

@@ -56,6 +56,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassExtenders\AssemblyExtender.cs" />
     <Compile Include="ClassExtenders\DateTimeExtender.cs" />
     <Compile Include="ClassExtenders\DecimalExtender.cs" />
     <Compile Include="ClassExtenders\DoubleExtender.cs" />
@@ -66,7 +67,10 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Services\ApplicationUpdateService.cs" />
     <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
+    <Compile Include="Services\IApplicationUpdateInfo.cs" />
+    <Compile Include="Services\IApplicationUpdateService.cs" />
     <Compile Include="Services\IUpdateService.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
@@ -74,6 +78,7 @@
     <Compile Include="Controllers\PriceCacheController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Services\UpdateFile.cs" />
     <Compile Include="Services\UpdateService.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
@@ -202,6 +207,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tables.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

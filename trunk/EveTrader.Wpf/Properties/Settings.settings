@@ -44,5 +44,14 @@
     <Setting Name="TransactionsApplyEndFilter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="BaseUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://femaref.killmail.de/evetrader/</Value>
+    </Setting>
+    <Setting Name="BinaryUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">binary.xml</Value>
+    </Setting>
+    <Setting Name="StaticUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">static.xml</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

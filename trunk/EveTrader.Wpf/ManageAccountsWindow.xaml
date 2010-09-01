@@ -22,13 +22,13 @@
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,3">
                         <Label Content="UserID" Margin="0,0,2,0"/>
-                        <TextBox x:Name="iUserID" MinWidth="100" />
+                        <TextBox x:Name="iUserID" MinWidth="100" Text="{Binding CurrentUserID}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,3">
                         <Label Content="ApiKey" Margin="0,0,2,0" />
-                        <TextBox x:Name="iApiKey" MinWidth="100"/>
+                        <TextBox x:Name="iApiKey" MinWidth="100" Text="{Binding CurrentApiKey}"/>
                     </StackPanel>
-                    <Button IsEnabled="{Binding DataRequestable}" x:Name="iSubmitDetails" Content="Submit" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="0,3" Click="iSubmitDetails_Click"/>
+                    <Button IsEnabled="{Binding DataRequestable}" x:Name="iSubmitDetails" Content="Submit" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="0,3" Command="{Binding RequestDataCommand}"/>
                     <Grid Grid.Row="3" Visibility="{Binding Path=DataPresent, Converter={StaticResource boolToVis}}" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -42,10 +42,10 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <Button Grid.Row="1" Width="100" HorizontalAlignment="Left" Content="Add characters" x:Name="iAddCharacters" Click="iAddCharacters_Click"/>
+                        <Button Grid.Row="1" Width="100" HorizontalAlignment="Left" Content="Add characters" x:Name="iAddCharacters" Command="{Binding AddCharacters}"/>
                     </Grid>
                     <Separator Grid.Row="4" VerticalAlignment="Top"></Separator>
-                    <Button Grid.Row="4" Content="Abort Request" Click="iAbortRequest_Click" x:Name="iAbortRequest" Width="100" HorizontalAlignment="Left" Margin="0,3"/>
+                    <Button Grid.Row="4" Content="Abort Request" x:Name="iAbortRequest" Width="100" HorizontalAlignment="Left" Margin="0,3" Command="AbortCommand"/>
                 </Grid>
             </TabItem>
                 <TabItem Header="Current Characters">
