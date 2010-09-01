@@ -97,6 +97,21 @@ namespace EveTrader.Core.Services
             }
         }
 
+        private string GetMD5Hash(byte[] input)
+        {
+            System.Security.Cryptography.MD5CryptoServiceProvider provider = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] data = input;
+
+            data = provider.ComputeHash(data);
+            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+
+            foreach (byte b in data)
+            {
+                builder.Append(b.ToString("x2").ToLower());
+            }
+            return builder.ToString();
+        }
+
         public void Update()
         {
             lock (iUpdaterLock)
@@ -121,9 +136,13 @@ namespace EveTrader.Core.Services
                         {
                             bw.Write(data);
                         }
-                        string destPath = Path.Combine(this.iUpdateInfo.ApplicationPath, uf.Name);
 
+                        if (uf.Checksum != GetMD5Hash(data))
+                            throw new Exception("Hash doesn't match!"); // needs better exception
+
+                        string destPath = Path.Combine(this.iUpdateInfo.ApplicationPath, uf.Name);
                         filePath.MoveTo(destPath);
+
                     }
                 }
                 finally
