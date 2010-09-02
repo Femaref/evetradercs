@@ -30,7 +30,6 @@ namespace EveTrader.Wpf
             x.GroupDescriptions.Add(new PropertyGroupDescription("Date"));
         }
 
-
         #region IExtendedView Members
 
         public void Invoke(Action action)

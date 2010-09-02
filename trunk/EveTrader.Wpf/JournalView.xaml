@@ -17,6 +17,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <ctrl:TimeframeSelector HorizontalAlignment="Left" StartDate="{Binding StartDate}" EndDate="{Binding EndDate}" EnableStartFilter="{Binding ApplyStartFilter}" EnableEndFilter="{Binding ApplyEndFilter}" Margin="5,0,5,5"/>
+            <Button Content="Load" HorizontalAlignment="Center" Command="{Binding LoadCommand}"/>
             <ComboBox Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentWallets}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="DisplayName"/>
         </Grid>
         
@@ -35,18 +36,6 @@
                 <DataGridTextColumn Binding="{Binding Path=Reason}" Header="Reason" />
                 <DataGridTextColumn Binding="{Binding Path=TaxAmount, StringFormat=n}" Header="TaxAmount" />
             </DataGrid.Columns>
-            <!--<DataGrid.Style>
-                <Style TargetType="DataGrid">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Updating}" Value="true">
-                            <Setter Property="ItemsSource" Value="UnsetValue"  />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Updating}" Value="false">
-                            <Setter Property="ItemsSource" Value="{Binding Source={StaticResource iGroupedJournal}}" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.Style>-->
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

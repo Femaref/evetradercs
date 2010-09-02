@@ -142,7 +142,6 @@ namespace EveTrader.Core.Services
 
                         string destPath = Path.Combine(this.iUpdateInfo.ApplicationPath, uf.Name);
                         filePath.MoveTo(destPath);
-
                     }
                 }
                 finally

@@ -39,7 +39,7 @@ namespace EveTrader.Wpf
         protected override void OnStartup(StartupEventArgs e)
         {
             
-#if (DEBUG != true)
+#if (!DEBUG)
             // Don't handle the exceptions in Debug mode because otherwise the Debugger wouldn't
             // jump into the code when an exception occurs.
             DispatcherUnhandledException += AppDispatcherUnhandledException;
