@@ -11,6 +11,7 @@ using MoreLinq;
 using System.Threading;
 using System.Data.Objects.SqlClient;
 using EveTrader.Core.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -24,6 +25,7 @@ namespace EveTrader.Core.ViewModel
 
         private object iCurrentWalletLocker = new object();
         private bool iUpdating;
+        private bool iLoaded;
 
         public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
         public SmartObservableCollection<Journal> JournalEntries { get; private set; }
@@ -42,7 +44,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.JournalApplyStartFilter = value;
                 RaisePropertyChanged("ApplyStartFilter");
-                Refresh();
             }
         }
         public bool ApplyEndFilter
@@ -55,7 +56,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.JournalApplyEndFilter = value;
                 RaisePropertyChanged("ApplyEndFilter");
-                Refresh();
             }
         }
         public DateTime StartDate
@@ -68,8 +68,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.JournalStartDate = value;
                 RaisePropertyChanged("StartDate");
-                if (ApplyStartFilter)
-                    Refresh();
             }
         }
         public DateTime EndDate
@@ -82,8 +80,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.JournalEndDate = value;
                 RaisePropertyChanged("StartDate");
-                if (ApplyEndFilter)
-                    Refresh();
             }
         }
         public bool Updating
@@ -98,6 +94,7 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("Updating");
             }
         }
+        public ICommand LoadCommand { get; private set; }
 
         [ImportingConstructor]
         public JournalViewModel(IJournalView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
@@ -108,6 +105,7 @@ namespace EveTrader.Core.ViewModel
             JournalEntries = new SmartObservableCollection<Journal>(ViewCore.BeginInvoke);
             CurrentWallets = new SmartObservableCollection<Wallets>(ViewCore.BeginInvoke);
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(view_EntitySelectionChanged);
+            LoadCommand = new DelegateCommand(Refresh, () => !Updating);
 
             RefreshCurrentWallets();
             SelectWallet(CurrentWallets.FirstOrDefault());
@@ -123,8 +121,6 @@ namespace EveTrader.Core.ViewModel
                 iCurrentWallet = w;
                 RaisePropertyChanged("CurrentWallet");
             }
-
-            Refresh();
         }
         private void RefreshCurrentWallets()
         {
@@ -141,6 +137,7 @@ namespace EveTrader.Core.ViewModel
         {
             lock (iCurrentWalletLocker)
             {
+                iLoaded = true;
                 Updating = true;
                 JournalEntries.Clear();
 
@@ -164,7 +161,7 @@ namespace EveTrader.Core.ViewModel
         {
             RefreshCurrentWallets();
 
-            if (CurrentWallet != null && e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name))
+            if (CurrentWallet != null && e.UpdatedEntities.Any(en => en.Name == CurrentWallet.Entity.Name) && iLoaded)
                 Refresh();
         }
         private void view_EntitySelectionChanged(object sender, EntitySelectionChangedEventArgs<Wallets> e)
