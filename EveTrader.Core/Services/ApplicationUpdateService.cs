@@ -47,6 +47,13 @@ namespace EveTrader.Core.Services
                 foreach (UpdateFile uf in files)
                 {
                     Assembly currentAssembly = assemblies.Where(a => !a.IsDynamic && Path.GetFileName(a.Location) == uf.Name).SingleOrDefault();
+
+                    if (currentAssembly == null)
+                    {
+                        iFiles.Add(uf);
+                        continue;
+                    }
+
                     string version = currentAssembly.GetAttribute<AssemblyFileVersionAttribute>().Version;
 
                     Version current = new Version(version);
@@ -64,7 +71,15 @@ namespace EveTrader.Core.Services
         {
             XElement root = XElement.Parse(DownloadXml(binaryXmlPath));
 
-            return new List<UpdateFile>();
+            return root.Elements().Select(x => new UpdateFile
+                {
+                     Name = x.Attribute("name").Value,
+                     Checksum = x.Attribute("checksum").Value,
+                     Compressed = bool.Parse(x.Attribute("compressed").Value),
+                     RelativePath = new Uri(x.Attribute("relativeUri").Value, UriKind.Relative),
+                     TargetArchitecture = (Architecture)Enum.Parse(typeof(Architecture), x.Attribute("targetArchitecture").Value),
+                     Version = x.Attribute("version").Value
+                });
         }
 
         private string DownloadXml(Uri xmlUri)
@@ -86,7 +101,7 @@ namespace EveTrader.Core.Services
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(binaryUri);
             req.Method = "GET";
             req.UserAgent = "EveTrader";
-            req.MediaType = "text/xml";
+            req.MediaType = "application/octet-stream";
 
             using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
             using (Stream s = res.GetResponseStream())

@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
              mc:Ignorable="d"
-             Loaded="TimeframeSelector_Loaded"
              >
        <Grid>
             <Grid.ColumnDefinitions>
@@ -17,18 +16,30 @@
             <DatePicker Grid.Column="0" x:Name="iStartDate"
                         Text="Start Date" 
                         HorizontalAlignment="Center" 
-                        Width="100" Margin="5,0" Padding="2" />
+                        Width="100" Margin="5,0" Padding="2" 
+                        SelectedDate="{Binding Path=StartDate, 
+                                          RelativeSource={RelativeSource Mode=FindAncestor, 
+                                          AncestorType={x:Type ctrl:TimeframeSelector}}}"/>
             <CheckBox Grid.Column="1" x:Name="iEnableStartFilter" 
                       Content="Apply Start Date filter" 
                       VerticalAlignment="Center" 
-                      Height="Auto" Padding="2,0,0,0" Margin="5,0" />
+                      Height="Auto" Padding="2,0,0,0" Margin="5,0" 
+                      IsChecked="{Binding Path=EnableStartFilter, 
+                                          RelativeSource={RelativeSource Mode=FindAncestor, 
+                                          AncestorType={x:Type ctrl:TimeframeSelector}}}"/>
             <DatePicker Grid.Column="2" x:Name="iEndDate"
                         Text="End Date"
                         HorizontalAlignment="Center"
-                        Width="100" Margin="5,0" />
+                        Width="100" Margin="5,0" 
+                        SelectedDate="{Binding Path=EndDate, 
+                                          RelativeSource={RelativeSource Mode=FindAncestor, 
+                                          AncestorType={x:Type ctrl:TimeframeSelector}}}"/>
             <CheckBox Grid.Column="3" x:Name="iEnableEndFilter" 
                       Content="Apply End Date filter" 
                       VerticalAlignment="Center" 
-                      Height="Auto" Padding="2,0,0,0" Margin="5,0" />
+                      Height="Auto" Padding="2,0,0,0" Margin="5,0" 
+                      IsChecked="{Binding Path=EnableEndFilter, 
+                                          RelativeSource={RelativeSource Mode=FindAncestor, 
+                                          AncestorType={x:Type ctrl:TimeframeSelector}}}"/>
         </Grid>
 </UserControl>

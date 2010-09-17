@@ -13,6 +13,7 @@ using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
 using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
+using System.Diagnostics;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -86,7 +87,6 @@ namespace EveTrader.Core.ViewModel
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
 
             RefreshCurrentEntities();
-            SelectEntity(CurrentEntities.FirstOrDefault());
         }
 
         private void RefreshCurrentEntities()
@@ -99,12 +99,7 @@ namespace EveTrader.Core.ViewModel
         }
         private void SelectEntity(string name)
         {
-            lock (iUpdaterLock)
-            {
-                iCurrentEntity = iModel.Entity.Where(e => e.Name == name).FirstOrDefault();
-                RaisePropertyChanged("CurrentEntity");
-                Refresh();
-            }
+            SelectEntity(iModel.Entity.Where(e => e.Name == name).FirstOrDefault());
         }
         private void SelectEntity(Entities e)
         {
