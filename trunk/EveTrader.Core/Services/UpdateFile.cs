@@ -29,5 +29,15 @@ namespace EveTrader.Core.Services
         /// MD5 checksum of the file
         /// </summary>
         public string Checksum { get; set; }
+
+        /// <summary>
+        /// Specifies the target architecture of the file
+        /// </summary>
+        public Architecture TargetArchitecture { get; set; }
+
+        /// <summary>
+        /// Specifies if the files is gzipped
+        /// </summary>
+        public bool Compressed { get; set; }
     }
 }

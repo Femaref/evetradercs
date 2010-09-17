@@ -68,6 +68,7 @@
     <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Services\ApplicationUpdateService.cs" />
+    <Compile Include="Services\Architecture.cs" />
     <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
     <Compile Include="Services\IApplicationUpdateInfo.cs" />
     <Compile Include="Services\IApplicationUpdateService.cs" />

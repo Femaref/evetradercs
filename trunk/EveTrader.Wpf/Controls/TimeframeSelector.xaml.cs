@@ -24,20 +24,73 @@ namespace EveTrader.Wpf.Controls
             InitializeComponent();
         }
 
-        public Binding StartDate { get; set; }
-        public Binding EndDate { get; set; }
-        public Binding EnableStartFilter { get; set; }
-        public Binding EnableEndFilter { get; set; }
-
-        private void TimeframeSelector_Loaded(object sender, RoutedEventArgs e)
+        public DateTime StartDate
         {
-            iStartDate.SetBinding(DatePicker.SelectedDateProperty, StartDate);
-            iEndDate.SetBinding(DatePicker.SelectedDateProperty, EndDate);
-            iEnableStartFilter.SetBinding(CheckBox.IsCheckedProperty, EnableStartFilter);
-            iEnableEndFilter.SetBinding(CheckBox.IsCheckedProperty, EnableEndFilter);
+            get{ return (DateTime)GetValue(StartDateProperty);}
+            set { SetValue(StartDateProperty, value); }
         }
 
+        public DateTime EndDate
+        {
+            get { return (DateTime)GetValue(EndDateProperty); }
+            set { SetValue(EndDateProperty, value); }
+        }
+
+        public bool EnableStartFilter
+        {
+            get { return (bool)GetValue(EnableStartFilterProperty); }
+            set { SetValue(EnableStartFilterProperty, value); }
+        }
+
+        public bool EnableEndFilter
+        {
+            get { return (bool)GetValue(EnableEndFilterProperty); }
+            set { SetValue(EnableEndFilterProperty, value); }
+        } 
+        
+
+        // Using a DependencyProperty as the backing store for StartDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StartDateProperty =
+            DependencyProperty.RegisterAttached(
+            "StartDate", 
+            typeof(DateTime), 
+            typeof(TimeframeSelector), 
+            new FrameworkPropertyMetadata(
+                DateTime.MinValue, 
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
+
+        // Using a DependencyProperty as the backing store for EndDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EndDateProperty =
+            DependencyProperty.Register(
+            "EndDate", 
+            typeof(DateTime), 
+            typeof(TimeframeSelector), 
+            new FrameworkPropertyMetadata(
+                DateTime.MinValue, 
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+        // Using a DependencyProperty as the backing store for ApplyStartFilter.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EnableStartFilterProperty =
+            DependencyProperty.Register(
+            "EnableStartFilter", 
+            typeof(bool), 
+            typeof(TimeframeSelector), 
+            new FrameworkPropertyMetadata(
+                false, 
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+        // Using a DependencyProperty as the backing store for ApplyEndFilter.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EnableEndFilterProperty =
+            DependencyProperty.Register(
+            "EnableEndFilter", 
+            typeof(bool), 
+            typeof(TimeframeSelector), 
+            new FrameworkPropertyMetadata(
+                false, 
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     }
 }
