@@ -62,7 +62,6 @@ namespace EveTrader.Core.Controllers
             iMainWindowViewModel = mainView;
 
             iModel = tm;
-            iModel.TablesChanged += new EventHandler<TablesChangedEventArgs>(iModel_TablesChanged);
             iStaticData = sm;
             iContainer = container;
             iManageAccountsController = manageAccountsController;
@@ -80,13 +79,9 @@ namespace EveTrader.Core.Controllers
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
 
-            mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
-        }
+            Mapping.CreateMappings();
 
-        private void iModel_TablesChanged(object sender, TablesChangedEventArgs e)
-        {
-            if ((e.ChangedTables & Tables.ApplicationLog) == Tables.ApplicationLog)
-                iApplicationLogController.Refresh();
+            mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
         }
 
         public void Run()

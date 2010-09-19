@@ -144,7 +144,7 @@ namespace EveTrader.Core.ViewModel
                         y.TypeName = type != null ? type.typeName : "Unknown Type";
                         y.StationName = station != null ? station.stationName : "Unknown Station";
                         return y;
-                    });
+                    }).ToList();
 
                     Orders.AddRange(output);
                 }

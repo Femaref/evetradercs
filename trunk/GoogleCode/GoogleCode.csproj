@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BodyData.cs" />
     <Compile Include="EncodedUploadData.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

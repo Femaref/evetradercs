@@ -19,6 +19,7 @@ using System.Data.SQLite;
 using System.Data.EntityClient;
 using System.EnterpriseServices.Internal;
 using EveTrader.Core.Services;
+using EveTrader.Wpf.Controls;
 
 namespace EveTrader.Wpf
 {
@@ -174,7 +175,9 @@ namespace EveTrader.Wpf
 
             if (!isTerminating)
             {
-                
+                ExceptionDisplay ed = new ExceptionDisplay();
+                ed.Current = e;
+                ed.ShowDialog();
             }
         }
     }
