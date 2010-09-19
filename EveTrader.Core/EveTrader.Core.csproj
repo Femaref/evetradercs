@@ -34,9 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="automapper">
+      <HintPath>..\..\..\assembly\automapper.dll</HintPath>
+    </Reference>
     <Reference Include="libevecache">
       <HintPath>..\..\libevecache\libevecache\Debug\libevecache.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MoreLinq">
       <HintPath>..\..\..\Assembly\morelinq-1.0-beta\MoreLinq.dll</HintPath>
     </Reference>
@@ -53,6 +57,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="T4Toolbox.10.0, Version=10.3.7.1, Culture=neutral, PublicKeyToken=7e313accbcce84dc, processorArchitecture=x86" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +69,16 @@
     <Compile Include="ClassExtenders\EnumExtender.cs" />
     <Compile Include="ClassExtenders\StreamExtender.cs" />
     <Compile Include="ClassExtenders\StringExtender.cs" />
+    <Compile Include="Collections\BindableCollection.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationLogController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="Model\Display\DisplayJournal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DisplayJournal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\ApplicationUpdateService.cs" />
     <Compile Include="Services\Architecture.cs" />
     <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
@@ -188,6 +200,10 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StaticModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Model\Display\DisplayJournal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DisplayJournal.cs</LastGenOutput>
+    </None>
     <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
   </ItemGroup>
   <ItemGroup>

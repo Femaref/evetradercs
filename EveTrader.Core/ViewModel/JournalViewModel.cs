@@ -28,7 +28,7 @@ namespace EveTrader.Core.ViewModel
         private bool iLoaded;
 
         public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
-        public SmartObservableCollection<Journal> JournalEntries { get; private set; }
+        public Sheva.Windows.Data.BindableCollection<DisplayJournal> JournalEntries { get; private set; }
 
         public Wallets CurrentWallet
         {
@@ -102,7 +102,7 @@ namespace EveTrader.Core.ViewModel
         {
             iModel = tm;
             iSettings = settings;
-            JournalEntries = new SmartObservableCollection<Journal>(ViewCore.BeginInvoke);
+            JournalEntries = new Sheva.Windows.Data.BindableCollection<DisplayJournal>();
             CurrentWallets = new SmartObservableCollection<Wallets>(ViewCore.BeginInvoke);
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(view_EntitySelectionChanged);
             LoadCommand = new DelegateCommand(Refresh, () => !Updating);
@@ -152,7 +152,8 @@ namespace EveTrader.Core.ViewModel
                 var cache = CurrentWallet.Journal
                     .Where(filter)
                     .OrderByDescending(j => j.DateTime).ToList();
-                JournalEntries.AddRange(cache);
+
+                JournalEntries.AddRange(AutoMapper.Mapper.Map<IEnumerable<Journal>, IEnumerable<DisplayJournal>>(cache));
                 Updating = false;
             }
         }

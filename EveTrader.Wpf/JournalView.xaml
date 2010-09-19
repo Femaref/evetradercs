@@ -26,16 +26,16 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
                     <DataGridTextColumn Binding="{Binding Path=RefTypeID}" Header="RefTypeID" />
-                    <DataGridTextColumn Binding="{Binding Path=OwnerName1}" Header="OwnerName1" />
+                    <!--<DataGridTextColumn Binding="{Binding Path=OwnerName1}" Header="OwnerName1" />
                     <DataGridTextColumn Binding="{Binding Path=OwnerID1}" Header="OwnerID1" />
                     <DataGridTextColumn Binding="{Binding Path=OwnerName2}" Header="OwnerName2" />
                     <DataGridTextColumn Binding="{Binding Path=OwnerID2}" Header="OwnerID2" />
                     <DataGridTextColumn Binding="{Binding Path=ArgName1}" Header="ArgName1" />
-                    <DataGridTextColumn Binding="{Binding Path=ArgID1}" Header="ArgID1" />
+                    <DataGridTextColumn Binding="{Binding Path=ArgID1}" Header="ArgID1" />-->
                     <DataGridTextColumn Binding="{Binding Path=Amount, StringFormat=n}" Header="Amount" />
                     <DataGridTextColumn Binding="{Binding Path=Balance, StringFormat=n}" Header="Balance" />
                     <DataGridTextColumn Binding="{Binding Path=Reason}" Header="Reason" />
-                    <DataGridTextColumn Binding="{Binding Path=TaxAmount, StringFormat=n}" Header="TaxAmount" />
+                    <!--<DataGridTextColumn Binding="{Binding Path=TaxAmount, StringFormat=n}" Header="TaxAmount" />-->
                 </DataGrid.Columns>
                 <DataGrid.GroupStyle>
                     <GroupStyle>

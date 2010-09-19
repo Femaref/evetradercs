@@ -26,8 +26,8 @@ namespace EveTrader.Wpf
         public JournalView()
         {
             InitializeComponent();
-            var x = (CollectionViewSource)this.Resources["iGroupedJournal"];
-            x.GroupDescriptions.Add(new PropertyGroupDescription("Date"));
+           // var x = (CollectionViewSource)this.Resources["iGroupedJournal"];
+           // x.GroupDescriptions.Add(new PropertyGroupDescription("Date"));
         }
 
         #region IExtendedView Members
@@ -57,7 +57,5 @@ namespace EveTrader.Wpf
         }
 
         public event EventHandler<EntitySelectionChangedEventArgs<Wallets>> EntitySelectionChanged;
-
-        
     }
 }
