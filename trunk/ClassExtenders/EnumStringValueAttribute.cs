@@ -1,6 +1,6 @@
 using System;
 
-namespace EveTrader.Core.ClassExtenders
+namespace ClassExtenders
 {
     public class EnumStringValueAttribute : Attribute
     {

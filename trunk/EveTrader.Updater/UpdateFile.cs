@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EveTrader.Core.Services
+namespace EveTrader.Updater
 {
     /// <summary>
     /// Describes an updateable file
@@ -39,5 +39,10 @@ namespace EveTrader.Core.Services
         /// Specifies if the files is gzipped
         /// </summary>
         public bool Compressed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time this file was changed
+        /// </summary>
+        public DateTime ChangeDate { get; set; }
     }
 }

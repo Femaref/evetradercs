@@ -290,6 +290,10 @@
       <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
       <Name>EveTrader.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Updater\EveTrader.Updater.csproj">
+      <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
+      <Name>EveTrader.Updater</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Intelligence.ico" />

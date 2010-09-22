@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace EveTrader.Core.ClassExtenders
+namespace ClassExtenders
 {
     public static class AssemblyExtender
     {

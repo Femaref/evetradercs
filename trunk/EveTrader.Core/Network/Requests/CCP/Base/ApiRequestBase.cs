@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Net;
 using System.IO;
-using EveTrader.Core.ClassExtenders;
+using ClassExtenders;
 
 namespace EveTrader.Core.Network.Requests.CCP
 {

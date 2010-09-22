@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EveTrader.Core.Model;
 using System.Data.Objects;
+using System.Linq;
+using EveTrader.Core.Model;
 
-namespace EveTrader.Core.ClassExtenders
+namespace ClassExtenders
 {
     public static class EnumerableExtender
     {
