@@ -77,6 +77,13 @@ namespace GoogleCode
         /// and Location of the uploaded file (or none of the upload produced an error)</returns>
         public UploadInfo Upload(string localPath, string summary, params string[] labels)
         {
+            byte[] data = File.ReadAllBytes(localPath);
+            return Upload(data, Path.GetFileName(localPath), summary, labels);
+           
+        }
+
+        public UploadInfo Upload (byte[] data, string fileName, string summary, params string[] labels)
+        {
             List<Tuple<string, string>> postData = new List<Tuple<string, string>>();
             postData.Add(new Tuple<string, string>("summary", summary));
 
@@ -88,8 +95,13 @@ namespace GoogleCode
                 }
             }
 
-            var data = this.EncodeUpload(postData, localPath);
+            var uploadData = this.EncodeUpload(postData, data, fileName);
 
+            return UploadRequest(uploadData.Data, uploadData.ContentType);
+        }
+
+        private UploadInfo UploadRequest(byte[] body, string ContentType)
+        {
             string host = string.Format("https://{0}.googlecode.com:443", this.ProjectName) + "/files";
 
             byte[] auth = Encoding.UTF8.GetBytes(string.Format("{0}:{1}", this.UserName, this.iPassword));
@@ -101,13 +113,13 @@ namespace GoogleCode
             req.UseDefaultCredentials = true;
             req.AllowAutoRedirect = true;
             req.UserAgent = "Googlecode.com uploader v0.9.4";
-            req.ContentType = data.ContentType;
+            req.ContentType = ContentType;
             req.Method = "POST";
 
-            req.ContentLength = data.Data.Length;
+            req.ContentLength = body.Length;
             using (Stream reqStream = req.GetRequestStream())
             {
-                reqStream.Write(data.Data, 0, data.Data.Length);
+                reqStream.Write(body, 0, body.Length);
             }
 
             try
@@ -164,7 +176,7 @@ namespace GoogleCode
         /// <param name="postData">Represents custom data for the upload</param>
         /// <param name="filePath">Path to the file getting uploaded</param>
         /// <returns>Returns a EncodedUploadData object, containing ContentType and the body as UTF-8 encoded byte[]/returns>
-        private EncodedUploadData EncodeUpload(IEnumerable<Tuple<string, string>> postData, string filePath)
+        private EncodedUploadData EncodeUpload(IEnumerable<Tuple<string, string>> postData, byte[] file, string fileName)
         {
             //creates BodyData objects from the custom data
             var body = new List<BodyData>(postData.Select(t =>
@@ -174,8 +186,6 @@ namespace GoogleCode
                     Key = string.Format("Content-Disposition: form-data; name=\"{0}\"", t.Item1),
                     Value = t.Item2
                 }));
-
-            FileInfo file = new FileInfo(filePath);
 
             using (MemoryStream ms = new MemoryStream())
             {
@@ -195,7 +205,7 @@ namespace GoogleCode
                 ms.Write(buffer, 0, buffer.Length);
 
                 // data key
-                buffer = Encoding.UTF8.GetBytes(string.Format("Content-Disposition: form-data; name=\"filename\"; filename=\"{0}\"", file.Name) + LineFeed);
+                buffer = Encoding.UTF8.GetBytes(string.Format("Content-Disposition: form-data; name=\"filename\"; filename=\"{0}\"", fileName) + LineFeed);
                 ms.Write(buffer, 0, buffer.Length);
 
                 // data seperator
@@ -203,7 +213,7 @@ namespace GoogleCode
                 ms.Write(buffer, 0, buffer.Length);
 
                 // data
-                buffer = File.ReadAllBytes(filePath);
+                buffer = file;
                 ms.Write(buffer, 0, buffer.Length);
 
                 //data LineFeed

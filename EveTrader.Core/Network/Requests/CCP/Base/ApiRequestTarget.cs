@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EveTrader.Core.ClassExtenders;
+using ClassExtenders;
 
 namespace EveTrader.Core.Network.Requests.CCP
 {

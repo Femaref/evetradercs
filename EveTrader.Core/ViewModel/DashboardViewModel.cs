@@ -9,7 +9,7 @@ using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
-using EveTrader.Core.ClassExtenders;
+using ClassExtenders;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Threading;

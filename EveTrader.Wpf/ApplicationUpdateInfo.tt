@@ -2,8 +2,8 @@
 <#@ output extension="cs" #>
 <#@ include file="T4Toolbox.tt" #>
 <#@ assembly name="Q:\Projects\evetradercs\EveTrader.Wpf\bin\Debug\System.ComponentModel.Composition.dll" #>
-<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="Q:\Projects\evetradercs\EveTrader.Core\bin\Debug\EveTrader.Core.dll" #>
-<#@ import namespace="EveTrader.Core.Services"#>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="Q:\Projects\evetradercs\EveTrader.Updater\bin\Debug\EveTrader.Updater.dll" #>
+<#@ import namespace="EveTrader.Updater"#>
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.ComponentModel.Composition"#>
 <#
@@ -13,7 +13,7 @@
 
 
 #>
-using EveTrader.Core.Services;
+using EveTrader.Updater;
 using System.ComponentModel.Composition;
 using System.Reflection;
 using System.IO;

@@ -61,14 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassExtenders\AssemblyExtender.cs" />
-    <Compile Include="ClassExtenders\DateTimeExtender.cs" />
-    <Compile Include="ClassExtenders\DecimalExtender.cs" />
-    <Compile Include="ClassExtenders\DoubleExtender.cs" />
     <Compile Include="ClassExtenders\EnumerableExtender.cs" />
-    <Compile Include="ClassExtenders\EnumExtender.cs" />
-    <Compile Include="ClassExtenders\StreamExtender.cs" />
-    <Compile Include="ClassExtenders\StringExtender.cs" />
     <Compile Include="Collections\BindableCollection.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationLogController.cs" />
@@ -80,10 +73,7 @@
       <DependentUpon>DisplayJournal.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\ApplicationUpdateService.cs" />
-    <Compile Include="Services\Architecture.cs" />
     <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
-    <Compile Include="Services\IApplicationUpdateInfo.cs" />
-    <Compile Include="Services\IApplicationUpdateService.cs" />
     <Compile Include="Services\IUpdateService.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ManageAccountsController.cs" />
@@ -91,10 +81,8 @@
     <Compile Include="Controllers\PriceCacheController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
-    <Compile Include="Services\UpdateFile.cs" />
     <Compile Include="Services\UpdateService.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
-    <Compile Include="ClassExtenders\EnumStringValueAttribute.cs" />
     <Compile Include="Model\ISettingsProvider.cs" />
     <Compile Include="Model\MarketOrdersPartial.cs" />
     <Compile Include="Model\StaticModel.cs" />
@@ -214,6 +202,14 @@
     <ProjectReference Include="..\..\..\Assembly\WpfApplicationFramework-1.0.0.90\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
       <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
       <Name>WpfApplicationFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClassExtenders\ClassExtenders.csproj">
+      <Project>{8439287F-C3AC-4B3E-96D4-29EDB08F7FB3}</Project>
+      <Name>ClassExtenders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Updater\EveTrader.Updater.csproj">
+      <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
+      <Name>EveTrader.Updater</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

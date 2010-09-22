@@ -7,7 +7,8 @@ using System.IO;
 using System.Net;
 using System.Xml.Linq;
 using System.Reflection;
-using EveTrader.Core.ClassExtenders;
+using ClassExtenders;
+using EveTrader.Updater;
 
 namespace EveTrader.Core.Services
 {
@@ -47,6 +48,7 @@ namespace EveTrader.Core.Services
                 foreach (UpdateFile uf in files)
                 {
                     Assembly currentAssembly = assemblies.Where(a => !a.IsDynamic && Path.GetFileName(a.Location) == uf.Name).SingleOrDefault();
+                    FileInfo currentFile = new FileInfo(currentAssembly.Location);
 
                     if (currentAssembly == null)
                     {
@@ -59,7 +61,7 @@ namespace EveTrader.Core.Services
                     Version current = new Version(version);
                     Version target = new Version(uf.Version);
 
-                    if (target > current)
+                    if (target > current || currentFile.LastWriteTimeUtc > uf.ChangeDate)
                         iFiles.Add(uf);
                 }
 
@@ -112,21 +114,6 @@ namespace EveTrader.Core.Services
             }
         }
 
-        private string GetMD5Hash(byte[] input)
-        {
-            System.Security.Cryptography.MD5CryptoServiceProvider provider = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] data = input;
-
-            data = provider.ComputeHash(data);
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-
-            foreach (byte b in data)
-            {
-                builder.Append(b.ToString("x2").ToLower());
-            }
-            return builder.ToString();
-        }
-
         public void Update()
         {
             lock (iUpdaterLock)
@@ -142,7 +129,23 @@ namespace EveTrader.Core.Services
                         Uri binaryPath;
                         Uri.TryCreate(iBasePath, uf.RelativePath, out binaryPath);
 
-                        byte[] data = DownloadBinary(binaryPath);
+                        byte[] payload = DownloadBinary(binaryPath);
+                        int tries = 0;
+                        while(uf.Checksum != payload.GetMD5Hash())
+                        {
+                            if (tries >= 5)
+                                throw new Exception("Checksum failed for file " + uf.Name); //TODO: better exception
+
+                            payload = DownloadBinary(binaryPath);
+
+                            tries++;
+                        }
+
+                        byte[] data = null;
+                        if (uf.Compressed)
+                            data = Gzip.Decompress(DownloadBinary(binaryPath));
+                        else
+                            data = DownloadBinary(binaryPath);
 
                         FileInfo filePath = new FileInfo(Path.Combine(tempPath.FullName, uf.Name));
 
@@ -151,9 +154,6 @@ namespace EveTrader.Core.Services
                         {
                             bw.Write(data);
                         }
-
-                        if (uf.Checksum != GetMD5Hash(data))
-                            throw new Exception("Hash doesn't match!"); // needs better exception
 
                         string destPath = Path.Combine(this.iUpdateInfo.ApplicationPath, uf.Name);
                         filePath.MoveTo(destPath);

@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace EveTrader.Core.ClassExtenders
+namespace ClassExtenders
 {
     public static class EnumExtender
     {

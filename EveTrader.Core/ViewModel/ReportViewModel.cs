@@ -9,7 +9,7 @@ using EveTrader.Core.Model;
 using System.Reflection;
 using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.ViewModel.Display;
-using EveTrader.Core.ClassExtenders;
+using ClassExtenders;
 using System.Threading;
 
 namespace EveTrader.Core.ViewModel
