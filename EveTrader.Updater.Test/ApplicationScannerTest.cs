@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace EveTrader.Updater.Test
 {
@@ -76,6 +78,62 @@ namespace EveTrader.Updater.Test
             Architecture expected = new Architecture(); // TODO: Initialize to an appropriate value
             Architecture actual;
             actual = ApplicationScanner_Accessor.DetermineArchitecture(pek);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for CreateServerInfo
+        ///</summary>
+        [TestMethod()]
+        public void CreateServerInfoTest()
+        {
+            IEnumerable<UpdateFile> files = ApplicationScanner.Scan(@"Q:\Projects\evetradercs\EveTrader.Wpf\bin\EveTraderBeta125x64\", true, new Dictionary<string, string>
+                {
+                    {"EveTrader.Wpf.exe.config", "1.2.5"},
+                    {"static.db", "1.0"}
+                }, "dll", "exe", "config", "db"); // TODO: Initialize to an appropriate value
+            XDocument expected = null; // TODO: Initialize to an appropriate value
+            XDocument actual;
+            actual = ApplicationScanner.CreateServerInfo(files);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for CreateVersionInfo
+        ///</summary>
+        [TestMethod()]
+        public void CreateVersionInfoTest()
+        {
+            IEnumerable<UpdateFile> files = ApplicationScanner.Scan(@"Q:\Projects\evetradercs\EveTrader.Wpf\bin\EveTraderBeta125x32\", true, new Dictionary<string, string>
+                {
+                    {"EveTrader.Wpf.exe.config", "1.2.5"},
+                    {"static.db", "1.0"}
+                }, "dll", "exe", "exe.config", "db"); // TODO: Initialize to an appropriate value
+            XDocument expected = null; // TODO: Initialize to an appropriate value
+            XDocument actual;
+            actual = ApplicationScanner.CreateVersionInfo(files);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for Scan
+        ///</summary>
+        [TestMethod()]
+        public void ScanTest()
+        {
+            string path = @"Q:\Projects\evetradercs\EveTrader.Wpf\bin\EveTraderBeta125x64\"; // TODO: Initialize to an appropriate value
+            bool compress = true; // TODO: Initialize to an appropriate value
+            Dictionary<string, string> customVersion = new Dictionary<string, string>
+                {
+                    {"EveTrader.Wpf.exe.config", "1.2.5"},
+                    {"static.db", "1.0"}
+                }; // TODO: Initialize to an appropriate value
+            IEnumerable<UpdateFile> expected = null; // TODO: Initialize to an appropriate value
+            IEnumerable<UpdateFile> actual;
+            actual = ApplicationScanner.Scan(path, compress, customVersion, "dll", "exe", "exe.config", "db");
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
