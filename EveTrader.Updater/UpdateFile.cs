@@ -31,6 +31,11 @@ namespace EveTrader.Updater
         public string Checksum { get; set; }
 
         /// <summary>
+        /// If compressed is true, this contains the MD5 checksum of the gzipped archive
+        /// </summary>
+        public string ArchiveChecksum { get; set; }
+
+        /// <summary>
         /// Specifies the target architecture of the file
         /// </summary>
         public Architecture TargetArchitecture { get; set; }

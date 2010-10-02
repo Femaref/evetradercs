@@ -38,7 +38,8 @@ namespace EveTrader.Updater
                 byte[] content = File.ReadAllBytes(fi.FullName);
                 uf.Compressed = compress;
                 uf.Name = fi.Name;
-                uf.Checksum = compress ? "0" : content.GetMD5Hash();
+                uf.Checksum = content.GetMD5Hash();
+                uf.ArchiveChecksum = "0";
 
                 uf.RelativePath = compress ? new Uri(string.Format("{0}.gzip", fi.Name), UriKind.Relative) : new Uri(fi.Name, UriKind.Relative);
 
@@ -111,7 +112,9 @@ namespace EveTrader.Updater
                 XElement xe = new XElement("UpdateFile");
                 foreach (PropertyInfo pi in typeof(UpdateFile).GetProperties())
                 {
-                    xe.Add(new XAttribute(pi.Name, pi.GetValue(uf, null)));
+                    string name = pi.Name;
+                    name = (new string(new char[] {name[0] })).ToLower() + name.Substring(1);
+                    xe.Add(new XAttribute(name, pi.GetValue(uf, null)));
                 }
                 root.Add(xe);
             }

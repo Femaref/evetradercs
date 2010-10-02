@@ -131,14 +131,29 @@ namespace EveTrader.Core.Services
 
                         byte[] payload = DownloadBinary(binaryPath);
                         int tries = 0;
-                        while(uf.Checksum != payload.GetMD5Hash())
+                        if (uf.Compressed)
                         {
-                            if (tries >= 5)
-                                throw new Exception("Checksum failed for file " + uf.Name); //TODO: better exception
+                            while (uf.ArchiveChecksum != payload.GetMD5Hash())
+                            {
+                                if (tries >= 5)
+                                    throw new Exception("Archive Checksum failed for file " + uf.Name); //TODO: better exception
 
-                            payload = DownloadBinary(binaryPath);
+                                payload = DownloadBinary(binaryPath);
 
-                            tries++;
+                                tries++;
+                            }
+                        }
+                        else
+                        {
+                            while (uf.Checksum != payload.GetMD5Hash())
+                            {
+                                if (tries >= 5)
+                                    throw new Exception("Checksum failed for file " + uf.Name); //TODO: better exception
+
+                                payload = DownloadBinary(binaryPath);
+
+                                tries++;
+                            }
                         }
 
                         byte[] data = null;
