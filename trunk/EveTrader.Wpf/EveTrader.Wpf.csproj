@@ -312,5 +312,4 @@
 	<Target Name="AfterBuild">
 	</Target>
 	-->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
 </Project>

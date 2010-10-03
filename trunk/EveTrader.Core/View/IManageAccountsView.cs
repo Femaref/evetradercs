@@ -9,9 +9,6 @@ namespace EveTrader.Core.View
 {
     public interface IManageAccountsView : IExtendedView
     {
-        event EventHandler AbortRequest;
-        event EventHandler AddCharacters;
-        event EventHandler<CharacterDataRequestedEventArgs> DataRequested;
         event CancelEventHandler Closing;
         void Show();
         void Close();
