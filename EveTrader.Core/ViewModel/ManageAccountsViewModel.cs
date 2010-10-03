@@ -25,9 +25,9 @@ namespace EveTrader.Core.ViewModel
         private readonly IUpdateService iUpdater;
         private readonly EntityFactory iFactory;
 
-        private ICommand iRequestDataCommand;
-        private ICommand iAbortRequestCommand;
-        private ICommand iAddCharactersCommand;
+        private DelegateCommand iRequestDataCommand;
+        private DelegateCommand iAbortRequestCommand;
+        private DelegateCommand iAddCharactersCommand;
 
         private object iUpdaterLock = new object();
 
@@ -78,6 +78,7 @@ namespace EveTrader.Core.ViewModel
 
 
         private bool iDataRequestable = false;
+        private bool iDataPresent = false;
         
         public SmartObservableCollection<Characters> CurrentCharacters { get; private set; }
         public SmartObservableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
@@ -85,7 +86,12 @@ namespace EveTrader.Core.ViewModel
         {
             get
             {
-                return RequestedCharacters.Count() > 0;
+                return iDataPresent;
+            }
+            private set
+            {
+                iDataPresent = value;
+                RaisePropertyChanged("DataPresent");
             }
         }
         public bool DataRequestable
@@ -155,7 +161,10 @@ namespace EveTrader.Core.ViewModel
                 RequestedCharacters.AddRange(requestedCharacters);
 
                 DataRequestable = false;
-                RaisePropertyChanged("DataPresent");
+                DataPresent = true;
+                iRequestDataCommand.RaiseCanExecuteChanged();
+                iAddCharactersCommand.RaiseCanExecuteChanged();
+
             }
         }
         private void AbortRequest()
@@ -163,8 +172,10 @@ namespace EveTrader.Core.ViewModel
             lock (iUpdaterLock)
             {
                 RequestedCharacters.Clear();
-                DataRequestable = false;
-                RaisePropertyChanged("DataPresent");
+                DataRequestable = true;
+                DataPresent = false;
+                iRequestDataCommand.RaiseCanExecuteChanged();
+                iAddCharactersCommand.RaiseCanExecuteChanged();
             }
         }
         private void AddCharacters()
@@ -184,8 +195,10 @@ namespace EveTrader.Core.ViewModel
                     iUpdater.Update(cache.Corporation);
                 }
                 RequestedCharacters.Clear();
-                DataRequestable = false;
-                RaisePropertyChanged("DataPresent");
+                DataRequestable = true;
+                DataPresent = false;
+                iRequestDataCommand.RaiseCanExecuteChanged();
+                iAddCharactersCommand.RaiseCanExecuteChanged();
             }
         }
         private void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
