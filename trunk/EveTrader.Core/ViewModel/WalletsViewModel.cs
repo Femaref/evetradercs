@@ -57,22 +57,7 @@ namespace EveTrader.Core.ViewModel
             lock (iUpdaterLock)
             {
                 EntityWallets.Clear();
-
-                foreach (Entities e in iModel.Entity)
-                {
-                    if (e is Characters)
-                    {
-                        Wallets w = e.Wallets.FirstOrDefault();
-                        EntityWallets.Add(new DisplayWallets() { Name = e.Name, Balance = w != null ? w.Balance : 0m });
-                    }
-                    if (e is Corporations)
-                    {
-                        foreach (Wallets w in e.Wallets)
-                        {
-                            EntityWallets.Add(new DisplayWallets() { Name = string.Format("{0}: {1}", e.Name, w.Name), Balance = w.Balance });
-                        }
-                    }
-                }
+                EntityWallets.AddRange(iModel.Wallets.ToList().Select(w => new DisplayWallets { Name = w.DisplayName, Balance = w.Balance }));
             }
         }
 

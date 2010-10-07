@@ -92,9 +92,10 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFVisifire.Charts, Version=3.5.7.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WPFVisifire.Charts, Version=3.6.1.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Assembly\visifire_v3.5.7\WPF Binaries\WPFVisifire.Charts.dll</HintPath>
+      <HintPath>..\..\..\Assembly\visifire_v3.6.1\WPF Binaries\WPFVisifire.Charts.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
