@@ -37,10 +37,13 @@ namespace EveTrader.Core.Collections.ObjectModel
         {
             if (!iSuspendCollectionChangeNotification)
             {
-                iDispatchingAction(() =>
+                using (IDisposable disposeable = this.BlockReentrancy())
                 {
-                    base.OnCollectionChanged(e);
-                });
+                    iDispatchingAction(() =>
+                    {
+                        base.OnCollectionChanged(e);
+                    });
+                }
             }
         }
         [DebuggerStepThrough]
