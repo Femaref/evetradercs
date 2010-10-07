@@ -11,7 +11,7 @@ using EveTrader.Core.View;
 using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
-using EveTrader.Core.Collections.ObjectModel;
+using Sheva.Windows.Data;
 using System.Threading;
 using System.Diagnostics;
 
@@ -30,8 +30,8 @@ namespace EveTrader.Core.ViewModel
         private Func<MarketOrders, bool> iHideWhere = mo => mo.OrderState == (long)MarketOrderState.OpenActive;
         private Entities iCurrentEntity;
         
-        public SmartObservableCollection<Entities> CurrentEntities { get; private set; }
-        public SmartObservableCollection<DisplayMarketOrders> Orders { get; private set; }
+        public BindableCollection<Entities> CurrentEntities { get; private set; }
+        public BindableCollection<DisplayMarketOrders> Orders { get; private set; }
         public Entities CurrentEntity
         {
             get { return iCurrentEntity; }
@@ -82,8 +82,8 @@ namespace EveTrader.Core.ViewModel
             iModel = model;
             iStaticData = sm;
             iSettings = settings;
-            Orders = new SmartObservableCollection<DisplayMarketOrders>(view.BeginInvoke);
-            CurrentEntities = new SmartObservableCollection<Entities>(view.BeginInvoke);
+            Orders = new BindableCollection<DisplayMarketOrders>();
+            CurrentEntities = new BindableCollection<Entities>();
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
 
             RefreshCurrentEntities();

@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using MoreLinq;
 using System.ComponentModel.Composition;
 using EveTrader.Core.ViewModel.Display;
-using EveTrader.Core.Collections.ObjectModel;
+using Sheva.Windows.Data;
 using System.Threading;
 
 namespace EveTrader.Core.ViewModel
@@ -23,7 +23,7 @@ namespace EveTrader.Core.ViewModel
         private object iUpdaterLock = new object();
         private bool iUpdating;
 
-        public SmartObservableCollection<DisplayPriceCache> Prices { get; private set; }
+        public BindableCollection<DisplayPriceCache> Prices { get; private set; }
         public bool Updating
         {
             get
@@ -44,7 +44,7 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iStaticData = sm;
 
-            Prices = new SmartObservableCollection<DisplayPriceCache>(view.BeginInvoke);
+            Prices = new BindableCollection<DisplayPriceCache>();
 
             Refresh();
         }

@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using EveTrader.Core.ViewModel.Display;
-using EveTrader.Core.Collections.ObjectModel;
+using Sheva.Windows.Data;
 using System.Threading;
 
 namespace EveTrader.Core.ViewModel
@@ -23,7 +23,7 @@ namespace EveTrader.Core.ViewModel
         private object iUpdaterLock = new object();
         private bool iUpdating;
 
-        public SmartObservableCollection<DisplayWallets> EntityWallets { get; private set; }
+        public BindableCollection<DisplayWallets> EntityWallets { get; private set; }
         public bool Updating
         {
             get
@@ -42,7 +42,7 @@ namespace EveTrader.Core.ViewModel
             : base(view)
         {
             iModel = tm;
-            EntityWallets = new SmartObservableCollection<DisplayWallets>(view.BeginInvoke);
+            EntityWallets = new BindableCollection<DisplayWallets>();
             Refresh();
         }
 
