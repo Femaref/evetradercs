@@ -140,7 +140,7 @@ namespace EveTrader.Core.ViewModel
             lock (iUpdaterLock)
             {
                 CurrentWallets.Clear();
-                CurrentWallets.AddRange(iModel.Wallets.Select(w => w.DisplayName).ToList());
+                CurrentWallets.AddRange(iModel.Wallets.Select(w => w).ToList().Select(w => w.DisplayName));
             }
         }
         public void Refresh()
