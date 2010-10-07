@@ -7,7 +7,7 @@ using System.Waf.Applications;
 using EveTrader.Core.Model;
 using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
-using Sheva.Windows.Data;
+using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
 
 namespace EveTrader.Core.ViewModel
@@ -20,7 +20,7 @@ namespace EveTrader.Core.ViewModel
         private object iUpdaterLock = new object();
         private bool iUpdating;
 
-        public BindableCollection<ApplicationLog> Messages {get; private set;}
+        public SmartObservableCollection<ApplicationLog> Messages {get; private set;}
         public bool Updating
         {
             get
@@ -39,7 +39,7 @@ namespace EveTrader.Core.ViewModel
             : base(view)
         {
             iModel = tm;
-            Messages = new BindableCollection<ApplicationLog>();
+            Messages = new SmartObservableCollection<ApplicationLog>(view.BeginInvoke);
             Refresh();
         }
 

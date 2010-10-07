@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using MoreLinq;
 using System.Threading;
 using System.Data.Objects.SqlClient;
-using Sheva.Windows.Data;
+using EveTrader.Core.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace EveTrader.Core.ViewModel
@@ -27,7 +27,7 @@ namespace EveTrader.Core.ViewModel
         private bool iUpdating;
         private bool iLoaded;
 
-        public BindableCollection<Wallets> CurrentWallets { get; private set; }
+        public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
         public Sheva.Windows.Data.BindableCollection<DisplayJournal> JournalEntries { get; private set; }
 
         public Wallets CurrentWallet
@@ -103,7 +103,7 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iSettings = settings;
             JournalEntries = new Sheva.Windows.Data.BindableCollection<DisplayJournal>();
-            CurrentWallets = new BindableCollection<Wallets>();
+            CurrentWallets = new SmartObservableCollection<Wallets>(ViewCore.BeginInvoke);
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(view_EntitySelectionChanged);
             LoadCommand = new DelegateCommand(Refresh, () => !Updating);
 
