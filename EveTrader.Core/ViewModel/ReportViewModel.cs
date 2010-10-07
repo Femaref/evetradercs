@@ -7,7 +7,7 @@ using System.Waf.Applications;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Model;
 using System.Reflection;
-using Sheva.Windows.Data;
+using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.ViewModel.Display;
 using ClassExtenders;
 using System.Threading;
@@ -25,12 +25,12 @@ namespace EveTrader.Core.ViewModel
         private string iConcatedEntities = "";
         private bool iUpdating = false;
 
-        public BindableCollection<Selectable<Entities>> Entities { get; private set; }
-        public BindableCollection<DisplayReport> StationReport { get; private set; }
-        public BindableCollection<DisplayReport> ItemReport { get; private set; }
-        public BindableCollection<DisplayReport> BuyerReport { get; private set; }
-        public BindableCollection<DisplayWalletHistory> WalletHistories { get; private set; }
-        public BindableCollection<KeyValuePair<long, string>> Wallets { get; private set; }
+        public SmartObservableCollection<Selectable<Entities>> Entities { get; private set; }
+        public SmartObservableCollection<DisplayReport> StationReport { get; private set; }
+        public SmartObservableCollection<DisplayReport> ItemReport { get; private set; }
+        public SmartObservableCollection<DisplayReport> BuyerReport { get; private set; }
+        public SmartObservableCollection<DisplayWalletHistory> WalletHistories { get; private set; }
+        public SmartObservableCollection<KeyValuePair<long, string>> Wallets { get; private set; }
 
         public DateTime StartDate
         {
@@ -115,13 +115,13 @@ namespace EveTrader.Core.ViewModel
 
 
 
-            Entities = new BindableCollection<Selectable<Entities>>();
+            Entities = new SmartObservableCollection<Selectable<Entities>>(ViewCore.BeginInvoke);
 
-            StationReport = new BindableCollection<DisplayReport>();
-            ItemReport = new BindableCollection<DisplayReport>();
-            BuyerReport = new BindableCollection<DisplayReport>();
-            WalletHistories = new BindableCollection<DisplayWalletHistory>();
-            Wallets = new BindableCollection<KeyValuePair<long, string>>();
+            StationReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
+            ItemReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
+            BuyerReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
+            WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(view.BeginInvoke);
+            Wallets = new SmartObservableCollection<KeyValuePair<long, string>>(view.BeginInvoke);
 
             Wallets.CollectionChanged += view.ChartCollectionChanged;
 

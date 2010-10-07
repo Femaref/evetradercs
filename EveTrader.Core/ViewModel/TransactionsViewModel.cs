@@ -6,7 +6,7 @@ using EveTrader.Core.View;
 using System.Waf.Applications;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Model;
-using Sheva.Windows.Data;
+using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
 using System.Diagnostics;
 
@@ -23,8 +23,8 @@ namespace EveTrader.Core.ViewModel
         private ISettingsProvider iSettings;
         private bool iUpdating;
 
-        public BindableCollection<Transactions> Transactions { get; private set; }
-        public BindableCollection<Wallets> CurrentWallets { get; private set; }
+        public SmartObservableCollection<Transactions> Transactions { get; private set; }
+        public SmartObservableCollection<Wallets> CurrentWallets { get; private set; }
         public Wallets CurrentWallet
         {
             get { return iCurrentWallet; }
@@ -103,8 +103,8 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iSettings = settings;
 
-            CurrentWallets = new BindableCollection<Wallets>();
-            Transactions = new BindableCollection<Transactions>();
+            CurrentWallets = new SmartObservableCollection<Wallets>(view.BeginInvoke);
+            Transactions = new SmartObservableCollection<Transactions>(view.BeginInvoke);
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(ViewCore_EntitySelectionChanged);
 
             RefreshCurrentWallets();

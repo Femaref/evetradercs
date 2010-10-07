@@ -109,6 +109,7 @@
     <Compile Include="Network\Requests\CCP\JournalRequest.cs" />
     <Compile Include="Network\Requests\CCP\MarketOrdersRequest.cs" />
     <Compile Include="Network\Requests\CCP\TransactionsRequest.cs" />
+    <Compile Include="Collections\SmartObservableCollection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

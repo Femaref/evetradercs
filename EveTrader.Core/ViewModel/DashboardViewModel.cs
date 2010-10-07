@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Threading;
 using EveTrader.Core.ViewModel.Display;
-using Sheva.Windows.Data;
+using EveTrader.Core.Collections.ObjectModel;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -40,11 +40,11 @@ namespace EveTrader.Core.ViewModel
         public ICommand FilterMonthCommand { get; private set; }
         public ICommand FilterAllTimeCommand { get; private set; }
 
-        public BindableCollection<DisplayDashboard> DailyInfo { get; private set; }
-        public BindableCollection<string> CurrentWallets { get; private set; }
-        public BindableCollection<DisplayDetail> Investment { get; private set; }
-        public BindableCollection<DisplayDetail> Sales { get; private set; }
-        public BindableCollection<DisplayDetail> Profit { get; private set; }
+        public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
+        public SmartObservableCollection<string> CurrentWallets { get; private set; }
+        public SmartObservableCollection<DisplayDetail> Investment { get; private set; }
+        public SmartObservableCollection<DisplayDetail> Sales { get; private set; }
+        public SmartObservableCollection<DisplayDetail> Profit { get; private set; }
         public bool Updating
         {
             get
@@ -108,11 +108,11 @@ namespace EveTrader.Core.ViewModel
             : base(view)
         {
             iModel = tm;
-            DailyInfo = new BindableCollection<DisplayDashboard>();
-            CurrentWallets = new BindableCollection<string>();
-            Investment = new BindableCollection<DisplayDetail>();
-            Sales = new BindableCollection<DisplayDetail>();
-            Profit = new BindableCollection<DisplayDetail>();
+            DailyInfo = new SmartObservableCollection<DisplayDashboard>(view.BeginInvoke);
+            CurrentWallets = new SmartObservableCollection<string>(view.BeginInvoke);
+            Investment = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
+            Sales = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
+            Profit = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
 
             CurrentWallets.CollectionChanged += view.ChartCollectionChanged;
             view.DetailsRequested += new EventHandler<DetailsRequestedEventArgs>(view_DetailsRequested);

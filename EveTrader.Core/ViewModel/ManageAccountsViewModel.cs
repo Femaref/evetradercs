@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
 using EveTrader.Core.Network.Requests.CCP;
-using Sheva.Windows.Data;
+using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.ViewModel.Display;
 using MoreLinq;
 using EveTrader.Core.Controllers;
@@ -80,8 +80,8 @@ namespace EveTrader.Core.ViewModel
         private bool iDataRequestable = false;
         private bool iDataPresent = false;
         
-        public BindableCollection<Characters> CurrentCharacters { get; private set; }
-        public BindableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
+        public SmartObservableCollection<Characters> CurrentCharacters { get; private set; }
+        public SmartObservableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
         public bool DataPresent
         {
             get
@@ -115,8 +115,8 @@ namespace EveTrader.Core.ViewModel
             iUpdater = us;
             iFactory = ef;
 
-            CurrentCharacters = new BindableCollection<Characters>();
-            RequestedCharacters = new BindableCollection<Selectable<Characters>>();
+            CurrentCharacters = new SmartObservableCollection<Characters>(view.Invoke);
+            RequestedCharacters = new SmartObservableCollection<Selectable<Characters>>(view.Invoke);
             DataRequestable = true;
             view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
 
