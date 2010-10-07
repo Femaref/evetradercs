@@ -16,7 +16,6 @@ using System.ComponentModel.Composition;
 using Visifire.Charts;
 using System.Collections.Specialized;
 using EveTrader.Core.ViewModel.Display;
-using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.Model;
 
 namespace EveTrader.Wpf
