@@ -287,6 +287,14 @@
       <Project>{FDA2F329-9062-48A2-AE08-65A3DEFC226B}</Project>
       <Name>EveTrader.Core.DataConverter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
+      <Project>{8195E663-2B7C-46C7-8785-3F7A820F094D}</Project>
+      <Name>EveTrader.Core.Model.Trader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Visual\EveTrader.Core.Visual.csproj">
+      <Project>{BE783258-5513-4588-BB7A-BD4E36231644}</Project>
+      <Name>EveTrader.Core.Visual</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core\EveTrader.Core.csproj">
       <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
       <Name>EveTrader.Core</Name>

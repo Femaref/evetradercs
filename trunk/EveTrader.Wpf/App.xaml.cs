@@ -85,13 +85,13 @@ namespace EveTrader.Wpf
                 File.Copy(staticDatabaseRessource.FullName, staticDatabase.FullName);
 
 
-            EntityConnectionStringBuilder traderModelEntityBuilder = CreateConnectionBuilder(databaseInfo.FullName, @"res://*/Model.TraderModel.csdl|res://*/Model.TraderModel.ssdl|res://*/Model.TraderModel.msl");
+            EntityConnectionStringBuilder traderModelEntityBuilder = CreateConnectionBuilder(databaseInfo.FullName, @"res://*/TraderModel.csdl|res://*/TraderModel.ssdl|res://*/TraderModel.msl");
 
             //Prune incomplete entities, wrongly created transactions etc
             using (TraderModel tm = new TraderModel(traderModelEntityBuilder))
                 tm.Prune();
 
-            EntityConnectionStringBuilder staticModelEntityBuilder = CreateConnectionBuilder(staticDatabase.FullName, @"res://*/Model.StaticModel.csdl|res://*/Model.StaticModel.ssdl|res://*/Model.StaticModel.msl");
+            EntityConnectionStringBuilder staticModelEntityBuilder = CreateConnectionBuilder(staticDatabase.FullName, @"res://*/StaticModel.csdl|res://*/StaticModel.ssdl|res://*/StaticModel.msl");
 
             base.OnStartup(e);
 
@@ -101,14 +101,18 @@ namespace EveTrader.Wpf
             AggregateCatalog catalog = new AggregateCatalog();
             // Add the WpfApplicationFramework assembly to the catalog
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Controller).Assembly));
-            // Add Frontend Assembly
+
+            //EveTrader.Wpf.exe
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-            // Add EveTrader.Core
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(ApplicationController).Assembly));
+
+            //add all EveTrader.*.dll
+            DirectoryCatalog dc = new DirectoryCatalog(System.AppDomain.CurrentDomain.BaseDirectory, "EveTrader.*.dll");
+           
+
+            catalog.Catalogs.Add(dc);
 
             CompositionContainer container = new CompositionContainer(catalog);
             CompositionBatch batch = new CompositionBatch();
-
 
             batch.AddExportedValue(container);
 
