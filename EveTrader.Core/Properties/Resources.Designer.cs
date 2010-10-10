@@ -59,30 +59,5 @@ namespace EveTrader.Core.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PRAGMA foreign_keys=OFF;
-        ///BEGIN TRANSACTION;
-        ///CREATE TABLE [Corporations] (
-        ///    [ID] integer PRIMARY KEY NOT NULL,
-        ///    [Ticker] nvarchar(50) NOT NULL,
-        ///    [Npc] bit NOT NULL DEFAULT 0,
-        ///    [ApiCharacterID] integer NOT NULL,
-        ///    CONSTRAINT [FK_Corporations_ID_Entity_ID] FOREIGN KEY ([ID]) REFERENCES [Entity] ([ID])
-        ///
-        ///);
-        ///CREATE TABLE [Accounts] (
-        ///    [ID] integer PRIMARY KEY NOT NULL,
-        ///    [ApiKey] text NOT NULL
-        ///);
-        ///CREATE TABLE [Entity] (
-        ///    [ID] integer PRIMARY KEY NOT NULL,
-        ///    [Name] nvarchar( [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string tables {
-            get {
-                return ResourceManager.GetString("tables", resourceCulture);
-            }
-        }
     }
 }

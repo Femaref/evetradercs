@@ -46,7 +46,9 @@ namespace EveTrader.Core.Services
 
             iBigUpdate = true;
 
-            foreach (Entities e in iModel.Entity)
+            foreach (var e in iModel.Entity.OfType<Characters>())
+                this.Update(e);
+            foreach (var e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
                 this.Update(e);
 
             iBigUpdate = false;
