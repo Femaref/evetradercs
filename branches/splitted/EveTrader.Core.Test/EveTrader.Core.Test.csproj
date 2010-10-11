@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{701A4AD2-9A50-46AA-A7E8-0CD659EBCE0B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EveTrader.Core.Test</RootNamespace>
+    <AssemblyName>EveTrader.Core.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EveTrader.Core.Model.Trader">
+      <HintPath>..\EveTrader.Core.Model.Trader\bin\Debug\EveTrader.Core.Model.Trader.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VariousStuff.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.Model.Static\EveTrader.Core.Model.Static.csproj">
+      <Project>{5535DD64-0072-418E-8117-F58A96A8D586}</Project>
+      <Name>EveTrader.Core.Model.Static</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Network\EveTrader.Core.Network.csproj">
+      <Project>{F03BE304-D9BD-4607-A788-CC92B1F3AF1F}</Project>
+      <Name>EveTrader.Core.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Visual\EveTrader.Core.Visual.csproj">
+      <Project>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</Project>
+      <Name>EveTrader.Core.Visual</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core\EveTrader.Core.csproj">
+      <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
+      <Name>EveTrader.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libevecache\libevecache.vcxproj">
+      <Project>{3546F283-32F8-4508-9632-AF0431B933C9}</Project>
+      <Name>libevecache</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

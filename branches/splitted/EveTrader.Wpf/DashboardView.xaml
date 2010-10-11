@@ -1,0 +1,89 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="EveTrader.Wpf.DashboardView"
+    x:Name="UserControl"
+    xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+    xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
+    xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+    Width="Auto" Height="Auto">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <CollectionViewSource x:Key="iDashboardData" Source="{Binding DailyInfo}"/>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*" />
+            <ColumnDefinition Width="0.25*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Working, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.475*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="0.525*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.475*" />
+                <RowDefinition Height="0.05*" />
+                <RowDefinition Height="0.525*" />
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="1" Grid.Column="1" Maximum="{Binding Path=WorkingCount}" Value="{Binding Path=CurrentIndex}" Height="25" Width="300"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Path=CurrentIndex}"/>
+                <TextBlock Text=" of "/>
+                <TextBlock Text="{Binding Path=WorkingCount}"/>
+                <TextBlock Text=" days processed."/>
+            </StackPanel>
+        </Grid>
+        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
+            <visi:Chart.TrendLines>
+                <visi:TrendLine Enabled="True" Orientation="Horizontal" LineColor="Red" LineThickness="20"/>
+            </visi:Chart.TrendLines>
+            <visi:Chart.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>
+                    <MenuItem Header="Last 14 days" Command="{Binding FilterTwoWeeksCommand}"/>
+                    <MenuItem Header="Last 30 days" Command="{Binding FilterMonthCommand}"/>
+                    <MenuItem Header="All time" Command="{Binding FilterAllTimeCommand}"/>
+                </ContextMenu>
+            </visi:Chart.ContextMenu>
+        </visi:Chart>
+
+        <Grid Panel.ZIndex="2" Grid.Column="1" Grid.Row="0" Opacity="0.75" Background="White" Visibility="{Binding Path=DetailsUpdating, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ctrl:ProgressIndicator IsIndeterminate="True" Text="" IsRunning="{Binding DetailsUpdating}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <visi:Chart Panel.ZIndex="1" x:Name="iDetailChart" Height="Auto" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
+            <visi:Chart.AxesX>
+                <visi:Axis>
+                    <visi:Axis.AxisLabels>
+                        <visi:AxisLabels TextWrap="0.2" Angle="90"/>
+                    </visi:Axis.AxisLabels>
+                </visi:Axis>
+            </visi:Chart.AxesX>
+            <visi:Chart.Series>
+                <visi:DataSeries RenderAs="Column" DataSource="{Binding Investment}" LegendText="Investment" Color="Red">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
+                        <visi:DataMapping MemberName="YValue" Path="Value" />
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+                <visi:DataSeries RenderAs="Column" DataSource="{Binding Sales}" LegendText="Sales" Color="Blue">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
+                        <visi:DataMapping MemberName="YValue" Path="Value"/>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+                <visi:DataSeries RenderAs="Column" DataSource="{Binding Profit}" LegendText="Profit" Color="Green">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
+                        <visi:DataMapping MemberName="YValue" Path="Value"/>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+            </visi:Chart.Series>
+        </visi:Chart>
+    </Grid>
+</UserControl>
