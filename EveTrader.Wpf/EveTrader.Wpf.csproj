@@ -93,9 +93,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="WPFVisifire.Charts, Version=3.6.1.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Assembly\visifire_v3.6.1\WPF Binaries\WPFVisifire.Charts.dll</HintPath>
+    <Reference Include="WPFVisifire.Charts">
+      <HintPath>..\References\WPFVisifire.Charts.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -279,20 +278,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Assembly\WpfApplicationFramework-1.0.0.90\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
-      <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
-      <Name>WpfApplicationFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.DataConverter\EveTrader.Core.DataConverter.csproj">
       <Project>{FDA2F329-9062-48A2-AE08-65A3DEFC226B}</Project>
       <Name>EveTrader.Core.DataConverter</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
-      <Project>{8195E663-2B7C-46C7-8785-3F7A820F094D}</Project>
+      <Project>{4B9C05A9-54A2-415A-8245-FB90E0CF4EFE}</Project>
       <Name>EveTrader.Core.Model.Trader</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Visual\EveTrader.Core.Visual.csproj">
-      <Project>{BE783258-5513-4588-BB7A-BD4E36231644}</Project>
+      <Project>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</Project>
       <Name>EveTrader.Core.Visual</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core\EveTrader.Core.csproj">
@@ -302,6 +297,10 @@
     <ProjectReference Include="..\EveTrader.Updater\EveTrader.Updater.csproj">
       <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
       <Name>EveTrader.Updater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
+      <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
+      <Name>WpfApplicationFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +313,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)References\System.Data.SQLite.dll" "$(TargetDir)System.Data.SQLite.dll"
+copy "$(SolutionDir)References\System.Data.SQLite.Linq.dll" "$(TargetDir)System.Data.SQLite.Linq.dll"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 		 Other similar extension points exist, see Microsoft.Common.targets.
 	<Target Name="BeforeBuild">

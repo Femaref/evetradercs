@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 using EveTrader.Core.DataConverter.ClassExtenders;
 using System.Data.SQLite;
 

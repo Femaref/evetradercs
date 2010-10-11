@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 using EveTrader.Core.Network.Requests.CCP;
 using System.ComponentModel.Composition;
 

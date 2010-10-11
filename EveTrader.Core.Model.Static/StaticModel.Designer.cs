@@ -17,7 +17,7 @@ using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 
-namespace EveTrader.Core.Model
+namespace EveTrader.Core.Model.Static
 {
     #region Contexts
     

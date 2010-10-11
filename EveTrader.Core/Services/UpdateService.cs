@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Updater.CCP;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 using System.Threading;
+using EveTrader.Core.Model;
 
 
 namespace EveTrader.Core.Services

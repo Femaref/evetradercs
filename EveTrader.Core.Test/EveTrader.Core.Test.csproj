@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EveTrader.Core.Model.Trader">
+      <HintPath>..\EveTrader.Core.Model.Trader\bin\Debug\EveTrader.Core.Model.Trader.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -47,6 +50,18 @@
     <Compile Include="VariousStuff.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.Model.Static\EveTrader.Core.Model.Static.csproj">
+      <Project>{5535DD64-0072-418E-8117-F58A96A8D586}</Project>
+      <Name>EveTrader.Core.Model.Static</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Network\EveTrader.Core.Network.csproj">
+      <Project>{F03BE304-D9BD-4607-A788-CC92B1F3AF1F}</Project>
+      <Name>EveTrader.Core.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Visual\EveTrader.Core.Visual.csproj">
+      <Project>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</Project>
+      <Name>EveTrader.Core.Visual</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core\EveTrader.Core.csproj">
       <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
       <Name>EveTrader.Core</Name>

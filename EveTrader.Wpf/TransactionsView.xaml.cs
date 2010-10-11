@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 
 namespace EveTrader.Wpf
 {
@@ -32,7 +32,7 @@ namespace EveTrader.Wpf
 
         #region ITransactionsView Members
 
-        public event EventHandler<EntitySelectionChangedEventArgs<Core.Model.Wallets>> EntitySelectionChanged;
+        public event EventHandler<EntitySelectionChangedEventArgs<Wallets>> EntitySelectionChanged;
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

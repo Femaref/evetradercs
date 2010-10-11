@@ -18,17 +18,17 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Wallets_0", "Entity", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Entities), "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Wallets))]
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Entity_0", "Accounts", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(EveTrader.Core.Model.Accounts), "Entity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Entities))]
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Characters_0", "Corporations", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Corporations), "Characters", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Characters))]
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_MarketOrders_0", "Entity", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Entities), "MarketOrders", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.MarketOrders))]
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Journal_0", "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Wallets), "Journal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Journal))]
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Transactions_0", "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Wallets), "Transactions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Transactions))]
-[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_WalletHistories_0", "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Wallets), "WalletHistories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.WalletHistories))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Wallets_0", "Entity", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Trader.Entities), "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.Wallets))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Entity_0", "Accounts", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(EveTrader.Core.Model.Trader.Accounts), "Entity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.Entities))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Characters_0", "Corporations", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Trader.Corporations), "Characters", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.Characters))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_MarketOrders_0", "Entity", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Trader.Entities), "MarketOrders", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.MarketOrders))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Journal_0", "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Trader.Wallets), "Journal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.Journal))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_Transactions_0", "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Trader.Wallets), "Transactions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.Transactions))]
+[assembly: EdmRelationshipAttribute("EveTrader.Core.Model", "FK_WalletHistories_0", "Wallets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EveTrader.Core.Model.Trader.Wallets), "WalletHistories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EveTrader.Core.Model.Trader.WalletHistories))]
 
 #endregion
 
-namespace EveTrader.Core.Model
+namespace EveTrader.Core.Model.Trader
 {
     #region Contexts
     

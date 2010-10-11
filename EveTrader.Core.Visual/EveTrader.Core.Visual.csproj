@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BE783258-5513-4588-BB7A-BD4E36231644}</ProjectGuid>
+    <ProjectGuid>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EveTrader.Core.Visual</RootNamespace>
@@ -31,20 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="automapper">
-      <HintPath>..\..\..\assembly\automapper.dll</HintPath>
-    </Reference>
-    <Reference Include="ClassExtenders">
-      <HintPath>..\ClassExtenders\bin\Debug\ClassExtenders.dll</HintPath>
+    <Reference Include="AutoMapper">
+      <HintPath>..\References\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="MoreLinq">
-      <HintPath>..\..\..\Assembly\morelinq-1.0-beta\MoreLinq.dll</HintPath>
+      <HintPath>..\References\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -102,25 +100,25 @@
     <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Assembly\WpfApplicationFramework-1.0.0.90\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
-      <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
-      <Name>WpfApplicationFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Static\EveTrader.Core.Model.Static.csproj">
-      <Project>{AB576596-9AE5-4ED2-A893-41126D116966}</Project>
+      <Project>{5535DD64-0072-418E-8117-F58A96A8D586}</Project>
       <Name>EveTrader.Core.Model.Static</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
-      <Project>{8195E663-2B7C-46C7-8785-3F7A820F094D}</Project>
+      <Project>{4B9C05A9-54A2-415A-8245-FB90E0CF4EFE}</Project>
       <Name>EveTrader.Core.Model.Trader</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Network\EveTrader.Core.Network.csproj">
-      <Project>{2A2FE72E-FEF2-4B56-81D1-7A738B6E1936}</Project>
+      <Project>{F03BE304-D9BD-4607-A788-CC92B1F3AF1F}</Project>
       <Name>EveTrader.Core.Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core\EveTrader.Core.csproj">
       <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
       <Name>EveTrader.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
+      <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
+      <Name>WpfApplicationFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

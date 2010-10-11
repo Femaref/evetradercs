@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 
 namespace EveTrader.Wpf
 {

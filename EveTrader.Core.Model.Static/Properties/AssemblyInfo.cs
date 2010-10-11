@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EveTrader.Core.Model.Static")]
+[assembly: AssemblyTitle("EveTrader.Core.Static")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Elvian Empire")]
-[assembly: AssemblyProduct("EveTrader.Core.Model.Static")]
+[assembly: AssemblyProduct("EveTrader.Core.Static")]
 [assembly: AssemblyCopyright("Copyright © Elvian Empire 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5b902f04-a811-4e03-a123-92409c87fb0f")]
+[assembly: Guid("540282e0-3c8f-4fad-9e69-88f69c57f39e")]
 
 // Version information for an assembly consists of the following four values:
 //

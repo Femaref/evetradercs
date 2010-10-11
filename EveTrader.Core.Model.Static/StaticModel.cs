@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel.Composition;
 using System.Data.EntityClient;
 
-namespace EveTrader.Core.Model
+namespace EveTrader.Core.Model.Static
 {
     [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.NonShared)]
     [Export(typeof(StaticModel))]

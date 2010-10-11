@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Updater.CCP

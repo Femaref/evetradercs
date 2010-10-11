@@ -14,7 +14,7 @@ using System.Diagnostics;
 using System.Waf;
 using EveTrader.Core.DataConverter;
 using System.IO;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 using System.Data.SQLite;
 using System.Data.EntityClient;
 using System.EnterpriseServices.Internal;
@@ -102,17 +102,19 @@ namespace EveTrader.Wpf
             // Add the WpfApplicationFramework assembly to the catalog
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Controller).Assembly));
 
+
             //EveTrader.Wpf.exe
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
 
+
             //add all EveTrader.*.dll
             DirectoryCatalog dc = new DirectoryCatalog(System.AppDomain.CurrentDomain.BaseDirectory, "EveTrader.*.dll");
-           
 
             catalog.Catalogs.Add(dc);
 
             CompositionContainer container = new CompositionContainer(catalog);
             CompositionBatch batch = new CompositionBatch();
+
 
             batch.AddExportedValue(container);
 

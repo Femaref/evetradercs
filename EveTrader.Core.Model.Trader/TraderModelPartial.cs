@@ -11,7 +11,7 @@ using System.IO;
 using System.Data.SQLite;
 using System.Data.EntityClient;
 
-namespace EveTrader.Core.Model
+namespace EveTrader.Core.Model.Trader
 {
     [PartCreationPolicy(System.ComponentModel.Composition.CreationPolicy.Any)]
     [Export(typeof(TraderModel))]
@@ -27,7 +27,7 @@ namespace EveTrader.Core.Model
 
         public string WriteToLog(string text, string callingMember)
         {
-            var log = new Model.ApplicationLog() { Message = text, CallingClass = callingMember, Date = DateTime.UtcNow };
+            var log = new ApplicationLog() { Message = text, CallingClass = callingMember, Date = DateTime.UtcNow };
             this.ApplicationLog.AddObject(log);
             this.SaveChanges();
             return string.Format("{0} from {1} at {2}", log.Message, log.CallingClass, log.Date);
@@ -90,7 +90,7 @@ namespace EveTrader.Core.Model
             if (!fi.Exists || fi.Length == 0)
             {
                 string connection = string.Format("Data Source={0};Version=3;", path);
-                string db_schema = EveTrader.Core.Model.Trader.Properties.Resources.tables;
+                string db_schema = Properties.Resources.tables;
 
                 using (SQLiteConnection cn = new SQLiteConnection(connection))
                 {

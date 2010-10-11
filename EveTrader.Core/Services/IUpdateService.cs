@@ -1,5 +1,5 @@
 ﻿using System;
-using EveTrader.Core.Model;
+using EveTrader.Core.Model.Trader;
 
 namespace EveTrader.Core.Services
 {
