@@ -5,7 +5,7 @@
     xmlns:utility="clr-namespace:System.Collections.ObjectModel;assembly=System"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf" d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
-    xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+    xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core.Visual"
     xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
     x:Class="EveTrader.Wpf.MainWindow"
     x:Name="Window"
