@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:TransactionsViewModel}"
-             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core"
+             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core.Visual"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <CollectionViewSource x:Key="iGroupedTransactions" Source="{Binding Transactions}"/>

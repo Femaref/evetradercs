@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:selector="clr-namespace:EveTrader.Wpf.Selectors"
              mc:Ignorable="d" 
-             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core" d:DataContext="{d:DesignInstance vm:WalletsViewModel}"
+             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core.Visual" d:DataContext="{d:DesignInstance vm:WalletsViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         
