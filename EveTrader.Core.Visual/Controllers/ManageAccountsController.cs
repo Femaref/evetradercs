@@ -23,7 +23,6 @@ namespace EveTrader.Core.Controllers
         public ManageAccountsController(CompositionContainer container)
         {
             iContainer = container;
-            
         }
 
         public void Show()

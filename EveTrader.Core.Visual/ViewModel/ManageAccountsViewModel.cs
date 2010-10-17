@@ -199,6 +199,7 @@ namespace EveTrader.Core.ViewModel
                 DataPresent = false;
                 iRequestDataCommand.RaiseCanExecuteChanged();
                 iAddCharactersCommand.RaiseCanExecuteChanged();
+                Refresh();
             }
         }
         private void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
