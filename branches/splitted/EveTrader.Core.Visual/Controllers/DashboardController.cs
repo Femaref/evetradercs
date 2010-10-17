@@ -28,7 +28,8 @@ namespace EveTrader.Core.Controllers
 
         public void Refresh()
         {
-            iDashboardView.Refresh();
+            // randomly crashes the app at startup
+           // iDashboardView.Refresh();
         }
     }
 }
