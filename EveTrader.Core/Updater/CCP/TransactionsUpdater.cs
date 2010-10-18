@@ -5,6 +5,7 @@ using System.Text;
 using EveTrader.Core.Model.Trader;
 using EveTrader.Core.Network.Requests.CCP;
 using System.ComponentModel.Composition;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Updater.CCP
 {
@@ -24,16 +25,19 @@ namespace EveTrader.Core.Updater.CCP
     [Export(typeof(ITransactionsUpdater))]
     public class TransactionsUpdater : UpdaterBase<Entities>, ITransactionsUpdater
     {
+        private readonly ICachedPriceUpdaterService iPriceUpdater;
+
         [ImportingConstructor]
-        public TransactionsUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
+        public TransactionsUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm, ICachedPriceUpdaterService cpus)
             : base(tm)
         {
+            iPriceUpdater = cpus;
         }
 
 
         protected override bool InnerUpdate<U>(U entity)
         {
-            List<long> recacheTypes = new List<long>();
+            List<long> recache = new List<long>();
 
             TransactionsRequest tr = null;
             foreach (Wallets w in entity.Wallets)
@@ -72,7 +76,8 @@ namespace EveTrader.Core.Updater.CCP
 
                             item.Wallet = w;
                             w.Transactions.Add(item);
-                            recacheTypes.Add(item.TypeID);
+                            if(!recache.Contains(item.TypeID))
+                                recache.Add(item.TypeID);
                         }
                     }
                 }
@@ -80,27 +85,7 @@ namespace EveTrader.Core.Updater.CCP
 
             iModel.SaveChanges();
 
-            foreach (long i in recacheTypes)
-            {
-
-                CachedPriceInfos cpi = null;
-                if (iModel.CachedPriceInfo.Count(c => c.TypeID == i) == 0)
-                {
-                    cpi = new CachedPriceInfos() { TypeID = i };
-                    iModel.CachedPriceInfo.AddObject(cpi);
-                }
-                else
-                    cpi = iModel.CachedPriceInfo.First(c => c.TypeID == i);
-
-                var buyQuery = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Buy).OrderByDescending(t => t.DateTime).Take(10);
-                cpi.BuyPrice = buyQuery.Count() > 0 ? buyQuery.Average(t => t.Price) : 0m;
-                var sellQuery = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Sell).OrderByDescending(t => t.DateTime).Take(10);
-                cpi.SellPrice = sellQuery.Count() > 0 ? sellQuery.Average(t => t.Price) : 0m;
-
-                iModel.WriteToLog(string.Format("Updated average prices for typeID {0}", cpi.TypeID), "TransactionUpdater.InnerUpdate()");
-            }
-
-            iModel.SaveChanges();
+            iPriceUpdater.Update(recache);
 
             return true;
         }
