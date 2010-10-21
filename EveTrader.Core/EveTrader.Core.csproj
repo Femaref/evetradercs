@@ -59,8 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\BindableCollection.cs" />
+    <Compile Include="Collections\SyncQueue.cs" />
     <Compile Include="Services\ApplicationUpdateService.cs" />
+    <Compile Include="Services\CachedPriceUpdaterService.cs" />
     <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
+    <Compile Include="Services\ICachedPriceUpdaterService.cs" />
     <Compile Include="Services\IUpdateService.cs" />
     <Compile Include="Services\UpdateService.cs" />
     <Compile Include="Model\ISettingsProvider.cs" />

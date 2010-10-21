@@ -27,7 +27,7 @@ namespace EveTrader.Core.Services
             Thread worker = new Thread(ts);
             worker.Name = "CachedPriceUpdaterService Worker";
 
-            worker.Start();
+           // worker.Start();
         }
 
 

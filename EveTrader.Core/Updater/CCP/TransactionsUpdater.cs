@@ -76,6 +76,7 @@ namespace EveTrader.Core.Updater.CCP
 
                             item.Wallet = w;
                             w.Transactions.Add(item);
+
                             if(!recache.Contains(item.TypeID))
                                 recache.Add(item.TypeID);
                         }
@@ -85,7 +86,7 @@ namespace EveTrader.Core.Updater.CCP
 
             iModel.SaveChanges();
 
-            iPriceUpdater.Update(recache);
+            //iPriceUpdater.Update(recache);
 
             return true;
         }
