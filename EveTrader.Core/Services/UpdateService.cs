@@ -21,6 +21,8 @@ namespace EveTrader.Core.Services
         private Timer iTimer;
         private bool iBigUpdate = false;
 
+        private readonly object iUpdaterLock = new object();
+
         [ImportingConstructor]
         public UpdateService(CharacterUpdater characterUpdater, CorporationUpdater corporationUpdater, TraderModel tm, ISettingsProvider settings)
         {
@@ -43,29 +45,44 @@ namespace EveTrader.Core.Services
 
         public void Update()
         {
-            iTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            ThreadStart ts = new ThreadStart(ThreadedUpdate);
+            Thread t = new Thread(ts);
+            t.Name = "CCP Api Updater";
+            t.Start();
+        }
 
-            iBigUpdate = true;
+        private void ThreadedUpdate()
+        {
+            lock (iUpdaterLock)
+            {
 
-            foreach (var e in iModel.Entity.OfType<Characters>())
-                this.Update(e);
-            foreach (var e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
-                this.Update(e);
+                iTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
-            iBigUpdate = false;
-            RaiseUpdated(iModel.Entity);
+                iBigUpdate = true;
 
-            ActivateTimer();
+                foreach (var e in iModel.Entity.OfType<Characters>())
+                    this.Update(e);
+                foreach (var e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
+                    this.Update(e);
+
+                iBigUpdate = false;
+                RaiseUpdated(iModel.Entity);
+
+                ActivateTimer();
+            }
         }
 
         public void Update(Entities e)
         {
-            if (e is Characters)
-                iCharacterUpdater.Update(e as Characters);
-            if (e is Corporations)
-                iCorporationUpdater.Update(e as Corporations);
+            lock (iUpdaterLock)
+            {
+                if (e is Characters)
+                    iCharacterUpdater.Update(e as Characters);
+                if (e is Corporations)
+                    iCorporationUpdater.Update(e as Corporations);
 
-            RaiseUpdated(e);
+                RaiseUpdated(e);
+            }
         }
 
         public bool AutoUpdate
