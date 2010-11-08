@@ -124,6 +124,14 @@ namespace EveTrader.Core.ViewModel
             iAbortRequestCommand = new DelegateCommand(AbortRequest);
             iAddCharactersCommand = new DelegateCommand(AddCharacters, () => DataPresent);
 
+            this.PropertyChanged += (sender, e) =>
+                {
+                    if (e.PropertyName == "DataRequestable")
+                        iRequestDataCommand.RaiseCanExecuteChanged();
+                    if (e.PropertyName == "DataPresent")
+                        iAddCharactersCommand.RaiseCanExecuteChanged();
+                };
+            
             Refresh();
         }
 
@@ -162,9 +170,6 @@ namespace EveTrader.Core.ViewModel
 
                 DataRequestable = false;
                 DataPresent = true;
-                iRequestDataCommand.RaiseCanExecuteChanged();
-                iAddCharactersCommand.RaiseCanExecuteChanged();
-
             }
         }
         private void AbortRequest()
@@ -174,8 +179,6 @@ namespace EveTrader.Core.ViewModel
                 RequestedCharacters.Clear();
                 DataRequestable = true;
                 DataPresent = false;
-                iRequestDataCommand.RaiseCanExecuteChanged();
-                iAddCharactersCommand.RaiseCanExecuteChanged();
             }
         }
         private void AddCharacters()
@@ -197,8 +200,6 @@ namespace EveTrader.Core.ViewModel
                 RequestedCharacters.Clear();
                 DataRequestable = true;
                 DataPresent = false;
-                iRequestDataCommand.RaiseCanExecuteChanged();
-                iAddCharactersCommand.RaiseCanExecuteChanged();
                 Refresh();
             }
         }
