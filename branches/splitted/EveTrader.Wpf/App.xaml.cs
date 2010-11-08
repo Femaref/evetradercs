@@ -46,11 +46,15 @@ namespace EveTrader.Wpf
             DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
-            string commandLine = e.Args.First();
-            FileInfo parsedCommandLine = new FileInfo(commandLine);
+            string commandLine = e.Args.FirstOrDefault();
             string optional = "";
-            if (parsedCommandLine.Exists && parsedCommandLine.Extension == ".db")
-                optional = parsedCommandLine.FullName;
+            if (commandLine != null)
+            {
+                FileInfo parsedCommandLine = new FileInfo(commandLine);
+
+                if (parsedCommandLine.Exists && parsedCommandLine.Extension == ".db")
+                    optional = parsedCommandLine.FullName;
+            }
 
             
             DirectoryInfo appData = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));

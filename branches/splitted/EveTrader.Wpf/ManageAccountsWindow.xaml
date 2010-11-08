@@ -57,6 +57,12 @@
                             <DataGridTextColumn Binding="{Binding Path=Corporation.Name}" CanUserSort="False" Header="Corporation" />
                             <DataGridTextColumn Binding="{Binding Path=Account.ID}" CanUserSort="False" Header="Account" />
                         </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Change Info" />
+                                <MenuItem Header="Delete Character" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                     </DataGrid>
                 </Grid>
             </TabItem>
