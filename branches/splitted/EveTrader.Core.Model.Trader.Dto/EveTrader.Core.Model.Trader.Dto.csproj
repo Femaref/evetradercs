@@ -46,6 +46,7 @@
       <DependentUpon>DtoGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefTypesDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DtoGenerator.tt">

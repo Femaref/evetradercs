@@ -19,6 +19,7 @@
           <EntitySet Name="Entity" EntityType="testModel.Store.Entity" store:Type="Tables" />
           <EntitySet Name="Journal" EntityType="testModel.Store.Journal" store:Type="Tables" />
           <EntitySet Name="MarketOrders" EntityType="testModel.Store.MarketOrders" store:Type="Tables" />
+          <EntitySet Name="RefTypes" EntityType="testModel.Store.RefTypes" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="testModel.Store.Transactions" store:Type="Tables" />
           <EntitySet Name="WalletHistories" EntityType="testModel.Store.WalletHistories" store:Type="Tables" />
           <EntitySet Name="Wallets" EntityType="testModel.Store.Wallets" store:Type="Tables" />
@@ -91,14 +92,14 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false"  />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApiTransactions">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationLog">
@@ -142,7 +143,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false"  />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" Nullable="false" />
         </EntityType>
@@ -150,7 +151,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false"  />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" />
         </EntityType>
@@ -204,6 +205,13 @@
           <Property Name="Issued" Type="datetime" Nullable="false" />
           <Property Name="IssuedDate" Type="datetime" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RefTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -424,6 +432,7 @@
           <EntitySet Name="ApplicationLog" EntityType="EveTrader.Core.Model.ApplicationLog" />
           <EntitySet Name="CachedPriceInfo" EntityType="EveTrader.Core.Model.CachedPriceInfos" />
           <EntitySet Name="ApiCache" EntityType="EveTrader.Core.Model.ApiCache" />
+          <EntitySet Name="RefTypes" EntityType="EveTrader.Core.Model.RefTypes" />
           </EntityContainer>
         <EntityType Name="Characters" BaseType="EveTrader.Core.Model.Entities">
           <Property Type="String" Name="Race" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -589,6 +598,13 @@
           <Property Type="String" Name="RequestString" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="RequestDate" Nullable="false" />
           <Property Type="String" Name="Data" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RefTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -781,6 +797,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RefTypes">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.RefTypes">
+              <MappingFragment StoreEntitySet="RefTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -850,9 +874,9 @@
           <ConnectorPoint PointX="14.625" PointY="4.3678898111979159" />
           </AssociationConnector>
         <AssociationConnector Association="EveTrader.Core.Model.FK_WalletHistories_0">
-          <ConnectorPoint PointX="9.65625" PointY="4.125" />
-          <ConnectorPoint PointX="9.65625" PointY="0.90625" />
-          <ConnectorPoint PointX="11.375" PointY="0.90625" />
+          <ConnectorPoint PointX="9.96875" PointY="4.125" />
+          <ConnectorPoint PointX="9.96875" PointY="1.28125" />
+          <ConnectorPoint PointX="11.375" PointY="1.28125" />
           </AssociationConnector>
         <EntityTypeShape EntityType="EveTrader.Core.Model.ApiTransactions" Width="1.875" PointX="18" PointY="1.5" Height="1.099264322916667" />
         <EntityTypeShape EntityType="EveTrader.Core.Model.CustomTransactions" Width="1.875" PointX="18" PointY="3.375" Height="1.2636116536458335" />
@@ -877,6 +901,7 @@
         </InheritanceConnector>
         <EntityTypeShape EntityType="EveTrader.Core.Model.CachedPriceInfos" Width="1.875" PointX="0.75" PointY="0.75" Height="1.4279589843750031" />
         <EntityTypeShape EntityType="EveTrader.Core.Model.ApiCache" Width="1.5" PointX="10.75" PointY="7.75" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.RefTypes" Width="1.5" PointX="7.375" PointY="0.75" Height="1.4033821614583388" />
         </Diagram></Diagrams>
   </Designer>
 </edmx:Edmx>

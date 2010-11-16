@@ -42,7 +42,6 @@ namespace EveTrader.Core.Services
             else
                 iTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
-
         public void Update()
         {
             ThreadStart ts = new ThreadStart(ThreadedUpdate);
@@ -50,7 +49,6 @@ namespace EveTrader.Core.Services
             t.Name = "CCP Api Updater";
             t.Start();
         }
-
         private void ThreadedUpdate()
         {
             lock (iUpdaterLock)
@@ -70,7 +68,6 @@ namespace EveTrader.Core.Services
                 ActivateTimer();
             }
         }
-
         public void Update(Entities e)
         {
             lock (iUpdaterLock)
@@ -83,7 +80,6 @@ namespace EveTrader.Core.Services
                 RaiseUpdateCompleted(e);
             }
         }
-
         public bool AutoUpdate
         {
             get
@@ -97,9 +93,23 @@ namespace EveTrader.Core.Services
             }
         }
 
+        public void UpdateStatic()
+        {
+            ThreadStart ts = new ThreadStart(ThreadedUpdateStatic);
+            Thread t = new Thread(ts);
+            t.Name = "Static Data Updater";
+            t.Start();
+        }
+        private void ThreadedUpdateStatic()
+        {
+            lock (iUpdaterLock)
+            {
+                RaiseUpdateStarted();
+            }
+        }
+
 
         public event EventHandler<EntitiesUpdatedEventArgs> UpdateCompleted;
-
 
         private void RaiseUpdateCompleted(IEnumerable<Entities> updated)
         {
@@ -118,12 +128,10 @@ namespace EveTrader.Core.Services
             
                
         }
-
         private void RaiseUpdateCompleted(Entities updated)
         {
             RaiseUpdateCompleted(new Entities[] { updated });
         }
-
         private void RaiseUpdateStarted()
         {
             var handler = UpdateStarted;

@@ -62,6 +62,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DisplayJournal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Mapping.cs" />
     <Compile Include="MarketOrdersPartial.cs" />
     <Compile Include="MarketOrderState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.Model.Trader.Dto\EveTrader.Core.Model.Trader.Dto.csproj">
+      <Project>{0A3AE4B4-F3F1-4520-835C-D85683EC3700}</Project>
+      <Name>EveTrader.Core.Model.Trader.Dto</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

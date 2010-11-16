@@ -235,6 +235,22 @@ namespace EveTrader.Core.Model.Trader
             }
         }
         private ObjectSet<ApiCache> _ApiCache;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<RefTypes> RefTypes
+        {
+            get
+            {
+                if ((_RefTypes == null))
+                {
+                    _RefTypes = base.CreateObjectSet<RefTypes>("RefTypes");
+                }
+                return _RefTypes;
+            }
+        }
+        private ObjectSet<RefTypes> _RefTypes;
 
         #endregion
         #region AddTo Methods
@@ -317,6 +333,14 @@ namespace EveTrader.Core.Model.Trader
         public void AddToApiCache(ApiCache apiCache)
         {
             base.AddObject("ApiCache", apiCache);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the RefTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRefTypes(RefTypes refTypes)
+        {
+            base.AddObject("RefTypes", refTypes);
         }
 
         #endregion
@@ -2602,6 +2626,87 @@ namespace EveTrader.Core.Model.Trader
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="EveTrader.Core.Model", Name="RefTypes")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class RefTypes : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new RefTypes object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static RefTypes CreateRefTypes(global::System.Int64 id, global::System.String name)
+        {
+            RefTypes refTypes = new RefTypes();
+            refTypes.ID = id;
+            refTypes.Name = name;
+            return refTypes;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
     }
     
     /// <summary>

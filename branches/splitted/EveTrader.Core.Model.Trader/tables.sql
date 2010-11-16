@@ -355,3 +355,10 @@ CREATE TABLE [Wallets] (
     CONSTRAINT [FK_Wallets_0] FOREIGN KEY ([EntityID]) REFERENCES [Entity] ([ID])
 
 );
+
+DROP TABLE IF EXISTS [RefTypes];
+CREATE TABLE [RefTypes]
+(
+  [ID] integer PRIMARY KEY NOT NULL,
+  [Name] text NOT NULL
+);
