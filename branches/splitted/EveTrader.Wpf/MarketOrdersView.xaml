@@ -13,14 +13,15 @@
             <conv:BidConverter x:Key="bidConverter" />
         </UserControl.Resources>
         <Grid>
-            <ctrl:LoadingIndicator IsIndeterminate="true" Text="Loading MarketOrders" IsRunning="{Binding Updating}" Panel.ZIndex="2"/>
+            <ctrl:LoadingIndicator ProgressHeight="150" ProgressWidth="150" IsIndeterminate="true" Text="Loading MarketOrders" IsRunning="{Binding Updating}" Panel.ZIndex="2"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="19" />
+                <RowDefinition Height="25" />
                     <RowDefinition Height="1000*"/>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <CheckBox Content="Hide Expired" Height="16" HorizontalAlignment="Left" Margin="383,3,0,0" Name="checkBox1" VerticalAlignment="Top" Grid.Row="0" IsChecked="{Binding HideExpired, Mode=TwoWay}"/>
+            <Button Content="Load" HorizontalAlignment="Center" Command="{Binding LoadCommand}"/>
             <ComboBox Height="Auto" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentEntities}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
             <DataGrid Height="Auto" Width="Auto"
                             Grid.Row="1" 

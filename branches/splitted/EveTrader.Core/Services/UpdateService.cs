@@ -55,18 +55,17 @@ namespace EveTrader.Core.Services
         {
             lock (iUpdaterLock)
             {
-
+                RaiseUpdateStarted();
                 iTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
                 iBigUpdate = true;
-
-                foreach (var e in iModel.Entity.OfType<Characters>())
-                    this.Update(e);
-                foreach (var e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
+                var toBeUpdated = iModel.Entity.OfType<Characters>()
+                    .Union(iModel.Entity.OfType<Corporations>().Where(c => !c.Npc).Cast<Entities>()).ToList();
+                foreach (var e in toBeUpdated)
                     this.Update(e);
 
                 iBigUpdate = false;
-                RaiseUpdated(iModel.Entity);
+                RaiseUpdateCompleted(toBeUpdated);
 
                 ActivateTimer();
             }
@@ -81,7 +80,7 @@ namespace EveTrader.Core.Services
                 if (e is Corporations)
                     iCorporationUpdater.Update(e as Corporations);
 
-                RaiseUpdated(e);
+                RaiseUpdateCompleted(e);
             }
         }
 
@@ -99,29 +98,39 @@ namespace EveTrader.Core.Services
         }
 
 
-        public event EventHandler<EntitiesUpdatedEventArgs> Updated;
+        public event EventHandler<EntitiesUpdatedEventArgs> UpdateCompleted;
 
 
-        private void RaiseUpdated(IEnumerable<Entities> updated)
+        private void RaiseUpdateCompleted(IEnumerable<Entities> updated)
         {
             if (iBigUpdate)
                 return;
 
-            var handler = Updated;
+            var handler = UpdateCompleted;
             if (handler != null)
             {
                 handler(this, new EntitiesUpdatedEventArgs(updated));
                 //Action a = () => handler(this, new EntitiesUpdatedEventArgs(updated));
                 //Thread t = new Thread(new ThreadStart(a));
+                //t.Name = "Entities Updated Event";
                 //t.Start();
             }
             
                
         }
 
-        private void RaiseUpdated(Entities updated)
+        private void RaiseUpdateCompleted(Entities updated)
         {
-            RaiseUpdated(new Entities[] { updated });
+            RaiseUpdateCompleted(new Entities[] { updated });
         }
+
+        private void RaiseUpdateStarted()
+        {
+            var handler = UpdateStarted;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        public event EventHandler UpdateStarted;
     }
 }

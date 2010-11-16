@@ -13,6 +13,12 @@ namespace EveTrader.Core.Network.Requests.CCP
         [EnumStringValue("corp")]
         Corporation,
         [EnumStringValue("account")]
-        Account
+        Account,
+        [EnumStringValue("eve")]
+        Eve,
+        [EnumStringValue("map")]
+        Map,
+        [EnumStringValue("server")]
+        Server
     }
 }

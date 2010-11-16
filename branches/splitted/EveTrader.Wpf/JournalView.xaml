@@ -11,7 +11,7 @@
         <CollectionViewSource x:Key="iGroupedJournal" Source="{Binding JournalEntries, IsAsync=True}"/>
     </UserControl.Resources>
     <Grid>
-        <ctrl:LoadingIndicator Grid.RowSpan="2" Panel.ZIndex="2" IsIndeterminate="true" IsRunning="{Binding Updating}" Text="Updating Journal..." />
+        <ctrl:LoadingIndicator ProgressHeight="150" ProgressWidth="150" Grid.RowSpan="2" Panel.ZIndex="2" IsIndeterminate="true" IsRunning="{Binding Updating}" Text="Updating Journal..." />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

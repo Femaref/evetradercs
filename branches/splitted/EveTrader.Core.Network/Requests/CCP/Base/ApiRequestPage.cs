@@ -21,6 +21,9 @@ namespace EveTrader.Core.Network.Requests.CCP
         IndustryJobs,
         WalletTransactions,
         Standings,
-        CorporationSheet
+        CorporationSheet,
+        AllianceList,
+        SkillTree,
+        RefTypes
     }
 }

@@ -22,7 +22,7 @@ namespace EveTrader.Core.Controllers
             iReportView = reportView;
             iMainView.ReportView = iReportView.View;
 
-            updater.Updated += iReportView.DataIncoming;
+            updater.UpdateCompleted += iReportView.DataIncoming;
         }
 
         public void Refresh()

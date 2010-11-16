@@ -159,9 +159,22 @@ namespace EveTrader.Core.ViewModel
             iModel = tm;
             iUpdateService = us;
 
+            iUpdateService.UpdateStarted += new EventHandler(iUpdateService_UpdateStarted);
+            iUpdateService.UpdateCompleted += new EventHandler<EntitiesUpdatedEventArgs>(iUpdateService_UpdateCompleted);
+
             iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
             iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
             iFetchApiDataCommand = new DelegateCommand(FetchApiData);
+        }
+
+        void iUpdateService_UpdateCompleted(object sender, EntitiesUpdatedEventArgs e)
+        {
+            Updating = false;
+        }
+
+        void iUpdateService_UpdateStarted(object sender, EventArgs e)
+        {
+            Updating = true;
         }
 
         public void Show()
@@ -179,16 +192,9 @@ namespace EveTrader.Core.ViewModel
         {
             if (this.Updating)
                 return;
-            Action updater = () =>
-            {
+           
                 this.UpdatingText = "Updating CCP Api data...";
-                this.Updating = true;
                 iUpdateService.Update();
-                this.Updating = false;
-            };
-
-            Thread t = new Thread(new ThreadStart(updater));
-            t.Start();
         }
         private void RegeneratePriceCache()
         {

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
+using EveTrader.Core.Model.Trader;
 
 namespace EveTrader.Wpf
 {
@@ -38,5 +39,13 @@ namespace EveTrader.Wpf
         }
 
         #endregion
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (iGrid.SelectedIndex != -1)
+            {
+                iTabControl.SelectedIndex = 0;
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace EveTrader.Core.Controllers
             iMarketOrdersView = marketOrdersView;
             iMainView.MarketOrdersView = iMarketOrdersView.View;
 
-            updater.Updated += iMarketOrdersView.DataIncoming;
+            updater.UpdateCompleted += iMarketOrdersView.DataIncoming;
         }
 
         public void Refresh()

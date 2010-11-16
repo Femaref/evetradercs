@@ -22,7 +22,7 @@ namespace EveTrader.Core.Controllers
             iApplicationLogView = applicationLogView;
             iMainView.ApplicationLogView = iApplicationLogView.View;
 
-            updater.Updated += iApplicationLogView.DataIncoming;
+            updater.UpdateCompleted += iApplicationLogView.DataIncoming;
         }
 
         public void Refresh()
