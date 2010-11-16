@@ -99,7 +99,8 @@ namespace EveTrader.Core.ViewModel
             lock (iUpdaterLock)
             {
                 CurrentEntities.Clear();
-                CurrentEntities.AddRange(iModel.Entity.Where(e => (e is Characters) || !(e as Corporations).Npc).ToList());
+                var insert = iModel.Entity.Where(e => (e is Characters) || !(e as Corporations).Npc).ToList();
+                CurrentEntities.AddRange(insert);
             }
         }
         private void SelectEntity(string name)

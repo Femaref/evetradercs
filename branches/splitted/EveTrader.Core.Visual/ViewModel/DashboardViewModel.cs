@@ -121,7 +121,6 @@ namespace EveTrader.Core.ViewModel
             FilterTwoWeeksCommand = new DelegateCommand(() => Filter(14));
             FilterMonthCommand = new DelegateCommand(() => Filter(30));
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
-            RefreshWallets();
             Filter(7);
         }
 
@@ -140,7 +139,8 @@ namespace EveTrader.Core.ViewModel
             lock (iUpdaterLock)
             {
                 CurrentWallets.Clear();
-                CurrentWallets.AddRange(iModel.Wallets.Select(w => w).ToList().Select(w => w.DisplayName));
+                var insert = iModel.Wallets.Select(w => w).ToList().Select(w => w.DisplayName).ToList();
+                CurrentWallets.AddRange(insert);
             }
         }
         public void Refresh()
@@ -154,6 +154,7 @@ namespace EveTrader.Core.ViewModel
         {
             lock (iUpdaterLock)
             {
+                Working = true;
                 DailyInfo.Clear();
 
                 iModel.Connection.Open();
@@ -164,7 +165,6 @@ namespace EveTrader.Core.ViewModel
                                   orderby grouped.Key
                                   select grouped);
 
-                Working = true;
                 WorkingCount = investment.Count();
                 CurrentIndex = 0;
 
@@ -268,7 +268,6 @@ namespace EveTrader.Core.ViewModel
         }
         public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
-            RefreshWallets();
             Refresh();
         }
     }

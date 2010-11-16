@@ -96,8 +96,8 @@ namespace EveTrader.Wpf
                 }
             };
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            Binding b = new Binding("");
-            b.Source = this.Resources["iDashboardData"];
+            Binding b = new Binding("DailyInfo");
+            b.Source = this.DataContext;
             ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }

@@ -80,7 +80,7 @@ namespace EveTrader.Core.ViewModel
 
         public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
-            Refresh();
+           Refresh();
         }
     }
 }
