@@ -144,6 +144,16 @@ namespace EveTrader.Core.ViewModel
                         CurrentUserID = CurrentItem.Account.ID; 
                 });
 
+            iUpdater.UpdateStarted += (sender, e) =>
+                {
+                    Updating = true;
+                };
+
+            iUpdater.UpdateCompleted += (sender, e) =>
+                {
+                    Updating = false;
+                };
+
             this.PropertyChanged += (sender, e) =>
                 {
                     if (e.PropertyName == "DataRequestable")
@@ -173,6 +183,8 @@ namespace EveTrader.Core.ViewModel
         {
             lock (iUpdaterLock)
             {
+                Updating = true;
+
                 var account = iModel.Accounts.Where(a => a.ID == CurrentUserID).FirstOrDefault();
                 if (account == null)
                 {
@@ -190,15 +202,20 @@ namespace EveTrader.Core.ViewModel
 
                 DataRequestable = false;
                 DataPresent = true;
+                Updating = false;
             }
         }
         private void AbortRequest()
         {
             lock (iUpdaterLock)
             {
+                Updating = true;
+
                 RequestedCharacters.Clear();
                 DataRequestable = true;
                 DataPresent = false;
+
+                Updating = false;
             }
         }
         private void AddCharacters()
@@ -219,6 +236,7 @@ namespace EveTrader.Core.ViewModel
                 RequestedCharacters.Clear();
                 DataRequestable = true;
                 DataPresent = false;
+
                 Refresh();
             }
         }

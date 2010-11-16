@@ -155,7 +155,9 @@ namespace EveTrader.Core.ViewModel
                     .Where(filter)
                     .OrderByDescending(j => j.DateTime).ToList();
 
-                JournalEntries.AddRange(AutoMapper.Mapper.Map<IEnumerable<Journal>, IEnumerable<DisplayJournal>>(cache));
+                var insert = AutoMapper.Mapper.Map<IEnumerable<Journal>, IEnumerable<DisplayJournal>>(cache);
+
+                JournalEntries.AddRange(insert);
                 Updating = false;
             }
         }

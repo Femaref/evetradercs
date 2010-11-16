@@ -22,7 +22,7 @@
                 <Button Content="Load" HorizontalAlignment="Center" Command="{Binding LoadCommand}"/>
                 <ComboBox Height="Auto" Name="comboBox1" MinWidth="150" VerticalAlignment="Top" HorizontalAlignment="Right" Width="Auto" SelectionChanged="comboBox1_SelectionChanged" ItemsSource="{Binding Path=CurrentWallets}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="DisplayName"/>
             </Grid>
-            <DataGrid Grid.Row="1" ItemsSource="{Binding Source={StaticResource iGroupedJournal}}" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" VirtualizingStackPanel.IsVirtualizing="true" VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <DataGrid Grid.Row="1" ItemsSource="{Binding JournalEntries}" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" VirtualizingStackPanel.IsVirtualizing="true" VirtualizingStackPanel.VirtualizationMode="Recycling">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
                     <DataGridTextColumn Binding="{Binding Path=RefTypeID}" Header="RefTypeID" />

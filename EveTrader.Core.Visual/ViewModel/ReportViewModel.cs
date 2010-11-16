@@ -127,6 +127,7 @@ namespace EveTrader.Core.ViewModel
             Wallets.CollectionChanged += view.ChartCollectionChanged;
 
             RefreshEntities();
+            RefreshWallets();
             
         }
 
@@ -245,7 +246,7 @@ namespace EveTrader.Core.ViewModel
 
                 List<Selectable<Entities>> creationCache = new List<Selectable<Entities>>();
                 
-                foreach (Entities e in iModel.Entity.OfType<Characters>())
+                foreach (Entities e in iModel.Entity.OfType<Characters>().ToList())
                 {
                     bool selected = false;
                     var prevEntity = entitiesCache.FirstOrDefault(s => s.Item.ID == e.ID);
@@ -255,7 +256,7 @@ namespace EveTrader.Core.ViewModel
                     Selectable<Entities> cache = new Selectable<Entities>(e, selected);
                     creationCache.Add(cache);
                 }
-                foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
+                foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc).ToList())
                 {
                     bool selected = false;
                     var prevEntity = entitiesCache.FirstOrDefault(s => s.Item.ID == e.ID);
@@ -274,7 +275,10 @@ namespace EveTrader.Core.ViewModel
             lock (iUpdaterLock)
             {
                 Wallets.Clear();
-                Wallets.AddRange(WalletHistories.Select(wh => new KeyValuePair<long, string>(WalletHistories.IndexOf(wh), wh.Name)).ToList());
+
+                var insert = WalletHistories.Select(wh => new KeyValuePair<long, string>(WalletHistories.IndexOf(wh), wh.Name)).ToList();
+
+                Wallets.AddRange(insert);
             }
         }
 
