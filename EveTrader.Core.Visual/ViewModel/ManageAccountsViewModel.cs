@@ -28,6 +28,7 @@ namespace EveTrader.Core.ViewModel
         private DelegateCommand iRequestDataCommand;
         private DelegateCommand iAbortRequestCommand;
         private DelegateCommand iAddCharactersCommand;
+        private DelegateCommand iUpdateAccountCommand;
 
         private object iUpdaterLock = new object();
 
@@ -39,10 +40,13 @@ namespace EveTrader.Core.ViewModel
         {
             get { return iAbortRequestCommand; }
         }
-
         public ICommand AddCharactersCommand
         {
             get { return iAddCharactersCommand; }
+        }
+        public ICommand UpdateAccountCommand
+        {
+            get { return iUpdateAccountCommand; }
         }
 
         private long iCurrentUserID;
@@ -75,13 +79,23 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
+        public Characters CurrentItem
+        {
+            get { return iCurrentItem; }
+            set
+            {
+                this.iCurrentItem = value;
+                RaisePropertyChanged("CurrentItem");
+            }
+        }
+
 
 
         private bool iDataRequestable = false;
         private bool iDataPresent = false;
-        
+
         public SmartObservableCollection<Characters> CurrentCharacters { get; private set; }
-        public SmartObservableCollection<Selectable<Characters>> RequestedCharacters {get; private set;}
+        public SmartObservableCollection<Selectable<Characters>> RequestedCharacters { get; private set; }
         public bool DataPresent
         {
             get
@@ -123,6 +137,12 @@ namespace EveTrader.Core.ViewModel
             iRequestDataCommand = new DelegateCommand(RequestData, () => DataRequestable);
             iAbortRequestCommand = new DelegateCommand(AbortRequest);
             iAddCharactersCommand = new DelegateCommand(AddCharacters, () => DataPresent);
+            iUpdateAccountCommand = new DelegateCommand(
+                () => 
+                { 
+                    if (CurrentItem != null) 
+                        CurrentUserID = CurrentItem.Account.ID; 
+                });
 
             this.PropertyChanged += (sender, e) =>
                 {
@@ -131,7 +151,7 @@ namespace EveTrader.Core.ViewModel
                     if (e.PropertyName == "DataPresent")
                         iAddCharactersCommand.RaiseCanExecuteChanged();
                 };
-            
+
             Refresh();
         }
 
@@ -166,7 +186,7 @@ namespace EveTrader.Core.ViewModel
                 CharacterListRequest clr = new CharacterListRequest(new Accounts() { ID = account.ID, ApiKey = account.ApiKey }, iModel.StillCached, iModel.SaveCache, iModel.LoadCache);
                 var requestedCharacters = clr.Request().Select(c => new Selectable<Characters>(c, false));
 
-                RequestedCharacters.AddRange(requestedCharacters);
+                RequestedCharacters.AddRange(requestedCharacters.Where(s => !account.Entities.Any(e => e.ID == s.Item.ID)));
 
                 DataRequestable = false;
                 DataPresent = true;
@@ -187,8 +207,7 @@ namespace EveTrader.Core.ViewModel
             {
                 long id = RequestedCharacters.First().Item.Account.ID;
                 Accounts account = iModel.Accounts.First(a => a.ID == id);
-                account.Entities.Clear();
-                foreach (Characters c in RequestedCharacters.Where(s => s.IsSelected))
+                foreach (Characters c in RequestedCharacters.Where(s => s.IsSelected).Where(s => !iModel.Entity.Any(e => e.ID == s.Item.ID)))
                 {
                     Characters cache = iFactory.CreateCharacter(c.ID, account);
                     cache.Corporation = iFactory.CreateCorporation(c.Corporation.ID, account, c.ID);
@@ -224,9 +243,17 @@ namespace EveTrader.Core.ViewModel
             throw new NotImplementedException();
         }
 
+        private bool iUpdating = false;
+private  Characters iCurrentItem;
+
         public bool Updating
         {
-            get { throw new NotImplementedException(); }
+            get { return iUpdating; }
+            private set
+            {
+                iUpdating = value;
+                RaisePropertyChanged("Updating");
+            }
         }
 
         #endregion

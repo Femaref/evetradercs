@@ -10,6 +10,7 @@ using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
 using System.Diagnostics;
 using EveTrader.Core.Model;
+using System.Windows.Input;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -40,7 +41,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.TransactionsApplyStartFilter = value;
                 RaisePropertyChanged("ApplyStartFilter");
-                Refresh();
             }
         }
         public bool ApplyEndFilter
@@ -53,7 +53,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.TransactionsApplyEndFilter = value;
                 RaisePropertyChanged("ApplyEndFilter");
-                Refresh();
             }
         }
         public DateTime StartDate
@@ -66,8 +65,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.TransactionsStartDate = value;
                 RaisePropertyChanged("StartDate");
-                if (ApplyStartFilter)
-                    Refresh();
             }
         }
         public DateTime EndDate
@@ -80,8 +77,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.TransactionsEndDate = value;
                 RaisePropertyChanged("StartDate");
-                if (ApplyEndFilter)
-                    Refresh();
             }
         }
         public bool Updating
@@ -96,6 +91,7 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("Updating");
             }
         }
+        public ICommand LoadCommand { get; private set; }
 
         [ImportingConstructor]
         public TransactionsViewModel(ITransactionsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
@@ -107,6 +103,8 @@ namespace EveTrader.Core.ViewModel
             CurrentWallets = new SmartObservableCollection<Wallets>(view.BeginInvoke);
             Transactions = new SmartObservableCollection<Transactions>(view.BeginInvoke);
             this.ViewCore.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Wallets>>(ViewCore_EntitySelectionChanged);
+
+            LoadCommand = new DelegateCommand(Refresh, () => !Updating);
 
             RefreshCurrentWallets();
             SelectWallet(CurrentWallets.FirstOrDefault());
@@ -122,6 +120,7 @@ namespace EveTrader.Core.ViewModel
         {
                 lock (iCurrentWalletLocker)
                 {
+                    Updating = true;
                     Transactions.Clear();
                     Func<Transactions, bool> filter = (t) => true;
                     if (ApplyStartFilter && ApplyEndFilter)
@@ -135,6 +134,7 @@ namespace EveTrader.Core.ViewModel
                         .Where(filter)
                         .OrderByDescending(j => j.DateTime).ToList();
                     Transactions.AddRange(cache);
+                    Updating = false;
                 }
         }
 
@@ -154,7 +154,7 @@ namespace EveTrader.Core.ViewModel
                 RaisePropertyChanged("CurrentWallet");
             }
 
-            Refresh();
+            
         }
 
 

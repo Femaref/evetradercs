@@ -23,7 +23,7 @@ namespace EveTrader.Core.Controllers
 
             iMainView.JournalView = iJournalView.View;
 
-            updater.Updated += iJournalView.DataIncoming;
+            updater.UpdateCompleted += iJournalView.DataIncoming;
         }
     }
 }

@@ -73,9 +73,11 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.HideExpired = value;
                 RaisePropertyChanged("HideExpired");
-                Refresh();
+                
             }
         }
+
+        public ICommand LoadCommand { get; private set; }
 
         [ImportingConstructor]
         public MarketOrdersViewModel(IMarketOrdersView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel model, StaticModel sm, ISettingsProvider settings)
@@ -87,6 +89,7 @@ namespace EveTrader.Core.ViewModel
             Orders = new SmartObservableCollection<DisplayMarketOrders>(view.BeginInvoke);
             CurrentEntities = new SmartObservableCollection<Entities>(view.BeginInvoke);
             view.EntitySelectionChanged += new EventHandler<EntitySelectionChangedEventArgs<Entities>>(view_EntitySelectionChanged);
+            LoadCommand = new DelegateCommand(() => Refresh());
 
             RefreshCurrentEntities();
         }
@@ -111,7 +114,7 @@ namespace EveTrader.Core.ViewModel
             {
                 iCurrentEntity = e;
                 RaisePropertyChanged("CurrentEntity");
-                Refresh();
+                
             }
         }
 

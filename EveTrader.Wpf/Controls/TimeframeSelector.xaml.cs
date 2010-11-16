@@ -56,7 +56,7 @@ namespace EveTrader.Wpf.Controls
             typeof(DateTime), 
             typeof(TimeframeSelector), 
             new FrameworkPropertyMetadata(
-                DateTime.MinValue, 
+                DateTime.MinValue,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 

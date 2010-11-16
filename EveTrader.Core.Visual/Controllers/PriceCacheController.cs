@@ -22,7 +22,7 @@ namespace EveTrader.Core.Controllers
             iPriceCacheView = priceCacheView;
             iMainView.PriceCacheView = iPriceCacheView.View;
 
-            updater.Updated += iPriceCacheView.DataIncoming;
+            updater.UpdateCompleted += iPriceCacheView.DataIncoming;
         }
 
     }

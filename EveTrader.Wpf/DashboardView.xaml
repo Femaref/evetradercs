@@ -56,7 +56,7 @@
             <ctrl:ProgressIndicator IsIndeterminate="True" Text="" IsRunning="{Binding DetailsUpdating}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
-        <visi:Chart Panel.ZIndex="1" x:Name="iDetailChart" Height="Auto" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0">
+        <visi:Chart Panel.ZIndex="1" x:Name="iDetailChart" Height="Auto" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" >
             <visi:Chart.AxesX>
                 <visi:Axis>
                     <visi:Axis.AxisLabels>
@@ -67,7 +67,7 @@
             <visi:Chart.Series>
                 <visi:DataSeries RenderAs="Column" DataSource="{Binding Investment}" LegendText="Investment" Color="Red">
                     <visi:DataSeries.DataMappings>
-                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName" />
                         <visi:DataMapping MemberName="YValue" Path="Value" />
                     </visi:DataSeries.DataMappings>
                 </visi:DataSeries>

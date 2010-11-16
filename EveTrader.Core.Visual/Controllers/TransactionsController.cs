@@ -23,7 +23,7 @@ namespace EveTrader.Core.Controllers
 
             iMainView.TransactionsView = iTransactionsView.View;
 
-            updater.Updated += iTransactionsView.DataIncoming;
+            updater.UpdateCompleted += iTransactionsView.DataIncoming;
         }
     }
 }

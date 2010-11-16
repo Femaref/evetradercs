@@ -312,6 +312,7 @@ namespace EveTrader.Core.ViewModel
         {
             Refresh();
         }
+
         public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             RefreshEntities();

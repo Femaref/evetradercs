@@ -130,7 +130,6 @@ namespace EveTrader.Wpf
 
             ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
             Binding b = new Binding("");
-            b.Source = this.Resources["iDashboardData"];
             ds.SetBinding(DataSeries.DataSourceProperty, b);
             return ds;
         }

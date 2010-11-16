@@ -8,10 +8,10 @@
         <BooleanToVisibilityConverter x:Key="boolToVis" />
     </Window.Resources>
     <Grid>
-        <TabControl
+        <TabControl x:Name="iTabControl"
             Height="Auto"
             Width="Auto">
-                <TabItem Header="Add Account">
+                <TabItem Header="Add Account" x:Name="addAccountTab">
                 <Grid Margin="0,3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="{Binding ElementName=iUserID, Path=Height}"/>
@@ -50,7 +50,7 @@
             </TabItem>
                 <TabItem Header="Current Characters">
                 <Grid>
-                    <DataGrid ItemsSource="{Binding CurrentCharacters}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False">
+                    <DataGrid x:Name="iGrid" ItemsSource="{Binding CurrentCharacters}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectedItem="{Binding CurrentItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
                             <DataGridTextColumn Binding="{Binding Path=Balance}" Header="Balance" />
@@ -59,7 +59,7 @@
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Change Info" />
+                                <MenuItem Header="Change Info" Click="MenuItem_Click" Command="{Binding UpdateAccountCommand}"/>
                                 <MenuItem Header="Delete Character" />
                             </ContextMenu>
                         </DataGrid.ContextMenu>

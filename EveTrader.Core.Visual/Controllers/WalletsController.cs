@@ -22,7 +22,7 @@ namespace EveTrader.Core.Controllers
             iWalletsView = walletsView;
             iMainView.WalletsView = iWalletsView.View;
 
-            updater.Updated += iWalletsView.DataIncoming;
+            updater.UpdateCompleted += iWalletsView.DataIncoming;
         }
     }
 }
