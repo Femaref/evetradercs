@@ -192,9 +192,9 @@ namespace EveTrader.Wpf
 
             if (!isTerminating)
             {
-                ExceptionDisplay ed = new ExceptionDisplay();
-                ed.Current = e;
-                ed.ShowDialog();
+                //ExceptionDisplay ed = new ExceptionDisplay();
+                //ed.Current = e;
+                //ed.ShowDialog();
             }
         }
     }

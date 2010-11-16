@@ -12,6 +12,7 @@ using EveTrader.Core.ViewModel.Display;
 using ClassExtenders;
 using System.Threading;
 using EveTrader.Core.Model;
+using System.Windows.Input;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -43,8 +44,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.ReportStartDate = value;
                 RaisePropertyChanged("StartDate");
-                if (ApplyStartFilter)
-                    Refresh();
             }
         }
         public DateTime EndDate
@@ -57,8 +56,6 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.ReportEndDate = value;
                 RaisePropertyChanged("EndDate");
-                if (ApplyEndFilter)
-                    Refresh();
             }
         }
         public bool ApplyStartFilter
@@ -71,7 +68,7 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.ReportApplyStartFilter = value;
                 RaisePropertyChanged("ApplyStartFilter");
-                Refresh();
+                
             }
         }
         public bool ApplyEndFilter
@@ -84,7 +81,7 @@ namespace EveTrader.Core.ViewModel
             {
                 iSettings.ReportApplyEndFilter = value;
                 RaisePropertyChanged("ApplyEndFilter");
-                Refresh();
+                
             }
         }
         public bool Updating
@@ -106,6 +103,7 @@ namespace EveTrader.Core.ViewModel
                 return iConcatedEntities;
             }
         }
+        public ICommand RefreshCommand { get; private set; }
 
         [ImportingConstructor]
         public ReportViewModel(IReportView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
@@ -124,10 +122,12 @@ namespace EveTrader.Core.ViewModel
             WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(view.BeginInvoke);
             Wallets = new SmartObservableCollection<KeyValuePair<long, string>>(view.BeginInvoke);
 
+            RefreshCommand = new DelegateCommand(() => Refresh());
+
             Wallets.CollectionChanged += view.ChartCollectionChanged;
 
             RefreshEntities();
-            Refresh();
+            
         }
 
         public void Refresh()
@@ -253,7 +253,6 @@ namespace EveTrader.Core.ViewModel
                         selected = prevEntity.IsSelected;
 
                     Selectable<Entities> cache = new Selectable<Entities>(e, selected);
-                    cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
                     creationCache.Add(cache);
                 }
                 foreach (Entities e in iModel.Entity.OfType<Corporations>().Where(c => !c.Npc))
@@ -264,7 +263,6 @@ namespace EveTrader.Core.ViewModel
                         selected = prevEntity.IsSelected;
 
                     Selectable<Entities> cache = new Selectable<Entities>(e, selected);
-                    cache.SelectedChanged += new EventHandler<SelectedChangedEventArgs>(entities_SelectedChanged);
                     creationCache.Add(cache);
                 }
 
@@ -305,14 +303,7 @@ namespace EveTrader.Core.ViewModel
                 SalesTax = d.Sum(dr => dr.SalesTax)
             });
         }
-
-        
-
-        private void entities_SelectedChanged(object sender, SelectedChangedEventArgs e)
-        {
-            Refresh();
-        }
-
+ 
         public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
         {
             RefreshEntities();
