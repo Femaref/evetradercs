@@ -8,6 +8,7 @@ namespace EveTrader.Core.Services
         bool AutoUpdate { get; set; }
         void Update();
         void Update(Entities e);
+        void UpdateStatic();
         event EventHandler<EntitiesUpdatedEventArgs> UpdateCompleted;
         event EventHandler UpdateStarted;
     }

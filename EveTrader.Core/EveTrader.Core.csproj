@@ -91,9 +91,14 @@
     <Compile Include="Updater\CCP\Interfaces\IEntityUpdater.cs" />
     <Compile Include="Updater\CCP\Interfaces\IJournalUpdater.cs" />
     <Compile Include="Updater\CCP\Interfaces\IMarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IRefTypesUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IStaticUpdater.cs" />
     <Compile Include="Updater\CCP\Interfaces\ITransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\JournalUpdater.cs" />
     <Compile Include="Updater\CCP\MarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\RefTypesUpdater.cs" />
+    <Compile Include="Updater\CCP\StaticUpdater.cs" />
+    <Compile Include="Updater\CCP\StaticUpdaterBase.cs" />
     <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
     <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
