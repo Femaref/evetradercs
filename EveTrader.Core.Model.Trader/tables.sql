@@ -21,7 +21,7 @@ CREATE TABLE [ApiCache] (
 );
 DROP TABLE IF EXISTS [ApiJournal];
 CREATE TABLE [ApiJournal] (
-[ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+[ID] integer PRIMARY KEY NOT NULL,
 [ExternalID] integer NOT NULL,
 CONSTRAINT [FK_ApiJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID])
 );
@@ -30,7 +30,7 @@ CREATE TABLE [ApiTransactions] (
 
 
 
-    [ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+    [ID] integer PRIMARY KEY NOT NULL,
 
 
 
@@ -121,7 +121,7 @@ CREATE TABLE [Corporations] (
 );
 DROP TABLE IF EXISTS [CustomJournal];
 CREATE TABLE [CustomJournal](
-[ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+[ID] integer PRIMARY KEY NOT NULL,
 [Created] datetime NOT NULL,
 [Description] text NOT NULL,
 CONSTRAINT [FK_CustomJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID])
@@ -131,7 +131,7 @@ CREATE TABLE [CustomTransactions] (
 
 
 
-    [ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+    [ID] integer PRIMARY KEY NOT NULL,
 
 
 

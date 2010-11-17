@@ -92,14 +92,14 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApiTransactions">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="ExternalID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationLog">
@@ -143,7 +143,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" Nullable="false" />
         </EntityType>
@@ -151,7 +151,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" />
         </EntityType>
