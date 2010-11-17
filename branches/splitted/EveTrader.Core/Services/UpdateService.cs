@@ -16,6 +16,7 @@ namespace EveTrader.Core.Services
     {
         private readonly CharacterUpdater iCharacterUpdater;
         private readonly CorporationUpdater iCorporationUpdater;
+        private readonly StaticUpdater iStaticUpdater;
         private readonly TraderModel iModel;
         private readonly ISettingsProvider iSettings;
         private Timer iTimer;
@@ -24,10 +25,11 @@ namespace EveTrader.Core.Services
         private readonly object iUpdaterLock = new object();
 
         [ImportingConstructor]
-        public UpdateService(CharacterUpdater characterUpdater, CorporationUpdater corporationUpdater, TraderModel tm, ISettingsProvider settings)
+        public UpdateService(CharacterUpdater characterUpdater, CorporationUpdater corporationUpdater, StaticUpdater staticUpdater, TraderModel tm, ISettingsProvider settings)
         {
             iCharacterUpdater = characterUpdater;
             iCorporationUpdater = corporationUpdater;
+            iStaticUpdater = staticUpdater;
             iModel = tm;
             iSettings = settings;
 
@@ -105,6 +107,8 @@ namespace EveTrader.Core.Services
             lock (iUpdaterLock)
             {
                 RaiseUpdateStarted();
+                iStaticUpdater.Update();
+                RaiseUpdateCompleted(Enumerable.Empty<Entities>());
             }
         }
 

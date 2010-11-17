@@ -20,6 +20,7 @@ namespace EveTrader.Core.ViewModel
         private readonly ICommand iOpenManageAccountsCommand;
         private readonly ICommand iRegeneratePriceCache;
         private readonly ICommand iFetchApiDataCommand;
+        private readonly ICommand iFetchStaticDataCommand;
 
         private readonly TraderModel iModel;
         private readonly IUpdateService iUpdateService;
@@ -46,6 +47,10 @@ namespace EveTrader.Core.ViewModel
         public ICommand FetchApiDataCommand
         {
             get { return iFetchApiDataCommand; }
+        }
+        public ICommand FetchStaticDataCommand
+        {
+            get { return this.iFetchStaticDataCommand; }
         }
         public bool Updating
         {
@@ -165,6 +170,7 @@ namespace EveTrader.Core.ViewModel
             iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
             iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
             iFetchApiDataCommand = new DelegateCommand(FetchApiData);
+            iFetchStaticDataCommand = new DelegateCommand(FetchStaticData);
         }
 
         void iUpdateService_UpdateCompleted(object sender, EntitiesUpdatedEventArgs e)
@@ -196,6 +202,16 @@ namespace EveTrader.Core.ViewModel
                 this.UpdatingText = "Updating CCP Api data...";
                 iUpdateService.Update();
         }
+
+        private void FetchStaticData()
+        {
+            if (this.Updating)
+                return;
+
+            this.UpdatingText = "Updating Eve Static data...";
+            iUpdateService.UpdateStatic();
+        }
+
         private void RegeneratePriceCache()
         {
             if (this.Updating)

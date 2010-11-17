@@ -11,6 +11,7 @@ namespace EveTrader.Core.Model.Trader
         static Mapping()
         {
             AutoMapper.Mapper.CreateMap<RefTypes, RefTypesDto>();
+            AutoMapper.Mapper.CreateMap<RefTypesDto, RefTypes>();
         }
     }
 }

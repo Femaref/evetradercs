@@ -25,6 +25,7 @@
                 <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
                 <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
                 <MenuItem Header="Update API Data" Command="{Binding FetchApiDataCommand}"/>
+                <MenuItem Header="Update Static Eve Data" Command="{Binding FetchStaticDataCommand}"/>
                 <MenuItem Header="Exit" Command="Close"/>
             </MenuItem>
         </Menu>
