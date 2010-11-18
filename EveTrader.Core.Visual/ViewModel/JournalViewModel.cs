@@ -99,7 +99,9 @@ namespace EveTrader.Core.ViewModel
         public ICommand LoadCommand { get; private set; }
 
         [ImportingConstructor]
-        public JournalViewModel(IJournalView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
+        public JournalViewModel(IJournalView view, 
+            [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
+            ISettingsProvider settings)
             : base(view)
         {
             iModel = tm;
