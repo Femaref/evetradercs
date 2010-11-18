@@ -65,19 +65,38 @@
   <ItemGroup>
     <Compile Include="Collections\BindableCollection.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
-    <Compile Include="RefTypesConverter.cs" />
-    <Compile Include="Services\ApplicationUpdateService.cs" />
-    <Compile Include="Services\CachedPriceUpdaterService.cs" />
-    <Compile Include="Services\EntitiesUpdatedEventArgs.cs" />
-    <Compile Include="Services\ICachedPriceUpdaterService.cs" />
-    <Compile Include="Services\IUpdateService.cs" />
-    <Compile Include="Services\UpdateService.cs" />
+    <Compile Include="Mapping.cs" />
     <Compile Include="Model\ISettingsProvider.cs" />
     <Compile Include="Collections\SmartObservableCollection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ApplicationUpdateService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\CachedPriceUpdaterService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\EntitiesUpdatedEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\ICachedPriceUpdaterService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IMappingCreator.cs" />
+    <Compile Include="Services\IRefTypesLookup.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IUpdateService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\RefTypesLookup.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\UpdateService.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />

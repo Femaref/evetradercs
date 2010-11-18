@@ -81,8 +81,6 @@ namespace EveTrader.Core.Controllers
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
 
-            Mapping.CreateMappings();
-
             mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
         }
 

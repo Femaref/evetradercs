@@ -20,4 +20,5 @@ foreach(PropertyInfo p in properties)
 <#	
 	}
 }#>
+public System.String RefTypeName {get;set;}
 }

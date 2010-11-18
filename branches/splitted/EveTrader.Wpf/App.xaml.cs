@@ -137,6 +137,13 @@ namespace EveTrader.Wpf
 
            // var updater = container.GetExportedValue<IApplicationUpdateService>();
            // updater.CheckUpdate();
+
+            var mappings = container.GetExportedValues<IMappingCreator>();
+
+            foreach (IMappingCreator mc in mappings)
+            {
+                mc.CreateMappings();
+            }
             
             controller = container.GetExportedValue<ApplicationController>();
 

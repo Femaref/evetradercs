@@ -62,7 +62,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DisplayJournal.tt</DependentUpon>
     </Compile>
-    <Compile Include="Mapping.cs" />
     <Compile Include="MarketOrdersPartial.cs" />
     <Compile Include="MarketOrderState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

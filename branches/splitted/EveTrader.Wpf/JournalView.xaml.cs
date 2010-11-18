@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using EveTrader.Core.View;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Model.Trader;
+using EveTrader.Core;
 
 namespace EveTrader.Wpf
 {
@@ -23,11 +24,10 @@ namespace EveTrader.Wpf
     [Export(typeof(IJournalView))]
     public partial class JournalView : UserControl, IJournalView
     {
+        [ImportingConstructor]
         public JournalView()
         {
             InitializeComponent();
-           // var x = (CollectionViewSource)this.Resources["iGroupedJournal"];
-           // x.GroupDescriptions.Add(new PropertyGroupDescription("Date"));
         }
 
         #region IExtendedView Members
