@@ -25,10 +25,19 @@ namespace EveTrader.Core.Services
         {
             XDocument xd = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),new XElement("EveTraderExport"));
 
+            XElement xa = new XElement("Accounts",
+                new object[]
+                {
+                    new XAttribute("userid", a.ID),
+                    new XAttribute("apikey", a.ApiKey)
+                });
+
             foreach (Entities e in a.Entities)
             {
-                xd.Root.Add(ExportEntity(e));
+                xa.Add(ExportEntity(e));
             }
+
+            xd.Root.Add(xa);
 
             return xd;
         }
