@@ -95,7 +95,6 @@ namespace EveTrader.Core.Services
                 {
                     new XAttribute("accountKey", w.AccountKey),
                     new XAttribute("balance", w.Balance),
-                    new XAttribute("id", w.ID),
                     new XAttribute("name", w.Name),
                     ExportJournal(w.Journal),
                     ExportTransactions(w.Transactions),
@@ -106,17 +105,66 @@ namespace EveTrader.Core.Services
             return xe;
         }
 
-        private object ExportWalletHistory(IEnumerable<WalletHistories> walletHistories)
+        private XElement ExportWalletHistory(IEnumerable<WalletHistories> walletHistories)
         {
-            throw new NotImplementedException();
+            return new XElement("WalletHistories", walletHistories.Select(wh => new XElement("WalletHistory",
+                new object[]
+                {
+                    new XAttribute("date", wh.Date),
+                    new XAttribute("balance", wh.Balance),
+                })));
         }
 
-        private object ExportTransactions(IEnumerable<Transactions> transactions)
+        private XElement ExportTransactions(IEnumerable<Transactions> transactions)
         {
-            throw new NotImplementedException();
+            XElement xt = new XElement("ApiTransactions");
+            XElement xcustom = new XElement("CustomTransactions");
+
+            foreach (Transactions t in transactions)
+            {
+                XElement xc = new XElement((t is ApiTransactions) ? "ApiTransaction" : "CustomTransaction");
+                xc.Add(
+                new object[]
+                {
+                    new XAttribute("clientID", t.ClientID),
+                    new XAttribute("clientName", t.ClientName),
+                    new XAttribute("dateTime", t.DateTime),
+                    new XAttribute("ignored", t.Ignored),
+                    new XAttribute("price", t.Price),
+                    new XAttribute("quantity", t.Quantity),
+                    new XAttribute("stationID", t.StationID),
+                    new XAttribute("stationName", t.StationName),
+                    new XAttribute("transactionFor", t.TransactionFor),
+                    new XAttribute("transactionType", t.TransactionType),
+                    new XAttribute("typeID", t.TypeID),
+                    new XAttribute("typeName", t.TypeName)
+                });
+
+                if (t is ApiTransactions)
+                    xc.Add(new XAttribute("externalID", (t as ApiTransactions).ExternalID));
+                if (t is CustomTransactions)
+                    xc.Add(
+                        new object[] 
+                        {
+                            new XAttribute("created", (t as CustomTransactions).Created),
+                            new XAttribute("description", (t as CustomTransactions).Description)
+                        });
+
+                if (t is ApiTransactions)
+                    xt.Add(xc);
+                if (t is CustomTransactions)
+                    xcustom.Add(xc);
+            }
+
+            return new XElement("Transactions",
+                new object[]
+                {
+                    xt,
+                    xcustom
+                });
         }
 
-        private object ExportJournal(IEnumerable<Journal> journal)
+        private XElement ExportJournal(IEnumerable<Journal> journal)
         {
             throw new NotImplementedException();
         }
