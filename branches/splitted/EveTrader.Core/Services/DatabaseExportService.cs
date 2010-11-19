@@ -23,7 +23,7 @@ namespace EveTrader.Core.Services
 
         public System.Xml.Linq.XDocument Export(Model.Trader.Accounts a)
         {
-            XDocument xd = new XDocument(new XDeclaration("1.0", "utf-8", "yes"));
+            XDocument xd = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),new XElement("EveTraderExport"));
 
             foreach (Entities e in a.Entities)
             {
@@ -90,7 +90,7 @@ namespace EveTrader.Core.Services
             XElement xe = new XElement("Wallets");
             foreach(Wallets w in wallets)
             {
-            xe.Add("Wallet",
+            xe.Add(new XElement("Wallet",
                 new object[]
                 {
                     new XAttribute("accountKey", w.AccountKey),
@@ -99,7 +99,7 @@ namespace EveTrader.Core.Services
                     ExportJournal(w.Journal),
                     ExportTransactions(w.Transactions),
                     ExportWalletHistory(w.WalletHistory)
-                });
+                }));
             }
 
             return xe;
@@ -141,19 +141,20 @@ namespace EveTrader.Core.Services
                 });
 
                 if (t is ApiTransactions)
+                {
                     xc.Add(new XAttribute("externalID", (t as ApiTransactions).ExternalID));
+                    xt.Add(xc);
+                }
                 if (t is CustomTransactions)
+                {
                     xc.Add(
                         new object[] 
                         {
                             new XAttribute("created", (t as CustomTransactions).Created),
                             new XAttribute("description", (t as CustomTransactions).Description)
                         });
-
-                if (t is ApiTransactions)
-                    xt.Add(xc);
-                if (t is CustomTransactions)
                     xcustom.Add(xc);
+                }
             }
 
             return new XElement("Transactions",
@@ -166,12 +167,82 @@ namespace EveTrader.Core.Services
 
         private XElement ExportJournal(IEnumerable<Journal> journal)
         {
-            throw new NotImplementedException();
+
+            XElement xa = new XElement("ApiJournal");
+            XElement xc = new XElement("CustomJournal");
+
+            foreach (var j in journal)
+            {
+                XElement xcurrent = new XElement(j is ApiJournal ? "ApiJournal" : "CustomJournal");
+
+                xcurrent.Add(new object[]
+                {
+                    new XAttribute("amount", j.Amount),
+                    new XAttribute("argID1", j.ArgID1),
+                    new XAttribute("argName1", j.ArgName1),
+                    new XAttribute("balance", j.Balance),
+                    new XAttribute("datetime", j.DateTime),
+                    new XAttribute("ownerID1", j.OwnerID1),
+                    new XAttribute("ownerID2", j.OwnerID2),
+                    new XAttribute("ownerName1", j.OwnerName1),
+                    new XAttribute("ownerName2", j.OwnerName2),
+                    new XAttribute("reason", j.Reason),
+                    new XAttribute("refTypeID", j.RefTypeID),
+                    new XAttribute("taxAmount", j.TaxAmount),
+                    new XAttribute("taxReceiverID", j.TaxReceiverID)
+                });
+                if (j is ApiJournal)
+                {
+                    xcurrent.Add(new XAttribute("externalID", (j as ApiJournal).ExternalID));
+                    xa.Add(xcurrent);
+                }
+                if (j is CustomJournal)
+                {
+                    xcurrent.Add(new object[]
+                    {
+                        new XAttribute("created", (j as CustomJournal).Created),
+                        new XAttribute("description", (j as CustomJournal).Description)
+                    });
+                    xc.Add(xcurrent);
+                }
+
+
+            }
+
+
+            XElement xe = new XElement("Journal", new object[]
+                {
+                    xa,
+                    xc
+                });
+
+            return xe;
         }
 
         private XElement ExportMarketOrders(IEnumerable<MarketOrders> marketOrders)
         {
             XElement xe = new XElement("MarketOrders");
+
+            foreach (var mo in marketOrders)
+            {
+                xe.Add(new XElement("MarketOrder", new object[]
+                {
+                    new XAttribute("accountKey", mo.AccountKey),
+                    new XAttribute("bid", mo.Bid),
+                    new XAttribute("duration", mo.Duration),
+                    new XAttribute("escrow", mo.Escrow),
+                    new XAttribute("externalID", mo.ExternalID),
+                    new XAttribute("issued", mo.Issued),
+                    new XAttribute("minimumValue", mo.MinimumVolume),
+                    new XAttribute("orderState", mo.OrderState),
+                    new XAttribute("price", mo.Price),
+                    new XAttribute("range", mo.Range),
+                    new XAttribute("stationID", mo.StationID),
+                    new XAttribute("typeID", mo.TypeID),
+                    new XAttribute("volumeEntered", mo.VolumeEntered),
+                    new XAttribute("volumeRemaining", mo.VolumeRemaining)
+                }));
+            }
 
             return xe;
         }
