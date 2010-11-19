@@ -144,7 +144,7 @@ namespace EveTrader.Wpf
             {
                 mc.CreateMappings();
             }
-            
+
             controller = container.GetExportedValue<ApplicationController>();
 
             sw.Stop();
