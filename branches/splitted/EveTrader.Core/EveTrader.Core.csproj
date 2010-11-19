@@ -79,12 +79,15 @@
     <Compile Include="Services\CachedPriceUpdaterService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\DatabaseExportService.cs" />
     <Compile Include="Services\EntitiesUpdatedEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\ICachedPriceUpdaterService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\IDatabaseExportService.cs" />
+    <Compile Include="Services\IDatabaseImportService.cs" />
     <Compile Include="Services\IMappingCreator.cs" />
     <Compile Include="Services\IRefTypesLookup.cs">
       <SubType>Code</SubType>
