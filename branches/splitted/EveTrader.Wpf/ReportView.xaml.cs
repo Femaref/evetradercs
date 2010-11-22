@@ -11,11 +11,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using System.ComponentModel.Composition;
 using Visifire.Charts;
 using System.Collections.Specialized;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Model;
 
 namespace EveTrader.Wpf

@@ -202,6 +202,9 @@
     <Compile Include="Controls\TimeframeSelector.xaml.cs">
       <DependentUpon>TimeframeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConverterWindow.xaml.cs">
+      <DependentUpon>ConverterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\BidConverter.cs" />
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -262,6 +265,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TimeframeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConverterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

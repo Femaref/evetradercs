@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"  d:DataContext="{d:DesignInstance vm:ReportViewModel}"
-             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core.Visual"
+             xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
              xmlns:converter="clr-namespace:EveTrader.Wpf.Converter"
              xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"

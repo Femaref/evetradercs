@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace EveTrader.Core.ViewModel.Display
+namespace EveTrader.Core.Visual.ViewModel.Display
 {
     [DebuggerDisplay("Key: {Key}, Quantity: {Quantity}, GrossSales: {GrossSales}, PureProfit: {PureProfit}")]
     public class DisplayReport

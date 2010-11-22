@@ -4,7 +4,7 @@ using System.Text;
 using System.Waf.Applications;
 using System.Collections.Specialized;
 
-namespace EveTrader.Core.View
+namespace EveTrader.Core.Visual.View
 {
     public class DetailsRequestedEventArgs : EventArgs
     {

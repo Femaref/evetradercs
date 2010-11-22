@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EveTrader.Core.View
+namespace EveTrader.Core.Visual.View
 {
     public class EntitySelectionChangedEventArgs<T> : EventArgs
     {

@@ -67,6 +67,7 @@
     <Compile Include="Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ApplicationLogViewModel.cs" />
+    <Compile Include="ViewModel\ConverterViewModel.cs" />
     <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\Display\DisplayDashboard.cs" />
     <Compile Include="ViewModel\Display\DisplayDetail.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="View\EntitySelectionChangedEventArgs.cs" />
     <Compile Include="View\IAccountEntityView.cs" />
     <Compile Include="View\IApplicationLogView.cs" />
+    <Compile Include="View\IConverterView.cs" />
     <Compile Include="View\IDashboardView.cs" />
     <Compile Include="View\IJournalView.cs" />
     <Compile Include="View\IMainWindowView.cs" />

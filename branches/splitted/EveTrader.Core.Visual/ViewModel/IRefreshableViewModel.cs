@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.Controllers;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     public interface IRefreshableViewModel
     {

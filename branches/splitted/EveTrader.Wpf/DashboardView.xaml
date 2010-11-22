@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="EveTrader.Wpf.DashboardView"
     x:Name="UserControl"
-    xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core.Visual"
+    xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
     xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"

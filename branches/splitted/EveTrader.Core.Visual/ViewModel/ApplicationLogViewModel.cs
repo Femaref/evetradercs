@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using System.Waf.Applications;
 using EveTrader.Core.Model.Trader;
 using System.ComponentModel.Composition;
@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
     public class ApplicationLogViewModel : ViewModel<IApplicationLogView>, IRefreshableViewModel

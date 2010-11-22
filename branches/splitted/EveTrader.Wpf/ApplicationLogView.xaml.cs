@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Waf.Applications;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using System.ComponentModel.Composition;
 using System.Windows.Threading;
 

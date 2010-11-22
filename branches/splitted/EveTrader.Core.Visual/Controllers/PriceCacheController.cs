@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
-using EveTrader.Core.ViewModel;
+using EveTrader.Core.Visual.ViewModel;
 using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Controllers

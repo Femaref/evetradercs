@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Waf.Applications;
 using System.ComponentModel;
+using EveTrader.Core.Visual.View;
 
 namespace EveTrader.Core.Visual.View
 {
-    public interface IManageAccountsView : IExtendedView
+    public interface IConverterView : IExtendedView
     {
         event CancelEventHandler Closing;
         void Show();

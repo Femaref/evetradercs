@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using EveTrader.Core.Model.Trader;
 using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
@@ -13,10 +13,10 @@ using ClassExtenders;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Threading;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
     public class DashboardViewModel : ViewModel<IDashboardView>, IRefreshableViewModel
