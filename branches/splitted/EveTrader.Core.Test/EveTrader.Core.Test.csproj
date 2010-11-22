@@ -50,6 +50,10 @@
     <Compile Include="VariousStuff.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
+      <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
+      <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Static\EveTrader.Core.Model.Static.csproj">
       <Project>{5535DD64-0072-418E-8117-F58A96A8D586}</Project>
       <Name>EveTrader.Core.Model.Static</Name>

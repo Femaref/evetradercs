@@ -240,6 +240,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 Refresh();
             }
         }
+
         private void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             OnClosing(e);
