@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf" d:DataContext="{d:DesignInstance vm:JournalViewModel}"
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
-             xmlns:vm="clr-namespace:EveTrader.Core.ViewModel;assembly=EveTrader.Core.Visual"
+             xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <CollectionViewSource x:Key="iGroupedJournal" Source="{Binding JournalEntries, IsAsync=True}"/>

@@ -10,8 +10,8 @@ using System.Waf.Applications;
 using System.Windows.Input;
 using EveTrader.Core.Model.Trader;
 using EveTrader.Core.Updater.CCP;
-using EveTrader.Core.View;
-using EveTrader.Core.ViewModel;
+using EveTrader.Core.Visual.View;
+using EveTrader.Core.Visual.ViewModel;
 using EveTrader.Core.Model.Static;
 using EveTrader.Core.Model;
 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace EveTrader.Core.ViewModel.Display
+namespace EveTrader.Core.Visual.ViewModel.Display
 {
     [DebuggerDisplay("Key: {Key}, Profit: {Profit}, Investment: {Investment}, Sales Count:{Sales.Count}")]
     public class DisplayDashboard

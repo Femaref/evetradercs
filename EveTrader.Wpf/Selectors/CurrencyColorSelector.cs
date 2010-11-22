@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows;
-using EveTrader.Core.ViewModel;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel;
+using EveTrader.Core.Visual.ViewModel.Display;
 
 namespace EveTrader.Wpf.Selectors
 {

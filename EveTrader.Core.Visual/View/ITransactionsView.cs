@@ -5,7 +5,7 @@ using System.Text;
 using System.Waf.Applications;
 using EveTrader.Core.Model.Trader;
 
-namespace EveTrader.Core.View
+namespace EveTrader.Core.Visual.View
 {
     public interface ITransactionsView : IExtendedView
     {

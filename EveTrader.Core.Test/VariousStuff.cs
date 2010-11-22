@@ -6,11 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EveTrader.Core;
 using EveTrader.Core.Model.Static;
 using EveTrader.Core.Model.Trader;
-using EveTrader.Core.ViewModel;
+using EveTrader.Core.Visual.ViewModel;
 using EveTrader.Core.Network.Requests.CCP;
 using EveTrader.Core.Updater.CCP;
 using System.IO;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 namespace TestProject1
 {
 

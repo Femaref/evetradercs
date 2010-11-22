@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using EveTrader.Core.Model.Trader;
 using System.Collections.ObjectModel;
 using MoreLinq;
 using System.ComponentModel.Composition;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
 using EveTrader.Core.Model.Static;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
     public class PriceCacheViewModel : ViewModel<IPriceCacheView>, IRefreshableViewModel

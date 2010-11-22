@@ -7,9 +7,9 @@ using EveTrader.Core.Model.Trader;
 using System.Waf.Applications;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using System.ComponentModel.Composition;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 using MoreLinq;
 using EveTrader.Core.Collections.ObjectModel;
 using System.Threading;
@@ -17,7 +17,7 @@ using System.Diagnostics;
 using EveTrader.Core.Model;
 using EveTrader.Core.Model.Static;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
     public class MarketOrdersViewModel : ViewModel<IMarketOrdersView>, IRefreshableViewModel

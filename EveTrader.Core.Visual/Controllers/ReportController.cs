@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
-using EveTrader.Core.ViewModel;
+using EveTrader.Core.Visual.ViewModel;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Services;
 

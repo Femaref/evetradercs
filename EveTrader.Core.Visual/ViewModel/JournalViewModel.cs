@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Model.Trader;
 using System.Collections.ObjectModel;
@@ -15,7 +15,7 @@ using System.Windows.Input;
 using EveTrader.Core.Model;
 
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
     public class JournalViewModel : ViewModel<IJournalView>, IRefreshableViewModel

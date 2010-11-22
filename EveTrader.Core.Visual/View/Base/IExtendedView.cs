@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Waf.Applications;
 
-namespace EveTrader.Core.View
+namespace EveTrader.Core.Visual.View
 {
     public interface IExtendedView : IView
     {

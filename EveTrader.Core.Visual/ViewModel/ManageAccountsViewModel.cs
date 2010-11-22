@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using EveTrader.Core.Model.Trader;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Collections.ObjectModel;
 using EveTrader.Core.Network.Requests.CCP;
 using EveTrader.Core.Collections.ObjectModel;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 using MoreLinq;
 using EveTrader.Core.Controllers;
 using EveTrader.Core.Updater.CCP;
 using EveTrader.Core.Services;
 using System.Windows.Input;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     public class ManageAccountsViewModel : ViewModel<IManageAccountsView>, IRefreshableViewModel
     {

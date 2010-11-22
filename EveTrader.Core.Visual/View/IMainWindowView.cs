@@ -5,7 +5,7 @@ using System.Text;
 using System.Waf.Applications;
 using System.ComponentModel;
 
-namespace EveTrader.Core.View
+namespace EveTrader.Core.Visual.View
 {
     public interface IMainWindowView : IExtendedView
     {

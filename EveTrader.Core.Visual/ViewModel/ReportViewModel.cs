@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EveTrader.Core.View;
+using EveTrader.Core.Visual.View;
 using System.Waf.Applications;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Model.Trader;
 using System.Reflection;
 using EveTrader.Core.Collections.ObjectModel;
-using EveTrader.Core.ViewModel.Display;
+using EveTrader.Core.Visual.ViewModel.Display;
 using ClassExtenders;
 using System.Threading;
 using EveTrader.Core.Model;
 using System.Windows.Input;
 
-namespace EveTrader.Core.ViewModel
+namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
     public class ReportViewModel : ViewModel<IReportView>, IRefreshableViewModel

@@ -5,7 +5,7 @@ using System.Text;
 using EveTrader.Core.Model.Trader;
 using System.Diagnostics;
 
-namespace EveTrader.Core.ViewModel.Display
+namespace EveTrader.Core.Visual.ViewModel.Display
 {
     [DebuggerDisplay("ID: {ID}, TypeID: {TypeID}")]
     public class DisplayMarketOrders
