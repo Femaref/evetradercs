@@ -79,6 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\DatabaseExportService.cs" />
+    <Compile Include="Services\DatabaseImportService.cs" />
     <Compile Include="Services\RefTypesLookup.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,7 +117,9 @@
     </None>
     <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassExtenders\ClassExtenders.csproj">
       <Project>{8439287F-C3AC-4B3E-96D4-29EDB08F7FB3}</Project>
@@ -147,10 +150,8 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\tables.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
