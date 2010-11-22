@@ -66,7 +66,6 @@
     <Compile Include="Collections\BindableCollection.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
     <Compile Include="Mapping.cs" />
-    <Compile Include="Model\ISettingsProvider.cs" />
     <Compile Include="Collections\SmartObservableCollection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -80,22 +79,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\DatabaseExportService.cs" />
-    <Compile Include="Services\EntitiesUpdatedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\ICachedPriceUpdaterService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\IDatabaseExportService.cs" />
-    <Compile Include="Services\IDatabaseImportService.cs" />
-    <Compile Include="Services\IMappingCreator.cs" />
-    <Compile Include="Services\IPriceLookup.cs" />
-    <Compile Include="Services\IRefTypesLookup.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\IUpdateService.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Services\RefTypesLookup.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -138,6 +121,10 @@
     <ProjectReference Include="..\ClassExtenders\ClassExtenders.csproj">
       <Project>{8439287F-C3AC-4B3E-96D4-29EDB08F7FB3}</Project>
       <Name>ClassExtenders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
+      <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
+      <Name>EveTrader.Core.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Trader.Dto\EveTrader.Core.Model.Trader.Dto.csproj">
       <Project>{0A3AE4B4-F3F1-4520-835C-D85683EC3700}</Project>

@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Linq;
-using EveTrader.Core.Model;
 using System.IO;
 
 namespace EveTrader.Core.DataConverter.Test

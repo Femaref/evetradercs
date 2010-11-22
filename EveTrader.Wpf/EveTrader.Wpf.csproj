@@ -361,6 +361,10 @@
       <Project>{FDA2F329-9062-48A2-AE08-65A3DEFC226B}</Project>
       <Name>EveTrader.Core.DataConverter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
+      <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
+      <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
       <Project>{4B9C05A9-54A2-415A-8245-FB90E0CF4EFE}</Project>
       <Name>EveTrader.Core.Model.Trader</Name>
@@ -368,10 +372,6 @@
     <ProjectReference Include="..\EveTrader.Core.Visual\EveTrader.Core.Visual.csproj">
       <Project>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</Project>
       <Name>EveTrader.Core.Visual</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EveTrader.Core\EveTrader.Core.csproj">
-      <Project>{AF60FE10-88C7-499F-86F3-7078BF22C156}</Project>
-      <Name>EveTrader.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Updater\EveTrader.Updater.csproj">
       <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
