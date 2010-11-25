@@ -16,6 +16,9 @@ using EveTrader.Core.Controllers;
 using EveTrader.Core.Updater.CCP;
 using EveTrader.Core.Services;
 using System.Windows.Input;
+using System.Threading;
+using System.Xml.Linq;
+using System.IO;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
@@ -24,11 +27,13 @@ namespace EveTrader.Core.Visual.ViewModel
         private readonly TraderModel iModel;
         private readonly IUpdateService iUpdater;
         private readonly EntityFactory iFactory;
+        private readonly IDatabaseExportService iExport;
 
         private DelegateCommand iRequestDataCommand;
         private DelegateCommand iAbortRequestCommand;
         private DelegateCommand iAddCharactersCommand;
         private DelegateCommand iUpdateAccountCommand;
+        private DelegateCommand iDeleteCharacterCommand;
 
         private object iUpdaterLock = new object();
 
@@ -47,6 +52,10 @@ namespace EveTrader.Core.Visual.ViewModel
         public ICommand UpdateAccountCommand
         {
             get { return iUpdateAccountCommand; }
+        }
+        public ICommand DeleteCharacterCommand
+        {
+            get { return iDeleteCharacterCommand; }
         }
 
         private long iCurrentUserID;
@@ -122,12 +131,18 @@ namespace EveTrader.Core.Visual.ViewModel
         }
 
 
-        public ManageAccountsViewModel(IManageAccountsView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IUpdateService us, EntityFactory ef)
+        public ManageAccountsViewModel(
+            IManageAccountsView view, 
+            [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
+            IUpdateService us, 
+            EntityFactory ef,
+            IDatabaseExportService export)
             : base(view)
         {
             iModel = tm;
             iUpdater = us;
             iFactory = ef;
+            iExport = export;
 
             CurrentCharacters = new SmartObservableCollection<Characters>(view.Invoke);
             RequestedCharacters = new SmartObservableCollection<Selectable<Characters>>(view.Invoke);
@@ -143,6 +158,12 @@ namespace EveTrader.Core.Visual.ViewModel
                     if (CurrentItem != null) 
                         CurrentUserID = CurrentItem.Account.ID; 
                 });
+            iDeleteCharacterCommand = new DelegateCommand(
+                () =>
+                {
+                    if (CurrentItem != null)
+                        DeleteCharacter(CurrentItem);
+                });
 
             iUpdater.UpdateStarted += (sender, e) =>
                 {
@@ -150,6 +171,15 @@ namespace EveTrader.Core.Visual.ViewModel
                 };
 
             iUpdater.UpdateCompleted += (sender, e) =>
+                {
+                    Updating = false;
+                };
+
+            iExport.Started += (sender, e) =>
+                {
+                    Updating = true;
+                };
+            iExport.Completed += (sender, e) =>
                 {
                     Updating = false;
                 };
@@ -163,6 +193,33 @@ namespace EveTrader.Core.Visual.ViewModel
                 };
 
             Refresh();
+        }
+
+        private void DeleteCharacter(Characters c)
+        {
+
+            ThreadStart ts = new ThreadStart(() => ThreadedDelete(c));
+            Thread export = new Thread(ts);
+            export.Name = "Exporting Thread";
+            export.Start();
+        }
+
+        //hacky code
+        private void ThreadedDelete(Characters c)
+        {
+            lock (iUpdaterLock)
+            {
+                Updating = true;
+
+                XDocument xd = iExport.Export(c.Account);
+
+                DirectoryInfo di = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
+                FileInfo fi = new FileInfo(string.Format("{0}_{1}.xml", c.Account.ID, DateTime.UtcNow.ToFileTimeUtc()));
+
+                File.WriteAllText(Path.Combine(di.FullName, fi.Name), xd.ToString());
+
+                Updating = false;
+            }
         }
 
         public void Show()

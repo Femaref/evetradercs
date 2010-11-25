@@ -11,5 +11,10 @@ namespace EveTrader.Core.Services
         {
             throw new NotImplementedException();
         }
+
+
+        public event EventHandler Started;
+
+        public event EventHandler Completed;
     }
 }

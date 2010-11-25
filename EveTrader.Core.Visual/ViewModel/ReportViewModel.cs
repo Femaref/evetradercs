@@ -181,9 +181,9 @@ namespace EveTrader.Core.Visual.ViewModel
 
                     var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.TransactionType == (long)TransactionType.Sell).Where(filter);
 
-                    var stationData = this.GroupedTransactions(filteredTransactions, t => t.StationName);
-                    var itemData = this.GroupedTransactions(filteredTransactions, t => t.TypeName);
-                    var buyerData = this.GroupedTransactions(filteredTransactions, t => t.ClientName);
+                    var stationData = this.GroupedTransactions(filteredTransactions, t => t.StationName).ToList();
+                    var itemData = this.GroupedTransactions(filteredTransactions, t => t.TypeName).ToList();
+                    var buyerData = this.GroupedTransactions(filteredTransactions, t => t.ClientName).ToList();
 
                     currentStation.Add(stationData);
                     currentItem.Add(itemData);
@@ -198,7 +198,7 @@ namespace EveTrader.Core.Visual.ViewModel
                         var dwh = new DisplayWalletHistory()
                         {
                             Name = w.DisplayName,
-                            Histories = w.WalletHistory.Where(historyFilter).Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance = wh.Balance })
+                            Histories = w.WalletHistory.Where(historyFilter).Select(wh => new DisplaySingleHistory() { Date = wh.Date, Balance = wh.Balance }).ToList()
                         };
                         cache.Add(dwh);
                     }

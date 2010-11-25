@@ -9,5 +9,7 @@ namespace EveTrader.Core.Services
     public interface IDatabaseImportService
     {
         void Import(XDocument xd);
+        event EventHandler Started;
+        event EventHandler Completed;
     }
 }
