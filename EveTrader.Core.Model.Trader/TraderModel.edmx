@@ -469,7 +469,9 @@
           <Property Type="Int64" Name="AccountKey" Nullable="false" />
           </EntityType>
         <Association Name="FK_Wallets_0">
-          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="1" />
+          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="*" /></Association>
         <EntityType Name="Accounts">
           <Key>
@@ -550,16 +552,24 @@
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_WalletHistories_0" FromRole="WalletHistories" ToRole="Wallets" /></EntityType>
         <Association Name="FK_MarketOrders_0">
-          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="1" />
+          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="EveTrader.Core.Model.MarketOrders" Role="MarketOrders" Multiplicity="*" /></Association>
         <Association Name="FK_Journal_0">
-          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" />
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="EveTrader.Core.Model.Journal" Role="Journal" Multiplicity="*" /></Association>
         <Association Name="FK_Transactions_0">
-          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" />
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="EveTrader.Core.Model.Transactions" Role="Transactions" Multiplicity="*" /></Association>
         <Association Name="FK_WalletHistories_0">
-          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" />
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="EveTrader.Core.Model.WalletHistories" Role="WalletHistories" Multiplicity="*" /></Association>
         <EntityType Name="ApiTransactions" BaseType="EveTrader.Core.Model.Transactions">
           <Property Type="Int64" Name="ExternalID" Nullable="false" />
@@ -864,10 +874,13 @@
           <ConnectorPoint PointX="4.1562525" PointY="6.375" />
           <ConnectorPoint PointX="5.625" PointY="6.375" />
           </AssociationConnector>
-        <AssociationConnector Association="EveTrader.Core.Model.FK_Journal_0">
-          <ConnectorPoint PointX="10.625" PointY="5.5239876302083326" />
-          <ConnectorPoint PointX="16.71875" PointY="5.5239876302083326" />
-          <ConnectorPoint PointX="16.71875" PointY="6.375" />
+        <AssociationConnector Association="EveTrader.Core.Model.FK_Journal_0" ManuallyRouted="true">
+          <ConnectorPoint PointX="10.625" PointY="6.5285953776041659" />
+          <ConnectorPoint PointX="12.23375" PointY="6.5285953776041659" />
+          <ConnectorPoint PointX="12.23375" PointY="8.0633175998263891" />
+          <ConnectorPoint PointX="13.89125" PointY="8.0633175998263891" />
+          <ConnectorPoint PointX="13.89125" PointY="6.5285953776041659" />
+          <ConnectorPoint PointX="15.5" PointY="6.5285953776041659" />
           </AssociationConnector>
         <AssociationConnector Association="EveTrader.Core.Model.FK_Transactions_0">
           <ConnectorPoint PointX="10.625" PointY="4.3678898111979159" />
