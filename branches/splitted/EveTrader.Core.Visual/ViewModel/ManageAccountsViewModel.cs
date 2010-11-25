@@ -218,6 +218,8 @@ namespace EveTrader.Core.Visual.ViewModel
 
                 File.WriteAllText(Path.Combine(di.FullName, fi.Name), xd.ToString());
 
+                iModel.Entity.DeleteObject(c);
+                iModel.SaveChanges();
                 Updating = false;
             }
         }
