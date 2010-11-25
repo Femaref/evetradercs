@@ -10,5 +10,7 @@ namespace EveTrader.Core.Services
     public interface IDatabaseExportService
     {
         XDocument Export(Accounts a);
+        event EventHandler Started;
+        event EventHandler Completed;
     }
 }

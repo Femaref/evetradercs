@@ -61,8 +61,8 @@
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Change Info" Click="MenuItem_Click" Command="{Binding UpdateAccountCommand}"/>
-                                <MenuItem Header="Delete Character" />
+                                <MenuItem Header="Change Info" Command="{Binding UpdateAccountCommand}"/>
+                                <MenuItem Header="Delete Character" Command="{Binding DeleteCharacterCommand}"/>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>

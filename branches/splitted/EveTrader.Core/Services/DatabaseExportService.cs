@@ -281,5 +281,23 @@ namespace EveTrader.Core.Services
 
             return xe;
         }
+
+
+        public event EventHandler Started;
+        private void RaiseStarted()
+        {
+            var handler = Started;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+
+        public event EventHandler Completed;
+        private void RaiseCompleted()
+        {
+            var handler = Completed;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
     }
 }

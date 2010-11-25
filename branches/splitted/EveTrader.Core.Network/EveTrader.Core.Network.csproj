@@ -66,6 +66,8 @@
     <Compile Include="Requests\CCP\MarketOrdersRequest.cs" />
     <Compile Include="Requests\CCP\RefTypesRequest.cs" />
     <Compile Include="Requests\CCP\TransactionsRequest.cs" />
+    <Compile Include="Requests\IRequestConstructor.cs" />
+    <Compile Include="Requests\RequestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requests\Central\" />
