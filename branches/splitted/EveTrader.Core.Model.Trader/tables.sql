@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS [ApiJournal];
 CREATE TABLE [ApiJournal] (
 [ID] integer PRIMARY KEY NOT NULL,
 [ExternalID] integer NOT NULL,
-CONSTRAINT [FK_ApiJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID])
+CONSTRAINT [FK_ApiJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID]) ON DELETE CASCADE
 );
 DROP TABLE IF EXISTS [ApiTransactions];
 CREATE TABLE [ApiTransactions] (
@@ -38,7 +38,7 @@ CREATE TABLE [ApiTransactions] (
 
 
 
-    CONSTRAINT [FK_ApiTransactions_0] FOREIGN KEY ([ID]) REFERENCES [Transactions] ([ID])
+    CONSTRAINT [FK_ApiTransactions_0] FOREIGN KEY ([ID]) REFERENCES [Transactions] ([ID]) ON DELETE CASCADE
 
 
 
@@ -124,7 +124,7 @@ CREATE TABLE [CustomJournal](
 [ID] integer PRIMARY KEY NOT NULL,
 [Created] datetime NOT NULL,
 [Description] text NOT NULL,
-CONSTRAINT [FK_CustomJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID])
+CONSTRAINT [FK_CustomJournal_0] FOREIGN KEY ([ID]) REFERENCES [Journal] ([ID]) ON DELETE CASCADE
 );
 DROP TABLE IF EXISTS [CustomTransactions];
 CREATE TABLE [CustomTransactions] (
@@ -143,7 +143,7 @@ CREATE TABLE [CustomTransactions] (
 
 
 
-    CONSTRAINT [FK_CustomTransactions_0] FOREIGN KEY ([ID]) REFERENCES [Transactions] ([ID])
+    CONSTRAINT [FK_CustomTransactions_0] FOREIGN KEY ([ID]) REFERENCES [Transactions] ([ID]) ON DELETE CASCADE
 
 
 
@@ -165,7 +165,7 @@ CREATE TABLE [Entity] (
 
 
 
-    CONSTRAINT [FK_Entity_AccountID_Accounts_ID] FOREIGN KEY ([AccountID]) REFERENCES [Accounts] ([ID])
+    CONSTRAINT [FK_Entity_AccountID_Accounts_ID] FOREIGN KEY ([AccountID]) REFERENCES [Accounts] ([ID]) ON DELETE CASCADE
 
 
 
@@ -204,7 +204,7 @@ CREATE TABLE [Journal] (
     [DateTime] DateTime NOT NULL,
     [Date] DateTime NOT NULL,
 
-    CONSTRAINT [FK_Journal_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID])
+    CONSTRAINT [FK_Journal_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID]) ON DELETE CASCADE
 
 );
 DROP TABLE IF EXISTS [MarketOrders];
@@ -243,7 +243,7 @@ CREATE TABLE [MarketOrders] (
 
     [ExternalID] integer  NOT NULL,
 
-    CONSTRAINT [FK_MarketOrders_0] FOREIGN KEY ([EntityID]) REFERENCES [Entity] ([ID])
+    CONSTRAINT [FK_MarketOrders_0] FOREIGN KEY ([EntityID]) REFERENCES [Entity] ([ID]) ON DELETE CASCADE
 
 );
 DROP TABLE IF EXISTS [Transactions];
@@ -308,7 +308,7 @@ CREATE TABLE [Transactions] (
 
 
 
-    CONSTRAINT [FK_Transactions_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID])
+    CONSTRAINT [FK_Transactions_0] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID]) ON DELETE CASCADE
 
 
 
@@ -334,7 +334,7 @@ CREATE TABLE [WalletHistories] (
 
 
 
-    CONSTRAINT [FK_WalletHistories_WalletID_Wallets_ID] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID])
+    CONSTRAINT [FK_WalletHistories_WalletID_Wallets_ID] FOREIGN KEY ([WalletID]) REFERENCES [Wallets] ([ID]) ON DELETE CASCADE
 
 
 
@@ -352,7 +352,7 @@ CREATE TABLE [Wallets] (
 
     [Balance] decimal NOT NULL,
 
-    CONSTRAINT [FK_Wallets_0] FOREIGN KEY ([EntityID]) REFERENCES [Entity] ([ID])
+    CONSTRAINT [FK_Wallets_0] FOREIGN KEY ([EntityID]) REFERENCES [Entity] ([ID]) ON DELETE CASCADE
 
 );
 
