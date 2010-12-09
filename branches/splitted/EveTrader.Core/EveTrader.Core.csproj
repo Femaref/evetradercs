@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
+    <Compile Include="Updater\CCP\CCPUpdaterFailedException.cs" />
     <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
     <Compile Include="Updater\CCP\CharacterUpdater.cs" />
     <Compile Include="Updater\CCP\CorporationSheetUpdater.cs" />
@@ -108,8 +109,10 @@
     <Compile Include="Updater\CCP\StaticUpdaterBase.cs" />
     <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
-    <Compile Include="Updater\CCP\UpdaterFailedException.cs" />
+    <Compile Include="Updater\Metrics\MetricUpdaterBase.cs" />
+    <Compile Include="Updater\UpdaterFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater\Metrics\ItemPriceUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
@@ -128,6 +131,10 @@
     <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
       <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
       <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric\EveTrader.Core.Model.Metric.csproj">
+      <Project>{BF29F53A-D752-4327-96FB-545CC8770248}</Project>
+      <Name>EveTrader.Core.Model.Metric</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Trader.Dto\EveTrader.Core.Model.Trader.Dto.csproj">
       <Project>{0A3AE4B4-F3F1-4520-835C-D85683EC3700}</Project>

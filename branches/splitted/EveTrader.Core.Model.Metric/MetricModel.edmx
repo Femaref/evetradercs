@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MetricsModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MetricsModelStoreContainer">
+          <EntitySet Name="ItemPrices" EntityType="MetricsModel.Store.ItemPrices" store:Type="Tables" />
+        </EntityContainer>
+        <EntityType Name="ItemPrices">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="integer" Nullable="false" />
+          <Property Name="LastUpload" Type="datetime" Nullable="false" />
+          <Property Name="RegionID" Type="integer" Nullable="false" />
+          <Property Name="MinimumBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MinimumSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MaximumBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MaximumSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MedianBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MedianSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="AverageBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="AverageSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="KurtosisBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="KurtosisSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="SkewBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="SkewSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="VarianceBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="VarianceSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="StandardDeviationBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="StandardDeviationSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="SimulatedBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="SimulatedSell" Type="decimal" Nullable="false" Precision="53" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MetricsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MetricModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ItemPrices" EntityType="MetricsModel.ItemPrices" />
+        </EntityContainer>
+        <EntityType Name="ItemPrices">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int64" Nullable="false" />
+          <Property Name="LastUpload" Type="DateTime" Nullable="false" />
+          <Property Name="MinimumBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="MinimumSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="MaximumBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="MaximumSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="MedianBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="MedianSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="AverageBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="AverageSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="KurtosisBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="KurtosisSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="SkewBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="SkewSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="VarianceBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="VarianceSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="StandardDeviationBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="StandardDeviationSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="SimulatedBuy" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="SimulatedSell" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Int64" Name="RegionID" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MetricsModelStoreContainer" CdmEntityContainer="MetricModel">
+          <EntitySetMapping Name="ItemPrices"><EntityTypeMapping TypeName="MetricsModel.ItemPrices"><MappingFragment StoreEntitySet="ItemPrices">
+            <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+            <ScalarProperty Name="LastUpload" ColumnName="LastUpload" />
+            <ScalarProperty Name="MinimumBuy" ColumnName="MinimumBuy" />
+            <ScalarProperty Name="MinimumSell" ColumnName="MinimumSell" />
+            <ScalarProperty Name="MaximumBuy" ColumnName="MaximumBuy" />
+            <ScalarProperty Name="MaximumSell" ColumnName="MaximumSell" />
+            <ScalarProperty Name="MedianBuy" ColumnName="MedianBuy" />
+            <ScalarProperty Name="MedianSell" ColumnName="MedianSell" />
+            <ScalarProperty Name="AverageBuy" ColumnName="AverageBuy" />
+            <ScalarProperty Name="AverageSell" ColumnName="AverageSell" />
+            <ScalarProperty Name="KurtosisBuy" ColumnName="KurtosisBuy" />
+            <ScalarProperty Name="KurtosisSell" ColumnName="KurtosisSell" />
+            <ScalarProperty Name="SkewBuy" ColumnName="SkewBuy" />
+            <ScalarProperty Name="SkewSell" ColumnName="SkewSell" />
+            <ScalarProperty Name="VarianceBuy" ColumnName="VarianceBuy" />
+            <ScalarProperty Name="VarianceSell" ColumnName="VarianceSell" />
+            <ScalarProperty Name="StandardDeviationBuy" ColumnName="StandardDeviationBuy" />
+            <ScalarProperty Name="StandardDeviationSell" ColumnName="StandardDeviationSell" />
+            <ScalarProperty Name="SimulatedBuy" ColumnName="SimulatedBuy" />
+            <ScalarProperty Name="SimulatedSell" ColumnName="SimulatedSell" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MetricModel" ZoomLevel="74">
+        <EntityTypeShape EntityType="MetricsModel.ItemPrices" Width="1.75" PointX="0.75" PointY="0.75" Height="4.8648079427083326" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
