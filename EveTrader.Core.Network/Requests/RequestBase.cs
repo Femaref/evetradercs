@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 
-namespace EveTrader.Core.Network.Requests.CCP
+namespace EveTrader.Core.Network.Requests
 {
     /// <summary>
     /// Provides infrastructure to query generic apis
@@ -13,9 +13,8 @@ namespace EveTrader.Core.Network.Requests.CCP
     /// <typeparam name="TOutput">Specifies the output</typeparam>
     public abstract class RequestBase<TOutput>
     {
-        protected Dictionary<string, string> iData = new Dictionary<string, string>();
         private XDocument iCachedResponseXml = null;
-        private readonly IRequestConstructor iRequestConstructor;
+        protected readonly IRequestConstructor iRequestConstructor;
         private Func<string, TimeSpan, bool> iStillCached;
         private Action<string, DateTime, string> iSaveCache;
 
@@ -108,7 +107,7 @@ namespace EveTrader.Core.Network.Requests.CCP
             }
         }
 
-        private void SaveCache(DateTime time, string data)
+        protected void SaveCache(DateTime time, string data)
         {
             this.iSaveCache(this.Identifier.ToString() + "?" + iRequestConstructor.GetRequestData(), time, data);
         }
