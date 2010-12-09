@@ -59,24 +59,24 @@
             <visi:Chart.AxesX>
                 <visi:Axis>
                     <visi:Axis.AxisLabels>
-                        <visi:AxisLabels TextWrap="0.2" Angle="90"/>
+                        <visi:AxisLabels TextWrap="0.2" Angle="0"/>
                     </visi:Axis.AxisLabels>
                 </visi:Axis>
             </visi:Chart.AxesX>
             <visi:Chart.Series>
-                <visi:DataSeries RenderAs="Column" DataSource="{Binding Investment}" LegendText="Investment" Color="Red">
+                <visi:DataSeries RenderAs="Bar" DataSource="{Binding Investment}" LegendText="Investment" Color="Red">
                     <visi:DataSeries.DataMappings>
                         <visi:DataMapping MemberName="AxisXLabel" Path="TypeName" />
                         <visi:DataMapping MemberName="YValue" Path="Value" />
                     </visi:DataSeries.DataMappings>
                 </visi:DataSeries>
-                <visi:DataSeries RenderAs="Column" DataSource="{Binding Sales}" LegendText="Sales" Color="Blue">
+                <visi:DataSeries RenderAs="Bar" DataSource="{Binding Sales}" LegendText="Sales" Color="Blue">
                     <visi:DataSeries.DataMappings>
                         <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
                         <visi:DataMapping MemberName="YValue" Path="Value"/>
                     </visi:DataSeries.DataMappings>
                 </visi:DataSeries>
-                <visi:DataSeries RenderAs="Column" DataSource="{Binding Profit}" LegendText="Profit" Color="Green">
+                <visi:DataSeries RenderAs="Bar" DataSource="{Binding Profit}" LegendText="Profit" Color="Green">
                     <visi:DataSeries.DataMappings>
                         <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
                         <visi:DataMapping MemberName="YValue" Path="Value"/>
