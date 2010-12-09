@@ -29,7 +29,7 @@ namespace EveTrader.Core.Updater.Metrics
             }
         }
 
-        protected abstract bool InnerUpdate(IEnumerable<long> types);
+        protected abstract bool InnerUpdate();
 
     }
 }

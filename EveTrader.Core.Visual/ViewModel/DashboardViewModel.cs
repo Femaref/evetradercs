@@ -157,7 +157,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 Working = true;
                 DailyInfo.Clear();
 
-                iModel.Connection.Open();
+               // iModel.Connection.Open();
 
                 var investment = (from w in iModel.Transactions
                                   where w.Date > iDateBefore
@@ -200,7 +200,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 }
                 DailyInfo.AddRange(cache);
 
-                iModel.Connection.Close();
+              //  iModel.Connection.Close();
 
                 RefreshWallets();
 
@@ -210,48 +210,51 @@ namespace EveTrader.Core.Visual.ViewModel
         }
         private void ThreadedDetailsRefresh(DetailsRequestedEventArgs e)
         {
-            lock (iDetailLock)
+            lock (iUpdaterLock)
             {
-                if (iCurrentKey == e.Key && iCurrentBindingKey == e.BindingKey)
-                    return;
-                iCurrentKey = e.Key;
-                iCurrentBindingKey = e.BindingKey;
-
-
-                this.DetailsUpdating = true;
-                Investment.Clear();
-                Sales.Clear();
-                Profit.Clear();
-
-                if (e.BindingKey.Contains("Investment"))
+                lock (iDetailLock)
                 {
-                    foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
+                    if (iCurrentKey == e.Key && iCurrentBindingKey == e.BindingKey)
+                        return;
+                    iCurrentKey = e.Key;
+                    iCurrentBindingKey = e.BindingKey;
+
+
+                    this.DetailsUpdating = true;
+                    Investment.Clear();
+                    Sales.Clear();
+                    Profit.Clear();
+
+                    if (e.BindingKey.Contains("Investment"))
                     {
-                        foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
+                        foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
                         {
-                            Investment.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
+                            foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
+                            {
+                                Investment.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
+                            }
                         }
                     }
-                }
-                if (e.BindingKey.Contains("Sales"))
-                {
-                    foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Sell).GroupBy(s => s.Wallet))
+                    if (e.BindingKey.Contains("Sales"))
                     {
-                        foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
+                        foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Sell).GroupBy(s => s.Wallet))
                         {
-                            Sales.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
+                            foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
+                            {
+                                Sales.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
+                            }
                         }
                     }
-                }
-                if (e.BindingKey.Contains("Profit"))
-                {
-                    foreach (var grouping in iModel.Transactions.Where(t => t.TransactionType == (long)TransactionType.Sell && t.Date == e.Key).GroupBy(t => t.TypeName))
+                    if (e.BindingKey.Contains("Profit"))
                     {
-                        var val = grouping.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2));
-                        Profit.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", grouping.Sum(t => t.Quantity), grouping.Key), Value = val });
+                        foreach (var grouping in iModel.Transactions.Where(t => t.TransactionType == (long)TransactionType.Sell && t.Date == e.Key).GroupBy(t => t.TypeName))
+                        {
+                            var val = grouping.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2));
+                            Profit.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", grouping.Sum(t => t.Quantity), grouping.Key), Value = val });
+                        }
                     }
+                    this.DetailsUpdating = false;
                 }
-                this.DetailsUpdating = false;
             }
         }
 
