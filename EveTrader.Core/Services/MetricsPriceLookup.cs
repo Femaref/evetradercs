@@ -5,20 +5,31 @@ using System.Text;
 using EveTrader.Core.Model.Metric;
 using System.Reflection;
 using System.Linq.Expressions;
+using EveTrader.Core.Updater.Metrics;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Services
 {
+    [Export("MetricsPriceLookup", typeof(IPriceLookup))]
     public class MetricsPriceLookup : IPriceLookup
     {
         private readonly MetricModel iModel;
+        private readonly ItemPriceUpdater iPriceUpdater;
 
-        public MetricsPriceLookup(MetricModel mm)
+        [ImportingConstructor]
+        public MetricsPriceLookup([Import(RequiredCreationPolicy=CreationPolicy.NonShared)] MetricModel mm, ItemPriceUpdater ipu)
         {
             iModel = mm;
+            iPriceUpdater = ipu;
         }
 
-        private decimal Lookup(Func<ItemPrices, decimal> selector, Func<ItemPrices, bool> where)
+        private decimal Lookup(Func<ItemPrices, decimal> selector, long typeID, long regionID)
         {
+            var where = WhereGenerator(typeID, regionID);
+
+            if (!iModel.ItemPrices.Any(where))
+                iPriceUpdater.Update(typeID, regionID);
+
             var current = iModel.ItemPrices.FirstOrDefault(where);
 
             if (current == null)
@@ -46,42 +57,42 @@ namespace EveTrader.Core.Services
 
         public decimal Minimum(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal Maximum(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal Average(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal Kurtosis(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal Skew(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal Variance(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal StandardDeviation(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
 
         public decimal Simulated(long typeID, OrderType mot, long regionID = 10000002)
         {
-            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), WhereGenerator(typeID, regionID));
+            return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
     }
 }

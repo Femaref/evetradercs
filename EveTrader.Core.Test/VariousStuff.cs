@@ -206,9 +206,10 @@ namespace TestProject1
         [TestMethod]
         public void PriceLookup()
         {
-            MetricsPriceLookup mpr = new MetricsPriceLookup(new MetricModel());
-
-            decimal test = mpr.Maximum(34, OrderType.Buy);
+            MetricsPriceLookup mpr = new MetricsPriceLookup(new MetricModel(), new ItemPriceUpdater(new MetricModel()));
+            AutoMapper.Mapper.CreateMap<ItemPrices, ItemPricesDto>();
+            AutoMapper.Mapper.CreateMap<ItemPricesDto, ItemPrices>();
+            decimal test = mpr.Maximum(37, OrderType.Buy);
         }
     }
 }
