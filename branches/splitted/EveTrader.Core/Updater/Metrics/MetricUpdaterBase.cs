@@ -8,17 +8,33 @@ namespace EveTrader.Core.Updater.Metrics
 {
     public abstract class MetricUpdaterBase
     {
-        private readonly MetricModel iModel;
+        protected readonly MetricModel iModel;
 
         public MetricUpdaterBase(MetricModel mm)
         {
             iModel = mm;
         }
-        public bool Update()
+
+
+        public bool Update(
+            long typeID,
+            long regionID = 10000002,
+            long minimumQuantity = 0,
+            string developerKey = "")
+        {
+            return Update ( new long[] {typeID}, new long[] {regionID}, minimumQuantity, developerKey);
+        }
+
+        public bool Update(
+            IEnumerable<long> typeIDs,
+            IEnumerable<long> regionsIDs,
+            long mininumQuantity = 0,
+            string developerKey = ""
+                )
         {
             try
             {
-                return InnerUpdate();
+                return InnerUpdate(typeIDs, regionsIDs, mininumQuantity, developerKey);
             }
             catch (Exception ex)
             {
@@ -29,7 +45,11 @@ namespace EveTrader.Core.Updater.Metrics
             }
         }
 
-        protected abstract bool InnerUpdate();
+        protected abstract bool InnerUpdate(
+                        IEnumerable<long> typeIDs,
+            IEnumerable<long> regionsIDs,
+            long mininumQuantity = 0,
+            string developerKey = "");
 
     }
 }

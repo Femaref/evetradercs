@@ -192,7 +192,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
                     foreach (var groupedEntity in entityGroup)
                     {
-                        dd.Sales[groupedEntity.Key.Name] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
+                        dd.Sales[groupedEntity.Key.DisplayName] = groupedEntity.Sum(ge => ge.Price * ge.Quantity);
                     }
 
                     cache.Add(dd);

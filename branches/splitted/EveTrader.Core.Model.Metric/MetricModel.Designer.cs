@@ -80,6 +80,22 @@ namespace EveTrader.Core.Model.Metric
             }
         }
         private ObjectSet<ItemPrices> _ItemPrices;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Cache> Cache
+        {
+            get
+            {
+                if ((_Cache == null))
+                {
+                    _Cache = base.CreateObjectSet<Cache>("Cache");
+                }
+                return _Cache;
+            }
+        }
+        private ObjectSet<Cache> _Cache;
 
         #endregion
         #region AddTo Methods
@@ -91,6 +107,14 @@ namespace EveTrader.Core.Model.Metric
         {
             base.AddObject("ItemPrices", itemPrices);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Cache EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCache(Cache cache)
+        {
+            base.AddObject("Cache", cache);
+        }
 
         #endregion
     }
@@ -99,6 +123,139 @@ namespace EveTrader.Core.Model.Metric
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MetricsModel", Name="Cache")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Cache : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Cache object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="requestString">Initial value of the RequestString property.</param>
+        /// <param name="data">Initial value of the Data property.</param>
+        /// <param name="requestDate">Initial value of the RequestDate property.</param>
+        public static Cache CreateCache(global::System.Int64 id, global::System.String requestString, global::System.String data, global::System.DateTime requestDate)
+        {
+            Cache cache = new Cache();
+            cache.ID = id;
+            cache.RequestString = requestString;
+            cache.Data = data;
+            cache.RequestDate = requestDate;
+            return cache;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String RequestString
+        {
+            get
+            {
+                return _RequestString;
+            }
+            set
+            {
+                OnRequestStringChanging(value);
+                ReportPropertyChanging("RequestString");
+                _RequestString = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("RequestString");
+                OnRequestStringChanged();
+            }
+        }
+        private global::System.String _RequestString;
+        partial void OnRequestStringChanging(global::System.String value);
+        partial void OnRequestStringChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Data
+        {
+            get
+            {
+                return _Data;
+            }
+            set
+            {
+                OnDataChanging(value);
+                ReportPropertyChanging("Data");
+                _Data = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Data");
+                OnDataChanged();
+            }
+        }
+        private global::System.String _Data;
+        partial void OnDataChanging(global::System.String value);
+        partial void OnDataChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime RequestDate
+        {
+            get
+            {
+                return _RequestDate;
+            }
+            set
+            {
+                OnRequestDateChanging(value);
+                ReportPropertyChanging("RequestDate");
+                _RequestDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RequestDate");
+                OnRequestDateChanged();
+            }
+        }
+        private global::System.DateTime _RequestDate;
+        partial void OnRequestDateChanging(global::System.DateTime value);
+        partial void OnRequestDateChanged();
+
+        #endregion
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -650,7 +807,7 @@ namespace EveTrader.Core.Model.Metric
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int64 RegionID
         {
@@ -660,11 +817,14 @@ namespace EveTrader.Core.Model.Metric
             }
             set
             {
-                OnRegionIDChanging(value);
-                ReportPropertyChanging("RegionID");
-                _RegionID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RegionID");
-                OnRegionIDChanged();
+                if (_RegionID != value)
+                {
+                    OnRegionIDChanging(value);
+                    ReportPropertyChanging("RegionID");
+                    _RegionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RegionID");
+                    OnRegionIDChanged();
+                }
             }
         }
         private global::System.Int64 _RegionID;

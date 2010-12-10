@@ -1,5 +1,5 @@
 Create Table ItemPrices (
-	TypeID integer NOT NULL PRIMARY KEY,
+	TypeID integer NOT NULL,
 	LastUpload datetime NOT NULL,
 	RegionID integer NOT NULL,
 	MinimumBuy decimal NOT NULL,
@@ -19,5 +19,12 @@ Create Table ItemPrices (
 	StandardDeviationBuy decimal NOT NULL,
 	StandardDeviationSell decimal NOT NULL,
 	SimulatedBuy decimal NOT NULL,
-	SimulatedSell decimal NOT NULL
+	SimulatedSell decimal NOT NULL,
+	PRIMARY KEY (TypeID, RegionID)
 );
+
+Create Table Cache (
+ID integer NOT NULL PRIMARY KEY,
+RequestString string NOT NULL,
+RequestDate datetime NOT NULL,
+Data string NOT NULL);

@@ -1,7 +1,9 @@
 ﻿<Window x:Class="EveTrader.Wpf.ConverterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ConverterWindow" Height="300" Width="300">
+        Title="ConverterWindow" Height="300" Width="300"
+        xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
+        xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls">
     <Grid>
         
     </Grid>

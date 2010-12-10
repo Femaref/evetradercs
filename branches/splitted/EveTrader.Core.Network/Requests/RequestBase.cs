@@ -95,7 +95,7 @@ namespace EveTrader.Core.Network.Requests
             }
             else
             {
-                req = (HttpWebRequest)HttpWebRequest.Create(new Uri(Identifier, iRequestConstructor.GetRequestData()));
+                req = (HttpWebRequest)HttpWebRequest.Create(new Uri(Identifier + "?" + iRequestConstructor.GetRequestData()));
                 req.UserAgent = "EveTrader/1.2.5";
             }
 

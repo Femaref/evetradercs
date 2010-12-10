@@ -5,6 +5,7 @@ using System.Text;
 using EveTrader.Core.Services;
 using EveTrader.Core.Model.Trader;
 using System.ComponentModel.Composition;
+using EveTrader.Core.Model.Metric;
 
 namespace EveTrader.Core
 {
@@ -15,6 +16,9 @@ namespace EveTrader.Core
         {
             AutoMapper.Mapper.CreateMap<RefTypes, RefTypesDto>();
             AutoMapper.Mapper.CreateMap<RefTypesDto, RefTypes>();
+
+            AutoMapper.Mapper.CreateMap<ItemPrices, ItemPricesDto>();
+            AutoMapper.Mapper.CreateMap<ItemPricesDto, ItemPrices>();
         }
     }
 }

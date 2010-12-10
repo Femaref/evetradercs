@@ -15,17 +15,17 @@ namespace EveTrader.Core.Network.Requests.Metrics
 
         protected override void OnError(string output)
         {
-            throw new NotImplementedException();
+            throw new Exception("Error in metrics xml!");
         }
 
         protected override void SaveCache(string content)
         {
-            throw new NotImplementedException();
+            this.SaveCache(DateTime.UtcNow, content);
         }
 
         protected override bool ContainsError(string output)
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }
