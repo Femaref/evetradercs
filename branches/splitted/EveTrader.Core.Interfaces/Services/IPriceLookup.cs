@@ -8,13 +8,13 @@ namespace EveTrader.Core.Services
 {
     public interface IPriceLookup
     {
-        decimal Minimum(long typeID, TransactionType mot);
-        decimal Maximum(long typeID, TransactionType mot);
-        decimal Average(long typeID, TransactionType mot);
-        decimal Kurtosis(long typeID, TransactionType mot);
-        decimal Skew(long typeID, TransactionType mot);
-        decimal Variance(long typeID, TransactionType mot);
-        decimal StandardDeviation(long typeID, TransactionType mot);
-        decimal Simulated(long typeID, TransactionType mot);
+        decimal Minimum(long typeID, OrderType mot, long regionID = 10000002);
+        decimal Maximum(long typeID, OrderType mot, long regionID = 10000002);
+        decimal Average(long typeID, OrderType mot, long regionID = 10000002);
+        decimal Kurtosis(long typeID, OrderType mot, long regionID = 10000002);
+        decimal Skew(long typeID, OrderType mot, long regionID = 10000002);
+        decimal Variance(long typeID, OrderType mot, long regionID = 10000002);
+        decimal StandardDeviation(long typeID, OrderType mot, long regionID = 10000002);
+        decimal Simulated(long typeID, OrderType mot, long regionID = 10000002);
     }
 }

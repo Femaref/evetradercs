@@ -13,6 +13,7 @@ using System.IO;
 using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Updater.Metrics;
 using EveTrader.Core.Model.Metric;
+using EveTrader.Core.Services;
 namespace TestProject1
 {
 
@@ -200,6 +201,14 @@ namespace TestProject1
             ipu.Update(34);
             ipu.Update(35);
             ipu.Update(34, 10000043);
+        }
+
+        [TestMethod]
+        public void PriceLookup()
+        {
+            MetricsPriceLookup mpr = new MetricsPriceLookup(new MetricModel());
+
+            decimal test = mpr.Maximum(34, OrderType.Buy);
         }
     }
 }

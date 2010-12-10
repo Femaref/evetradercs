@@ -20,6 +20,7 @@ using System.Data.EntityClient;
 using System.EnterpriseServices.Internal;
 using EveTrader.Core.Services;
 using EveTrader.Wpf.Controls;
+using EveTrader.Core.Model.Metric;
 
 namespace EveTrader.Wpf
 {
@@ -57,11 +58,13 @@ namespace EveTrader.Wpf
             }
 
             
-            DirectoryInfo appData = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
-            FileInfo databaseInfo = new FileInfo(optional == "" ? Path.Combine(appData.FullName, "EveTrader.db") : optional);
-            FileInfo settingsInfo = new FileInfo(Path.Combine(appData.FullName, "settings.xml"));
-            FileInfo staticDatabase = new FileInfo(Path.Combine(appData.FullName, "static.db"));
-            FileInfo staticDatabaseRessource = new FileInfo("static.db");
+            DirectoryInfo appData = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader")); // custom files root
+            FileInfo databaseInfo = new FileInfo(optional == "" ? Path.Combine(appData.FullName, "EveTrader.db") : optional); // standard/custom path to db
+            FileInfo metricsInfo = new FileInfo(Path.Combine(appData.FullName, "Metrics.db")); // path to metrics price data
+            FileInfo settingsInfo = new FileInfo(Path.Combine(appData.FullName, "settings.xml")); // path to old data
+            FileInfo staticDatabase = new FileInfo(Path.Combine(appData.FullName, "static.db")); //path to static data
+            FileInfo staticDatabaseRessource = new FileInfo("static.db"); // path to current load of static data
+            
 
             if (!appData.Exists)
                 appData.Create();
@@ -91,12 +94,17 @@ namespace EveTrader.Wpf
             if (!databaseInfo.Exists || databaseInfo.Length == 0)
                 TraderModel.CreateDatabase(databaseInfo.FullName);
 
+            if (!metricsInfo.Exists || metricsInfo.Length == 0)
+                MetricModel.CreateDatabase(metricsInfo.FullName);
+
             //copy over static.db
             if (!staticDatabase.Exists)
                 File.Copy(staticDatabaseRessource.FullName, staticDatabase.FullName);
 
 
             EntityConnectionStringBuilder traderModelEntityBuilder = CreateConnectionBuilder(databaseInfo.FullName, @"res://*/TraderModel.csdl|res://*/TraderModel.ssdl|res://*/TraderModel.msl");
+
+            EntityConnectionStringBuilder metricsModelEntityBuilder = CreateConnectionBuilder(metricsInfo.FullName, @"res://*/MetricModel.csdl|res://*/MetricModel.ssdl|res://*/MetricModel.msl");
 
             //Prune incomplete entities, wrongly created transactions etc
             using (TraderModel tm = new TraderModel(traderModelEntityBuilder))
@@ -132,6 +140,7 @@ namespace EveTrader.Wpf
             //add connections to the batch
             batch.AddExportedValue("TraderModelConnection", traderModelEntityBuilder);
             batch.AddExportedValue("StaticModelConnection", staticModelEntityBuilder);
+            batch.AddExportedValue("MetricsModelConnection", metricsModelEntityBuilder);
 
             container.Compose(batch);
 

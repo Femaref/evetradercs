@@ -365,6 +365,10 @@
       <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
       <Name>EveTrader.Core.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric\EveTrader.Core.Model.Metric.csproj">
+      <Project>{BF29F53A-D752-4327-96FB-545CC8770248}</Project>
+      <Name>EveTrader.Core.Model.Metric</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
       <Project>{4B9C05A9-54A2-415A-8245-FB90E0CF4EFE}</Project>
       <Name>EveTrader.Core.Model.Trader</Name>
