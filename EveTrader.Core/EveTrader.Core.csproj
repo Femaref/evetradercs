@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Services\DatabaseExportService.cs" />
     <Compile Include="Services\DatabaseImportService.cs" />
+    <Compile Include="Services\MetricsPriceLookup.cs" />
     <Compile Include="Services\RefTypesLookup.cs">
       <SubType>Code</SubType>
     </Compile>
