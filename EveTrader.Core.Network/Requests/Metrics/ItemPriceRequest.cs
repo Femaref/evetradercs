@@ -43,7 +43,8 @@ namespace EveTrader.Core.Network.Requests.Metrics
             : base(
             (new MetricsRequestConstructor(MetricsPage.ItemPrice, developerKey))
                 .AddData("type_ids", itemIDs.Aggregate("", (s, l) => s + l + ",")) //aggregates itemIDs to a comma delimited string
-                .AddData("min_quantity", minQuantity.ToString()),
+                .AddData("min_quantity", minQuantity.ToString())
+                .AddData("region_ids",  regionIDs.Aggregate("", (s, l) => s + l + ",")),
             stillCached,
             saveCache,
             loadCache)
@@ -61,11 +62,14 @@ namespace EveTrader.Core.Network.Requests.Metrics
             {
                 foreach (XElement sub in x.Elements())
                 {
+                    if (sub.Name == "name")
+                        continue;
+
                     ItemPricesDto ipd = new ItemPricesDto() 
                     { 
                         TypeID = x.Attribute("id").Value.ToInt64(),
                         LastUpload = sub.Element("last_upload").Value.ToDateTime(),
-                        RegionID = x.Name == "global" ? 0 : x.Attribute("id").Value.ToInt64(),
+                        RegionID = sub.Name == "global" ? 0 : sub.Attribute("id").Value.ToInt64(),
                         MinimumBuy = sub.Element("buy").Element("minimum").Value.ToDecimal(),
                         MinimumSell = sub.Element("sell").Element("minimum").Value.ToDecimal(),
                         MaximumBuy = sub.Element("buy").Element("maximum").Value.ToDecimal(),

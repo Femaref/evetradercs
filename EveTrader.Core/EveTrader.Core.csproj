@@ -132,6 +132,10 @@
       <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
       <Name>EveTrader.Core.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric.Dto\EveTrader.Core.Model.Metric.Dto.csproj">
+      <Project>{180D7942-A00E-44E9-B515-0C88D03059E2}</Project>
+      <Name>EveTrader.Core.Model.Metric.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Metric\EveTrader.Core.Model.Metric.csproj">
       <Project>{BF29F53A-D752-4327-96FB-545CC8770248}</Project>
       <Name>EveTrader.Core.Model.Metric</Name>
