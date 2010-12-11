@@ -38,6 +38,16 @@ namespace EveTrader.Core.DataConverter
             }
         }
 
+        public bool Finished
+        {
+            get { return iFinished; }
+            private set
+            {
+                iFinished = value;
+                RaisePropertyChanged("Finished");
+            }
+        }
+
         private void RaisePropertyChanged(string p)
         {
             var handler = PropertyChanged;
@@ -116,6 +126,7 @@ namespace EveTrader.Core.DataConverter
 
                 model.Entity.AddObject(dbChar);
                 model.SaveChanges();
+                Finished = true;
             }
             return true;
         }
@@ -285,5 +296,6 @@ namespace EveTrader.Core.DataConverter
         }
     
 public event PropertyChangedEventHandler  PropertyChanged;
+private bool iFinished;
 }
 }

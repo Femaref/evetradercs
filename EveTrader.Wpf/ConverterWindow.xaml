@@ -6,7 +6,18 @@
         xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls">
     <Grid>
         <ProgressBar VerticalAlignment="Center" HorizontalAlignment="Center" Maximum="{Binding Objects}" Value="{Binding CurrentObject}" Width="200" Height="20"/>
-        <Label Content="Test" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label.Content>
+                <TextBlock>
+                    <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} of {1} objects processed.">
+                                <Binding Path="CurrentObject"/>
+                                <Binding Path="Objects"/>
+                            </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Label.Content>
+        </Label>
         <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding Finished}" Content="OK" Width="75" />
     </Grid>
 </Window>

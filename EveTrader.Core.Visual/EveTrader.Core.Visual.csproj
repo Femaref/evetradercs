@@ -105,6 +105,10 @@
     <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.DataConverter\EveTrader.Core.DataConverter.csproj">
+      <Project>{FDA2F329-9062-48A2-AE08-65A3DEFC226B}</Project>
+      <Name>EveTrader.Core.DataConverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
       <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
       <Name>EveTrader.Core.Interfaces</Name>

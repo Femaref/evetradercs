@@ -11,6 +11,7 @@ using System.Threading;
 using System.Diagnostics;
 using EveTrader.Core.Model;
 using System.Windows.Input;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
@@ -158,7 +159,7 @@ namespace EveTrader.Core.Visual.ViewModel
         }
 
 
-        public void DataIncoming(object sender, Services.EntitiesUpdatedEventArgs e)
+        public void DataIncoming(object sender, EntitiesUpdatedEventArgs e)
         {
             RefreshCurrentWallets();
 

@@ -8,7 +8,7 @@
     <ProjectGuid>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EveTrader.Core.Interfaces</RootNamespace>
+    <RootNamespace>EveTrader.Core</RootNamespace>
     <AssemblyName>EveTrader.Core.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -61,6 +61,8 @@
     <Compile Include="Services\IPriceLookup.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\IPriceLookupLoader.cs" />
+    <Compile Include="Services\IPriceSourceSelector.cs" />
     <Compile Include="Services\IRefTypesLookup.cs">
       <SubType>Code</SubType>
     </Compile>
