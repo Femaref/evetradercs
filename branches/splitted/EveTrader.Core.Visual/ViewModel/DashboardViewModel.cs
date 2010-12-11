@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.Threading;
 using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
@@ -33,6 +34,7 @@ namespace EveTrader.Core.Visual.ViewModel
         private DateTime iCurrentKey = new DateTime();
         private string iCurrentBindingKey = "";
         private bool iUpdating;
+        private IPriceLookup iLookup;
         
 
         public ICommand FilterWeekCommand { get; private set; }
@@ -104,7 +106,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
 
         [ImportingConstructor]
-        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm)
+        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, [Import("MetricsPriceLookup")]  IPriceLookup ipl)
             : base(view)
         {
             iModel = tm;
@@ -113,6 +115,7 @@ namespace EveTrader.Core.Visual.ViewModel
             Investment = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Sales = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Profit = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
+            iLookup = ipl;
 
             CurrentWallets.CollectionChanged += view.ChartCollectionChanged;
             view.DetailsRequested += new EventHandler<DetailsRequestedEventArgs>(view_DetailsRequested);
@@ -183,7 +186,9 @@ namespace EveTrader.Core.Visual.ViewModel
                     }
 
                     dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
-                    dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2))).FirstOrDefault();
+                    dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - 
+                        iLookup.Simulated(gt.TypeID, OrderType.Buy)//iModel.Transactions.AverageBuyPrice(gt.TypeID)
+                        ) * gt.Quantity, 2))).FirstOrDefault();
 
                     var entityGroup = (from g in i
                                        where g.TransactionType == (long)TransactionType.Sell
