@@ -13,7 +13,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="RequestString" Type="nvarchar" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="Data" Type="nvarchar" Nullable="false" />

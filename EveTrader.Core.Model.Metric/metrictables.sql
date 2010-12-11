@@ -24,7 +24,7 @@ Create Table ItemPrices (
 );
 
 Create Table Cache (
-ID integer NOT NULL PRIMARY KEY,
+ID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
 RequestString string NOT NULL,
 RequestDate datetime NOT NULL,
 Data string NOT NULL);
