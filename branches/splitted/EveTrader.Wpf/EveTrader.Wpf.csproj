@@ -192,6 +192,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblySettingsProvider.tt</DependentUpon>
     </Compile>
+    <Compile Include="Attached\ChartBehaviour.cs" />
     <Compile Include="Controls\ExceptionDisplay.xaml.cs">
       <DependentUpon>ExceptionDisplay.xaml</DependentUpon>
     </Compile>
@@ -206,6 +207,8 @@
       <DependentUpon>ConverterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\BidConverter.cs" />
+    <Compile Include="Converter\TransactionsForConverter.cs" />
+    <Compile Include="Converter\TransactionsTypeConverter.cs" />
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>

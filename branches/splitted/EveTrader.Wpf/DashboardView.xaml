@@ -7,17 +7,57 @@
     x:Name="UserControl"
     xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+    xmlns:att="clr-namespace:EveTrader.Wpf.Attached"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
     xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
     Width="Auto" Height="Auto">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="OverviewHiddenStyleTrigger" TargetType="{x:Type MenuItem}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding OverviewHidden}" Value="true">
+                    <Setter Property="Header" Value="Show Overview"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding OverviewHidden}" Value="false">
+                    <Setter Property="Header" Value="Hide Overview"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.75*" />
-            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="{x:Type ColumnDefinition}">
+                        <Setter Property="Width" Value="0.75*"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverviewHidden}" Value="true">
+                                <Setter Property="Width" Value="0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding OverviewHidden}" Value="false">
+                                <Setter Property="Width" Value="0.75*"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>
+            </ColumnDefinition>
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="{x:Type ColumnDefinition}">
+                        <Setter Property="Width" Value="0.25*"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverviewHidden}" Value="true">
+                                <Setter Property="Width" Value="*"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding OverviewHidden}" Value="false">
+                                <Setter Property="Width" Value="0.25*"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>
+            </ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
         <Grid Grid.Row="0" Grid.Column="0" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Working, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.475*" />
@@ -38,6 +78,22 @@
             </StackPanel>
         </Grid>
         <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
+            <visi:Chart.Style>
+                <Style TargetType="{x:Type visi:Chart}">
+                    <Setter Property="att:ChartBehaviour.ExecuteCommandOnDoubleClick" Value="true"/>
+                    <Setter Property="att:ChartBehaviour.ShowHideCommand" Value="{Binding OverviewHideCommand}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding OverviewHidden}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding OverviewHidden}" Value="false">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </visi:Chart.Style>
+            
+            
             <visi:Chart.TrendLines>
                 <visi:TrendLine Enabled="True" Orientation="Horizontal" LineColor="Red" LineThickness="20"/>
             </visi:Chart.TrendLines>
@@ -47,6 +103,8 @@
                     <MenuItem Header="Last 14 days" Command="{Binding FilterTwoWeeksCommand}"/>
                     <MenuItem Header="Last 30 days" Command="{Binding FilterMonthCommand}"/>
                     <MenuItem Header="All time" Command="{Binding FilterAllTimeCommand}"/>
+                    <Separator/>
+                    <MenuItem Name="OverviewHide" Command="{Binding OverviewHideCommand}" Style="{StaticResource OverviewHiddenStyleTrigger}"/>
                 </ContextMenu>
             </visi:Chart.ContextMenu>
         </visi:Chart>
@@ -55,7 +113,18 @@
             <ctrl:ProgressIndicator IsIndeterminate="True" Text="" IsRunning="{Binding DetailsUpdating}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
-        <visi:Chart Panel.ZIndex="1" x:Name="iDetailChart" Height="Auto" Width="Auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" >
+        <visi:Chart Panel.ZIndex="1" x:Name="iDetailChart" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" >
+            <visi:Chart.Style>
+                <Style TargetType="{x:Type visi:Chart}">
+                    <Setter Property="att:ChartBehaviour.ExecuteCommandOnDoubleClick" Value="true"/>
+                    <Setter Property="att:ChartBehaviour.ShowHideCommand" Value="{Binding OverviewHideCommand}"/>
+                </Style>
+            </visi:Chart.Style>
+            <visi:Chart.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding OverviewHideCommand}" Style="{StaticResource OverviewHiddenStyleTrigger}"/>
+                </ContextMenu>
+            </visi:Chart.ContextMenu>
             <visi:Chart.AxesX>
                 <visi:Axis>
                     <visi:Axis.AxisLabels>

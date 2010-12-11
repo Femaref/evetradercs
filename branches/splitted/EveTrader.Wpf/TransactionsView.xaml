@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+             xmlns:conv="clr-namespace:EveTrader.Wpf.Converter"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:TransactionsViewModel}"
              xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <CollectionViewSource x:Key="iGroupedTransactions" Source="{Binding Transactions}"/>
+        <conv:TransactionsTypeConverter x:Key="transactionTypeConverter"/>
     </UserControl.Resources>
     <Grid>
         <ctrl:LoadingIndicator ProgressHeight="150" ProgressWidth="150" Grid.RowSpan="2" Panel.ZIndex="2" IsIndeterminate="true" IsRunning="{Binding Updating}" Text="Updating Transactions..." />
@@ -26,12 +28,11 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
                     <DataGridTextColumn Binding="{Binding Path=TypeName}" Header="TypeName" />
-                    <DataGridTextColumn Binding="{Binding Path=Quantity}" Header="Quantity" />
-                    <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" />
+                    <DataGridTextColumn Binding="{Binding Path=Quantity, StringFormat=n}" Header="Quantity" />
+                    <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=n}" Header="Price" />
                     <DataGridTextColumn Binding="{Binding Path=ClientName}" Header="ClientName" />
                     <DataGridTextColumn Binding="{Binding Path=StationName}" Header="StationName" />
-                    <DataGridTextColumn Binding="{Binding Path=TransactionType}" Header="TransactionType" />
-                    <DataGridTextColumn Binding="{Binding Path=TransactionFor}" Header="TransactionFor" />
+                    <DataGridTextColumn Binding="{Binding Path=TransactionType, Converter={StaticResource transactionTypeConverter}}" Header="TransactionType" />
                 </DataGrid.Columns>
                 <DataGrid.GroupStyle>
                     <GroupStyle>

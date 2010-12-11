@@ -35,12 +35,15 @@ namespace EveTrader.Core.Visual.ViewModel
         private string iCurrentBindingKey = "";
         private bool iUpdating;
         private IPriceLookup iLookup;
+        private bool iOverviewHidden;
+        private IPriceSourceSelector iSource;
         
 
         public ICommand FilterWeekCommand { get; private set; }
         public ICommand FilterTwoWeeksCommand { get; private set; }
         public ICommand FilterMonthCommand { get; private set; }
         public ICommand FilterAllTimeCommand { get; private set; }
+        public ICommand OverviewHideCommand { get; private set; }
 
         public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
         public SmartObservableCollection<string> CurrentWallets { get; private set; }
@@ -104,9 +107,19 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
+        public bool OverviewHidden
+        {
+            get { return iOverviewHidden; }
+            set
+            {
+                iOverviewHidden = value;
+                RaisePropertyChanged("OverviewHidden");
+            }
+        }
+
 
         [ImportingConstructor]
-        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, [Import("MetricsPriceLookup")]  IPriceLookup ipl)
+        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IPriceLookup ipl, IPriceSourceSelector ips)
             : base(view)
         {
             iModel = tm;
@@ -116,6 +129,7 @@ namespace EveTrader.Core.Visual.ViewModel
             Sales = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Profit = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             iLookup = ipl;
+            iSource = ips;
 
             CurrentWallets.CollectionChanged += view.ChartCollectionChanged;
             view.DetailsRequested += new EventHandler<DetailsRequestedEventArgs>(view_DetailsRequested);
@@ -124,6 +138,7 @@ namespace EveTrader.Core.Visual.ViewModel
             FilterTwoWeeksCommand = new DelegateCommand(() => Filter(14));
             FilterMonthCommand = new DelegateCommand(() => Filter(30));
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
+            OverviewHideCommand = new DelegateCommand(() => OverviewHidden = !OverviewHidden);
             Filter(7);
         }
 
@@ -187,7 +202,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
                     dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
                     dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - 
-                        iLookup.Simulated(gt.TypeID, OrderType.Buy)//iModel.Transactions.AverageBuyPrice(gt.TypeID)
+                        iSource.Current(gt.TypeID, OrderType.Buy, 10000002)//iModel.Transactions.AverageBuyPrice(gt.TypeID)
                         ) * gt.Quantity, 2))).FirstOrDefault();
 
                     var entityGroup = (from g in i
