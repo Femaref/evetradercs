@@ -7,12 +7,53 @@ using System.IO;
 using EveTrader.Core.Model.Trader;
 using EveTrader.Core.DataConverter.ClassExtenders;
 using System.Data.SQLite;
+using System.ComponentModel;
 
 namespace EveTrader.Core.DataConverter
 {
-    public class XmlToSqlite
+    public class XmlToSqlite : INotifyPropertyChanged
     {
         private XDocument iDocument;
+
+        private int iCurrentObject = 1;
+        private int iObjects = 1;
+
+        public int CurrentObject
+        {
+            get { return iCurrentObject; }
+            private set
+            {
+                iCurrentObject = value;
+                RaisePropertyChanged("CurrentObject");
+            }
+        }
+
+        public int Objects
+        {
+            get { return iObjects; }
+            private set
+            {
+                iObjects = value;
+                RaisePropertyChanged("Objects");
+            }
+        }
+
+        private void RaisePropertyChanged(string p)
+        {
+            var handler = PropertyChanged;
+            if(handler != null)
+                handler(this, new PropertyChangedEventArgs(p));
+        }
+
+        private void ExpandObjectCount(int count)
+        {
+            Objects += count;
+        }
+
+        private void AdvanceCounter()
+        {
+            CurrentObject++;
+        }
 
         public XmlToSqlite(string path)
             : this(XDocument.Load(path))
@@ -81,6 +122,7 @@ namespace EveTrader.Core.DataConverter
 
         private Corporations GetCorporation(XElement corporations)
         {
+            ExpandObjectCount(1);
             Corporations corporation = new Corporations()
             {
                 ID = corporations.Element("ID").Value.ToInt64(),
@@ -92,6 +134,7 @@ namespace EveTrader.Core.DataConverter
             };
             if (!corporation.Npc)
             {
+                ExpandObjectCount(corporations.Element("MarketOrders").Elements().Count());
                 foreach (XElement marketOrders in corporations.Element("MarketOrders").Elements())
                 {
                     corporation.MarketOrders.Add(GetMarketOrder(marketOrders));
@@ -103,12 +146,14 @@ namespace EveTrader.Core.DataConverter
                     corporation.Wallets.Add(w);
                 }
             }
-            
+
+            AdvanceCounter();
             return corporation;
         }
 
-        private static Characters GetCharacter(XElement characters)
+        private Characters GetCharacter(XElement characters)
         {
+            ExpandObjectCount(1);
             Characters character = new Characters()
             {
                 ID = characters.Element("ID").Value.ToInt64(),
@@ -118,7 +163,7 @@ namespace EveTrader.Core.DataConverter
                 Name = characters.Element("Name").Value,
                 Race = characters.Element("Race").Value
             };
-
+            ExpandObjectCount(characters.Element("MarketOrders").Elements().Count());
             foreach (XElement marketOrders in characters.Element("MarketOrders").Elements())
             {
                 character.MarketOrders.Add(GetMarketOrder(marketOrders));
@@ -129,30 +174,36 @@ namespace EveTrader.Core.DataConverter
             //remove all Transactions that reference a corporation transaction, those aren't needed with the character
             w.Transactions.ToList().RemoveAll(t => t.TransactionFor != (long)TransactionFor.Personal);
 
+            ExpandObjectCount(characters.Element("BalanceHistory").Elements().Count());
             foreach (XElement wh in characters.Element("BalanceHistory").Elements())
             {
                 w.WalletHistory.Add(GetWalletHistory(wh));
             }
             character.Wallets.Add(w);
 
+            AdvanceCounter();
             return character;
 
         }
-        private static WalletHistories GetWalletHistory(XElement wh)
+        private WalletHistories GetWalletHistory(XElement wh)
         {
+            AdvanceCounter();
             return WalletHistories.CreateWalletHistories(0, wh.Element("Value").Value.ToDecimal(), wh.Element("Key").Value.ToDateTime());
         }
 
-        private static Wallets GetWallet(XElement wallet)
+        private Wallets GetWallet(XElement wallet)
         {
+            ExpandObjectCount(1);
             Wallets w = Wallets.CreateWallets(wallet.Element("ID").Value.ToInt64(),
                 wallet.Element("Name").Value,
                 wallet.Element("Balance").Value.ToDecimal(),
                 wallet.Element("Key").Value.ToInt64());
+            ExpandObjectCount(wallet.Element("Transactions").Elements().Count());
             foreach (XElement transaction in wallet.Element("Transactions").Elements())
             {
                 w.Transactions.Add(GetTransaction(transaction));
             }
+            ExpandObjectCount(wallet.Element("Journal").Elements().Count());
             foreach (XElement journal in wallet.Element("Journal").Elements())
             {
                 if(journal.Element("ReferenceID").Value.ToInt64() != 0)
@@ -161,8 +212,9 @@ namespace EveTrader.Core.DataConverter
             return w;
         }
 
-        private static ApiJournal GetJournal(XElement journal)
+        private ApiJournal GetJournal(XElement journal)
         {
+            AdvanceCounter();
             return ApiJournal.CreateApiJournal(0,
                 journal.Element("ReferenceTypeID").Value.ToInt64(),
                 journal.Element("OwnerName1").Value,
@@ -183,8 +235,9 @@ namespace EveTrader.Core.DataConverter
 
         }
 
-        private static ApiTransactions GetTransaction(XElement transaction)
+        private ApiTransactions GetTransaction(XElement transaction)
         {
+            AdvanceCounter();
             return ApiTransactions.CreateApiTransactions(0,
                                 transaction.Element("Quantity").Value.ToInt64(),
                                 transaction.Element("TypeName").Value,
@@ -202,8 +255,9 @@ namespace EveTrader.Core.DataConverter
                                 transaction.Element("TransactionID").Value.ToInt64());
         }
 
-        private static MarketOrders GetMarketOrder(XElement marketOrders)
+        private MarketOrders GetMarketOrder(XElement marketOrders)
         {
+            AdvanceCounter();
             return MarketOrders.CreateMarketOrders(0,
                                         marketOrders.Element("StationID").Value.ToInt64(),
                                         marketOrders.Element("VolumeEntered").Value.ToInt64(),
@@ -229,5 +283,7 @@ namespace EveTrader.Core.DataConverter
         {
             return TraderModel.CreateDatabase(path);
         }
-    }
+    
+public event PropertyChangedEventHandler  PropertyChanged;
+}
 }
