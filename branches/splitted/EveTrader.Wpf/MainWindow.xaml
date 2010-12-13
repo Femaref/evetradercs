@@ -28,6 +28,19 @@
                 <MenuItem Header="Update Static Eve Data" Command="{Binding FetchStaticDataCommand}"/>
                 <MenuItem Header="Exit" Command="Close"/>
             </MenuItem>
+            <MenuItem Header="Price Source" ItemsSource="{Binding PriceGrabbers}">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <MenuItem Header="{Binding}" IsCheckable="true" IsChecked="{Binding IsSelected}">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Item.FullName}"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
         </Menu>
 
         <Grid Grid.Row="1" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Updating, Converter={StaticResource BooleanToVisibilityConverter}}">

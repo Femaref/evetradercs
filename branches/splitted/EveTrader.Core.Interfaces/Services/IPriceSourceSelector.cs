@@ -9,6 +9,8 @@ namespace EveTrader.Core.Services
     {
         IEnumerable<IPriceLookup> LookupServices { get; set; }
         decimal Current(long typeID, OrderType type, long regionID = 10000002);
+        void ChangeLookup(string name);
+        void ChangeMethod(string name);
     }
 
 }
