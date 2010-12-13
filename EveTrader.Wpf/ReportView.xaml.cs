@@ -44,48 +44,5 @@ namespace EveTrader.Wpf
         }
 
         #endregion
-
-        private DataSeries CreateLine(string title, long bindingIndex)
-        {
-            DataSeries ds = new DataSeries()
-            {
-                XValueFormatString = "dd.MM.yyyy",
-                XValueType = ChartValueTypes.Date,
-                LegendText = title,
-                RenderAs = RenderAs.StepLine,
-                DataMappings = new DataMappingCollection()
-                {
-                    new DataMapping() 
-                    {
-                        MemberName ="XValue",
-                        Path = "Date"
-                    },
-                    new DataMapping() 
-                    {
-                        MemberName ="YValue",
-                        Path = "Balance"
-                    }
-                }
-            };
-            Binding b = new Binding(string.Format("WalletHistories[{0}].Histories", bindingIndex));
-            b.Source = this.DataContext;
-            ds.SetBinding(DataSeries.DataSourceProperty, b);
-            return ds;
-        }
-
-
-        #region IReportView Members
-
-        public void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            iHistory.Series.Clear();
-
-            var col = (sender as IList<KeyValuePair<long, string>>);
-
-            foreach(var kvp in col)
-                iHistory.Series.Add(CreateLine(kvp.Value, kvp.Key));
-        }
-
-        #endregion
     }
 }

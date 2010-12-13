@@ -8,6 +8,5 @@ namespace EveTrader.Core.Visual.View
 {
     public interface IReportView : IExtendedView
     {
-        void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e);
     }
 }
