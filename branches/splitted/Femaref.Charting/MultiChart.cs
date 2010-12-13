@@ -34,11 +34,16 @@ namespace Femaref.Charting
 
         protected virtual void OnSeriesSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
-            this.Series.Clear();
+            var oldNot = (oldValue as INotifyCollectionChanged);
+            if(oldNot != null)
+                CollectionChangedEventManager.RemoveListener(oldNot, iSeriesChangedEventListener);
 
-            var col = (newValue as INotifyCollectionChanged);
-            if (col != null)
-                iSeriesChangedEventListener = new CollectionChangedEventListener(col, NotifyCollectionChangedEventHandler);
+            var newNot = (newValue as INotifyCollectionChanged);
+            if (newNot != null)
+            {
+                iSeriesChangedEventListener = new CollectionChangedEventListener(newNot, NotifyCollectionChangedEventHandler);
+                CollectionChangedEventManager.AddListener(newNot, iSeriesChangedEventListener);
+            }
 
             ResetCollection(newValue);
 
@@ -62,7 +67,7 @@ namespace Femaref.Charting
                     ReplaceCollection(e.OldItems, e.OldStartingIndex, e.NewItems, e.NewStartingIndex);
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    ResetCollection(e.NewItems);
+                    ResetCollection((IEnumerable)sender);
                     break;
             }
         }
@@ -101,6 +106,8 @@ namespace Femaref.Charting
 
         private void ResetCollection(IEnumerable newValue)
         {
+            this.Series.Clear();
+
             if (newValue != null)
             {
                 foreach (object item in newValue)

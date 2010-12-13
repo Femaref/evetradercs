@@ -68,7 +68,7 @@ namespace EveTrader.Wpf
 
             foreach (var s in col)
             {
-                this.iPrimaryChart.Series.Add(CreateStackedColumn(s, "Sales"));
+               // this.iPrimaryChart.Series.Add(CreateStackedColumn(s, "Sales"));
             }
         }
         

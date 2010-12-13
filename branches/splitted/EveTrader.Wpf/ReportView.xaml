@@ -9,6 +9,7 @@
              xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
              xmlns:converter="clr-namespace:EveTrader.Wpf.Converter"
              xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+             xmlns:chart="clr-namespace:Femaref.Charting;assembly=Femaref.Charting"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>      
@@ -104,7 +105,18 @@
                     </visi:Chart>
                 </TabItem>
                 <TabItem  Header="Wallet Histories">
-                    <visi:Chart x:Name="iHistory"/>
+                    <chart:MultiChart x:Name="iHistory" SeriesSource="{Binding WalletHistories}">
+                        <chart:MultiChart.SeriesTemplate>
+                            <DataTemplate>
+                                <visi:DataSeries RenderAs="StepLine" LegendText="{Binding Name}" DataSource="{Binding Histories}">
+                                    <visi:DataSeries.DataMappings>
+                                        <visi:DataMapping MemberName="XValue" Path="Date"/>
+                                        <visi:DataMapping MemberName="YValue" Path="Balance"/>
+                                    </visi:DataSeries.DataMappings>
+                                </visi:DataSeries>
+                            </DataTemplate>
+                        </chart:MultiChart.SeriesTemplate>
+                    </chart:MultiChart>
                 </TabItem>            
             </TabControl>
         </Grid>

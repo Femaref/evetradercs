@@ -384,6 +384,10 @@
       <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
       <Name>EveTrader.Updater</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Femaref.Charting\Femaref.Charting.csproj">
+      <Project>{DC351C6B-D916-4783-869A-6DE8EB559109}</Project>
+      <Name>Femaref.Charting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
       <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
       <Name>WpfApplicationFramework</Name>

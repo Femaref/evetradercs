@@ -32,7 +32,6 @@ namespace EveTrader.Core.Visual.ViewModel
         public SmartObservableCollection<DisplayReport> ItemReport { get; private set; }
         public SmartObservableCollection<DisplayReport> BuyerReport { get; private set; }
         public SmartObservableCollection<DisplayWalletHistory> WalletHistories { get; private set; }
-        public SmartObservableCollection<KeyValuePair<long, string>> Wallets { get; private set; }
 
         public DateTime StartDate
         {
@@ -224,8 +223,6 @@ namespace EveTrader.Core.Visual.ViewModel
 
                 RaisePropertyChanged("ConcatedEntities");
 
-                RefreshWallets();
-
                 StationReport.AddRange(this.Combine(currentStation).OrderBy(d => d.PureProfit));
                 ItemReport.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
                 BuyerReport.AddRange(this.Combine(currentBuyer).OrderBy(d => d.PureProfit));
@@ -268,17 +265,6 @@ namespace EveTrader.Core.Visual.ViewModel
                 }
 
                 Entities.AddRange(creationCache);
-            }
-        }
-        private void RefreshWallets()
-        {
-            lock (iUpdaterLock)
-            {
-                Wallets.Clear();
-
-                var insert = WalletHistories.Select(wh => new KeyValuePair<long, string>(WalletHistories.IndexOf(wh), wh.Name)).ToList();
-
-                Wallets.AddRange(insert);
             }
         }
 
