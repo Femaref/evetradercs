@@ -29,5 +29,16 @@ namespace EveTrader.Core.Services
         {
             return iLookupServices.First().Average(typeID, type, regionID);
         }
+
+
+        public void ChangeLookup(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeMethod(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
