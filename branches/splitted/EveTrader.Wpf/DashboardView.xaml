@@ -23,6 +23,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
@@ -92,6 +93,15 @@
                     </Style.Triggers>
                 </Style>
             </visi:Chart.Style>
+            
+            <!--<visi:Chart.Series>
+                <visi:DataSeries RenderAs="Bar" DataSource="{Binding Source=DailyInfo, Path=Sales[({Binding Wallets})]}" LegendText="Sales" Color="Blue">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="TypeName"/>
+                        <visi:DataMapping MemberName="YValue" Path="Value"/>
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+            </visi:Chart.Series>-->
             
             
             <visi:Chart.TrendLines>
