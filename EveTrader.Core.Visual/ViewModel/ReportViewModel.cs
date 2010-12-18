@@ -119,14 +119,10 @@ namespace EveTrader.Core.Visual.ViewModel
             ItemReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             BuyerReport = new SmartObservableCollection<DisplayReport>(ViewCore.BeginInvoke);
             WalletHistories = new SmartObservableCollection<DisplayWalletHistory>(view.BeginInvoke);
-            Wallets = new SmartObservableCollection<KeyValuePair<long, string>>(view.BeginInvoke);
 
             RefreshCommand = new DelegateCommand(() => Refresh());
 
-            Wallets.CollectionChanged += view.ChartCollectionChanged;
-
             RefreshEntities();
-            RefreshWallets();
             
         }
 

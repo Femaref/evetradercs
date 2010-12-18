@@ -67,7 +67,7 @@ namespace Sheva.Windows.Data
                         {
                             // We are running inside DispatcherSynchronizationContext,
                             // so we should invoke the event handler in the correct dispatcher.
-                            dispatcherInvoker.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(delegate
+                            dispatcherInvoker.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ThreadStart(delegate
                             {
                                 handler(this, e);
                             }));

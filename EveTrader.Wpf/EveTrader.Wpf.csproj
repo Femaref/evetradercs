@@ -237,6 +237,7 @@
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Selectors\CurrencyColorSelector.cs" />
+    <Compile Include="Selectors\DashboardSelector.cs" />
     <Compile Include="TransactionsView.xaml.cs">
       <DependentUpon>TransactionsView.xaml</DependentUpon>
     </Compile>

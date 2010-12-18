@@ -104,7 +104,7 @@
                         </visi:Chart.Series>
                     </visi:Chart>
                 </TabItem>
-                <TabItem  Header="Wallet Histories">
+                <TabItem Header="Wallet Histories">
                     <chart:MultiChart x:Name="iHistory" SeriesSource="{Binding WalletHistories}">
                         <chart:MultiChart.SeriesTemplate>
                             <DataTemplate>

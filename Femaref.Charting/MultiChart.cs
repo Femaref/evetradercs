@@ -101,7 +101,7 @@ namespace Femaref.Charting
         private void AddCollection(IList newItems)
         {
             foreach (var item in newItems)
-                AddItem(item, SelectDataTemplate(item));
+                AddItem(item);
         }
 
         private void ResetCollection(IEnumerable newValue)
@@ -112,14 +112,15 @@ namespace Femaref.Charting
             {
                 foreach (object item in newValue)
                 {
-                    DataTemplate dataTemplate = SelectDataTemplate(item);
-                    AddItem(item, dataTemplate);
+                    AddItem(item);
                 }
             }
         }
 
-        private void AddItem(object item, DataTemplate dataTemplate)
+        protected virtual void AddItem(object item)
         {
+            DataTemplate dataTemplate = SelectDataTemplate(item);
+
             // load data template content
             if (dataTemplate != null)
             {
@@ -135,7 +136,7 @@ namespace Femaref.Charting
             }
         }
 
-        private DataTemplate SelectDataTemplate(object item)
+        protected virtual DataTemplate SelectDataTemplate(object item)
         {
             DataTemplate dataTemplate = null;
 

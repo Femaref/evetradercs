@@ -16,6 +16,7 @@ using System.Threading;
 using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.Services;
+using System.Reflection;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
@@ -46,7 +47,7 @@ namespace EveTrader.Core.Visual.ViewModel
         public ICommand OverviewHideCommand { get; private set; }
 
         public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
-        public SmartObservableCollection<string> CurrentWallets { get; private set; }
+        public SmartObservableCollection<KeyValuePair<PropertyInfo, IEnumerable<string>>> CurrentWallets { get; private set; }
         public SmartObservableCollection<DisplayDetail> Investment { get; private set; }
         public SmartObservableCollection<DisplayDetail> Sales { get; private set; }
         public SmartObservableCollection<DisplayDetail> Profit { get; private set; }
@@ -62,6 +63,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 RaisePropertyChanged("Updating");
             }
         }
+        public Type CurrentType { get { return typeof(DisplayDashboard); } }
 
         public int WorkingCount
         {
@@ -124,14 +126,13 @@ namespace EveTrader.Core.Visual.ViewModel
         {
             iModel = tm;
             DailyInfo = new SmartObservableCollection<DisplayDashboard>(view.BeginInvoke);
-            CurrentWallets = new SmartObservableCollection<string>(view.BeginInvoke);
+            CurrentWallets = new SmartObservableCollection<KeyValuePair<PropertyInfo,IEnumerable<string>>>(view.BeginInvoke);
             Investment = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Sales = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Profit = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             iLookup = ipl;
             iSource = ips;
 
-            CurrentWallets.CollectionChanged += view.ChartCollectionChanged;
             view.DetailsRequested += new EventHandler<DetailsRequestedEventArgs>(view_DetailsRequested);
 
             FilterWeekCommand = new DelegateCommand(() => Filter(7));
@@ -140,6 +141,8 @@ namespace EveTrader.Core.Visual.ViewModel
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
             OverviewHideCommand = new DelegateCommand(() => OverviewHidden = !OverviewHidden);
             Filter(7);
+
+            RefreshWallets();
         }
 
         private void Filter(int days)
@@ -152,13 +155,14 @@ namespace EveTrader.Core.Visual.ViewModel
             Refresh();
         }
 
+        private PropertyInfo iSalesPropertyInfo = typeof(DisplayDashboard).GetProperty("Sales");
         public void RefreshWallets()
         {
             lock (iUpdaterLock)
             {
                 CurrentWallets.Clear();
                 var insert = iModel.Wallets.Select(w => w).ToList().Select(w => w.DisplayName).ToList();
-                CurrentWallets.AddRange(insert);
+                CurrentWallets.Add(new KeyValuePair<PropertyInfo, IEnumerable<string>>(iSalesPropertyInfo, insert));
             }
         }
         public void Refresh()
@@ -187,6 +191,8 @@ namespace EveTrader.Core.Visual.ViewModel
                 CurrentIndex = 0;
 
                 List<DisplayDashboard> cache = new List<DisplayDashboard>();
+
+                IEnumerable<string> indexes = CurrentWallets.Single(x => x.Key == typeof(DisplayDashboard).GetProperty("Sales")).Value;
                 foreach (var i in investment)
                 {
                     DisplayDashboard dd = new DisplayDashboard()
@@ -195,7 +201,8 @@ namespace EveTrader.Core.Visual.ViewModel
                         Profit = 0m,
                         Investment = 0m,
                     };
-                    foreach (string s in CurrentWallets)
+
+                    foreach (var s in indexes)
                     {
                         dd.Sales.Add(s, 0m);
                     }
@@ -221,8 +228,6 @@ namespace EveTrader.Core.Visual.ViewModel
                 DailyInfo.AddRange(cache);
 
               //  iModel.Connection.Close();
-
-                RefreshWallets();
 
                 RaisePropertyChanged("ProfitAverage");
                 Working = false;

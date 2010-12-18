@@ -25,8 +25,6 @@ namespace EveTrader.Wpf
         public MainWindow()
         {
             this.InitializeComponent();
-            
-            // Insert code required on object creation below this point.
         }
 
         #region IExtendedView Members

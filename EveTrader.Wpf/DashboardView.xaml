@@ -9,6 +9,7 @@
     xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
     xmlns:att="clr-namespace:EveTrader.Wpf.Attached"
     xmlns:chart="clr-namespace:Femaref.Charting;assembly=Femaref.Charting"
+    xmlns:sel="clr-namespace:EveTrader.Wpf.Selectors"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:DashboardViewModel}"
     xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
     Width="Auto" Height="Auto">
@@ -24,7 +25,37 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        
+        <sel:DashboardSelector x:Key="DashboardTemplateSelector">
+            <sel:DashboardSelector.InvestmentTemplate>
+                <DataTemplate>
+                    <visi:DataSeries DataSource="{Binding}" LegendText="Investment" RenderAs="Line" ZIndex="99" XValueType="Date" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                        <visi:DataSeries.DataMappings>
+                            <visi:DataMapping MemberName="XValue" Path="Key"/>
+                            <visi:DataMapping MemberName="YValue" Path="Investment"/>
+</visi:DataSeries.DataMappings>
+                    </visi:DataSeries>
+                </DataTemplate>
+            </sel:DashboardSelector.InvestmentTemplate>
+            <sel:DashboardSelector.ProfitTemplate>
+                <DataTemplate>
+                    <visi:DataSeries DataSource="{Binding}" LegendText="Profit" RenderAs="Line" ZIndex="100"  XValueType="Date" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                        <visi:DataSeries.DataMappings>
+                            <visi:DataMapping MemberName="XValue" Path="Key"/>
+                            <visi:DataMapping MemberName="YValue" Path="Profit"/>
+                        </visi:DataSeries.DataMappings>
+                    </visi:DataSeries>
+                </DataTemplate>
+            </sel:DashboardSelector.ProfitTemplate>
+            <sel:DashboardSelector.SalesTemplate>
+                <DataTemplate>
+                    <visi:DataSeries DataSource="{Binding}" XValueType="Date" RenderAs="StackedColumn" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                        <visi:DataSeries.DataMappings>
+                            <visi:DataMapping MemberName="XValue" Path="Key"/>
+                        </visi:DataSeries.DataMappings>
+                    </visi:DataSeries>
+                </DataTemplate>
+            </sel:DashboardSelector.SalesTemplate>
+        </sel:DashboardSelector>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
@@ -79,8 +110,8 @@
                 <TextBlock Text=" days processed."/>
             </StackPanel>
         </Grid>
-        <visi:Chart Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
-            <visi:Chart.Style>
+        <chart:MultiValueChart DataSource="{Binding DailyInfo}" CollectionMappings="{Binding CurrentWallets}" SeriesTemplateSelector="{StaticResource DashboardTemplateSelector}" BindingType="{Binding CurrentType}"  Height="Auto" Width="Auto" x:Name="iPrimaryChart" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Panel.ZIndex="1" SmartLabelEnabled="True">
+            <chart:MultiValueChart.Style>
                 <Style TargetType="{x:Type visi:Chart}">
                     <Setter Property="att:ChartBehaviour.ExecuteCommandOnDoubleClick" Value="true"/>
                     <Setter Property="att:ChartBehaviour.ShowHideCommand" Value="{Binding OverviewHideCommand}"/>
@@ -93,12 +124,11 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </visi:Chart.Style>           
-            
-            <visi:Chart.TrendLines>
-                <visi:TrendLine Enabled="True" Orientation="Horizontal" LineColor="Red" LineThickness="20"/>
-            </visi:Chart.TrendLines>
-            <visi:Chart.ContextMenu>
+            </chart:MultiValueChart.Style>
+            <chart:MultiValueChart.TrendLines>
+                <visi:TrendLine Enabled="True" Orientation="Horizontal" LineColor="Red" LineThickness="20" />
+            </chart:MultiValueChart.TrendLines>
+            <chart:MultiValueChart.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Last 7 days" Command="{Binding FilterWeekCommand}"/>
                     <MenuItem Header="Last 14 days" Command="{Binding FilterTwoWeeksCommand}"/>
@@ -107,8 +137,8 @@
                     <Separator/>
                     <MenuItem Name="OverviewHide" Command="{Binding OverviewHideCommand}" Style="{StaticResource OverviewHiddenStyleTrigger}"/>
                 </ContextMenu>
-            </visi:Chart.ContextMenu>
-        </visi:Chart>
+            </chart:MultiValueChart.ContextMenu>
+        </chart:MultiValueChart>
 
         <Grid Panel.ZIndex="2" Grid.Column="1" Grid.Row="0" Opacity="0.75" Background="White" Visibility="{Binding Path=DetailsUpdating, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ctrl:ProgressIndicator IsIndeterminate="True" Text="" IsRunning="{Binding DetailsUpdating}" HorizontalAlignment="Center" VerticalAlignment="Center"/>

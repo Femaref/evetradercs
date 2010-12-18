@@ -178,7 +178,7 @@ namespace EveTrader.Core.Visual.ViewModel
             iUpdateService.UpdateStarted += new EventHandler(iUpdateService_UpdateStarted);
             iUpdateService.UpdateCompleted += new EventHandler<EntitiesUpdatedEventArgs>(iUpdateService_UpdateCompleted);
 
-            PriceGrabbers = new SmartObservableCollection<Selectable<Type>>(view.Invoke);            
+            PriceGrabbers = new SmartObservableCollection<Selectable<Type>>(view.BeginInvoke);            
 
             iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
             iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
