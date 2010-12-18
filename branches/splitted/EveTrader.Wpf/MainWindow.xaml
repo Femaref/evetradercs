@@ -48,9 +48,7 @@
         </Grid>
         <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1" Panel.ZIndex="1">
             <TabItem Header="Dashboard">
-                <Grid>
-                    <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                </Grid>
+                <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </TabItem>
             <TabItem Header="Wallets">
                 <ContentControl Content="{Binding WalletsView}"/>

@@ -21,6 +21,7 @@ namespace EveTrader.Core.Controllers
 
             iMainView = mainView;
             iDashboardView = dashboardView;
+
             iMainView.DashboardView = iDashboardView.View;
 
             updater.UpdateCompleted += iDashboardView.DataIncoming;

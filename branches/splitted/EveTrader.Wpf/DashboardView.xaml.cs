@@ -38,7 +38,7 @@ namespace EveTrader.Wpf
             TrendLine trendLine = iPrimaryChart.TrendLines[0];
 
 
-            trendLine.SetBinding(TrendLine.ValueProperty, binding); 
+            trendLine.SetBinding(TrendLine.ValueProperty, binding);
         }
 
         #region IExtendedView Members
@@ -57,82 +57,6 @@ namespace EveTrader.Wpf
 
 
         #region IDashboardView Members
-
-        public void ChartCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            this.iPrimaryChart.Series.Clear();
-            this.iPrimaryChart.Series.Add(CreateLine("Profit", "Profit", 99));
-            this.iPrimaryChart.Series.Add(CreateLine("Investment", "Investment", 100));
-
-            var col = (sender as IEnumerable<string>);
-
-            foreach (var s in col)
-            {
-               // this.iPrimaryChart.Series.Add(CreateStackedColumn(s, "Sales"));
-            }
-        }
-        
-        private DataSeries CreateLine(string title, string bindingProperty, int zindex)
-        {
-            DataSeries ds = new DataSeries()
-            {
-                XValueFormatString = "dd.MM.yyyy",
-                XValueType = ChartValueTypes.Date,
-                LegendText = title,
-                RenderAs = RenderAs.Line,
-                ZIndex = zindex,
-                DataMappings = new DataMappingCollection()
-                {
-                    new DataMapping() 
-                    {
-                        MemberName ="XValue",
-                        Path = "Key"
-                    },
-                    new DataMapping() 
-                    {
-                        MemberName ="YValue",
-                        Path = bindingProperty
-                    }
-                }
-            };
-            ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            Binding b = new Binding("DailyInfo");
-            b.Source = this.DataContext;
-            ds.SetBinding(DataSeries.DataSourceProperty, b);
-            return ds;
-        }
-
-        private DataSeries CreateStackedColumn(string entity, string bindingProperty)
-        {
-            DataSeries ds = new DataSeries()
-            {
-                XValueFormatString = "dd.MM.yyyy",
-                XValueType = ChartValueTypes.Date,
-                LegendText = entity,
-                Bevel = true,
-                MarkerType = Visifire.Commons.MarkerTypes.Square,
-                RenderAs = RenderAs.StackedColumn,
-                ToolTipText = entity,
-                DataMappings = new DataMappingCollection()
-                {
-                    new DataMapping() 
-                    {
-                        MemberName ="XValue",
-                        Path = "Key"
-                    },
-                    new DataMapping() 
-                    {
-                        MemberName ="YValue",
-                        Path = string.Format("{0}[\"{1}\"]", bindingProperty, entity)
-                    }
-                }
-            };
-
-            ds.MouseMove += new EventHandler<MouseEventArgs>(ds_MouseMove);
-            Binding b = new Binding("");
-            ds.SetBinding(DataSeries.DataSourceProperty, b);
-            return ds;
-        }
 
         void ds_MouseMove(object sender, MouseEventArgs e)
         {
