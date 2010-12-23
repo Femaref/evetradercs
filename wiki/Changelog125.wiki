@@ -25,6 +25,7 @@
   * Full support of Corporation Wallets
   * Viewable Price Cache with all item values used in calculations
   * Ability to select what price source to take (currently we have metrics and the internal cached one)
+  * ability to maximize the detail view in the dashboard (either context menu or double click)
 
 
 *Drawing Board*
