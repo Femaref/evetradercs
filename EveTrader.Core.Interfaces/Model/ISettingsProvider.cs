@@ -21,5 +21,7 @@ namespace EveTrader.Core.Model
         DateTime ReportEndDate { get; set; }
         bool ReportApplyStartFilter { get; set; }
         bool ReportApplyEndFilter { get; set; }
+        string PriceSource { get; set; }
+        string PriceMethod { get; set; }
     }
 }

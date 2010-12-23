@@ -53,5 +53,11 @@
     <Setting Name="StaticUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">static.xml</Value>
     </Setting>
+    <Setting Name="PriceSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PriceMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

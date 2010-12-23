@@ -213,7 +213,7 @@ namespace EveTrader.Core.Visual.ViewModel
             {
                 Updating = true;
 
-                XDocument xd = iExport.Export(c.Account.ID);
+                XDocument xd = iExport.Export(c.Account);
 
                 DirectoryInfo di = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
                 FileInfo fi = new FileInfo(string.Format("{0}_{1}.xml", c.Account.ID, DateTime.UtcNow.ToFileTimeUtc()));

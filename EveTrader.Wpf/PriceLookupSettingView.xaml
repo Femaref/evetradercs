@@ -6,6 +6,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            <Label Content="Placeholder"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" ItemsSource="{Binding PriceGrabbers}" DisplayMemberPath="FullName" SelectedItem="{Binding SelectedSource}"/>
+        <ListBox Grid.Column="1" ItemsSource="{Binding Methods}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMethod}" />
     </Grid>
 </UserControl>

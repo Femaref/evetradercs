@@ -29,12 +29,12 @@ namespace EveTrader.Wpf
 
         public void Invoke(Action action)
         {
-            throw new NotImplementedException();
+            Dispatcher.Invoke(action);
         }
 
         public void BeginInvoke(Action action)
         {
-            throw new NotImplementedException();
+            Dispatcher.BeginInvoke(action);
         }
     }
 }
