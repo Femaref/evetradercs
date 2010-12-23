@@ -8,7 +8,7 @@
     <ProjectGuid>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EveTrader.Core.Visual</RootNamespace>
+    <RootNamespace>EveTrader.Core</RootNamespace>
     <AssemblyName>EveTrader.Core.Visual</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -63,6 +63,7 @@
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\PriceCacheController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="Mapping.cs" />
@@ -82,12 +83,15 @@
     <Compile Include="ViewModel\Display\SelectedChangedEventArgs.cs" />
     <Compile Include="ViewModel\IRefreshableViewModel.cs" />
     <Compile Include="ViewModel\ISettingsPage.cs" />
+    <Compile Include="ViewModel\ISettingsParent.cs" />
     <Compile Include="ViewModel\JournalViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
     <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
     <Compile Include="ViewModel\PriceCacheViewModel.cs" />
+    <Compile Include="ViewModel\PriceLookupSettingViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\TransactionsViewModel.cs" />
     <Compile Include="ViewModel\WalletsViewModel.cs" />
     <Compile Include="View\Base\IExtendedView.cs" />
@@ -103,7 +107,9 @@
     <Compile Include="View\IManageAccountsView.cs" />
     <Compile Include="View\IMarketOrdersView.cs" />
     <Compile Include="View\IPriceCacheView.cs" />
+    <Compile Include="View\IPriceLookupSettingView.cs" />
     <Compile Include="View\IReportView.cs" />
+    <Compile Include="View\ISettingsView.cs" />
     <Compile Include="View\ITransactionsView.cs" />
     <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>

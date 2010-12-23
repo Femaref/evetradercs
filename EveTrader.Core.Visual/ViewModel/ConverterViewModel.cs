@@ -11,11 +11,12 @@ using System.Windows.Input;
 using System.Threading;
 using System.ComponentModel.Composition;
 using EveTrader.Core.Services;
+using EveTrader.Core.ViewModel;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
-    public class ConverterViewModel : ViewModel<IConverterView>, ISettingsPage
+    public class ConverterViewModel : ViewModel<IConverterView>, ISettingsParent
     {
         private readonly IConversionService converter;
         private int iObjects;
@@ -133,7 +134,7 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
-        #region ISettingsPage
+        #region ISettingsParent
 
         public event EventHandler Closed;
 

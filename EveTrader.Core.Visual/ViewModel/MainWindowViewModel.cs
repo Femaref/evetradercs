@@ -39,6 +39,7 @@ namespace EveTrader.Core.Visual.ViewModel
         private object iTransactionsView;
         private object iJournalView;
         private object iReportView;
+        private SettingsViewModel settings;
 
         public ICommand OpenManageAccountsCommand
         {
@@ -210,9 +211,11 @@ namespace EveTrader.Core.Visual.ViewModel
 
         private void OpenManageAccounts()
         {
-            EventHandler handler = ManageAccountsClicked;
-            if (handler != null)
-                handler(this, new EventArgs());
+            this.SettingsShown = true;
+
+            //EventHandler handler = ManageAccountsClicked;
+            //if (handler != null)
+            //    handler(this, new EventArgs());
         }
         private void FetchApiData()
         {
@@ -261,7 +264,6 @@ namespace EveTrader.Core.Visual.ViewModel
         public event EventHandler ManageAccountsClicked;
 
         private object converterView;
-
         public object ConverterView
         {
             get { return converterView; }
@@ -273,7 +275,6 @@ namespace EveTrader.Core.Visual.ViewModel
         }
 
         private bool converterShown;
-
         public bool ConverterShown
         {
             get { return converterShown; }
@@ -284,6 +285,26 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
-        
+        private object settingsView;
+        public object SettingsView
+        {
+            get { return settingsView; }
+            set
+            {
+                settingsView = value;
+                RaisePropertyChanged("SettingsView");
+            }
+        }
+
+        private bool settingsShown;
+        public bool SettingsShown
+        {
+            get { return settingsShown; }
+            set
+            {
+                settingsShown = value;
+                RaisePropertyChanged("SettingsShown");
+            }
+        } 
     }
 }

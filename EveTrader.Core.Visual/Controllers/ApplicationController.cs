@@ -42,6 +42,7 @@ namespace EveTrader.Core.Controllers
 
         private readonly List<Controller> iControllers = new List<Controller>();
         private ConverterController converterController;
+        private SettingsController settingsController;
        
         [ImportingConstructor]
         public ApplicationController(
@@ -59,6 +60,7 @@ namespace EveTrader.Core.Controllers
             TransactionsController transactionsController,
             ReportController reportController,
             ConverterController converterController,
+            SettingsController settingsController,
             ISettingsProvider settingsProvider,
             CharacterUpdater charUpdater,
             CorporationUpdater corpUpdater)
@@ -78,13 +80,14 @@ namespace EveTrader.Core.Controllers
             iTransactionsController = transactionsController;
             iReportController = reportController;
             this.converterController = converterController;
+            this.settingsController = settingsController;
 
             iSettings = settingsProvider;
 
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
 
-            mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
+            //mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
         }
 
         public void Run()
