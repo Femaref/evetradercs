@@ -28,12 +28,17 @@ namespace EveTrader.Core.Controllers
         public void Show()
         {
             iViewModel = new ManageAccountsViewModel(
-                iContainer.GetExportedValue<IManageAccountsView>(), 
-                iContainer.GetExportedValue<TraderModel>(), 
+                iContainer.GetExportedValue<IManageAccountsView>(),
+                iContainer.GetExportedValue<TraderModel>(),
                 iContainer.GetExportedValue<IUpdateService>(),
                 iContainer.GetExportedValue<EntityFactory>(),
                 iContainer.GetExportedValue<IDatabaseExportService>());
-           iViewModel.Show();
+
+            var main = iContainer.GetExportedValue<MainWindowViewModel>();
+
+            main.Closing += (obj, e) => Shutdown();
+
+            iViewModel.Show();
         }
 
         public void Shutdown()

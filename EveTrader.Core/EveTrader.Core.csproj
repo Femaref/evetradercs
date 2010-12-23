@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\BindableCollection.cs" />
+    <Compile Include="Collections\SmartGroupableObservableCollection.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Collections\SmartObservableCollection.cs" />
@@ -122,9 +123,7 @@
     </None>
     <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ClassExtenders\ClassExtenders.csproj">
       <Project>{8439287F-C3AC-4B3E-96D4-29EDB08F7FB3}</Project>

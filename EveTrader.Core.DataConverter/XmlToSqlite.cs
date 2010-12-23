@@ -8,6 +8,7 @@ using EveTrader.Core.Model.Trader;
 using EveTrader.Core.DataConverter.ClassExtenders;
 using System.Data.SQLite;
 using System.ComponentModel;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.DataConverter
 {
@@ -18,6 +19,32 @@ namespace EveTrader.Core.DataConverter
         private int iCurrentObject = 1;
         private int iObjects = 1;
 
+        public event EventHandler<ValueIncreasedEventArgs> CurrentObjectIncreased;
+        public event EventHandler<ValueIncreasedEventArgs> ObjectsIncreased;
+        public event EventHandler OperationFinished;
+
+        private void RaiseCurrentObjectIncreased(int newValue)
+        {
+            var handler = CurrentObjectIncreased;
+
+            if (handler != null)
+                handler(this, new ValueIncreasedEventArgs(newValue));
+        }
+        private void RaiseObjectsIncreased(int newValue)
+        {
+            var handler = ObjectsIncreased;
+
+            if (handler != null)
+                handler(this, new ValueIncreasedEventArgs(newValue));
+        }
+        private void RaiseOperationFinished()
+        {
+            var handler = OperationFinished;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
         public int CurrentObject
         {
             get { return iCurrentObject; }
@@ -25,6 +52,7 @@ namespace EveTrader.Core.DataConverter
             {
                 iCurrentObject = value;
                 RaisePropertyChanged("CurrentObject");
+                RaiseCurrentObjectIncreased(value);
             }
         }
 
@@ -35,6 +63,7 @@ namespace EveTrader.Core.DataConverter
             {
                 iObjects = value;
                 RaisePropertyChanged("Objects");
+                RaiseObjectsIncreased(value);
             }
         }
 
@@ -45,13 +74,15 @@ namespace EveTrader.Core.DataConverter
             {
                 iFinished = value;
                 RaisePropertyChanged("Finished");
+                if(value)
+                    RaiseOperationFinished();
             }
         }
 
         private void RaisePropertyChanged(string p)
         {
             var handler = PropertyChanged;
-            if(handler != null)
+            if (handler != null)
                 handler(this, new PropertyChangedEventArgs(p));
         }
 
@@ -83,7 +114,7 @@ namespace EveTrader.Core.DataConverter
 
             string path = CreateDatabase();
 
-            TraderModel model = new TraderModel("metadata=res://*/Model.TraderModel.csdl|res://*/Model.TraderModel.ssdl|res://*/Model.TraderModel.msl;provider=System.Data.SQLite;provider connection string='data source=" + path + "'");
+            TraderModel model = new TraderModel("metadata=res://*/TraderModel.csdl|res://*/TraderModel.ssdl|res://*/TraderModel.msl;provider=System.Data.SQLite;provider connection string='data source=" + path + "'");
 
             if (model.Accounts.Count(e => e.ID == 0) == 0)
             {
@@ -110,7 +141,7 @@ namespace EveTrader.Core.DataConverter
 
                 long corpID = characters.Element("Corporation").Element("ID").Value.ToInt64();
 
-                
+
                 if (model.Entity.Count(e => e.ID == corpID) == 0)
                 {
                     var corp = GetCorporation(characters.Element("Corporation"));
@@ -126,8 +157,8 @@ namespace EveTrader.Core.DataConverter
 
                 model.Entity.AddObject(dbChar);
                 model.SaveChanges();
-                Finished = true;
             }
+            Finished = true;
             return true;
         }
 
@@ -217,7 +248,7 @@ namespace EveTrader.Core.DataConverter
             ExpandObjectCount(wallet.Element("Journal").Elements().Count());
             foreach (XElement journal in wallet.Element("Journal").Elements())
             {
-                if(journal.Element("ReferenceID").Value.ToInt64() != 0)
+                if (journal.Element("ReferenceID").Value.ToInt64() != 0)
                     w.Journal.Add(GetJournal(journal));
             }
             return w;
@@ -294,8 +325,8 @@ namespace EveTrader.Core.DataConverter
         {
             return TraderModel.CreateDatabase(path);
         }
-    
-public event PropertyChangedEventHandler  PropertyChanged;
-private bool iFinished;
-}
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private bool iFinished;
+    }
 }

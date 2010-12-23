@@ -57,6 +57,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StaticModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="StaticModelConnectionStringProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="StaticModel.edmx">
@@ -68,6 +69,12 @@
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
+      <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
+      <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

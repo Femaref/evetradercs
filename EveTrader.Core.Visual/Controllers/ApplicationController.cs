@@ -41,6 +41,7 @@ namespace EveTrader.Core.Controllers
         private readonly StaticModel iStaticData;
 
         private readonly List<Controller> iControllers = new List<Controller>();
+        private ConverterController converterController;
        
         [ImportingConstructor]
         public ApplicationController(
@@ -57,6 +58,7 @@ namespace EveTrader.Core.Controllers
             JournalController journalController,
             TransactionsController transactionsController,
             ReportController reportController,
+            ConverterController converterController,
             ISettingsProvider settingsProvider,
             CharacterUpdater charUpdater,
             CorporationUpdater corpUpdater)
@@ -75,6 +77,7 @@ namespace EveTrader.Core.Controllers
             iJournalController = journalController;
             iTransactionsController = transactionsController;
             iReportController = reportController;
+            this.converterController = converterController;
 
             iSettings = settingsProvider;
 

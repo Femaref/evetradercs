@@ -22,6 +22,7 @@ using System.IO;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
+    [Export]
     public class ManageAccountsViewModel : ViewModel<IManageAccountsView>, IRefreshableViewModel
     {
         private readonly TraderModel iModel;
@@ -130,7 +131,7 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
-
+        [ImportingConstructor]
         public ManageAccountsViewModel(
             IManageAccountsView view, 
             [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
@@ -147,7 +148,7 @@ namespace EveTrader.Core.Visual.ViewModel
             CurrentCharacters = new SmartObservableCollection<Characters>(view.Invoke);
             RequestedCharacters = new SmartObservableCollection<Selectable<Characters>>(view.Invoke);
             DataRequestable = true;
-            view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
+          //  view.Closing += new System.ComponentModel.CancelEventHandler(ViewCore_Closing);
 
             iRequestDataCommand = new DelegateCommand(RequestData, () => DataRequestable);
             iAbortRequestCommand = new DelegateCommand(AbortRequest);
@@ -211,7 +212,7 @@ namespace EveTrader.Core.Visual.ViewModel
             {
                 Updating = true;
 
-                XDocument xd = iExport.Export(c.Account);
+                XDocument xd = iExport.Export(c.Account.ID);
 
                 DirectoryInfo di = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
                 FileInfo fi = new FileInfo(string.Format("{0}_{1}.xml", c.Account.ID, DateTime.UtcNow.ToFileTimeUtc()));
@@ -226,11 +227,11 @@ namespace EveTrader.Core.Visual.ViewModel
 
         public void Show()
         {
-            this.ViewCore.Show();
+           // this.ViewCore.Show();
         }
         public void Shutdown()
         {
-            this.ViewCore.Close();
+            //this.ViewCore.Close();
         }
         public void Refresh()
         {

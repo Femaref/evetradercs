@@ -37,7 +37,7 @@
                     <DataGridTextColumn Binding="{Binding Path=Reason}" Header="Reason" />
                     <!--<DataGridTextColumn Binding="{Binding Path=TaxAmount, StringFormat=n}" Header="TaxAmount" />-->
                 </DataGrid.Columns>
-                <DataGrid.GroupStyle>
+                <!--<DataGrid.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
@@ -61,7 +61,7 @@
                             </Style>
                         </GroupStyle.ContainerStyle>
                     </GroupStyle>
-                </DataGrid.GroupStyle>
+                </DataGrid.GroupStyle>-->
             </DataGrid>
         </Grid>
     </Grid>

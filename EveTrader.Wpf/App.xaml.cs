@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
-using System.Reflection;
-using EveTrader.Core.Controllers;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Waf.Applications;
-using System.Windows.Threading;
-using System.Diagnostics;
-using System.Waf;
-using EveTrader.Core.DataConverter;
-using System.IO;
-using EveTrader.Core.Model.Trader;
-using System.Data.SQLite;
 using System.Data.EntityClient;
-using System.EnterpriseServices.Internal;
-using EveTrader.Core.Services;
-using EveTrader.Wpf.Controls;
+using System.Data.SQLite;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Waf.Applications;
+using System.Windows;
+using System.Windows.Threading;
+using EveTrader.Core.Controllers;
+using EveTrader.Core.Model;
 using EveTrader.Core.Model.Metric;
+using EveTrader.Core.Model.Trader;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Wpf
 {
@@ -69,27 +63,6 @@ namespace EveTrader.Wpf
             if (!appData.Exists)
                 appData.Create();
 
-            if (settingsInfo.Exists && settingsInfo.Length > 0)
-            {
-                string fileTime = DateTime.Now.ToFileTime().ToString();
-                string backupPath = string.Format("backup_{0}", fileTime);
-                if (!Directory.Exists(Path.Combine(appData.FullName, backupPath)))
-                    appData.CreateSubdirectory(backupPath);
-
-                File.Copy(settingsInfo.FullName, Path.Combine(appData.FullName, backupPath, "settings.xml"));
-
-
-                //refactor to a more detailed window with progressbar etc
-                var result = MessageBox.Show("settings.xml found. Do you want to convert the data? This can take some time", "Convert data", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
-                {
-                    XmlToSqlite xts = new XmlToSqlite(settingsInfo.FullName);
-                    xts.Convert();
-                }
-
-                settingsInfo.Delete();
-            }
-
             //if no database exists, create a fresh one
             if (!databaseInfo.Exists || databaseInfo.Length == 0)
                 TraderModel.CreateDatabase(databaseInfo.FullName);
@@ -102,15 +75,6 @@ namespace EveTrader.Wpf
                 File.Copy(staticDatabaseRessource.FullName, staticDatabase.FullName);
 
 
-            EntityConnectionStringBuilder traderModelEntityBuilder = CreateConnectionBuilder(databaseInfo.FullName, @"res://*/TraderModel.csdl|res://*/TraderModel.ssdl|res://*/TraderModel.msl");
-
-            EntityConnectionStringBuilder metricsModelEntityBuilder = CreateConnectionBuilder(metricsInfo.FullName, @"res://*/MetricModel.csdl|res://*/MetricModel.ssdl|res://*/MetricModel.msl");
-
-            //Prune incomplete entities, wrongly created transactions etc
-            using (TraderModel tm = new TraderModel(traderModelEntityBuilder))
-                tm.Prune();
-
-            EntityConnectionStringBuilder staticModelEntityBuilder = CreateConnectionBuilder(staticDatabase.FullName, @"res://*/StaticModel.csdl|res://*/StaticModel.ssdl|res://*/StaticModel.msl");
 
             base.OnStartup(e);
 
@@ -137,15 +101,12 @@ namespace EveTrader.Wpf
 
             batch.AddExportedValue(container);
 
-            //add connections to the batch
-            batch.AddExportedValue("TraderModelConnection", traderModelEntityBuilder);
-            batch.AddExportedValue("StaticModelConnection", staticModelEntityBuilder);
-            batch.AddExportedValue("MetricsModelConnection", metricsModelEntityBuilder);
+            //set actual paths to the database files
+            container.GetExportedValue<IConnectionStringProvider>("TraderModelConnectionString").SetSource(databaseInfo.FullName);
+            container.GetExportedValue<IConnectionStringProvider>("StaticModelConnectionString").SetSource(staticDatabase.FullName);
+            container.GetExportedValue<IConnectionStringProvider>("MetricModelConnectionString").SetSource(metricsInfo.FullName);
 
             container.Compose(batch);
-
-           // var updater = container.GetExportedValue<IApplicationUpdateService>();
-           // updater.CheckUpdate();
 
             var mappings = container.GetExportedValues<IMappingCreator>();
 
@@ -153,9 +114,7 @@ namespace EveTrader.Wpf
             {
                 mc.CreateMappings();
             }
-
-
-            var x = container.GetExportedValue<IPriceSourceSelector>();
+            container.GetExportedValue<TraderModel>().Prune();
 
             controller = container.GetExportedValue<ApplicationController>();
 

@@ -18,8 +18,8 @@ namespace EveTrader.Core.Model.Trader
     public partial class TraderModel
     {
         [ImportingConstructor]
-        public TraderModel([Import("TraderModelConnection")] EntityConnectionStringBuilder sb)
-            : base(new EntityConnection(sb.ToString()), "TraderModel")
+        public TraderModel([Import("TraderModelConnectionString")] IConnectionStringProvider sb)
+            : base(new EntityConnection(sb.GetConnectionString()), "TraderModel")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();

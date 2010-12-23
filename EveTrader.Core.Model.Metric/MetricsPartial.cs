@@ -14,8 +14,8 @@ namespace EveTrader.Core.Model.Metric
     public partial class MetricModel
     {
         [ImportingConstructor]
-        public MetricModel([Import("MetricsModelConnection")] EntityConnectionStringBuilder sb)
-            : base(new EntityConnection(sb.ToString()), "MetricModel")
+        public MetricModel([Import("MetricModelConnectionString")] IConnectionStringProvider sb)
+            : base(new EntityConnection(sb.GetConnectionString()), "MetricModel")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();

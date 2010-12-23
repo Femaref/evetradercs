@@ -6,12 +6,18 @@ using System.Waf.Applications;
 using EveTrader.Core.Visual.View;
 using EveTrader.Core.DataConverter;
 using System.IO;
+using System.ComponentModel;
+using System.Windows.Input;
+using System.Threading;
+using System.ComponentModel.Composition;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
-    public class ConverterViewModel : ViewModel<IConverterView>
+    [Export]
+    public class ConverterViewModel : ViewModel<IConverterView>, ISettingsPage
     {
-        private readonly XmlToSqlite iConverter;
+        private readonly IConversionService converter;
         private int iObjects;
         private int iCurrentObject;
         private bool iFinished;
@@ -46,24 +52,99 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
+        private bool working;
 
-        public ConverterViewModel(IConverterView view)
+        public bool Working
+        {
+            get { return working; }
+            set
+            {
+                working = value;
+                RaisePropertyChanged("Working");
+            }
+        }
+
+        private ICommand closeCommand;
+
+        public ICommand CloseCommand
+        {
+            get { return closeCommand; }
+            set { closeCommand = value;
+            RaisePropertyChanged("CloseCommand");
+            }
+        }
+
+        private ICommand convertCommand;
+
+        public ICommand ConvertCommand
+        {
+            get { return convertCommand; }
+            set
+            {
+                convertCommand = value;
+                RaisePropertyChanged("ConvertCommand");
+            }
+        }
+
+        [ImportingConstructor]
+        public ConverterViewModel(IConverterView view, IConversionService converter)
             : base(view)
         {
-            iConverter = new XmlToSqlite(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "settings.xml"));
+            this.converter = converter;
 
-            iConverter.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(iConverter_PropertyChanged);
+            ConvertCommand = new DelegateCommand(() => Convert());
+            CloseCommand = new DelegateCommand(() => RaiseClosed());
         }
 
-        void iConverter_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void converter_OperationFinished(object sender, EventArgs e)
         {
-            if (e.PropertyName == "Objects")
-                this.Objects = (sender as XmlToSqlite).Objects;
-            if (e.PropertyName == "CurrentObject")
-                this.CurrentObject = (sender as XmlToSqlite).CurrentObject;
-            if (e.PropertyName == "Finished")
-                this.Finished = (sender as XmlToSqlite).Finished;
-
+            Finished = true;
         }
+
+        void converter_ObjectsIncreased(object sender, ValueIncreasedEventArgs e)
+        {
+            Objects = e.NewValue;
+        }
+
+        void converter_CurrentObjectIncreased(object sender, ValueIncreasedEventArgs e)
+        {
+            CurrentObject = e.NewValue;
+        }
+
+        private readonly object updaterLock = new object();
+
+        private void Convert()
+        {
+            Thread t = new Thread(new ThreadStart(ThreadedConvert));
+            t.Name = "Converter Thread";
+            t.Start();
+        }
+
+        private void ThreadedConvert()
+        {
+            lock (updaterLock)
+            {
+                Working = true;
+                this.converter.CurrentObjectIncreased += new EventHandler<ValueIncreasedEventArgs>(converter_CurrentObjectIncreased);
+                this.converter.ObjectsIncreased += new EventHandler<ValueIncreasedEventArgs>(converter_ObjectsIncreased);
+                this.converter.OperationFinished += new EventHandler(converter_OperationFinished);
+                converter.Convert();
+                Working = false;
+            }
+        }
+
+        #region ISettingsPage
+
+        public event EventHandler Closed;
+
+        private void RaiseClosed()
+        {
+            var handler = Closed;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        #endregion
     }
 }

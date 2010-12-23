@@ -28,13 +28,13 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
                     <DataGridTextColumn Binding="{Binding Path=TypeName}" Header="TypeName" />
-                    <DataGridTextColumn Binding="{Binding Path=Quantity, StringFormat=n}" Header="Quantity" />
+                    <DataGridTextColumn Binding="{Binding Path=Quantity, StringFormat=n0}" Header="Quantity" />
                     <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=n}" Header="Price" />
                     <DataGridTextColumn Binding="{Binding Path=ClientName}" Header="ClientName" />
                     <DataGridTextColumn Binding="{Binding Path=StationName}" Header="StationName" />
                     <DataGridTextColumn Binding="{Binding Path=TransactionType, Converter={StaticResource transactionTypeConverter}}" Header="TransactionType" />
                 </DataGrid.Columns>
-                <DataGrid.GroupStyle>
+               <!--<DataGrid.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
@@ -58,7 +58,7 @@
                             </Style>
                         </GroupStyle.ContainerStyle>
                     </GroupStyle>
-                </DataGrid.GroupStyle>
+                </DataGrid.GroupStyle>-->
             </DataGrid>
         </Grid>
     </Grid>
