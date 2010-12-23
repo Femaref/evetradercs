@@ -55,6 +55,13 @@ namespace EveTrader.Core.Visual.ViewModel
         {
             get { return this.iFetchStaticDataCommand; }
         }
+        private ICommand closeCommand;
+
+        public ICommand CloseCommand
+        {
+            get { return closeCommand; }
+        }
+
         public bool Updating
         {
             get
@@ -162,13 +169,15 @@ namespace EveTrader.Core.Visual.ViewModel
         public MainWindowViewModel(
             IMainWindowView view, 
             [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
-            IUpdateService us)
+            IUpdateService us,
+            IRefreshService refreshService)
             : base(view)
         {
             view.Closing += ViewClosing;
 
             iModel = tm;
             iUpdateService = us;
+            this.refreshService = refreshService;
 
             iUpdateService.UpdateStarted += new EventHandler(iUpdateService_UpdateStarted);
             iUpdateService.UpdateCompleted += new EventHandler<EntitiesUpdatedEventArgs>(iUpdateService_UpdateCompleted);           
@@ -177,6 +186,7 @@ namespace EveTrader.Core.Visual.ViewModel
             iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
             iFetchApiDataCommand = new DelegateCommand(FetchApiData);
             iFetchStaticDataCommand = new DelegateCommand(FetchStaticData);
+            closeCommand = new DelegateCommand(() => this.ViewCore.Close());
         }
 
         void iUpdateService_UpdateCompleted(object sender, EntitiesUpdatedEventArgs e)
@@ -273,6 +283,7 @@ namespace EveTrader.Core.Visual.ViewModel
         }
 
         private bool settingsShown;
+        private IRefreshService refreshService;
         public bool SettingsShown
         {
             get { return settingsShown; }
@@ -280,6 +291,7 @@ namespace EveTrader.Core.Visual.ViewModel
             {
                 settingsShown = value;
                 RaisePropertyChanged("SettingsShown");
+                refreshService.Refresh();
             }
         } 
     }

@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Services\IPriceLookupLoader.cs" />
     <Compile Include="Services\IPriceSourceSelector.cs" />
+    <Compile Include="Services\IRefreshService.cs" />
     <Compile Include="Services\IRefTypesLookup.cs">
       <SubType>Code</SubType>
     </Compile>
