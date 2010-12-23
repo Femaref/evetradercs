@@ -1,10 +1,10 @@
-#summary Prelimary Changelogs for 1.2.5
+#summary Changelogs for 1.2.5, Released december 24, 2010
 
 *Known Issues*
 
-  * Changing between tabs can lock the application up, especially if there is a lot of data to be rendered (Journal/Transactions/Market Orders tabs are experiencing this a lot). This mostly happends after startup.
   * Sometimes, a hiccup can occur in the application (ie. clicking a checkbox too fast). At most times, the application will recover, just redo what you wanted to do. If the application crashes, send the error log to me, it might help. Loss of data is very unlikely to occur.
   * Sometimes, the charts fail to display data. Just force a refresh (eg. change the limit at the dashboard to refresh it) and the data will reappear. This can also happen in respect to the previously mentioned hiccup.
+  * Sometimes a very long waiting time is possible on the details view in the dashboard.
 
 *Changes*
 
@@ -22,14 +22,17 @@
 
 *New Features*
 
-  * Groupable Transactions by TypeName and Station
   * Full support of Corporation Wallets
   * Viewable Price Cache with all item values used in calculations
+  * Ability to select what price source to take (currently we have metrics and the internal cached one)
 
 
 *Drawing Board*
   * Combining multiple wallets and/or entities into one ViewGroup, combining all their data
-  * Possibility of Custom Transactions and Journalentries (by this easier for producers and traders who do contracts to use the tool)
+  * Possibility of Custom Transactions and Journalentries (by this easier for producers and traders who do contracts to use the tool) -- partly fixed due fetching data from metrics
   * Possibility to set custom prices in the price cache
-  * Fetching price data from eve metrics/eve central
+  * Fetching price data from eve central
   * Importing price data from cache files of the eve client
+  * auto updater
+  * automatic migration on update
+  * broker fee and sales tax (I had to leave this one out, sadly)
