@@ -26,9 +26,9 @@
                 <MenuItem Header="Exit" Command="{Binding CloseCommand}"/>
             </MenuItem>
             <MenuItem Header="Update">
-                <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
                 <MenuItem Header="Update API Data" Command="{Binding FetchApiDataCommand}"/>
                 <MenuItem Header="Update Static Eve Data" Command="{Binding FetchStaticDataCommand}"/>
+                <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
             </MenuItem>
         </Menu>
 

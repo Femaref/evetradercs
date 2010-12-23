@@ -71,7 +71,8 @@ namespace EveTrader.Core.Visual.ViewModel
                 }).ToList();
                 x.ForEach(c =>
                 {
-                    c.TypeName = iStaticData.invTypes.First(ty => ty.typeID == c.TypeID).typeName;
+                    var cache = iStaticData.invTypes.FirstOrDefault(ty => ty.typeID == c.TypeID);
+                    c.TypeName = cache != null ? cache.typeName : "Unknown type (" + c.TypeID.ToString() + ")";
 
                 });
                 Prices.AddRange(x.OrderBy(c => c.TypeName));

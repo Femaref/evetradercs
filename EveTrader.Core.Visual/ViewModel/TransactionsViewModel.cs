@@ -131,10 +131,13 @@ namespace EveTrader.Core.Visual.ViewModel
                     else
                         filter = (t) => t.Date <= EndDate;
 
-                    var cache = CurrentWallet.Transactions
-                        .Where(filter)
-                        .OrderByDescending(j => j.DateTime).ToList();
-                    Transactions.AddRange(cache);
+                    if (CurrentWallet != null)
+                    {
+                        var cache = CurrentWallet.Transactions
+                            .Where(filter)
+                            .OrderByDescending(j => j.DateTime).ToList();
+                        Transactions.AddRange(cache);
+                    }
                     Updating = false;
                 }
         }
