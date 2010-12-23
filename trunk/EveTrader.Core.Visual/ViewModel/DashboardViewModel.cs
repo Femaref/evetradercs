@@ -274,7 +274,7 @@ namespace EveTrader.Core.Visual.ViewModel
                     {
                         foreach (var grouping in iModel.Transactions.Where(t => t.TransactionType == (long)TransactionType.Sell && t.Date == e.Key).GroupBy(t => t.TypeName))
                         {
-                            var val = grouping.Sum(gt => Math.Round((gt.Price - iModel.Transactions.AverageBuyPrice(gt.TypeID)) * gt.Quantity, 2));
+                            var val = grouping.Sum(gt => Math.Round((gt.Price - iSource.Current(gt.TypeID, OrderType.Buy)) * gt.Quantity, 2));
                             Profit.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", grouping.Sum(t => t.Quantity), grouping.Key), Value = val });
                         }
                     }

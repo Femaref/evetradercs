@@ -119,7 +119,12 @@ namespace EveTrader.Core.Services
                     ParameterExpression peOT = Expression.Parameter(typeof(OrderType), "orderType");
                     ParameterExpression peRID = Expression.Parameter(typeof(long), "regionID");
 
-                    var exp = Expression.Lambda<Func<long, OrderType, long, decimal>>(Expression.Call(Expression.Constant(LookupServices.Single(p => p.GetType() == CurrentSource)), CurrentMethod, peID, peOT, peRID), peID, peOT, peRID);
+                    var exp = Expression.Lambda<Func<long, OrderType, long, decimal>>(
+                        Expression.Call(
+                            Expression.Constant(LookupServices.Single(p => p.GetType() == CurrentSource)), 
+                                CurrentMethod, 
+                                peID, peOT, peRID), 
+                        peID, peOT, peRID);
 
                     currentFunc = exp.Compile();
                     dirty = false;

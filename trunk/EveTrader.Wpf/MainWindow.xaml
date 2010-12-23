@@ -22,24 +22,13 @@
         </Grid.RowDefinitions>
         <Menu Height="19" VerticalAlignment="Top">
             <MenuItem Margin="0" Header="Main">
-                <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
+                <MenuItem Header="Settings" Command="{Binding OpenManageAccountsCommand}" />
+                <MenuItem Header="Exit" Command="{Binding CloseCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Update">
                 <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
                 <MenuItem Header="Update API Data" Command="{Binding FetchApiDataCommand}"/>
                 <MenuItem Header="Update Static Eve Data" Command="{Binding FetchStaticDataCommand}"/>
-                <MenuItem Header="Exit" Command="Close"/>
-            </MenuItem>
-            <MenuItem Header="Price Source" ItemsSource="{Binding PriceGrabbers}">
-                <MenuItem.ItemTemplate>
-                    <DataTemplate>
-                        <MenuItem Header="{Binding}" IsCheckable="true" IsChecked="{Binding IsSelected}">
-                            <MenuItem.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Item.FullName}"/>
-                                </DataTemplate>
-                            </MenuItem.HeaderTemplate>
-                        </MenuItem>
-                    </DataTemplate>
-                </MenuItem.ItemTemplate>
             </MenuItem>
         </Menu>
 
