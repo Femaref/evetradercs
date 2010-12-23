@@ -135,7 +135,7 @@ namespace EveTrader.Core.Visual.ViewModel
         [ImportingConstructor]
         public ManageAccountsViewModel(
             IManageAccountsView view, 
-            [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
+            [Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm, 
             IUpdateService us, 
             EntityFactory ef,
             IDatabaseExportService export)
@@ -189,9 +189,9 @@ namespace EveTrader.Core.Visual.ViewModel
             this.PropertyChanged += (sender, e) =>
                 {
                     if (e.PropertyName == "DataRequestable")
-                        iRequestDataCommand.RaiseCanExecuteChanged();
+                        this.ViewCore.BeginInvoke(() => iRequestDataCommand.RaiseCanExecuteChanged());
                     if (e.PropertyName == "DataPresent")
-                        iAddCharactersCommand.RaiseCanExecuteChanged();
+                        this.ViewCore.BeginInvoke(() => iAddCharactersCommand.RaiseCanExecuteChanged());
                 };
 
             Refresh();
@@ -242,6 +242,13 @@ namespace EveTrader.Core.Visual.ViewModel
 
         private void RequestData()
         {
+            ThreadStart ts = new ThreadStart(ThreadedRequestData);
+            Thread t = new Thread(ts);
+            t.Name = "Request Thread";
+            t.Start();
+        }
+        private void ThreadedRequestData()
+        {
             lock (iUpdaterLock)
             {
                 Updating = true;
@@ -281,8 +288,18 @@ namespace EveTrader.Core.Visual.ViewModel
         }
         private void AddCharacters()
         {
+            ThreadStart ts = new ThreadStart(ThreadedAddCharacters);
+            Thread t = new Thread(ts);
+            t.Name = "Add characters Thread";
+            t.Start();
+        }
+
+        private void ThreadedAddCharacters()
+        {
             lock (iUpdaterLock)
             {
+                Updating = true;
+
                 long id = RequestedCharacters.First().Item.Account.ID;
                 Accounts account = iModel.Accounts.First(a => a.ID == id);
                 foreach (Characters c in RequestedCharacters.Where(s => s.IsSelected).Where(s => !iModel.Entity.Any(e => e.ID == s.Item.ID)))
@@ -297,7 +314,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 RequestedCharacters.Clear();
                 DataRequestable = true;
                 DataPresent = false;
-
+                Updating = false;
                 Refresh();
             }
         }

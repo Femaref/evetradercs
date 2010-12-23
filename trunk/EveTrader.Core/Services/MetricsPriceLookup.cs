@@ -10,7 +10,6 @@ using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Services
 {
-    [Export(typeof(IPriceLookup))]
     public class MetricsPriceLookup : IPriceLookup
     {
         private readonly MetricModel iModel;

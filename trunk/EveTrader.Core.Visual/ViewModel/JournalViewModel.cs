@@ -153,13 +153,16 @@ namespace EveTrader.Core.Visual.ViewModel
                 else
                     filter = (j) => j.Date <= EndDate;
 
-                var cache = CurrentWallet.Journal
-                    .Where(filter)
-                    .OrderByDescending(j => j.DateTime).ToList();
+                if (CurrentWallet != null)
+                {
+                    var cache = CurrentWallet.Journal
+                        .Where(filter)
+                        .OrderByDescending(j => j.DateTime).ToList();
 
-                var insert = AutoMapper.Mapper.Map<IEnumerable<Journal>, IEnumerable<DisplayJournal>>(cache);
+                    var insert = AutoMapper.Mapper.Map<IEnumerable<Journal>, IEnumerable<DisplayJournal>>(cache);
 
-                JournalEntries.AddRange(insert);
+                    JournalEntries.AddRange(insert);
+                }
                 Updating = false;
             }
         }

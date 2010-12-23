@@ -35,7 +35,6 @@ namespace EveTrader.Core.Visual.ViewModel
         private DateTime iCurrentKey = new DateTime();
         private string iCurrentBindingKey = "";
         private bool iUpdating;
-        private IPriceLookup iLookup;
         private bool iOverviewHidden;
         private IPriceSourceSelector iSource;
         
@@ -121,7 +120,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
 
         [ImportingConstructor]
-        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IPriceLookup ipl, IPriceSourceSelector ips)
+        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm,  IPriceSourceSelector ips)
             : base(view)
         {
             iModel = tm;
@@ -130,7 +129,6 @@ namespace EveTrader.Core.Visual.ViewModel
             Investment = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Sales = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Profit = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
-            iLookup = ipl;
             iSource = ips;
 
             view.DetailsRequested += new EventHandler<DetailsRequestedEventArgs>(view_DetailsRequested);
@@ -209,7 +207,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
                     dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
                     dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - 
-                        iSource.Current(gt.TypeID, OrderType.Buy, 10000002)//iModel.Transactions.AverageBuyPrice(gt.TypeID)
+                        iSource.Current(gt.TypeID, OrderType.Buy, 10000002)
                         ) * gt.Quantity, 2))).FirstOrDefault();
 
                     var entityGroup = (from g in i

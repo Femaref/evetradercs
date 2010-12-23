@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.Composition;
 
 namespace EveTrader.Core.Services
 {
+    [InheritedExport]
     public interface IPriceLookup
     {
         decimal Minimum(long typeID, OrderType mot, long regionID = 10000002);

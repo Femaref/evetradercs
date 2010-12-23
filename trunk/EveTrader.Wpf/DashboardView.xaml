@@ -48,7 +48,7 @@
             </sel:DashboardSelector.ProfitTemplate>
             <sel:DashboardSelector.SalesTemplate>
                 <DataTemplate>
-                    <visi:DataSeries DataSource="{Binding}" XValueType="Date" RenderAs="StackedColumn" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                    <visi:DataSeries DataSource="{Binding}" Visibility="Hidden" XValueType="Date" RenderAs="StackedColumn" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
                         <visi:DataSeries.DataMappings>
                             <visi:DataMapping MemberName="XValue" Path="Key"/>
                         </visi:DataSeries.DataMappings>
