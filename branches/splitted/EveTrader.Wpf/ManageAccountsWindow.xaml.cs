@@ -20,7 +20,7 @@ namespace EveTrader.Wpf
     /// Interaction logic for ManageAccountsWindow.xaml
     /// </summary>
     [Export(typeof(IManageAccountsView)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class ManageAccountsWindow : Window, IManageAccountsView
+    public partial class ManageAccountsWindow : UserControl, IManageAccountsView
     {
         public ManageAccountsWindow()
         {

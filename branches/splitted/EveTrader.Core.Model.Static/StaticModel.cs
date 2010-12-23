@@ -12,8 +12,8 @@ namespace EveTrader.Core.Model.Static
     public partial class StaticModel
     {
         [ImportingConstructor]
-        public StaticModel([Import("StaticModelConnection")] EntityConnectionStringBuilder sb)
-            : base(new EntityConnection(sb.ToString()), "StaticModel")
+        public StaticModel([Import("StaticModelConnectionString")] IConnectionStringProvider sb)
+            : base(new EntityConnection(sb.GetConnectionString()), "StaticModel")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();

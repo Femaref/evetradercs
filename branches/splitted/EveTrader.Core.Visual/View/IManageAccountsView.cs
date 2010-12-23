@@ -9,8 +9,8 @@ namespace EveTrader.Core.Visual.View
 {
     public interface IManageAccountsView : IExtendedView
     {
-        event CancelEventHandler Closing;
-        void Show();
-        void Close();
+        //event CancelEventHandler Closing;
+        //void Show();
+        //void Close();
     }
 }

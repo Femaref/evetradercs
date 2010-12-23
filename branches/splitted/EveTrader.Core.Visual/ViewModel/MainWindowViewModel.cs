@@ -259,5 +259,31 @@ namespace EveTrader.Core.Visual.ViewModel
 
         public event CancelEventHandler Closing;
         public event EventHandler ManageAccountsClicked;
+
+        private object converterView;
+
+        public object ConverterView
+        {
+            get { return converterView; }
+            set
+            {
+                converterView = value;
+                RaisePropertyChanged("ConverterView");
+            }
+        }
+
+        private bool converterShown;
+
+        public bool ConverterShown
+        {
+            get { return converterShown; }
+            set
+            {
+                converterShown = value;
+                RaisePropertyChanged("ConverterShown");
+            }
+        }
+
+        
     }
 }
