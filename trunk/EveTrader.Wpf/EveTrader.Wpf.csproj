@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
+    <ProjectGuid>{EF465469-220C-4CDF-918D-07F7EFBA3794}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <DefaultClrNameSpace>EveTrader_Wpf</DefaultClrNameSpace>
+    <RootNamespace>EveTrader.Wpf</RootNamespace>
+    <AssemblyName>EveTrader.Wpf</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AlwaysCompileMarkupFilesInSeparateDomain>false</AlwaysCompileMarkupFilesInSeparateDomain>
+    <ApplicationIcon>Images\Intelligence.ico</ApplicationIcon>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <Utf8Output>true</Utf8Output>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FullPush|AnyCPU'">
+    <OutputPath>bin\FullPush\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FullPush|x64'">
+    <OutputPath>bin\x64\FullPush\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug %28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug %28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug %28x64%29|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug %28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28x64%29|AnyCPU'">
+    <OutputPath>bin\Release %28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28x64%29|x64'">
+    <OutputPath>bin\x64\Release %28x64%29\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <HintPath>..\References\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>v4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WPFVisifire.Charts, Version=3.6.3.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\WPFVisifire.Charts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationLogView.xaml.cs">
+      <DependentUpon>ApplicationLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUpdateInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicationUpdateInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblySettingsProvider.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblySettingsProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Attached\ChartBehaviour.cs" />
+    <Compile Include="Controls\ExceptionDisplay.xaml.cs">
+      <DependentUpon>ExceptionDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoadingIndicator.xaml.cs">
+      <DependentUpon>LoadingIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressIndicator.cs" />
+    <Compile Include="Controls\TimeframeSelector.xaml.cs">
+      <DependentUpon>TimeframeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConverterView.xaml.cs">
+      <DependentUpon>ConverterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\BidConverter.cs" />
+    <Compile Include="Converter\TransactionsForConverter.cs" />
+    <Compile Include="Converter\TransactionsTypeConverter.cs" />
+    <Compile Include="DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PriceLookupSettingView.xaml.cs">
+      <DependentUpon>PriceLookupSettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JournalView.xaml.cs">
+      <DependentUpon>JournalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManageAccountsWindow.xaml.cs">
+      <DependentUpon>ManageAccountsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MarketOrdersView.xaml.cs">
+      <DependentUpon>MarketOrdersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PriceCacheView.xaml.cs">
+      <DependentUpon>PriceCacheView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ReportView.xaml.cs">
+      <DependentUpon>ReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Selectors\CurrencyColorSelector.cs" />
+    <Compile Include="Selectors\DashboardSelector.cs" />
+    <Compile Include="TransactionsView.xaml.cs">
+      <DependentUpon>TransactionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WalletsView.xaml.cs">
+      <DependentUpon>WalletsView.xaml</DependentUpon>
+    </Compile>
+    <None Include="ApplicationUpdateInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ApplicationUpdateInfo.cs</LastGenOutput>
+    </None>
+    <None Include="AssemblySettingsProvider.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblySettingsProvider.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Page Include="ApplicationLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ExceptionDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoadingIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TimeframeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConverterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PriceLookupSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DashboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JournalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <AppDesigner Include="Properties\" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Application.ico">
+      <Visible>false</Visible>
+    </None>
+    <Page Include="ManageAccountsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MarketOrdersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PriceCacheView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransactionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WalletsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\tahoma.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="Fonts\tahomabd.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveTrader.Core.DataConverter\EveTrader.Core.DataConverter.csproj">
+      <Project>{FDA2F329-9062-48A2-AE08-65A3DEFC226B}</Project>
+      <Name>EveTrader.Core.DataConverter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
+      <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
+      <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric\EveTrader.Core.Model.Metric.csproj">
+      <Project>{BF29F53A-D752-4327-96FB-545CC8770248}</Project>
+      <Name>EveTrader.Core.Model.Metric</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
+      <Project>{4B9C05A9-54A2-415A-8245-FB90E0CF4EFE}</Project>
+      <Name>EveTrader.Core.Model.Trader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Visual\EveTrader.Core.Visual.csproj">
+      <Project>{CA0EC3CB-E785-49A7-BDE4-B4B92FD7D158}</Project>
+      <Name>EveTrader.Core.Visual</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Updater\EveTrader.Updater.csproj">
+      <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
+      <Name>EveTrader.Updater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Femaref.Charting\Femaref.Charting.csproj">
+      <Project>{DC351C6B-D916-4783-869A-6DE8EB559109}</Project>
+      <Name>Femaref.Charting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfApplicationFramework\WpfApplicationFramework\WpfApplicationFramework.csproj">
+      <Project>{27B67DFE-0BF1-4435-B036-E4C083EAEA03}</Project>
+      <Name>WpfApplicationFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Intelligence.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)"=="Debug (x64)" goto :x64
+if "$(ConfigurationName)"=="Release (x64)" goto :x64
+if "$(ConfigurationName)"=="Debug" goto :x86
+if "$(ConfigurationName)"=="Release" goto :x86
+
+:x64
+copy "$(SolutionDir)References\x64\System.Data.SQLite.dll" "$(TargetDir)System.Data.SQLite.dll"
+goto :default
+
+:x86
+copy "$(SolutionDir)References\System.Data.SQLite.dll" "$(TargetDir)System.Data.SQLite.dll"
+goto :default
+
+:default
+copy "$(SolutionDir)References\System.Data.SQLite.Linq.dll" "$(TargetDir)System.Data.SQLite.Linq.dll"
+copy "$(SolutionDir)static.db" "$(TargetDir)static.db"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+		 Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

@@ -1,0 +1,24 @@
+<#@ template language="C#" hostspecific="false" debug="True" #>
+<#@ output extension="cs" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="..\..\EveTrader.Core.Model.Trader\bin\Debug\EveTrader.Core.Model.Trader.dll" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="EveTrader.Core.Model.Trader"#>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Data.Objects.DataClasses" #>
+
+public class DisplayJournal
+{
+<#	
+var properties = typeof(Journal).GetProperties();
+foreach(PropertyInfo p in properties)
+{ 
+	if(p.PropertyType.Namespace == "System")
+	{
+#>		
+		public <#=p.PropertyType#> <#=p.Name#> { get; set; }	
+<#	
+	}
+}#>
+public System.String RefTypeName {get;set;}
+}

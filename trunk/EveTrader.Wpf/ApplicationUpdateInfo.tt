@@ -1,0 +1,68 @@
+<#@ template language="C#" hostspecific="false" debug="True" #>
+<#@ output extension="cs" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ assembly name="System.ComponentModel.Composition" #>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="..\EveTrader.Updater\bin\Debug\EveTrader.Updater.dll" #>
+<#@ import namespace="EveTrader.Updater"#>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.ComponentModel.Composition"#>
+<#
+// <copyright file="ApplicationUpdateInfo.tt" company="Elvian Empire">
+//  Copyright © Elvian Empire. All Rights Reserved.
+// </copyright>
+
+
+#>
+using EveTrader.Updater;
+using System.ComponentModel.Composition;
+using System.Reflection;
+using System.IO;
+
+namespace EveTrader.Wpf
+{
+	[Export(typeof(IApplicationUpdateInfo))]
+	public class ApplicationUpdateInfo : IApplicationUpdateInfo
+	{
+		EveTrader.Wpf.Properties.Settings settings = new EveTrader.Wpf.Properties.Settings();
+<#	
+var properties = typeof(IApplicationUpdateInfo).GetProperties();
+foreach(PropertyInfo p in properties)
+{ 
+	if(p.Name == "ApplicationPath")
+		continue;
+#>		
+		public <#=p.PropertyType#> <#=p.Name#>
+		{
+			<# 
+			if(p.CanRead)
+			{
+			#>
+			get
+			{
+				return settings.<#=p.Name#>;
+			}
+			<#
+			}
+			if(p.CanWrite)
+			{
+			#>
+			set
+			{
+				settings.<#=p.Name#> = value;
+				settings.Save();
+			}
+			<#
+			}
+			#>
+		}		
+<#	
+}#>
+		public string ApplicationPath
+		{
+			get
+			{
+				 return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			}
+		}
+	}
+}
