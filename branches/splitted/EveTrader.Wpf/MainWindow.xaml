@@ -43,10 +43,14 @@
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Row="1" Panel.ZIndex="2" Background="White" Visibility="{Binding ConverterShown, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <Grid Grid.Row="1" Panel.ZIndex="3" Background="White" Visibility="{Binding ConverterShown, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <ContentControl Content="{Binding ConverterView}"/>
         </Grid>
-        
+
+        <Grid Grid.Row="1" Panel.ZIndex="2" Background="White" Visibility="{Binding SettingsShown, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <ContentControl Content="{Binding SettingsView}"/>
+        </Grid>
+
         <Grid Grid.Row="1" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Updating, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ctrl:ProgressIndicator Height="300" Width="300" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsRunning="{Binding Updating}" Text="{Binding UpdatingText}" />
         </Grid>

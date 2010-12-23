@@ -19,11 +19,12 @@ using System.Windows.Input;
 using System.Threading;
 using System.Xml.Linq;
 using System.IO;
+using EveTrader.Core.ViewModel;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
     [Export]
-    public class ManageAccountsViewModel : ViewModel<IManageAccountsView>, IRefreshableViewModel
+    public class ManageAccountsViewModel : ViewModel<IManageAccountsView>, IRefreshableViewModel, ISettingsPage
     {
         private readonly TraderModel iModel;
         private readonly IUpdateService iUpdater;
@@ -301,19 +302,6 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
-        private void ViewCore_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            OnClosing(e);
-        }
-        private void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            CancelEventHandler handler = Closing;
-            if (handler != null)
-                handler(this, e);
-        }
-
-        public event CancelEventHandler Closing;
-
         #region IRefreshableViewModel Members
 
 
@@ -335,6 +323,27 @@ private  Characters iCurrentItem;
             }
         }
 
+        #endregion
+
+        #region ISettingsPage Members
+        public event EventHandler Closed;
+
+        private void RaiseClosed()
+        {
+            var handler = Closed;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        public string Name
+        {
+            get { return "Manage Accounts"; }
+        }
+
+        public int Index
+        {
+            get { return 0; }
+        }
         #endregion
     }
 }

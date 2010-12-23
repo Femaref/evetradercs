@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Waf.Applications;
+using System.ComponentModel.Composition;
 
-namespace EveTrader.Core.Visual.ViewModel
+namespace EveTrader.Core.ViewModel
 {
+    [InheritedExport]
     public interface ISettingsPage
     {
         object View { get; }
-        event EventHandler Closed;
+        string Name { get; }
+        int Index { get; }
     }
 }
