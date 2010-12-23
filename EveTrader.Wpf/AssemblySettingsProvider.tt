@@ -1,0 +1,37 @@
+<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ output extension="cs" #>
+<#@ assembly name="System.ComponentModel.Composition" #>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="..\EveTrader.Core.Interfaces\bin\Release\EveTrader.Core.Interfaces.dll" #>
+<#@ import namespace="EveTrader.Core.Model"#>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.ComponentModel.Composition"#>
+
+using EveTrader.Core.Model;
+using System.ComponentModel.Composition;
+namespace EveTrader.Wpf
+{
+	[Export(typeof(ISettingsProvider))]
+	public class AssemblySettingsProvider : ISettingsProvider
+	{
+		EveTrader.Wpf.Properties.Settings settings = new EveTrader.Wpf.Properties.Settings();
+<#	
+var properties = typeof(ISettingsProvider).GetProperties();
+foreach(PropertyInfo p in properties)
+{ 
+#>		
+		public <#=p.PropertyType#> <#=p.Name#>
+		{
+			get
+			{
+				 return settings.<#=p.Name#>;
+			}
+			set
+			{
+				settings.<#=p.Name#> = value;
+				settings.Save();
+			}
+		}		
+<#	
+}#>
+	}
+}

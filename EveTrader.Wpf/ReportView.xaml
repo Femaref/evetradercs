@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="EveTrader.Wpf.ReportView"
+
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"  d:DataContext="{d:DesignInstance vm:ReportViewModel}"
+             xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
+             xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+             xmlns:converter="clr-namespace:EveTrader.Wpf.Converter"
+             xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+             xmlns:chart="clr-namespace:Femaref.Charting;assembly=Femaref.Charting"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>      
+    </UserControl.Resources>
+    <Grid>
+        <Grid Panel.ZIndex="2" Opacity="0.75" Background="White" Visibility="{Binding Path=Updating, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ctrl:ProgressIndicator Text="Updating Reports..." Height="300" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" IsRunning="{Binding Updating}" IsIndeterminate="True"/>
+        </Grid>
+        <Grid Panel.ZIndex="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="80*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding ElementName=iTimeframeSelector, Path=Height}" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <ctrl:TimeframeSelector Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" x:Name="iTimeframeSelector"
+                                        StartDate="{Binding StartDate}" 
+                                        EndDate="{Binding EndDate}" 
+                                        EnableStartFilter="{Binding ApplyStartFilter}"
+                                        EnableEndFilter="{Binding ApplyEndFilter}"
+                                        Margin="5,0,5,5"
+                                        />
+                <Button Grid.Column="0" HorizontalAlignment="Right" Content="Refresh" Command="{Binding RefreshCommand}" />
+                <ListBox Grid.Row="1" ItemsSource="{Binding Entities}" x:Name="iEntities">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Item.Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                </Grid>
+            <TabControl Grid.Row="1" Panel.ZIndex="1" VerticalAlignment="Stretch">
+                <TabItem Header="Items">
+                    <visi:Chart x:Name="iItemsReport">
+                        <visi:Chart.Series>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding ItemReport}" LegendText="Profit" Color="Green">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding ItemReport}" LegendText="Sales" Color="Yellow">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                        </visi:Chart.Series>
+                    </visi:Chart>
+                </TabItem>
+                <TabItem  Header="Stations">
+                    <visi:Chart x:Name="iStationsReport">
+                        <visi:Chart.Series>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding StationReport}" LegendText="Profit" Color="Green">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding StationReport}" LegendText="Sales" Color="Yellow">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                        </visi:Chart.Series>
+                    </visi:Chart>
+                </TabItem>
+                <TabItem  Header="Buyers">
+                    <visi:Chart x:Name="iBuyersReport">
+                        <visi:Chart.Series>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding BuyerReport}" LegendText="Profit" Color="Green">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding BuyerReport}" LegendText="Sales" Color="Yellow">
+                                <visi:DataSeries.DataMappings>
+                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
+                                </visi:DataSeries.DataMappings>
+                            </visi:DataSeries>
+                        </visi:Chart.Series>
+                    </visi:Chart>
+                </TabItem>
+                <TabItem Header="Wallet Histories">
+                    <chart:MultiChart x:Name="iHistory" SeriesSource="{Binding WalletHistories}">
+                        <chart:MultiChart.SeriesTemplate>
+                            <DataTemplate>
+                                <visi:DataSeries RenderAs="StepLine" LegendText="{Binding Name}" DataSource="{Binding Histories}">
+                                    <visi:DataSeries.DataMappings>
+                                        <visi:DataMapping MemberName="XValue" Path="Date"/>
+                                        <visi:DataMapping MemberName="YValue" Path="Balance"/>
+                                    </visi:DataSeries.DataMappings>
+                                </visi:DataSeries>
+                            </DataTemplate>
+                        </chart:MultiChart.SeriesTemplate>
+                    </chart:MultiChart>
+                </TabItem>            
+            </TabControl>
+        </Grid>
+    </Grid>
+</UserControl>

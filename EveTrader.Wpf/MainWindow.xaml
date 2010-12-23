@@ -1,0 +1,89 @@
+﻿ <Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:utility="clr-namespace:System.Collections.ObjectModel;assembly=System"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" xmlns:local="clr-namespace:EveTrader.Wpf" d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
+    xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
+    xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
+    x:Class="EveTrader.Wpf.MainWindow"
+    x:Name="Window"
+    Title="EveTrader"
+    Width="1181.5" Height="697" Icon="/EveTrader.Wpf;component/Images/Intelligence.ico">
+    <Window.Resources>
+           <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="619*" />
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Menu Height="19" VerticalAlignment="Top">
+            <MenuItem Margin="0" Header="Main">
+                <MenuItem Header="Manage characters" Command="{Binding OpenManageAccountsCommand}" />
+                <MenuItem Header="Regenerate Price Cache" Command="{Binding RegeneratePriceCacheCommand}" />
+                <MenuItem Header="Update API Data" Command="{Binding FetchApiDataCommand}"/>
+                <MenuItem Header="Update Static Eve Data" Command="{Binding FetchStaticDataCommand}"/>
+                <MenuItem Header="Exit" Command="Close"/>
+            </MenuItem>
+            <MenuItem Header="Price Source" ItemsSource="{Binding PriceGrabbers}">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <MenuItem Header="{Binding}" IsCheckable="true" IsChecked="{Binding IsSelected}">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Item.FullName}"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1" Panel.ZIndex="3" Background="White" Visibility="{Binding ConverterShown, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <ContentControl Content="{Binding ConverterView}"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Panel.ZIndex="2" Background="White" Visibility="{Binding SettingsShown, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <ContentControl Content="{Binding SettingsView}"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="White" Panel.ZIndex="2" Opacity="0.75" Visibility="{Binding Path=Updating, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ctrl:ProgressIndicator Height="300" Width="300" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsRunning="{Binding Updating}" Text="{Binding UpdatingText}" />
+        </Grid>
+
+        
+        
+        <TabControl VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.Row="1" Panel.ZIndex="1">
+            <TabItem Header="Dashboard">
+                <ContentControl Content="{Binding DashboardView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="Wallets">
+                <ContentControl Content="{Binding WalletsView}"/>
+            </TabItem>
+            <TabItem Header="Journal">
+                <ContentControl Content="{Binding JournalView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </TabItem>
+            <TabItem Header="Transactions">
+                <ContentControl Content="{Binding TransactionsView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="Reports">
+                <ContentControl Content="{Binding ReportView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="MarketOrders">
+                <ContentControl Content="{Binding MarketOrdersView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="Application Log">
+                <ContentControl Content="{Binding ApplicationLogView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </TabItem>
+            <TabItem Header="Price Cache">
+                <ContentControl Content="{Binding PriceCacheView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </TabItem>
+        </TabControl>
+
+        <StatusBar Height="20" Margin="0,0.333,0,0" VerticalAlignment="Top" Grid.Row="2"/>
+    </Grid>
+</Window>

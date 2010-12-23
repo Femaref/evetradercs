@@ -1,0 +1,920 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="testModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="testModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="testModel.Store.Accounts" store:Type="Tables" />
+          <EntitySet Name="ApiCache" EntityType="testModel.Store.ApiCache" store:Type="Tables" />
+          <EntitySet Name="ApiJournal" EntityType="testModel.Store.ApiJournal" store:Type="Tables" />
+          <EntitySet Name="ApiTransactions" EntityType="testModel.Store.ApiTransactions" store:Type="Tables" />
+          <EntitySet Name="ApplicationLog" EntityType="testModel.Store.ApplicationLog" store:Type="Tables" />
+          <EntitySet Name="CachedPriceInfo" EntityType="testModel.Store.CachedPriceInfo" store:Type="Tables" />
+          <EntitySet Name="Characters" EntityType="testModel.Store.Characters" store:Type="Tables" />
+          <EntitySet Name="Corporations" EntityType="testModel.Store.Corporations" store:Type="Tables" />
+          <EntitySet Name="CustomJournal" EntityType="testModel.Store.CustomJournal" store:Type="Tables" />
+          <EntitySet Name="CustomTransactions" EntityType="testModel.Store.CustomTransactions" store:Type="Tables" />
+          <EntitySet Name="Entity" EntityType="testModel.Store.Entity" store:Type="Tables" />
+          <EntitySet Name="Journal" EntityType="testModel.Store.Journal" store:Type="Tables" />
+          <EntitySet Name="MarketOrders" EntityType="testModel.Store.MarketOrders" store:Type="Tables" />
+          <EntitySet Name="RefTypes" EntityType="testModel.Store.RefTypes" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="testModel.Store.Transactions" store:Type="Tables" />
+          <EntitySet Name="WalletHistories" EntityType="testModel.Store.WalletHistories" store:Type="Tables" />
+          <EntitySet Name="Wallets" EntityType="testModel.Store.Wallets" store:Type="Tables" />
+          <AssociationSet Name="FK_ApiJournal_0" Association="testModel.Store.FK_ApiJournal_0">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="ApiJournal" EntitySet="ApiJournal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApiTransactions_0" Association="testModel.Store.FK_ApiTransactions_0">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="ApiTransactions" EntitySet="ApiTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_0" Association="testModel.Store.FK_Characters_0">
+            <End Role="Corporations" EntitySet="Corporations" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Corporations_0" Association="testModel.Store.FK_Corporations_0">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="Corporations" EntitySet="Corporations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomJournal_0" Association="testModel.Store.FK_CustomJournal_0">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="CustomJournal" EntitySet="CustomJournal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomTransactions_0" Association="testModel.Store.FK_CustomTransactions_0">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="CustomTransactions" EntitySet="CustomTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entity_0" Association="testModel.Store.FK_Entity_0">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Entity" EntitySet="Entity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_0" Association="testModel.Store.FK_Journal_0">
+            <End Role="Wallets" EntitySet="Wallets" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MarketOrders_0" Association="testModel.Store.FK_MarketOrders_0">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="MarketOrders" EntitySet="MarketOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_0" Association="testModel.Store.FK_Transactions_0">
+            <End Role="Wallets" EntitySet="Wallets" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WalletHistories_0" Association="testModel.Store.FK_WalletHistories_0">
+            <End Role="Wallets" EntitySet="Wallets" />
+            <End Role="WalletHistories" EntitySet="WalletHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wallets_0" Association="testModel.Store.FK_Wallets_0">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="Wallets" EntitySet="Wallets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ApiKey" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApiCache">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RequestString" Type="nvarchar" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="Data" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApiJournal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ExternalID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApiTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ExternalID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicationLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" />
+          <Property Name="CallingClass" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CachedPriceInfo">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="integer" Nullable="false" />
+          <Property Name="BuyPrice" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="SellPrice" Type="decimal" Nullable="false" Precision="53" />
+        </EntityType>
+        <EntityType Name="Characters">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="CorporationID" Type="integer" Nullable="false" />
+          <Property Name="Race" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Bloodline" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Balance" Type="decimal" Nullable="false" Precision="53" />
+        </EntityType>
+        <EntityType Name="Corporations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Ticker" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Npc" Type="bit" Nullable="false" />
+          <Property Name="ApiCharacterID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomJournal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" />
+        </EntityType>
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="AccountID" Type="integer" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WalletID" Type="integer" Nullable="false" />
+          <Property Name="RefTypeID" Type="integer" Nullable="false" />
+          <Property Name="OwnerName1" Type="nvarchar" Nullable="false" />
+          <Property Name="OwnerID1" Type="integer" Nullable="false" />
+          <Property Name="OwnerName2" Type="nvarchar" Nullable="false" />
+          <Property Name="OwnerID2" Type="integer" Nullable="false" />
+          <Property Name="ArgName1" Type="nvarchar" Nullable="false" />
+          <Property Name="ArgID1" Type="integer" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="Balance" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="Reason" Type="nvarchar" Nullable="false" />
+          <Property Name="TaxReceiverID" Type="integer" Nullable="false" />
+          <Property Name="TaxAmount" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MarketOrders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="integer" Nullable="false" />
+          <Property Name="StationID" Type="integer" Nullable="false" />
+          <Property Name="VolumeEntered" Type="integer" Nullable="false" />
+          <Property Name="VolumeRemaining" Type="integer" Nullable="false" />
+          <Property Name="MinimumVolume" Type="integer" Nullable="false" />
+          <Property Name="OrderState" Type="integer" Nullable="false" />
+          <Property Name="TypeID" Type="integer" Nullable="false" />
+          <Property Name="Range" Type="integer" Nullable="false" />
+          <Property Name="AccountKey" Type="integer" Nullable="false" />
+          <Property Name="Duration" Type="integer" Nullable="false" />
+          <Property Name="Escrow" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="Price" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="Bid" Type="bit" Nullable="false" />
+          <Property Name="Issued" Type="datetime" Nullable="false" />
+          <Property Name="IssuedDate" Type="datetime" Nullable="false" />
+          <Property Name="ExternalID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RefTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WalletID" Type="integer" Nullable="false" />
+          <Property Name="Quantity" Type="integer" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" Nullable="false" />
+          <Property Name="TypeID" Type="integer" Nullable="false" />
+          <Property Name="Price" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="ClientID" Type="integer" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" Nullable="false" />
+          <Property Name="StationID" Type="integer" Nullable="false" />
+          <Property Name="StationName" Type="nvarchar" Nullable="false" />
+          <Property Name="TransactionType" Type="integer" Nullable="false" />
+          <Property Name="TransactionFor" Type="integer" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Ignored" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WalletHistories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WalletID" Type="integer" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wallets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="integer" Nullable="false" />
+          <Property Name="AccountKey" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Balance" Type="decimal" Nullable="false" Precision="53" />
+        </EntityType>
+        <Association Name="FK_ApiJournal_0">
+          <End Role="Journal" Type="testModel.Store.Journal" Multiplicity="1" />
+          <End Role="ApiJournal" Type="testModel.Store.ApiJournal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApiJournal">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApiTransactions_0">
+          <End Role="Transactions" Type="testModel.Store.Transactions" Multiplicity="1" />
+          <End Role="ApiTransactions" Type="testModel.Store.ApiTransactions" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApiTransactions">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_0">
+          <End Role="Corporations" Type="testModel.Store.Corporations" Multiplicity="1" />
+          <End Role="Characters" Type="testModel.Store.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="CorporationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Corporations_0">
+          <End Role="Entity" Type="testModel.Store.Entity" Multiplicity="1" />
+          <End Role="Corporations" Type="testModel.Store.Corporations" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Corporations">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomJournal_0">
+          <End Role="Journal" Type="testModel.Store.Journal" Multiplicity="1" />
+          <End Role="CustomJournal" Type="testModel.Store.CustomJournal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomJournal">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomTransactions_0">
+          <End Role="Transactions" Type="testModel.Store.Transactions" Multiplicity="1" />
+          <End Role="CustomTransactions" Type="testModel.Store.CustomTransactions" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomTransactions">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entity_0">
+          <End Role="Accounts" Type="testModel.Store.Accounts" Multiplicity="0..1" />
+          <End Role="Entity" Type="testModel.Store.Entity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Entity">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_0">
+          <End Role="Wallets" Type="testModel.Store.Wallets" Multiplicity="1" />
+          <End Role="Journal" Type="testModel.Store.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wallets">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="WalletID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MarketOrders_0">
+          <End Role="Entity" Type="testModel.Store.Entity" Multiplicity="1" />
+          <End Role="MarketOrders" Type="testModel.Store.MarketOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MarketOrders">
+              <PropertyRef Name="EntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_0">
+          <End Role="Wallets" Type="testModel.Store.Wallets" Multiplicity="1" />
+          <End Role="Transactions" Type="testModel.Store.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wallets">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="WalletID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WalletHistories_0">
+          <End Role="Wallets" Type="testModel.Store.Wallets" Multiplicity="1" />
+          <End Role="WalletHistories" Type="testModel.Store.WalletHistories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wallets">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WalletHistories">
+              <PropertyRef Name="WalletID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wallets_0">
+          <End Role="Entity" Type="testModel.Store.Entity" Multiplicity="1" />
+          <End Role="Wallets" Type="testModel.Store.Wallets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Wallets">
+              <PropertyRef Name="EntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EveTrader.Core.Model" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="TraderModel" a:LazyLoadingEnabled="true" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Entity" EntityType="EveTrader.Core.Model.Entities" />
+          <EntitySet Name="Wallets" EntityType="EveTrader.Core.Model.Wallets" />
+          <AssociationSet Name="FK_Wallets_0" Association="EveTrader.Core.Model.FK_Wallets_0">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="Wallets" EntitySet="Wallets" /></AssociationSet>
+          <EntitySet Name="Accounts" EntityType="EveTrader.Core.Model.Accounts" />
+          <AssociationSet Name="FK_Entity_0" Association="EveTrader.Core.Model.FK_Entity_0">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Entity" EntitySet="Entity" /></AssociationSet>
+          <AssociationSet Name="FK_Characters_0" Association="EveTrader.Core.Model.FK_Characters_0">
+            <End Role="Corporations" EntitySet="Entity" />
+            <End Role="Characters" EntitySet="Entity" /></AssociationSet>
+          <EntitySet Name="Journal" EntityType="EveTrader.Core.Model.Journal" />
+          <EntitySet Name="MarketOrders" EntityType="EveTrader.Core.Model.MarketOrders" />
+          <EntitySet Name="Transactions" EntityType="EveTrader.Core.Model.Transactions" />
+          <EntitySet Name="WalletHistories" EntityType="EveTrader.Core.Model.WalletHistories" />
+          <AssociationSet Name="FK_MarketOrders_0" Association="EveTrader.Core.Model.FK_MarketOrders_0">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="MarketOrders" EntitySet="MarketOrders" /></AssociationSet>
+          <AssociationSet Name="FK_Journal_0" Association="EveTrader.Core.Model.FK_Journal_0">
+            <End Role="Wallets" EntitySet="Wallets" />
+            <End Role="Journal" EntitySet="Journal" /></AssociationSet>
+          <AssociationSet Name="FK_Transactions_0" Association="EveTrader.Core.Model.FK_Transactions_0">
+            <End Role="Wallets" EntitySet="Wallets" />
+            <End Role="Transactions" EntitySet="Transactions" /></AssociationSet>
+          <AssociationSet Name="FK_WalletHistories_0" Association="EveTrader.Core.Model.FK_WalletHistories_0">
+            <End Role="Wallets" EntitySet="Wallets" />
+            <End Role="WalletHistories" EntitySet="WalletHistories" /></AssociationSet>
+          <EntitySet Name="ApplicationLog" EntityType="EveTrader.Core.Model.ApplicationLog" />
+          <EntitySet Name="CachedPriceInfo" EntityType="EveTrader.Core.Model.CachedPriceInfos" />
+          <EntitySet Name="ApiCache" EntityType="EveTrader.Core.Model.ApiCache" />
+          <EntitySet Name="RefTypes" EntityType="EveTrader.Core.Model.RefTypes" />
+          </EntityContainer>
+        <EntityType Name="Characters" BaseType="EveTrader.Core.Model.Entities">
+          <Property Type="String" Name="Race" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Gender" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bloodline" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="53" Scale="0" />
+          <NavigationProperty Name="Corporation" Relationship="EveTrader.Core.Model.FK_Characters_0" FromRole="Characters" ToRole="Corporations" />
+          </EntityType>
+        <EntityType Name="Corporations" BaseType="EveTrader.Core.Model.Entities">
+          <Property Type="String" Name="Ticker" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Characters" Relationship="EveTrader.Core.Model.FK_Characters_0" FromRole="Corporations" ToRole="Characters" />
+          <Property Type="Boolean" Name="Npc" Nullable="false" />
+          <Property Type="Int64" Name = "ApiCharacterID" Nullable="false"/>
+          </EntityType>
+        <EntityType Name="Entities" Abstract="false">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Wallets" Relationship="EveTrader.Core.Model.FK_Wallets_0" FromRole="Entity" ToRole="Wallets" />
+          <NavigationProperty Name="Account" Relationship="EveTrader.Core.Model.FK_Entity_0" FromRole="Entity" ToRole="Accounts" />
+          <NavigationProperty Name="MarketOrders" Relationship="EveTrader.Core.Model.FK_MarketOrders_0" FromRole="Entity" ToRole="MarketOrders" />
+          </EntityType>
+        <EntityType Name="Wallets">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="53" Scale="0" />
+          <NavigationProperty Name="Entity" Relationship="EveTrader.Core.Model.FK_Wallets_0" FromRole="Wallets" ToRole="Entity" />
+          <NavigationProperty Name="Journal" Relationship="EveTrader.Core.Model.FK_Journal_0" FromRole="Wallets" ToRole="Journal" />
+          <NavigationProperty Name="Transactions" Relationship="EveTrader.Core.Model.FK_Transactions_0" FromRole="Wallets" ToRole="Transactions" />
+          <NavigationProperty Name="WalletHistory" Relationship="EveTrader.Core.Model.FK_WalletHistories_0" FromRole="Wallets" ToRole="WalletHistories" />
+          <Property Type="Int64" Name="AccountKey" Nullable="false" />
+          </EntityType>
+        <Association Name="FK_Wallets_0">
+          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="*" /></Association>
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ApiKey" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Entities" Relationship="EveTrader.Core.Model.FK_Entity_0" FromRole="Accounts" ToRole="Entity" /></EntityType>
+        <Association Name="FK_Entity_0">
+          <End Type="EveTrader.Core.Model.Accounts" Role="Accounts" Multiplicity="0..1" />
+          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="*" /></Association>
+        <Association Name="FK_Characters_0">
+          <End Type="EveTrader.Core.Model.Corporations" Role="Corporations" Multiplicity="1" />
+          <End Type="EveTrader.Core.Model.Characters" Role="Characters" Multiplicity="*" /></Association>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="RefTypeID" Nullable="false" />
+          <Property Type="String" Name="OwnerName1" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="OwnerID1" Nullable="false" />
+          <Property Type="String" Name="OwnerName2" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="OwnerID2" Nullable="false" />
+          <Property Type="String" Name="ArgName1" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="ArgID1" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="String" Name="Reason" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="TaxReceiverID" Nullable="false" />
+          <Property Type="Decimal" Name="TaxAmount" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="DateTime" Name="Date" Nullable="false"/>
+          <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Journal_0" FromRole="Journal" ToRole="Wallets" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" />
+          </EntityType>
+        <EntityType Name="MarketOrders">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int64" Name="StationID" Nullable="false" />
+          <Property Type="Int64" Name="VolumeEntered" Nullable="false" />
+          <Property Type="Int64" Name="VolumeRemaining" Nullable="false" />
+          <Property Type="Int64" Name="MinimumVolume" Nullable="false" />
+          <Property Type="Int64" Name="OrderState" Nullable="false" />
+          <Property Type="Int64" Name="TypeID" Nullable="false" />
+          <Property Type="Int64" Name="Range" Nullable="false" />
+          <Property Type="Int64" Name="AccountKey" Nullable="false" />
+          <Property Type="Int64" Name="Duration" Nullable="false" />
+          <Property Type="Decimal" Name="Escrow" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Boolean" Name="Bid" Nullable="false" />
+          <Property Type="DateTime" Name="Issued" Nullable="false" />
+          <Property Type="Int64" Name ="ExternalID" Nullable="false" />
+          <NavigationProperty Name="Entity" Relationship="EveTrader.Core.Model.FK_MarketOrders_0" FromRole="MarketOrders" ToRole="Entity" />
+          <Property Type="DateTime" Name="IssuedDate" Nullable="false" /></EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="TypeName" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="TypeID" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Int64" Name="ClientID" Nullable="false" />
+          <Property Type="String" Name="ClientName" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="StationID" Nullable="false" />
+          <Property Type="String" Name="StationName" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="TransactionType" Nullable="false" />
+          <Property Type="Int64" Name="TransactionFor" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_Transactions_0" FromRole="Transactions" ToRole="Wallets" />
+          <Property Type="Boolean" Name="Ignored" Nullable="false" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" />
+          </EntityType>
+        <EntityType Name="WalletHistories">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <NavigationProperty Name="Wallet" Relationship="EveTrader.Core.Model.FK_WalletHistories_0" FromRole="WalletHistories" ToRole="Wallets" /></EntityType>
+        <Association Name="FK_MarketOrders_0">
+          <End Type="EveTrader.Core.Model.Entities" Role="Entity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EveTrader.Core.Model.MarketOrders" Role="MarketOrders" Multiplicity="*" /></Association>
+        <Association Name="FK_Journal_0">
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EveTrader.Core.Model.Journal" Role="Journal" Multiplicity="*" /></Association>
+        <Association Name="FK_Transactions_0">
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EveTrader.Core.Model.Transactions" Role="Transactions" Multiplicity="*" /></Association>
+        <Association Name="FK_WalletHistories_0">
+          <End Type="EveTrader.Core.Model.Wallets" Role="Wallets" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EveTrader.Core.Model.WalletHistories" Role="WalletHistories" Multiplicity="*" /></Association>
+        <EntityType Name="ApiTransactions" BaseType="EveTrader.Core.Model.Transactions">
+          <Property Type="Int64" Name="ExternalID" Nullable="false" />
+          </EntityType>
+        <EntityType Name="CustomTransactions" BaseType="EveTrader.Core.Model.Transactions">
+          <Property Type="DateTime" Name="Created" Nullable="false" />
+          <Property Type="String" Name="Description" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          </EntityType>
+        <EntityType Name="ApplicationLog">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CallingClass" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" /></EntityType>
+        <EntityType Name="ApiJournal" BaseType="EveTrader.Core.Model.Journal">
+          <Property Type="Int64" Name="ExternalID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomJournal" BaseType="EveTrader.Core.Model.Journal">
+          <Property Type="DateTime" Name="Created" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CachedPriceInfos">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Type="Int64" Name="TypeID" Nullable="false" />
+          <Property Type="Decimal" Name="BuyPrice" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="SellPrice" Nullable="false" Precision="53" Scale="0" />
+        </EntityType>
+        <EntityType Name="ApiCache">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="RequestString" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="RequestDate" Nullable="false" />
+          <Property Type="String" Name="Data" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RefTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="TraderModel">
+          <EntitySetMapping Name="Entity">
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Entities)">
+              <MappingFragment StoreEntitySet="Entity">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" /></MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Characters)">
+              <MappingFragment StoreEntitySet="Characters">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Bloodline" ColumnName="Bloodline" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Corporations)">
+              <MappingFragment StoreEntitySet="Corporations">
+                <ScalarProperty Name="Npc" ColumnName="Npc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="ApiCharacterID" ColumnName="ApiCharacterID" />
+                </MappingFragment>
+              </EntityTypeMapping>
+            </EntitySetMapping>
+          <EntitySetMapping Name="Wallets">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.Wallets">
+              <MappingFragment StoreEntitySet="Wallets">
+                <ScalarProperty Name="AccountKey" ColumnName="AccountKey" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK_Wallets_0" TypeName="EveTrader.Core.Model.FK_Wallets_0" StoreEntitySet="Wallets">
+            <EndProperty Name="Wallets">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Entity">
+              <ScalarProperty Name="ID" ColumnName="EntityID" /></EndProperty></AssociationSetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK_Entity_0" TypeName="EveTrader.Core.Model.FK_Entity_0" StoreEntitySet="Entity">
+            <EndProperty Name="Entity">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Accounts">
+              <ScalarProperty Name="ID" ColumnName="AccountID" /></EndProperty>
+            <Condition ColumnName="AccountID" IsNull="false" /></AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Characters_0" TypeName="EveTrader.Core.Model.FK_Characters_0" StoreEntitySet="Characters">
+            <EndProperty Name="Characters">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Corporations">
+              <ScalarProperty Name="ID" ColumnName="CorporationID" /></EndProperty></AssociationSetMapping>
+          <EntitySetMapping Name="Journal">
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Journal)">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RefTypeID" ColumnName="RefTypeID" />
+                <ScalarProperty Name="OwnerName1" ColumnName="OwnerName1" />
+                <ScalarProperty Name="OwnerID1" ColumnName="OwnerID1" />
+                <ScalarProperty Name="OwnerName2" ColumnName="OwnerName2" />
+                <ScalarProperty Name="OwnerID2" ColumnName="OwnerID2" />
+                <ScalarProperty Name="ArgName1" ColumnName="ArgName1" />
+                <ScalarProperty Name="ArgID1" ColumnName="ArgID1" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="TaxReceiverID" ColumnName="TaxReceiverID" />
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.ApiJournal)">
+              <MappingFragment StoreEntitySet="ApiJournal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExternalID" ColumnName="ExternalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.CustomJournal)">
+              <MappingFragment StoreEntitySet="CustomJournal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MarketOrders">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.MarketOrders">
+              <MappingFragment StoreEntitySet="MarketOrders">
+                <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+                <ScalarProperty Name="Issued" ColumnName="Issued" />
+                <ScalarProperty Name="Bid" ColumnName="Bid" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Escrow" ColumnName="Escrow" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="AccountKey" ColumnName="AccountKey" />
+                <ScalarProperty Name="Range" ColumnName="Range" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="OrderState" ColumnName="OrderState" />
+                <ScalarProperty Name="MinimumVolume" ColumnName="MinimumVolume" />
+                <ScalarProperty Name="VolumeRemaining" ColumnName="VolumeRemaining" />
+                <ScalarProperty Name="VolumeEntered" ColumnName="VolumeEntered" />
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExternalID" ColumnName="ExternalID" />
+              </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.Transactions)">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Ignored" ColumnName="Ignored" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+                <ScalarProperty Name="StationName" ColumnName="StationName" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="TransactionFor" ColumnName="TransactionFor" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.ApiTransactions)">
+              <MappingFragment StoreEntitySet="ApiTransactions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExternalID" ColumnName="ExternalID" />
+                </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(EveTrader.Core.Model.CustomTransactions)">
+              <MappingFragment StoreEntitySet="CustomTransactions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                </MappingFragment></EntityTypeMapping>
+            </EntitySetMapping>
+          <EntitySetMapping Name="WalletHistories">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.WalletHistories">
+              <MappingFragment StoreEntitySet="WalletHistories">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK_MarketOrders_0" TypeName="EveTrader.Core.Model.FK_MarketOrders_0" StoreEntitySet="MarketOrders">
+            <EndProperty Name="MarketOrders">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Entity">
+              <ScalarProperty Name="ID" ColumnName="EntityID" /></EndProperty></AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Journal_0" TypeName="EveTrader.Core.Model.FK_Journal_0" StoreEntitySet="Journal">
+            <EndProperty Name="Journal">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Wallets">
+              <ScalarProperty Name="ID" ColumnName="WalletID" /></EndProperty></AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Transactions_0" TypeName="EveTrader.Core.Model.FK_Transactions_0" StoreEntitySet="Transactions">
+            <EndProperty Name="Transactions">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Wallets">
+              <ScalarProperty Name="ID" ColumnName="WalletID" /></EndProperty></AssociationSetMapping>
+          <AssociationSetMapping Name="FK_WalletHistories_0" TypeName="EveTrader.Core.Model.FK_WalletHistories_0" StoreEntitySet="WalletHistories">
+            <EndProperty Name="WalletHistories">
+              <ScalarProperty Name="ID" ColumnName="ID" /></EndProperty>
+            <EndProperty Name="Wallets">
+              <ScalarProperty Name="ID" ColumnName="WalletID" /></EndProperty></AssociationSetMapping>
+          <EntitySetMapping Name="ApplicationLog">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.ApplicationLog">
+              <MappingFragment StoreEntitySet="ApplicationLog">
+                <ScalarProperty Name="CallingClass" ColumnName="CallingClass" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CachedPriceInfo">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.CachedPriceInfos">
+              <MappingFragment StoreEntitySet="CachedPriceInfo">
+                <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+                <ScalarProperty Name="BuyPrice" ColumnName="BuyPrice" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApiCache">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.ApiCache">
+              <MappingFragment StoreEntitySet="ApiCache">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="RequestString" ColumnName="RequestString" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefTypes">
+            <EntityTypeMapping TypeName="EveTrader.Core.Model.RefTypes">
+              <MappingFragment StoreEntitySet="RefTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="TestModel" ZoomLevel="75">
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Characters" Width="1.5" PointX="2.125" PointY="7.5" Height="1.7566536458333344" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Corporations" Width="1.5" PointX="1.5" PointY="5.375" Height="1.2636116536458335" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Entities" Width="1.5" PointX="3" PointY="3" Height="1.7566536458333335" />
+        <InheritanceConnector EntityType="EveTrader.Core.Model.Characters">
+          <ConnectorPoint PointX="3.75" PointY="4.7566536458333335" />
+          <ConnectorPoint PointX="3.75" PointY="7.125" />
+          <ConnectorPoint PointX="2.875" PointY="7.125" />
+          <ConnectorPoint PointX="2.875" PointY="7.5" />
+          </InheritanceConnector>
+        <InheritanceConnector EntityType="EveTrader.Core.Model.Corporations">
+          <ConnectorPoint PointX="3.75" PointY="4.7566536458333335" />
+          <ConnectorPoint PointX="3.75" PointY="5" />
+          <ConnectorPoint PointX="2.25" PointY="5" />
+          <ConnectorPoint PointX="2.25" PointY="5.375" />
+          </InheritanceConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Wallets" Width="1.5" PointX="9.125" PointY="4.125" Height="2.0853483072916674" />
+        <AssociationConnector Association="EveTrader.Core.Model.FK_Wallets_0">
+          <ConnectorPoint PointX="4.5" PointY="4.4408268229166667" />
+          <ConnectorPoint PointX="9.125" PointY="4.4408268229166667" />
+          </AssociationConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Accounts" Width="1.5" PointX="0.75" PointY="3.125" Height="1.4279589843749996" />
+        <AssociationConnector Association="EveTrader.Core.Model.FK_Entity_0">
+          <ConnectorPoint PointX="2.25" PointY="3.8389794921875" />
+          <ConnectorPoint PointX="3" PointY="3.8389794921875" />
+          </AssociationConnector>
+        <AssociationConnector Association="EveTrader.Core.Model.FK_Characters_0">
+          <ConnectorPoint PointX="2.4375" PointY="6.6386116536458335" />
+          <ConnectorPoint PointX="2.4375" PointY="7.5" />
+          </AssociationConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Journal" Width="1.5" PointX="15.5" PointY="6.375" Height="3.2357796223958317" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.MarketOrders" Width="1.5" PointX="5.625" PointY="5.625" Height="3.400126953124996" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.Transactions" Width="1.75" PointX="14.625" PointY="1.375" Height="3.2357796223958317" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.WalletHistories" Width="1.5" PointX="11.375" PointY="0.5" Height="1.5923063151041674" />
+        <AssociationConnector Association="EveTrader.Core.Model.FK_MarketOrders_0">
+          <ConnectorPoint PointX="4.1562525" PointY="4.7566536458333335" />
+          <ConnectorPoint PointX="4.1562525" PointY="6.375" />
+          <ConnectorPoint PointX="5.625" PointY="6.375" />
+          </AssociationConnector>
+        <AssociationConnector Association="EveTrader.Core.Model.FK_Journal_0" ManuallyRouted="true">
+          <ConnectorPoint PointX="10.625" PointY="6.5285953776041659" />
+          <ConnectorPoint PointX="12.23375" PointY="6.5285953776041659" />
+          <ConnectorPoint PointX="12.23375" PointY="8.0633175998263891" />
+          <ConnectorPoint PointX="13.89125" PointY="8.0633175998263891" />
+          <ConnectorPoint PointX="13.89125" PointY="6.5285953776041659" />
+          <ConnectorPoint PointX="15.5" PointY="6.5285953776041659" />
+          </AssociationConnector>
+        <AssociationConnector Association="EveTrader.Core.Model.FK_Transactions_0">
+          <ConnectorPoint PointX="10.625" PointY="4.3678898111979159" />
+          <ConnectorPoint PointX="14.625" PointY="4.3678898111979159" />
+          </AssociationConnector>
+        <AssociationConnector Association="EveTrader.Core.Model.FK_WalletHistories_0">
+          <ConnectorPoint PointX="9.96875" PointY="4.125" />
+          <ConnectorPoint PointX="9.96875" PointY="1.28125" />
+          <ConnectorPoint PointX="11.375" PointY="1.28125" />
+          </AssociationConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.ApiTransactions" Width="1.875" PointX="18" PointY="1.5" Height="1.099264322916667" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.CustomTransactions" Width="1.875" PointX="18" PointY="3.375" Height="1.2636116536458335" />
+        <InheritanceConnector EntityType="EveTrader.Core.Model.ApiTransactions" ManuallyRouted="false">
+          <ConnectorPoint PointX="16.375" PointY="2.0496321614583337" />
+          <ConnectorPoint PointX="18" PointY="2.0496321614583337" />
+          </InheritanceConnector>
+        <InheritanceConnector EntityType="EveTrader.Core.Model.CustomTransactions" ManuallyRouted="false">
+          <ConnectorPoint PointX="16.375" PointY="3.9928898111979159" />
+          <ConnectorPoint PointX="18" PointY="3.9928898111979159" />
+          </InheritanceConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.ApplicationLog" Width="1.5" PointX="5.375" PointY="0.75" Height="1.5923063151041665" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.ApiJournal" Width="1.5" PointX="17.75" PointY="6.25" Height="1.0992643229166665" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.CustomJournal" Width="1.5" PointX="17.75" PointY="8.5" Height="1.2636116536458335" />
+        <InheritanceConnector EntityType="EveTrader.Core.Model.ApiJournal">
+          <ConnectorPoint PointX="17" PointY="6.8621321614583337" />
+          <ConnectorPoint PointX="17.75" PointY="6.8621321614583337" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="EveTrader.Core.Model.CustomJournal">
+          <ConnectorPoint PointX="17" PointY="9.0553898111979159" />
+          <ConnectorPoint PointX="17.75" PointY="9.0553898111979159" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="EveTrader.Core.Model.CachedPriceInfos" Width="1.875" PointX="0.75" PointY="0.75" Height="1.4279589843750031" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.ApiCache" Width="1.5" PointX="10.75" PointY="7.75" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="EveTrader.Core.Model.RefTypes" Width="1.5" PointX="7.375" PointY="0.75" Height="1.4033821614583388" />
+        </Diagram></Diagrams>
+  </Designer>
+</edmx:Edmx>

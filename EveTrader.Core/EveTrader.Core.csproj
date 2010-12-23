@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF60FE10-88C7-499F-86F3-7078BF22C156}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EveTrader.Core</RootNamespace>
+    <AssemblyName>EveTrader.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\References\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MoreLinq">
+      <HintPath>..\References\MoreLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <HintPath>..\References\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\References\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="T4Toolbox.10.0, Version=10.3.7.1, Culture=neutral, PublicKeyToken=7e313accbcce84dc, processorArchitecture=x86" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\BindableCollection.cs" />
+    <Compile Include="Collections\SmartGroupableObservableCollection.cs" />
+    <Compile Include="Collections\SyncQueue.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="Collections\SmartObservableCollection.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ApplicationUpdateService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\CachedPriceUpdaterService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\DatabaseExportService.cs" />
+    <Compile Include="Services\DatabaseImportService.cs" />
+    <Compile Include="Services\IPartImportsSatisifiedNotification.cs" />
+    <Compile Include="Services\MetricsPriceLookup.cs" />
+    <Compile Include="Services\PriceSourceSelector.cs" />
+    <Compile Include="Services\RefTypesLookup.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\UpdateService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Updater\CCP\AccountBalanceUpdater.cs" />
+    <Compile Include="Updater\CCP\CCPUpdaterFailedException.cs" />
+    <Compile Include="Updater\CCP\CharacterSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\CharacterUpdater.cs" />
+    <Compile Include="Updater\CCP\CorporationSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\CorporationUpdater.cs" />
+    <Compile Include="Updater\CCP\EntityFactory.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IAccountBalanceUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\ICharacterSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\ICorporationSheetUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IEntityUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IJournalUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IMarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IRefTypesUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\IStaticUpdater.cs" />
+    <Compile Include="Updater\CCP\Interfaces\ITransactionsUpdater.cs" />
+    <Compile Include="Updater\CCP\JournalUpdater.cs" />
+    <Compile Include="Updater\CCP\MarketOrdersUpdater.cs" />
+    <Compile Include="Updater\CCP\RefTypesUpdater.cs" />
+    <Compile Include="Updater\CCP\StaticUpdater.cs" />
+    <Compile Include="Updater\CCP\StaticUpdaterBase.cs" />
+    <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
+    <Compile Include="Updater\CCP\UpdaterBase.cs" />
+    <Compile Include="Updater\Metrics\MetricUpdaterBase.cs" />
+    <Compile Include="Updater\UpdaterFailedException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater\Metrics\ItemPriceUpdater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\EveTrader.Core.Model.TraderModel.datasource" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ClassExtenders\ClassExtenders.csproj">
+      <Project>{8439287F-C3AC-4B3E-96D4-29EDB08F7FB3}</Project>
+      <Name>ClassExtenders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
+      <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
+      <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric.Dto\EveTrader.Core.Model.Metric.Dto.csproj">
+      <Project>{180D7942-A00E-44E9-B515-0C88D03059E2}</Project>
+      <Name>EveTrader.Core.Model.Metric.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric\EveTrader.Core.Model.Metric.csproj">
+      <Project>{BF29F53A-D752-4327-96FB-545CC8770248}</Project>
+      <Name>EveTrader.Core.Model.Metric</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Trader.Dto\EveTrader.Core.Model.Trader.Dto.csproj">
+      <Project>{0A3AE4B4-F3F1-4520-835C-D85683EC3700}</Project>
+      <Name>EveTrader.Core.Model.Trader.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Trader\EveTrader.Core.Model.Trader.csproj">
+      <Project>{4B9C05A9-54A2-415A-8245-FB90E0CF4EFE}</Project>
+      <Name>EveTrader.Core.Model.Trader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Network\EveTrader.Core.Network.csproj">
+      <Project>{F03BE304-D9BD-4607-A788-CC92B1F3AF1F}</Project>
+      <Name>EveTrader.Core.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Updater\EveTrader.Updater.csproj">
+      <Project>{DBD8E6B9-D66C-402B-BC22-4BC5E027DEF9}</Project>
+      <Name>EveTrader.Updater</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
