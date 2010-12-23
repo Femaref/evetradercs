@@ -189,5 +189,31 @@ namespace EveTrader.Wpf
 				settings.Save();
 			}
 		}		
+		
+		public System.String PriceSource
+		{
+			get
+			{
+				 return settings.PriceSource;
+			}
+			set
+			{
+				settings.PriceSource = value;
+				settings.Save();
+			}
+		}		
+		
+		public System.String PriceMethod
+		{
+			get
+			{
+				 return settings.PriceMethod;
+			}
+			set
+			{
+				settings.PriceMethod = value;
+				settings.Save();
+			}
+		}		
 	}
 }

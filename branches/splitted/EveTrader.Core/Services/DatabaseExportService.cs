@@ -21,13 +21,8 @@ namespace EveTrader.Core.Services
         }
 
 
-        public System.Xml.Linq.XDocument Export(long userID)
+        public System.Xml.Linq.XDocument Export(Accounts a)
         {
-            Accounts a = iModel.Accounts.SingleOrDefault(x => x.ID == userID);
-
-            if (a == null)
-                throw new ArgumentNullException("userID doesn't have an associated account");
-
             XDocument xd = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),new XElement("EveTraderExport"));
 
             XElement xa = new XElement("Accounts",

@@ -27,7 +27,6 @@ namespace EveTrader.Core.Visual.ViewModel
 
         private readonly TraderModel iModel;
         private readonly IUpdateService iUpdateService;
-        private readonly IPriceSourceSelector iSelector;
 
         private bool iUpdating = false;
         private string iUpdatingText = ""; 
@@ -39,7 +38,6 @@ namespace EveTrader.Core.Visual.ViewModel
         private object iTransactionsView;
         private object iJournalView;
         private object iReportView;
-        private SettingsViewModel settings;
 
         public ICommand OpenManageAccountsCommand
         {
@@ -159,39 +157,26 @@ namespace EveTrader.Core.Visual.ViewModel
                 RaisePropertyChanged("ReportView");
             }
         }
-
-        public SmartObservableCollection<Selectable<Type>> PriceGrabbers {get; private set;}
       
         [ImportingConstructor]
         public MainWindowViewModel(
             IMainWindowView view, 
             [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
-            IUpdateService us,
-            IPriceSourceSelector selector)
+            IUpdateService us)
             : base(view)
         {
             view.Closing += ViewClosing;
 
             iModel = tm;
             iUpdateService = us;
-            iSelector = selector;
 
             iUpdateService.UpdateStarted += new EventHandler(iUpdateService_UpdateStarted);
-            iUpdateService.UpdateCompleted += new EventHandler<EntitiesUpdatedEventArgs>(iUpdateService_UpdateCompleted);
+            iUpdateService.UpdateCompleted += new EventHandler<EntitiesUpdatedEventArgs>(iUpdateService_UpdateCompleted);           
 
-            PriceGrabbers = new SmartObservableCollection<Selectable<Type>>(view.BeginInvoke);            
-
-            iOpenManageAccountsCommand = new DelegateCommand(OpenManageAccounts);
+            iOpenManageAccountsCommand = new DelegateCommand(() =>  this.SettingsShown = true);
             iRegeneratePriceCache = new DelegateCommand(RegeneratePriceCache);
             iFetchApiDataCommand = new DelegateCommand(FetchApiData);
             iFetchStaticDataCommand = new DelegateCommand(FetchStaticData);
-
-            RefreshPriceGrabbers();
-        }
-
-        private void RefreshPriceGrabbers()
-        {
-            PriceGrabbers.AddRange(iSelector.LookupServices.Select(i => new Selectable<Type>(i.GetType(), false)));
         }
 
         void iUpdateService_UpdateCompleted(object sender, EntitiesUpdatedEventArgs e)
@@ -209,14 +194,6 @@ namespace EveTrader.Core.Visual.ViewModel
             this.ViewCore.Show();
         }
 
-        private void OpenManageAccounts()
-        {
-            this.SettingsShown = true;
-
-            //EventHandler handler = ManageAccountsClicked;
-            //if (handler != null)
-            //    handler(this, new EventArgs());
-        }
         private void FetchApiData()
         {
             if (this.Updating)
@@ -261,7 +238,6 @@ namespace EveTrader.Core.Visual.ViewModel
         }
 
         public event CancelEventHandler Closing;
-        public event EventHandler ManageAccountsClicked;
 
         private object converterView;
         public object ConverterView

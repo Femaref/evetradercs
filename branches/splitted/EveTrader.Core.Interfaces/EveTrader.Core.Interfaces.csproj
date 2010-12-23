@@ -60,6 +60,7 @@
     <Compile Include="Services\IRefTypesLookup.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\LookupMethodAttribute.cs" />
     <Compile Include="Services\OrderType.cs" />
     <Compile Include="Services\ValueIncreasedEventArgs.cs" />
   </ItemGroup>

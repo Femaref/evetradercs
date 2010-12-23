@@ -55,16 +55,17 @@ namespace EveTrader.Core.Services
             return selectorExpression;
         }
 
+        [LookupMethod]
         public decimal Minimum(long typeID, OrderType mot, long regionID = 10000002)
         {
             return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
-
+        [LookupMethod]
         public decimal Maximum(long typeID, OrderType mot, long regionID = 10000002)
         {
             return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
-
+        [LookupMethod]
         public decimal Average(long typeID, OrderType mot, long regionID = 10000002)
         {
             return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
@@ -89,7 +90,7 @@ namespace EveTrader.Core.Services
         {
             return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);
         }
-
+        [LookupMethod]
         public decimal Simulated(long typeID, OrderType mot, long regionID = 10000002)
         {
             return Lookup(SelectorGenerator(MethodInfo.GetCurrentMethod(), mot.ToString()), typeID, regionID);

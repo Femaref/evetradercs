@@ -36,7 +36,7 @@ namespace EveTrader.Core.Visual.ViewModel
         {
             SettingPages = new SmartObservableCollection<ISettingsPage>(view.BeginInvoke);
 
-            SettingPages.AddRange(pages);
+            SettingPages.AddRange(pages.OrderBy(p => p.Index).ThenBy(p => p.Name));
 
             CloseCommand = new DelegateCommand(() => RaiseClosed());
         }

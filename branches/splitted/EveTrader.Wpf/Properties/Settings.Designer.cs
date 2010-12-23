@@ -217,5 +217,29 @@ namespace EveTrader.Wpf.Properties {
                 return ((string)(this["StaticUri"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PriceSource {
+            get {
+                return ((string)(this["PriceSource"]));
+            }
+            set {
+                this["PriceSource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PriceMethod {
+            get {
+                return ((string)(this["PriceMethod"]));
+            }
+            set {
+                this["PriceMethod"] = value;
+            }
+        }
     }
 }
