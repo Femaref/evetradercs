@@ -13,6 +13,7 @@ using ClassExtenders;
 using System.Threading;
 using EveTrader.Core.Model;
 using System.Windows.Input;
+using EveTrader.Core.Services;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
@@ -26,6 +27,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
         private string iConcatedEntities = "";
         private bool iUpdating = false;
+        private IPriceSourceSelector priceSelector;
 
         public SmartObservableCollection<Selectable<Entities>> Entities { get; private set; }
         public SmartObservableCollection<DisplayReport> StationReport { get; private set; }
@@ -105,12 +107,12 @@ namespace EveTrader.Core.Visual.ViewModel
         public ICommand RefreshCommand { get; private set; }
 
         [ImportingConstructor]
-        public ReportViewModel(IReportView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings)
+        public ReportViewModel(IReportView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings, IPriceSourceSelector selector)
             : base(view)
         {
             iModel = tm;
             iSettings = settings;
-
+            priceSelector = selector;
 
 
             Entities = new SmartObservableCollection<Selectable<Entities>>(ViewCore.BeginInvoke);
@@ -274,7 +276,7 @@ namespace EveTrader.Core.Visual.ViewModel
                         Quantity = g.Sum(gi => gi.Quantity),
                         GrossSales = Math.Round(g.Sum(gi => (gi.Price * gi.Quantity) / 1000000), 2),
                         //PureProfit = Math.Round(g.Sum(gi => ((gi.Price  - gi.SalesTax - (this.iActivateTransactionLimit ? Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID, this.iTransactionTimeLimit) : Analysis.Products.GetProductAverageBuyPrice(walletTransactions, gi.TypeID))) * gi.Quantity) / 1000000), 2),
-                        PureProfit = Math.Round(g.Sum(gi => ((gi.Price - iModel.Transactions.AverageBuyPrice(gi.TypeID)) * gi.Quantity) / 1000000), 2),
+                        PureProfit = Math.Round(g.Sum(gi => ((gi.Price - priceSelector.Current(gi.TypeID, OrderType.Buy)) * gi.Quantity) / 1000000), 2),
                         //SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                         SalesTax = 0m
                     });
