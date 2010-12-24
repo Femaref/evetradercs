@@ -115,13 +115,18 @@ namespace EveTrader.Wpf
                 mc.CreateMappings();
             }
             container.GetExportedValue<TraderModel>().Prune();
+            try
+            {
+                controller = container.GetExportedValue<ApplicationController>();
 
-            controller = container.GetExportedValue<ApplicationController>();
-
-            sw.Stop();
-            Debug.WriteLine(sw.Elapsed.TotalSeconds);
-
-            controller.Run();
+                sw.Stop();
+                Debug.WriteLine(sw.Elapsed.TotalSeconds);
+                controller.Run();
+            }
+            catch
+            {
+                this.Shutdown();
+            }
         }
 
         private EntityConnectionStringBuilder CreateConnectionBuilder(string source, string metadata)

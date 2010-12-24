@@ -29,7 +29,7 @@ namespace EveTrader.Core.Services
             if (settings.PriceSource == "")
             {
                 CurrentSource = LookupServices.First().GetType();
-                CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.First(t => t.Name == settings.PriceMethod && t.IsDefined(typeof(LookupMethodAttribute), false));
+                CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.FirstOrDefault(t => t.IsDefined(typeof(LookupMethodAttribute), false));
 
                 if (CurrentSource == null || CurrentMethod == null)
                     throw new Exception("No suitable price selector found!");
