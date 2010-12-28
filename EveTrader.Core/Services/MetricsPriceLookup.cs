@@ -49,7 +49,7 @@ namespace EveTrader.Core.Services
             MemberInfo mi = typeof(ItemPrices).GetProperty(method.Name + type);
 
             Func<ItemPrices, decimal> selectorExpression =
-                (Func<ItemPrices, decimal>)Expression.Lambda(Expression.MakeMemberAccess(pe, mi), pe).Compile();
+                Expression.Lambda<Func<ItemPrices, decimal>>(Expression.MakeMemberAccess(pe, mi), pe).Compile();
 
             return selectorExpression;
         }

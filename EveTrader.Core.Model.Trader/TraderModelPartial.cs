@@ -25,14 +25,6 @@ namespace EveTrader.Core.Model.Trader
             OnContextCreated();
         }
 
-        public string WriteToLog(string text, string callingMember)
-        {
-            var log = new ApplicationLog() { Message = text, CallingClass = callingMember, Date = DateTime.UtcNow };
-            this.ApplicationLog.AddObject(log);
-            this.SaveChanges();
-            return string.Format("{0} from {1} at {2}", log.Message, log.CallingClass, log.Date);
-        }
-
         public void RegeneratePriceCache()
         {
             this.CachedPriceInfo.ForEach(c => this.CachedPriceInfo.DeleteObject(c));

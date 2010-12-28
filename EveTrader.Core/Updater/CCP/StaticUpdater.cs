@@ -11,13 +11,15 @@ namespace EveTrader.Core.Updater.CCP
     public class StaticUpdater : StaticUpdaterBase
     {
         private List<IStaticUpdater> iUpdaters = new List<IStaticUpdater>();
+        private TraderLogService logger;
 
         [ImportingConstructor]
         public StaticUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm,
-            IRefTypesUpdater refTypesUpdater)
+            IRefTypesUpdater refTypesUpdater, TraderLogService logger)
             : base(tm)
         {
             iUpdaters.Add((IStaticUpdater)refTypesUpdater);
+            this.logger = logger;
         }
 
         protected override bool InnerUpdate()
@@ -30,7 +32,7 @@ namespace EveTrader.Core.Updater.CCP
                 }
                 catch (UpdaterFailedException ex)
                 {
-                    iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+                    logger.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
                 }
             }
 

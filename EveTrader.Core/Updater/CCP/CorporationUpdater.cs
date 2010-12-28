@@ -14,6 +14,7 @@ namespace EveTrader.Core.Updater.CCP
         private readonly List<IEntityUpdater<Corporations>> iUpdaters = new List<IEntityUpdater<Corporations>>();
         private readonly ICorporationSheetUpdater iCorpSheetUpdater;
         private readonly IAccountBalanceUpdater iAccountBalanceUpdater;
+        private TraderLogService logger;
 
         [ImportingConstructor]
         public CorporationUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm, EntityFactory ef,
@@ -21,7 +22,8 @@ namespace EveTrader.Core.Updater.CCP
             IAccountBalanceUpdater accountBalanceUpdater,
             IJournalUpdater journalUpdater,
             ITransactionsUpdater transactionsUpdater,
-            IMarketOrdersUpdater marketOrdersUpdater)
+            IMarketOrdersUpdater marketOrdersUpdater,
+            TraderLogService logger)
             : base(tm)
         {
             iEntityFactory = ef;
@@ -32,6 +34,8 @@ namespace EveTrader.Core.Updater.CCP
             iUpdaters.Add((IEntityUpdater<Corporations>)journalUpdater);
             iUpdaters.Add((IEntityUpdater<Corporations>)transactionsUpdater);
             iUpdaters.Add((IEntityUpdater<Corporations>)marketOrdersUpdater);
+
+            this.logger = logger;
         }
         protected override bool InnerUpdate<U>(U entity)
         {
@@ -44,7 +48,7 @@ namespace EveTrader.Core.Updater.CCP
             }
             catch (UpdaterFailedException ex)
             {
-                iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+               logger.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
             }
 
             
@@ -57,7 +61,7 @@ namespace EveTrader.Core.Updater.CCP
                 }
                 catch (UpdaterFailedException ex)
                 {
-                    iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+                    logger.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
                 }
                
                 iUpdaters.ForEach(u =>
@@ -68,7 +72,7 @@ namespace EveTrader.Core.Updater.CCP
                     }
                     catch (UpdaterFailedException ex)
                     {
-                        iModel.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
+                        logger.WriteToLog(ex.ToString(), ex.InnerException.TargetSite.DeclaringType.Name + "." + ex.InnerException.TargetSite.Name);
                     }
                 }
                 );

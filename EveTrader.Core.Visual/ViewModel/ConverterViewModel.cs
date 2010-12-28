@@ -93,6 +93,9 @@ namespace EveTrader.Core.Visual.ViewModel
         {
             this.converter = converter;
 
+            if (!this.converter.ConversionNecessary())
+                RaiseClosed();
+
             ConvertCommand = new DelegateCommand(() => Convert());
             CloseCommand = new DelegateCommand(() => RaiseClosed());
         }
@@ -129,7 +132,11 @@ namespace EveTrader.Core.Visual.ViewModel
                 this.converter.CurrentObjectIncreased += new EventHandler<ValueIncreasedEventArgs>(converter_CurrentObjectIncreased);
                 this.converter.ObjectsIncreased += new EventHandler<ValueIncreasedEventArgs>(converter_ObjectsIncreased);
                 this.converter.OperationFinished += new EventHandler(converter_OperationFinished);
-                converter.Convert();
+                if (converter.ConversionNecessary())
+                    converter.Convert();
+                else
+                    RaiseClosed();
+
                 Working = false;
             }
         }

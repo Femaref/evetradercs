@@ -75,6 +75,7 @@
     <Compile Include="Services\IDatabaseExportService.cs" />
     <Compile Include="Services\IDatabaseImportService.cs" />
     <Compile Include="Services\IUpdateService.cs" />
+    <Compile Include="TraderLogService.cs" />
     <Compile Include="TraderModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
