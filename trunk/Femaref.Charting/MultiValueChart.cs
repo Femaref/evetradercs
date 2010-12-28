@@ -16,6 +16,8 @@ namespace Femaref.Charting
         private List<PropertyInfo> iProperties = new List<PropertyInfo>();
         private Dictionary<PropertyInfo, IEnumerable<string>> iIndexableProperties = new Dictionary<PropertyInfo, IEnumerable<string>>();
 
+        private object seriesLocker = new object();
+
         private void GenerateTypeInfo(Type t)
         {
             iProperties.Clear();
@@ -29,43 +31,45 @@ namespace Femaref.Charting
 
         private void GenerateSeries()
         {
-            this.Series.Clear();
-
-            foreach (PropertyInfo pi in iProperties)
+            lock (seriesLocker)
             {
-                DataTemplate dataTemplate = SelectDataTemplate(pi);
+                this.Series.Clear();
 
-                // load data template content
-                if (dataTemplate != null)
+                foreach (PropertyInfo pi in iProperties)
                 {
-                    if (iIndexableProperties.ContainsKey(pi))
+                    DataTemplate dataTemplate = SelectDataTemplate(pi);
+
+                    // load data template content
+                    if (dataTemplate != null)
                     {
-                        foreach (var index in iIndexableProperties[pi])
+                        if (iIndexableProperties.ContainsKey(pi))
                         {
-                            DataSeries current = dataTemplate.LoadContent() as DataSeries;
-                            if (current != null)
+                            foreach (var index in iIndexableProperties[pi])
                             {
-                                current.LegendText = index;
-                                current.DataMappings.Add(new DataMapping() { MemberName = "YValue", Path = string.Format("{0}[{1}]", pi.Name, index) });
-                                current.DataContext = DataSource;
-                                this.Series.Add(current);
+                                DataSeries current = dataTemplate.LoadContent() as DataSeries;
+                                if (current != null)
+                                {
+                                    current.LegendText = index;
+                                    current.DataMappings.Add(new DataMapping() { MemberName = "YValue", Path = string.Format("{0}[{1}]", pi.Name, index) });
+                                    current.DataContext = DataSource;
+                                    this.Series.Add(current);
+                                }
+
                             }
-
+                            continue;
                         }
-                        continue;
-                    }
 
-                    DataSeries series = dataTemplate.LoadContent() as DataSeries;
-                    if (series != null)
-                    {
-                        // set data context
-                        series.DataContext = DataSource;
+                        DataSeries series = dataTemplate.LoadContent() as DataSeries;
+                        if (series != null)
+                        {
+                            // set data context
+                            series.DataContext = DataSource;
 
-                        this.Series.Add(series);
+                            this.Series.Add(series);
+                        }
                     }
                 }
             }
-
         }
 
 

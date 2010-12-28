@@ -123,8 +123,10 @@ namespace EveTrader.Wpf
                 Debug.WriteLine(sw.Elapsed.TotalSeconds);
                 controller.Run();
             }
-            catch
+            catch (Exception exc)
             {
+                HandleException(exc, false);
+
                 this.Shutdown();
             }
         }

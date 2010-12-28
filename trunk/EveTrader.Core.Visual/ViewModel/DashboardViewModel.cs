@@ -120,7 +120,10 @@ namespace EveTrader.Core.Visual.ViewModel
 
 
         [ImportingConstructor]
-        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm,  IPriceSourceSelector ips)
+        public DashboardViewModel(
+            IDashboardView view, 
+            [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm,  
+            IPriceSourceSelector ips)
             : base(view)
         {
             iModel = tm;
@@ -138,9 +141,8 @@ namespace EveTrader.Core.Visual.ViewModel
             FilterMonthCommand = new DelegateCommand(() => Filter(30));
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
             OverviewHideCommand = new DelegateCommand(() => OverviewHidden = !OverviewHidden);
-            Filter(7);
-
             RefreshWallets();
+            Filter(7);
         }
 
         private void Filter(int days)
@@ -190,7 +192,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
                 List<DisplayDashboard> cache = new List<DisplayDashboard>();
 
-                IEnumerable<string> indexes = CurrentWallets.Single(x => x.Key == typeof(DisplayDashboard).GetProperty("Sales")).Value;
+                IEnumerable<string> indexes = CurrentWallets.Single(x => x.Key == iSalesPropertyInfo).Value;
                 foreach (var i in investment)
                 {
                     DisplayDashboard dd = new DisplayDashboard()

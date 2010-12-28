@@ -18,7 +18,27 @@ namespace EveTrader.Core.Services
         {
             this.settings = settings;
             this.LookupServices = lookups;
-            Load();
+
+            if (settings.PriceSource == "")
+            {
+                CurrentSource = LookupServices.FirstOrDefault().GetType();
+            }
+            else
+            {
+                CurrentSource = LookupServices.Where(l => l.GetType().Name == settings.PriceSource).Select(l => l.GetType()).SingleOrDefault();
+            }
+            if (settings.PriceMethod == "")
+            {
+                CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.FirstOrDefault(t => t.IsDefined(typeof(LookupMethodAttribute), false));
+            }
+            else
+            {
+                if (CurrentSource != null)
+                    CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.SingleOrDefault(t => t.Name == settings.PriceMethod && t.IsDefined(typeof(LookupMethodAttribute), false));
+            }
+
+            if (CurrentSource == null || CurrentMethod == null)
+                throw new Exception("No suitable price selector found!");
         }
 
         private readonly object dirtyLock = new object();
@@ -26,25 +46,10 @@ namespace EveTrader.Core.Services
 
         private void Load()
         {
-            if (settings.PriceSource == "")
+            lock (dirtyLock)
             {
-                CurrentSource = LookupServices.First().GetType();
-                CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.FirstOrDefault(t => t.IsDefined(typeof(LookupMethodAttribute), false));
 
-                if (CurrentSource == null || CurrentMethod == null)
-                    throw new Exception("No suitable price selector found!");
             }
-
-            CurrentSource = LookupServices.Where(l => l.GetType().Name == settings.PriceSource).Select(l => l.GetType()).SingleOrDefault();
-
-            if (CurrentSource != null)
-                CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.SingleOrDefault(t => t.Name == settings.PriceMethod && t.IsDefined(typeof(LookupMethodAttribute), false));
-        }
-
-        private void Save()
-        {
-            settings.PriceSource = CurrentSource != null ? CurrentSource.Name : "";
-            settings.PriceMethod = CurrentMethod != null ? CurrentMethod.Name : "";
         }
 
         private readonly ISettingsProvider settings;
@@ -73,15 +78,24 @@ namespace EveTrader.Core.Services
                 {
                     currentSource = value;
                     RaisePropertyChanged("CurrentSource");
-                    if (value != null && CurrentMethod != null)
+                    if (value != null)
                     {
-                        CurrentMethod = CurrentSource
-                            .GetInterfaceMap(typeof(IPriceLookup))
-                            .TargetMethods.SingleOrDefault(
-                                    l => l.Name == CurrentMethod.Name
-                                    && l.IsDefined(typeof(LookupMethodAttribute), false));
+                        if (CurrentMethod != null)
+                        {
+                            CurrentMethod = CurrentSource
+                                .GetInterfaceMap(typeof(IPriceLookup))
+                                .TargetMethods.SingleOrDefault(
+                                        l => l.Name == CurrentMethod.Name
+                                        && l.IsDefined(typeof(LookupMethodAttribute), false));
+                        }
+
+                        if (CurrentMethod == null)
+                        {
+                            CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup))
+                                .TargetMethods.FirstOrDefault(l => l.IsDefined(typeof(LookupMethodAttribute), false));
+                        }
                         dirty = true;
-                        Save();
+                        settings.PriceSource = CurrentSource.Name;
                     }
                 }
             }
@@ -101,7 +115,12 @@ namespace EveTrader.Core.Services
                     if (currentMethod != null)
                     {
                         dirty = true;
-                        Save();
+                        settings.PriceMethod = currentMethod.Name;
+                    }
+                    else
+                    {
+                        CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup))
+                            .TargetMethods.FirstOrDefault(l => l.IsDefined(typeof(LookupMethodAttribute), false));
                     }
                 }
             }
@@ -113,7 +132,7 @@ namespace EveTrader.Core.Services
             lock (dirtyLock)
             {
                 //generates new Func<long, OrderType, long, decimal>
-                if (dirty)
+                if (dirty || currentFunc == null)
                 {
                     ParameterExpression peID = Expression.Parameter(typeof(long), "typeID");
                     ParameterExpression peOT = Expression.Parameter(typeof(OrderType), "orderType");

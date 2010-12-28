@@ -16,12 +16,14 @@ namespace EveTrader.Core.Services
         private readonly object iUpdater = new object();
         private readonly SyncQueue<long> iQueue;
         private bool iStop = false;
+        private TraderLogService logger;
 
         [ImportingConstructor]
-        public CachedPriceUpdaterService([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm)
+        public CachedPriceUpdaterService([Import(RequiredCreationPolicy = CreationPolicy.Shared)] TraderModel tm, TraderLogService logger)
         {
             iModel = tm;
             iQueue = new SyncQueue<long>();
+            this.logger = logger;
 
             ThreadStart ts = new ThreadStart(Worker);
             Thread worker = new Thread(ts);
@@ -60,7 +62,7 @@ namespace EveTrader.Core.Services
                     var sellQuery = iModel.Transactions.Where(t => t.TypeID == i && t.TransactionType == (long)TransactionType.Sell).OrderByDescending(t => t.DateTime).Take(10);
                     cpi.SellPrice = sellQuery.Count() > 0 ? sellQuery.Average(t => t.Price) : 0m;
 
-                    iModel.WriteToLog(string.Format("Updated average prices for typeID {0}", cpi.TypeID), "CachedPriceUpdaterService.Worker()");
+                    logger.WriteToLog(string.Format("Updated average prices for typeID {0}", cpi.TypeID), "CachedPriceUpdaterService.Worker()");
 
                     iModel.SaveChanges();
                 }
