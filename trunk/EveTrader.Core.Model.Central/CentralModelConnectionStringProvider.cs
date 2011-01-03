@@ -5,14 +5,15 @@ using System.Text;
 using System.ComponentModel.Composition;
 using System.Data.EntityClient;
 using System.Data.SQLite;
+using System.IO;
 
-namespace EveTrader.Core.Model.Static
+namespace EveTrader.Core.Model.Central
 {
-    [Export("StaticModelConnectionString", typeof(IConnectionStringProvider))]
-    public class StaticModelConnectionStringProvider : IConnectionStringProvider
+    [Export("CentralModelConnectionString", typeof(IConnectionStringProvider))]
+    public class CentralModelConnectionStringProvider : IConnectionStringProvider
     {
-        private string metadata = @"res://*/StaticModel.csdl|res://*/StaticModel.ssdl|res://*/StaticModel.msl";
-        private string source = ""; 
+        private string metadata = @"res://*/CentralModel.csdl|res://*/CentralModel.ssdl|res://*/CentralModel.msl";
+        private string source = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "Central.db");
 
 
         public string GetConnectionString()

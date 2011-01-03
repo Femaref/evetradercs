@@ -5,8 +5,8 @@ using System.Text;
 
 namespace EveTrader.Core.Services
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class LookupMethodAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public class LookupDeprecatedAttribute : Attribute
     {
     }
 }

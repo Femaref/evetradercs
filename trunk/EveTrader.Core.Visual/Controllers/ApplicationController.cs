@@ -22,7 +22,6 @@ namespace EveTrader.Core.Controllers
     {
         private readonly MainWindowViewModel iMainWindowViewModel;
         private readonly TraderModel iModel;
-        private readonly ManageAccountsController iManageAccountsController;
         private readonly CompositionContainer iContainer;
         private readonly DashboardController iDashboardController;
         private readonly WalletsController iWalletsController;
@@ -50,7 +49,6 @@ namespace EveTrader.Core.Controllers
             TraderModel tm,
             StaticModel sm,
             CompositionContainer container,
-            ManageAccountsController manageAccountsController,
             DashboardController dashboardController,
             WalletsController walletsController,
             MarketOrdersController marketOrdersController,
@@ -70,7 +68,6 @@ namespace EveTrader.Core.Controllers
             iModel = tm;
             iStaticData = sm;
             iContainer = container;
-            iManageAccountsController = manageAccountsController;
             iDashboardController = dashboardController;
             iWalletsController = walletsController;
             iMarketOrdersController = marketOrdersController;
@@ -86,8 +83,6 @@ namespace EveTrader.Core.Controllers
 
             iCharacterUpdater = charUpdater;
             iCorporationUpdater = corpUpdater;
-
-            //mainView.ManageAccountsClicked += (object o, EventArgs e) => { iManageAccountsController.Show(); };
         }
 
         public void Run()
@@ -97,7 +92,6 @@ namespace EveTrader.Core.Controllers
 
         public void Shutdown()
         {
-            iManageAccountsController.Shutdown();
             iModel.Dispose();
         }
     }

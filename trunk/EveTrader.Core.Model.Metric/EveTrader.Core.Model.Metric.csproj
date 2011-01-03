@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\References\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -48,6 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MappingGenerator.cs">
+      <DependentUpon>MappingGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="MetricModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -74,6 +82,10 @@
       <LastGenOutput>MetricModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
+    <None Include="MappingGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MappingGenerator.cs</LastGenOutput>
+    </None>
     <None Include="metrictables.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +93,13 @@
       <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
       <Name>EveTrader.Core.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Metric.Dto\EveTrader.Core.Model.Metric.Dto.csproj">
+      <Project>{180D7942-A00E-44E9-B515-0C88D03059E2}</Project>
+      <Name>EveTrader.Core.Model.Metric.Dto</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

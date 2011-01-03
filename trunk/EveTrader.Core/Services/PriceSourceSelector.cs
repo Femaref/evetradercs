@@ -17,53 +17,48 @@ namespace EveTrader.Core.Services
         public PriceSourceSelector(ISettingsProvider settings, [ImportMany] IEnumerable<IPriceLookup> lookups)
         {
             this.settings = settings;
-            this.LookupServices = lookups;
+            this.LookupServices = lookups.Where(l => !l.GetType().IsDefined(typeof(LookupDeprecatedAttribute), false));
 
-            if (settings.PriceSource == "")
+            if (settings.PriceSource == "" || !LookupServices.Any(l => l.GetType().Name == settings.PriceSource && !l.GetType().IsDefined(typeof(LookupDeprecatedAttribute), false)))
             {
-                CurrentSource = LookupServices.FirstOrDefault().GetType();
+                currentSource = LookupServices.FirstOrDefault().GetType();
             }
             else
             {
-                CurrentSource = LookupServices.Where(l => l.GetType().Name == settings.PriceSource).Select(l => l.GetType()).SingleOrDefault();
+                currentSource = LookupServices.Where(l => l.GetType().Name == settings.PriceSource && !l.GetType().IsDefined(typeof(LookupDeprecatedAttribute), false)).Select(l => l.GetType()).SingleOrDefault();
             }
-            if (settings.PriceMethod == "")
+            if (settings.PriceMethod == "" || !currentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.Any(t => t.IsDefined(typeof(LookupMethodAttribute), false) && t.Name == settings.PriceMethod))
             {
-                CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.FirstOrDefault(t => t.IsDefined(typeof(LookupMethodAttribute), false));
+                currentMethod = currentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.FirstOrDefault(t => t.IsDefined(typeof(LookupMethodAttribute), false));
             }
             else
             {
-                if (CurrentSource != null)
-                    CurrentMethod = CurrentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.SingleOrDefault(t => t.Name == settings.PriceMethod && t.IsDefined(typeof(LookupMethodAttribute), false));
+                if (currentSource != null)
+                    currentMethod = currentSource.GetInterfaceMap(typeof(IPriceLookup)).TargetMethods.SingleOrDefault(t => t.Name == settings.PriceMethod && t.IsDefined(typeof(LookupMethodAttribute), false));
             }
 
             if (CurrentSource == null || CurrentMethod == null)
                 throw new Exception("No suitable price selector found!");
+
+            RaisePropertyChanged("CurrentSource");
+            RaisePropertyChanged("CurrentMethod");
         }
 
         private readonly object dirtyLock = new object();
         private bool dirty = false;
 
-        private void Load()
-        {
-            lock (dirtyLock)
-            {
-
-            }
-        }
-
         private readonly ISettingsProvider settings;
-        private IEnumerable<IPriceLookup> iLookupServices = new List<IPriceLookup>();
+        private IEnumerable<IPriceLookup> lookupServices = new List<IPriceLookup>();
 
         public IEnumerable<IPriceLookup> LookupServices
         {
             get
             {
-                return iLookupServices;
+                return lookupServices;
             }
             set
             {
-                iLookupServices = value;
+                lookupServices = value;
             }
         }
 
@@ -134,16 +129,16 @@ namespace EveTrader.Core.Services
                 //generates new Func<long, OrderType, long, decimal>
                 if (dirty || currentFunc == null)
                 {
-                    ParameterExpression peID = Expression.Parameter(typeof(long), "typeID");
-                    ParameterExpression peOT = Expression.Parameter(typeof(OrderType), "orderType");
-                    ParameterExpression peRID = Expression.Parameter(typeof(long), "regionID");
+                    ParameterExpression expTypeID = Expression.Parameter(typeof(long), "typeID");
+                    ParameterExpression expOrderType = Expression.Parameter(typeof(OrderType), "orderType");
+                    ParameterExpression expRegionID = Expression.Parameter(typeof(long), "regionID");
 
                     var exp = Expression.Lambda<Func<long, OrderType, long, decimal>>(
                         Expression.Call(
                             Expression.Constant(LookupServices.Single(p => p.GetType() == CurrentSource)), 
                                 CurrentMethod, 
-                                peID, peOT, peRID), 
-                        peID, peOT, peRID);
+                                expTypeID, expOrderType, expRegionID), 
+                        expTypeID, expOrderType, expRegionID);
 
                     currentFunc = exp.Compile();
                     dirty = false;

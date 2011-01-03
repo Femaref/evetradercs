@@ -66,6 +66,10 @@
     <Compile Include="Requests\CCP\MarketOrdersRequest.cs" />
     <Compile Include="Requests\CCP\RefTypesRequest.cs" />
     <Compile Include="Requests\CCP\TransactionsRequest.cs" />
+    <Compile Include="Requests\Central\CentralRequestBase.cs" />
+    <Compile Include="Requests\Central\CentralRequestConstructor.cs" />
+    <Compile Include="Requests\Central\CentralRequestPage.cs" />
+    <Compile Include="Requests\Central\ItemPriceRequest.cs" />
     <Compile Include="Requests\IRequestConstructor.cs" />
     <Compile Include="Requests\Metrics\ItemPriceRequest.cs" />
     <Compile Include="Requests\Metrics\MetricsPage.cs" />
@@ -73,13 +77,15 @@
     <Compile Include="Requests\Metrics\MetricsRequestConstructor.cs" />
     <Compile Include="Requests\RequestBase.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\Central\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ClassExtenders\ClassExtenders.csproj">
       <Project>{8439287F-C3AC-4B3E-96D4-29EDB08F7FB3}</Project>
       <Name>ClassExtenders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Central.Dto\EveTrader.Core.Model.Central.Dto.csproj">
+      <Project>{E01D7113-1F96-400B-9DE5-D5EBE2851E64}</Project>
+      <Name>EveTrader.Core.Model.Central.Dto</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Metric.Dto\EveTrader.Core.Model.Metric.Dto.csproj">
       <Project>{180D7942-A00E-44E9-B515-0C88D03059E2}</Project>

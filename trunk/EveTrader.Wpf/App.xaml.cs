@@ -62,7 +62,9 @@ namespace EveTrader.Wpf
 
             if (!appData.Exists)
                 appData.Create();
+            
 
+            //TODO: MOVE TO CONNECTIONSTRING PROVIDER!
             //if no database exists, create a fresh one
             if (!databaseInfo.Exists || databaseInfo.Length == 0)
                 TraderModel.CreateDatabase(databaseInfo.FullName);
