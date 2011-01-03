@@ -148,7 +148,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="MetricModel" ZoomLevel="74">
+      <Diagram Name="MetricModel" ZoomLevel="72">
         <EntityTypeShape EntityType="MetricsModel.ItemPrices" Width="1.75" PointX="0.75" PointY="0.75" Height="4.8648079427083326" IsExpanded="true" />
         <EntityTypeShape EntityType="MetricsModel.Cache" Width="1.5" PointX="3.375" PointY="0.75" Height="1.787985026041667" />
       </Diagram>

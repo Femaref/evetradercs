@@ -12,7 +12,8 @@ namespace EveTrader.Core.Updater.Metrics
     public class ItemPriceUpdater : MetricUpdaterBase
     {
         [ImportingConstructor]
-        public ItemPriceUpdater ([Import(RequiredCreationPolicy= CreationPolicy.Shared)] MetricModel mm) : base(mm)
+        public ItemPriceUpdater([Import(RequiredCreationPolicy = CreationPolicy.Shared)] MetricModel mm)
+            : base(mm)
         {
         }
 

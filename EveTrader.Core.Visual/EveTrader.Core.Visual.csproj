@@ -59,7 +59,6 @@
     <Compile Include="Controllers\ConverterController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\JournalController.cs" />
-    <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\MarketOrdersController.cs" />
     <Compile Include="Controllers\PriceCacheController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="ViewModel\ISettingsParent.cs" />
     <Compile Include="ViewModel\JournalViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
     <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
     <Compile Include="ViewModel\PriceCacheViewModel.cs" />
     <Compile Include="ViewModel\PriceLookupSettingViewModel.cs" />

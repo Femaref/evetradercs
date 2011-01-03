@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CentralModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="CentralModelStoreContainer">
+          <EntitySet Name="Cache" EntityType="CentralModel.Store.Cache" store:Type="Tables" />
+          <EntitySet Name="ItemPrices" EntityType="CentralModel.Store.ItemPrices" store:Type="Tables" />
+        </EntityContainer>
+        <EntityType Name="Cache">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RequestString" Type="nvarchar" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="Data" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemPrices">
+          <Key>
+            <PropertyRef Name="TypeID" />
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="TypeID" Type="integer" Nullable="false" />
+          <Property Name="RegionID" Type="integer" Nullable="false" />
+          <Property Name="VolumeBuy" Type="integer" Nullable="false" />
+          <Property Name="VolumeSell" Type="integer" Nullable="false" />
+          <Property Name="AverageBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="AverageSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MaximumBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MaximumSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MinimumBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MinimumSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="StandardDeviationBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="StandardDeviationSell" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MedianBuy" Type="decimal" Nullable="false" Precision="53" />
+          <Property Name="MedianSell" Type="decimal" Nullable="false" Precision="53" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CentralsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="CentralModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cache" EntityType="CentralsModel.Cache" />
+          <EntitySet Name="ItemPrices" EntityType="CentralsModel.ItemPrices" />
+        </EntityContainer>
+        <EntityType Name="Cache">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RequestString" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="RequestDate" Nullable="false" />
+          <Property Type="String" Name="Data" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ItemPrices">
+          <Key>
+            <PropertyRef Name="TypeID" />
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Type="Int64" Name="TypeID" Nullable="false" />
+          <Property Type="Int64" Name="RegionID" Nullable="false" />
+          <Property Type="Int64" Name="VolumeBuy" Nullable="false" />
+          <Property Type="Int64" Name="VolumeSell" Nullable="false" />
+          <Property Type="Decimal" Name="AverageBuy" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="AverageSell" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="MaximumBuy" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="MaximumSell" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="MinimumBuy" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="MinimumSell" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="StandardDeviationBuy" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="StandardDeviationSell" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="MedianBuy" Nullable="false" Precision="53" Scale="0" />
+          <Property Type="Decimal" Name="MedianSell" Nullable="false" Precision="53" Scale="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CentralModelStoreContainer" CdmEntityContainer="CentralModel">
+          <EntitySetMapping Name="Cache">
+            <EntityTypeMapping TypeName="CentralsModel.Cache">
+              <MappingFragment StoreEntitySet="Cache">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="RequestString" ColumnName="RequestString" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemPrices">
+            <EntityTypeMapping TypeName="CentralsModel.ItemPrices">
+              <MappingFragment StoreEntitySet="ItemPrices">
+                <ScalarProperty Name="MedianSell" ColumnName="MedianSell" />
+                <ScalarProperty Name="MedianBuy" ColumnName="MedianBuy" />
+                <ScalarProperty Name="StandardDeviationSell" ColumnName="StandardDeviationSell" />
+                <ScalarProperty Name="StandardDeviationBuy" ColumnName="StandardDeviationBuy" />
+                <ScalarProperty Name="MinimumSell" ColumnName="MinimumSell" />
+                <ScalarProperty Name="MinimumBuy" ColumnName="MinimumBuy" />
+                <ScalarProperty Name="MaximumSell" ColumnName="MaximumSell" />
+                <ScalarProperty Name="MaximumBuy" ColumnName="MaximumBuy" />
+                <ScalarProperty Name="AverageSell" ColumnName="AverageSell" />
+                <ScalarProperty Name="AverageBuy" ColumnName="AverageBuy" />
+                <ScalarProperty Name="VolumeSell" ColumnName="VolumeSell" />
+                <ScalarProperty Name="VolumeBuy" ColumnName="VolumeBuy" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="CentralModel">
+        <EntityTypeShape EntityType="CentralsModel.Cache" Width="1.5" PointX="3.375" PointY="0.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="CentralsModel.ItemPrices" Width="1.5" PointX="0.75" PointY="0.75" Height="3.7109993489583335" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

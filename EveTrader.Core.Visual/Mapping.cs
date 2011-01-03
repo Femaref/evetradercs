@@ -9,7 +9,6 @@ using System.ComponentModel.Composition;
 
 namespace EveTrader.Core
 {
-    [Export(typeof(IMappingCreator))]
     public class Mapping : IMappingCreator
     {
         private readonly IRefTypesLookup iRefTypesLookup;

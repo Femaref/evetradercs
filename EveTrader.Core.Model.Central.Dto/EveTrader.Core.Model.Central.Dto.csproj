@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</ProjectGuid>
+    <ProjectGuid>{E01D7113-1F96-400B-9DE5-D5EBE2851E64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EveTrader.Core</RootNamespace>
-    <AssemblyName>EveTrader.Core.Interfaces</AssemblyName>
+    <RootNamespace>EveTrader.Core.Model.Central</RootNamespace>
+    <AssemblyName>EveTrader.Core.Model.Central.Dto</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,9 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,31 +40,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\IConnectionStringProvider.cs" />
-    <Compile Include="Model\ISettingsProvider.cs" />
+    <Compile Include="DtoGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtoGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ICachedPriceUpdaterService.cs">
-      <SubType>Code</SubType>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\IConversionService.cs" />
-    <Compile Include="Services\IMappingCreator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\IPriceLookup.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\IPriceLookupLoader.cs" />
-    <Compile Include="Services\IPriceSourceSelector.cs" />
-    <Compile Include="Services\IRefreshService.cs" />
-    <Compile Include="Services\IRefTypesLookup.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\LookupDeprecatedAttribute.cs" />
-    <Compile Include="Services\LookupMethodAttribute.cs" />
-    <Compile Include="Services\OrderType.cs" />
-    <Compile Include="Services\ValueIncreasedEventArgs.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DtoGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DtoGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="Manager.tt">
+      <LastGenOutput>Manager1.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

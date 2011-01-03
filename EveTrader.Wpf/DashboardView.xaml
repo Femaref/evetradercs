@@ -25,10 +25,20 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="HideSalesStyleTrigger" TargetType="{x:Type MenuItem}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SalesEnabled}" Value="true">
+                    <Setter Property="Header" Value="Hide Sales"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SalesEnabled}" Value="false">
+                    <Setter Property="Header" Value="Show Sales"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <sel:DashboardSelector x:Key="DashboardTemplateSelector">
             <sel:DashboardSelector.InvestmentTemplate>
                 <DataTemplate>
-                    <visi:DataSeries DataSource="{Binding}" LegendText="Investment" RenderAs="Line" ZIndex="99" XValueType="Date" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                    <visi:DataSeries DataSource="{Binding}" LegendText="Investment" RenderAs="Line" MarkerScale="1.5" ZIndex="99" XValueType="Date" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
                         <visi:DataSeries.DataMappings>
                             <visi:DataMapping MemberName="XValue" Path="Key"/>
                             <visi:DataMapping MemberName="YValue" Path="Investment"/>
@@ -38,7 +48,7 @@
             </sel:DashboardSelector.InvestmentTemplate>
             <sel:DashboardSelector.ProfitTemplate>
                 <DataTemplate>
-                    <visi:DataSeries DataSource="{Binding}" LegendText="Profit" RenderAs="Line" ZIndex="100"  XValueType="Date" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                    <visi:DataSeries DataSource="{Binding}" LegendText="Profit" RenderAs="Line" MarkerScale="1.5" ZIndex="100"  XValueType="Date" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
                         <visi:DataSeries.DataMappings>
                             <visi:DataMapping MemberName="XValue" Path="Key"/>
                             <visi:DataMapping MemberName="YValue" Path="Profit"/>
@@ -48,7 +58,7 @@
             </sel:DashboardSelector.ProfitTemplate>
             <sel:DashboardSelector.SalesTemplate>
                 <DataTemplate>
-                    <visi:DataSeries DataSource="{Binding}" Visibility="Hidden" XValueType="Date" RenderAs="StackedColumn" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
+                    <visi:DataSeries DataSource="{Binding}" Enabled="{Binding SalesEnabled}" XValueType="Date" RenderAs="StackedColumn" XValueFormatString="dd.MM.yyyy" MouseMove="ds_MouseMove">
                         <visi:DataSeries.DataMappings>
                             <visi:DataMapping MemberName="XValue" Path="Key"/>
                         </visi:DataSeries.DataMappings>
@@ -136,6 +146,7 @@
                     <MenuItem Header="All time" Command="{Binding FilterAllTimeCommand}"/>
                     <Separator/>
                     <MenuItem Name="OverviewHide" Command="{Binding OverviewHideCommand}" Style="{StaticResource OverviewHiddenStyleTrigger}"/>
+                    <!--<MenuItem Name="HideSales" Command="{Binding HideSalesCommand}" Style="{StaticResource HideSalesStyleTrigger}" />-->
                 </ContextMenu>
             </chart:MultiValueChart.ContextMenu>
         </chart:MultiValueChart>

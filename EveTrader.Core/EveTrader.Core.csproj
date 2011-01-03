@@ -66,7 +66,6 @@
     <Compile Include="Collections\BindableCollection.cs" />
     <Compile Include="Collections\SmartGroupableObservableCollection.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
-    <Compile Include="Mapping.cs" />
     <Compile Include="Collections\SmartObservableCollection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -79,6 +78,7 @@
     <Compile Include="Services\CachedPriceUpdaterService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\CentralPriceLookup.cs" />
     <Compile Include="Services\DatabaseExportService.cs" />
     <Compile Include="Services\DatabaseImportService.cs" />
     <Compile Include="Services\MetricsPriceLookup.cs" />
@@ -112,6 +112,8 @@
     <Compile Include="Updater\CCP\StaticUpdaterBase.cs" />
     <Compile Include="Updater\CCP\TransactionsUpdater.cs" />
     <Compile Include="Updater\CCP\UpdaterBase.cs" />
+    <Compile Include="Updater\Central\CentralUpdaterBase.cs" />
+    <Compile Include="Updater\Central\ItemPriceUpdater.cs" />
     <Compile Include="Updater\Metrics\MetricUpdaterBase.cs" />
     <Compile Include="Updater\UpdaterFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +134,14 @@
     <ProjectReference Include="..\EveTrader.Core.Interfaces\EveTrader.Core.Interfaces.csproj">
       <Project>{0500D9AD-B3E5-4059-9F4C-F7ED363A5969}</Project>
       <Name>EveTrader.Core.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Central.Dto\EveTrader.Core.Model.Central.Dto.csproj">
+      <Project>{E01D7113-1F96-400B-9DE5-D5EBE2851E64}</Project>
+      <Name>EveTrader.Core.Model.Central.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveTrader.Core.Model.Central\EveTrader.Core.Model.Central.csproj">
+      <Project>{0165F306-6D45-414B-9B10-5725FFC854CF}</Project>
+      <Name>EveTrader.Core.Model.Central</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveTrader.Core.Model.Metric.Dto\EveTrader.Core.Model.Metric.Dto.csproj">
       <Project>{180D7942-A00E-44E9-B515-0C88D03059E2}</Project>
