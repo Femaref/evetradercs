@@ -11,7 +11,7 @@ namespace EveTrader.Core.Network.Requests.Central
     public class ItemPriceRequest : CentralRequestBase<IEnumerable<ItemPricesDto>>
     {
 
-        public ItemPriceRequest            (IEnumerable<long> itemIDs,
+        public ItemPriceRequest (IEnumerable<long> itemIDs,
             IEnumerable<long> regionIDs,
             Func<string, TimeSpan, bool> stillCached,
             Action<string, DateTime, string> saveCache,

@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Data.EntityClient;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -131,19 +130,6 @@ namespace EveTrader.Wpf
 
                 this.Shutdown();
             }
-        }
-
-        private EntityConnectionStringBuilder CreateConnectionBuilder(string source, string metadata)
-        {
-            SQLiteConnectionStringBuilder sqliteBuilder = new SQLiteConnectionStringBuilder();
-            sqliteBuilder.DataSource = source;
-
-            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder();
-            entityBuilder.Provider = "System.Data.SQLite";
-            entityBuilder.ProviderConnectionString = sqliteBuilder.ToString();
-            entityBuilder.Metadata = metadata;
-
-            return entityBuilder;
         }
 
         protected override void OnExit(ExitEventArgs e)

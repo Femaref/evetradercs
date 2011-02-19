@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.EntityClient;
 using System.ComponentModel.Composition;
 using System.Data.SQLite;
+using System.IO;
 
 namespace EveTrader.Core.Model.Metric
 {
@@ -12,7 +13,7 @@ namespace EveTrader.Core.Model.Metric
     public class MetricModelConnectionStringProvider : IConnectionStringProvider
     {
         private string metadata = @"res://*/MetricModel.csdl|res://*/MetricModel.ssdl|res://*/MetricModel.msl";
-        private string source = "";
+        private string source = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "Metrics.db");
 
 
         public string GetConnectionString()
@@ -29,6 +30,10 @@ namespace EveTrader.Core.Model.Metric
             entityBuilder.Provider = "System.Data.SQLite";
             entityBuilder.ProviderConnectionString = sqliteBuilder.ToString();
             entityBuilder.Metadata = metadata;
+
+            FileInfo fi = new FileInfo(source);
+            if (!fi.Exists || fi.Length == 0)
+                MetricModel.CreateDatabase(source);
 
             return entityBuilder;
         }

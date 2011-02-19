@@ -49,75 +49,17 @@
                     </ListBox.ItemsPanel>
                 </ListBox>
                 </Grid>
-            <TabControl Grid.Row="1" Panel.ZIndex="1" VerticalAlignment="Stretch">
-                <TabItem Header="Items">
-                    <visi:Chart x:Name="iItemsReport">
-                        <visi:Chart.Series>
-                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding ItemReport}" LegendText="Profit" Color="Green">
-                                <visi:DataSeries.DataMappings>
-                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
-                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
-                                </visi:DataSeries.DataMappings>
-                            </visi:DataSeries>
-                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding ItemReport}" LegendText="Sales" Color="Yellow">
-                                <visi:DataSeries.DataMappings>
-                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
-                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
-                                </visi:DataSeries.DataMappings>
-                            </visi:DataSeries>
-                        </visi:Chart.Series>
-                    </visi:Chart>
-                </TabItem>
-                <TabItem  Header="Stations">
-                    <visi:Chart x:Name="iStationsReport">
-                        <visi:Chart.Series>
-                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding StationReport}" LegendText="Profit" Color="Green">
-                                <visi:DataSeries.DataMappings>
-                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
-                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
-                                </visi:DataSeries.DataMappings>
-                            </visi:DataSeries>
-                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding StationReport}" LegendText="Sales" Color="Yellow">
-                                <visi:DataSeries.DataMappings>
-                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
-                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
-                                </visi:DataSeries.DataMappings>
-                            </visi:DataSeries>
-                        </visi:Chart.Series>
-                    </visi:Chart>
-                </TabItem>
-                <TabItem  Header="Buyers">
-                    <visi:Chart x:Name="iBuyersReport">
-                        <visi:Chart.Series>
-                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding BuyerReport}" LegendText="Profit" Color="Green">
-                                <visi:DataSeries.DataMappings>
-                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
-                                    <visi:DataMapping MemberName="YValue" Path="PureProfit" />
-                                </visi:DataSeries.DataMappings>
-                            </visi:DataSeries>
-                            <visi:DataSeries RenderAs="Bar" DataSource="{Binding BuyerReport}" LegendText="Sales" Color="Yellow">
-                                <visi:DataSeries.DataMappings>
-                                    <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
-                                    <visi:DataMapping MemberName="YValue" Path="GrossSales" />
-                                </visi:DataSeries.DataMappings>
-                            </visi:DataSeries>
-                        </visi:Chart.Series>
-                    </visi:Chart>
-                </TabItem>
-                <TabItem Header="Wallet Histories">
-                    <chart:MultiChart x:Name="iHistory" SeriesSource="{Binding WalletHistories}">
-                        <chart:MultiChart.SeriesTemplate>
-                            <DataTemplate>
-                                <visi:DataSeries RenderAs="StepLine" LegendText="{Binding Name}" DataSource="{Binding Histories}">
-                                    <visi:DataSeries.DataMappings>
-                                        <visi:DataMapping MemberName="XValue" Path="Date"/>
-                                        <visi:DataMapping MemberName="YValue" Path="Balance"/>
-                                    </visi:DataSeries.DataMappings>
-                                </visi:DataSeries>
-                            </DataTemplate>
-                        </chart:MultiChart.SeriesTemplate>
-                    </chart:MultiChart>
-                </TabItem>            
+            <TabControl Grid.Row="1" Panel.ZIndex="1" VerticalAlignment="Stretch" ItemsSource="{Binding Reports}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding View}" />
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
             </TabControl>
         </Grid>
     </Grid>

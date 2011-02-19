@@ -82,14 +82,18 @@
     <Compile Include="ViewModel\Display\Selectable.cs" />
     <Compile Include="ViewModel\Display\SelectedChangedEventArgs.cs" />
     <Compile Include="ViewModel\IRefreshableViewModel.cs" />
+    <Compile Include="ViewModel\IReportPage.cs" />
     <Compile Include="ViewModel\ISettingsPage.cs" />
     <Compile Include="ViewModel\ISettingsParent.cs" />
+    <Compile Include="ViewModel\ItemReportViewModel.cs" />
     <Compile Include="ViewModel\JournalViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\ManageAccountsViewModel.cs" />
     <Compile Include="ViewModel\MarketOrdersViewModel.cs" />
     <Compile Include="ViewModel\PriceCacheViewModel.cs" />
     <Compile Include="ViewModel\PriceLookupSettingViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\ReportPageViewModelBase.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\TransactionsViewModel.cs" />
     <Compile Include="ViewModel\WalletsViewModel.cs" />
@@ -109,6 +113,7 @@
     <Compile Include="View\IPriceLookupSettingView.cs" />
     <Compile Include="View\IReportView.cs" />
     <Compile Include="View\ISettingsView.cs" />
+    <Compile Include="View\IBasicReportView.cs" />
     <Compile Include="View\ITransactionsView.cs" />
     <Compile Include="View\IWalletsView.cs" />
   </ItemGroup>

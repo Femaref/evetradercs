@@ -31,6 +31,10 @@ namespace EveTrader.Core.Model.Central
             entityBuilder.ProviderConnectionString = sqliteBuilder.ToString();
             entityBuilder.Metadata = metadata;
 
+            FileInfo fi = new FileInfo(source);
+            if (!fi.Exists || fi.Length == 0)
+                CentralModel.CreateDatabase(source);
+
             return entityBuilder;
         }
 

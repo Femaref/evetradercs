@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="EveTrader.Wpf.Views.WalletHistoriesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                                       xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+             xmlns:chart="clr-namespace:Femaref.Charting;assembly=Femaref.Charting"
+             xmlns:vm="clr-namespace:EveTrader.Core.Visual.ViewModel;assembly=EveTrader.Core.Visual"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:WalletHistoriesReportViewModel}" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <chart:MultiChart x:Name="iHistory" SeriesSource="{Binding WalletHistories}">
+            <chart:MultiChart.SeriesTemplate>
+                <DataTemplate>
+                    <visi:DataSeries RenderAs="StepLine" LegendText="{Binding Name}" DataSource="{Binding Histories}">
+                        <visi:DataSeries.DataMappings>
+                            <visi:DataMapping MemberName="XValue" Path="Date"/>
+                            <visi:DataMapping MemberName="YValue" Path="Balance"/>
+                        </visi:DataSeries.DataMappings>
+                    </visi:DataSeries>
+                </DataTemplate>
+            </chart:MultiChart.SeriesTemplate>
+        </chart:MultiChart>
+    </Grid>
+</UserControl>
