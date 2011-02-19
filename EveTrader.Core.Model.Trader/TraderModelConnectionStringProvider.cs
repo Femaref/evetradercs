@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel.Composition;
 using System.Data.EntityClient;
 using System.Data.SQLite;
+using System.IO;
 
 namespace EveTrader.Core.Model.Trader
 {
@@ -12,7 +13,7 @@ namespace EveTrader.Core.Model.Trader
     public class TraderModelConnectionStringProvider : IConnectionStringProvider
     {
         private string metadata = @"res://*/TraderModel.csdl|res://*/TraderModel.ssdl|res://*/TraderModel.msl";
-        private string source = "";
+        private string source = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader", "Trader.db");
 
 
         public string GetConnectionString()
@@ -29,6 +30,10 @@ namespace EveTrader.Core.Model.Trader
             entityBuilder.Provider = "System.Data.SQLite";
             entityBuilder.ProviderConnectionString = sqliteBuilder.ToString();
             entityBuilder.Metadata = metadata;
+
+            FileInfo fi = new FileInfo(source);
+            if (!fi.Exists || fi.Length == 0)
+                TraderModel.CreateDatabase(source);
 
             return entityBuilder;
         }

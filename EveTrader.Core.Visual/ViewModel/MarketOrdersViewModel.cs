@@ -136,6 +136,8 @@ namespace EveTrader.Core.Visual.ViewModel
 
                 if (iCurrentEntity != null)
                 {
+                    iCurrentEntity = iModel.Entity.Single(t => t.ID == iCurrentEntity.ID);
+
                     IEnumerable<MarketOrders> cache = null;
                     if (iSettings.HideExpired)
                         cache = iCurrentEntity.MarketOrders.Where(iHideWhere);

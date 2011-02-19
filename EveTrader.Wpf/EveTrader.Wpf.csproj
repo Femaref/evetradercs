@@ -145,9 +145,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <HintPath>..\References\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>v4.0</RequiredTargetFramework>
@@ -215,6 +212,7 @@
     <Compile Include="PriceLookupSettingView.xaml.cs">
       <DependentUpon>PriceLookupSettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Selectors\JournalCurrencyColorSelector.cs" />
     <Compile Include="SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -242,10 +240,16 @@
     <Compile Include="ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Selectors\CurrencyColorSelector.cs" />
+    <Compile Include="Selectors\WalletCurrencyColorSelector.cs" />
     <Compile Include="Selectors\DashboardSelector.cs" />
     <Compile Include="TransactionsView.xaml.cs">
       <DependentUpon>TransactionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicReportView.xaml.cs">
+      <DependentUpon>BasicReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WalletHistoriesView.xaml.cs">
+      <DependentUpon>WalletHistoriesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WalletsView.xaml.cs">
       <DependentUpon>WalletsView.xaml</DependentUpon>
@@ -332,6 +336,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TransactionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BasicReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WalletHistoriesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

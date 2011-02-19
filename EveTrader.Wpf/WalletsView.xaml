@@ -24,18 +24,18 @@
                   AreRowDetailsFrozen="True" 
                   IsReadOnly="True">
             <DataGrid.Resources>
-                <selector:CurrencyColorSelector x:Key="currencyColorSelector">
-                    <selector:CurrencyColorSelector.NegativeTemplate>
+                <selector:WalletCurrencyColorSelector x:Key="currencyColorSelector">
+                    <selector:WalletCurrencyColorSelector.NegativeTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Balance, StringFormat=n}" Foreground="Red"/>
                         </DataTemplate>
-                    </selector:CurrencyColorSelector.NegativeTemplate>
-                    <selector:CurrencyColorSelector.NormalTemplate>
+                    </selector:WalletCurrencyColorSelector.NegativeTemplate>
+                    <selector:WalletCurrencyColorSelector.NormalTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Balance, StringFormat=n}"/>
                         </DataTemplate>
-                    </selector:CurrencyColorSelector.NormalTemplate>
-                </selector:CurrencyColorSelector>
+                    </selector:WalletCurrencyColorSelector.NormalTemplate>
+                </selector:WalletCurrencyColorSelector>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" 

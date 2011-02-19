@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="EveTrader.Wpf.Views.BasicReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <visi:Chart>
+            <visi:Chart.Series>
+                <visi:DataSeries RenderAs="Bar" DataSource="{Binding Report}" LegendText="Profit" Color="Green">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                        <visi:DataMapping MemberName="YValue" Path="PureProfit" />
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+                <visi:DataSeries RenderAs="Bar" DataSource="{Binding Report}" LegendText="Sales" Color="Yellow">
+                    <visi:DataSeries.DataMappings>
+                        <visi:DataMapping MemberName="AxisXLabel" Path="Key"/>
+                        <visi:DataMapping MemberName="YValue" Path="GrossSales" />
+                    </visi:DataSeries.DataMappings>
+                </visi:DataSeries>
+            </visi:Chart.Series>
+        </visi:Chart>
+    </Grid>
+</UserControl>
