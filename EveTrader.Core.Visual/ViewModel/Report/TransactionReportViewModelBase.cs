@@ -4,24 +4,23 @@ using System.Linq;
 using System.Text;
 using EveTrader.Core.View;
 using EveTrader.Core.Model.Trader;
+using EveTrader.Core.Model;
 using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
-using System.ComponentModel.Composition;
 using EveTrader.Core.Services;
-using EveTrader.Core.Model;
 
 namespace EveTrader.Core.ViewModel
 {
-    public class StationReportViewModel : ReportPageViewModelBase<IBasicReportView, Transactions>, IReportPage
+    public abstract class TransactionReportViewModelBase : ReportPageViewModelBase<IBasicReportView, Transactions>
     {
+
         public SmartObservableCollection<DisplayReport> Report { get; private set; }
-                
-        [ImportingConstructor]
-        public StationReportViewModel([Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm,
-           [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] IBasicReportView view, 
+
+        public TransactionReportViewModelBase(TraderModel tm,
+            IBasicReportView view, 
             IPriceSourceSelector sel,
             ISettingsProvider provider)
-            : base(tm, view, sel, provider)
+            :base(tm, view, sel, provider)
         {
             this.Report = new SmartObservableCollection<DisplayReport>(view.BeginInvoke);
         }
@@ -40,9 +39,12 @@ namespace EveTrader.Core.ViewModel
 
                 foreach (Entities e in data)
                 {
-                    var filteredTransactions = e.Wallets.SelectMany(w => w.Transactions).Where(wt => wt.TransactionType == (long)TransactionType.Sell).Where(Filter);
+                    var filteredTransactions = e.Wallets
+                                                .SelectMany(w => w.Transactions)
+                                                .Where(wt => wt.TransactionType == (long)TransactionType.Sell)
+                                                .Where(Filter);
 
-                    var itemData = this.GroupedTransactions(filteredTransactions, t => t.StationName).ToList();
+                    var itemData = this.GroupedTransactions(filteredTransactions, this.Selector).ToList();
 
                     currentItem.Add(itemData);
 
@@ -66,15 +68,6 @@ namespace EveTrader.Core.ViewModel
             }
         }
 
-        public override string Name
-        {
-            get { return "Station"; }
-        }
-
-
-        public int Index
-        {
-            get { return 2; }
-        }
+        protected abstract string Selector(Transactions t);
     }
 }
