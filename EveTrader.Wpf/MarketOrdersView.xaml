@@ -29,7 +29,7 @@
                             AutoGenerateColumns="False"
                             CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" AreRowDetailsFrozen="True" IsReadOnly="true"
                             AlternatingRowBackground="#FFECECEF" Background="White"
-                            ItemsSource="{Binding Source={StaticResource iGroupedMarketOrders}}" GridLinesVisibility="None">
+                            ItemsSource="{Binding Orders}" GridLinesVisibility="None">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=TypeName}" Header="TypeName" />
                         <DataGridTextColumn Binding="{Binding Path=StationName}" Header="StationName" />
@@ -44,7 +44,7 @@
                         <DataGridTextColumn Binding="{Binding Path=Range}" Header="Range" />
                         <DataGridTextColumn Binding="{Binding Path=Duration}" Header="Duration" />
                     </DataGrid.Columns>
-                    <DataGrid.GroupStyle>
+                    <!--<DataGrid.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
@@ -70,7 +70,7 @@
                                 </Style>
                             </GroupStyle.ContainerStyle>
                         </GroupStyle>
-                    </DataGrid.GroupStyle>
+                    </DataGrid.GroupStyle>-->
                 </DataGrid>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>

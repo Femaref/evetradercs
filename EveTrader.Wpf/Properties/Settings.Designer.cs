@@ -241,5 +241,17 @@ namespace EveTrader.Wpf.Properties {
                 this["PriceMethod"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutomaticPriceUpdate {
+            get {
+                return ((bool)(this["AutomaticPriceUpdate"]));
+            }
+            set {
+                this["AutomaticPriceUpdate"] = value;
+            }
+        }
     }
 }

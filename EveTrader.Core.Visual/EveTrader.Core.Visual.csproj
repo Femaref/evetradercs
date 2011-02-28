@@ -95,6 +95,7 @@
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ReportPageViewModelBase.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\StationReportViewModel.cs" />
     <Compile Include="ViewModel\TransactionsViewModel.cs" />
     <Compile Include="ViewModel\WalletsViewModel.cs" />
     <Compile Include="View\Base\IExtendedView.cs" />

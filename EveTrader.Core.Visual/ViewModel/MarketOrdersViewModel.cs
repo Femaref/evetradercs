@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using EveTrader.Core.Model.Trader;
+using System.Threading;
 using System.Waf.Applications;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
-using EveTrader.Core.Visual.View;
-using System.ComponentModel.Composition;
-using EveTrader.Core.Visual.ViewModel.Display;
-using MoreLinq;
 using EveTrader.Core.Collections.ObjectModel;
-using System.Threading;
-using System.Diagnostics;
 using EveTrader.Core.Model;
 using EveTrader.Core.Model.Static;
+using EveTrader.Core.Model.Trader;
+using EveTrader.Core.Visual.View;
+using EveTrader.Core.Visual.ViewModel.Display;
 
 namespace EveTrader.Core.Visual.ViewModel
 {
@@ -139,10 +134,7 @@ namespace EveTrader.Core.Visual.ViewModel
                     iCurrentEntity = iModel.Entity.Single(t => t.ID == iCurrentEntity.ID);
 
                     IEnumerable<MarketOrders> cache = null;
-                    if (iSettings.HideExpired)
-                        cache = iCurrentEntity.MarketOrders.Where(iHideWhere);
-                    else
-                        cache = iCurrentEntity.MarketOrders;
+                    cache = iCurrentEntity.MarketOrders.Where(mo => !iSettings.HideExpired || mo.OrderState == (long)MarketOrderState.OpenActive);
 
                     output = cache.Select(x =>
                     {

@@ -215,5 +215,18 @@ namespace EveTrader.Wpf
 				settings.Save();
 			}
 		}		
+		
+		public System.Boolean AutomaticPriceUpdate
+		{
+			get
+			{
+				 return settings.AutomaticPriceUpdate;
+			}
+			set
+			{
+				settings.AutomaticPriceUpdate = value;
+				settings.Save();
+			}
+		}		
 	}
 }
