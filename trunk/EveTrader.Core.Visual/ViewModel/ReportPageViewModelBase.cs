@@ -9,6 +9,7 @@ using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Services;
 using System.Threading;
 using EveTrader.Core.Model;
+using System.Threading.Tasks;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -19,6 +20,7 @@ namespace EveTrader.Core.ViewModel
         protected IPriceSourceSelector priceSelector;
         protected readonly object locker = new object();
         private ISettingsProvider settings;
+        private bool updating;
 
         public ReportPageViewModelBase([Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, 
             T view, 
@@ -57,18 +59,33 @@ namespace EveTrader.Core.ViewModel
             });
         }
 
-        public void Refresh(object sender, EntitiesUpdatedEventArgs e)
+        public void Refresh(object sender, EntitiesUpdatedEventArgs<long> e)
         {
             Thread t = new Thread(new ThreadStart(() => ThreadedRefresh(e.UpdatedEntities)));
             t.Name = string.Format("{0} refresh", this.Name);
             t.Start();
         }
 
-        private void ThreadedRefresh(IEnumerable<Entities> data)
+        CancellationTokenSource cts = new CancellationTokenSource();
+
+        private void ThreadedRefresh(IEnumerable<long> data)
         {
             lock (locker)
             {
-                InnerRefresh(data);
+                cts.Cancel();
+
+                
+                cts = new CancellationTokenSource();
+                cts.Token.Register(() => Updating = false);
+
+
+                Task t = Task.Factory.StartNew(() => Updating = true)
+                    .ContinueWith(task => InnerRefresh(this.model.Entity.Where(e => data.Contains(e.ID))), cts.Token)
+                    .ContinueWith(task => Updating = false);
+
+                //Updating = true;
+                //InnerRefresh(this.model.Entity.Where(e => data.Contains(e.ID)));
+                //Updating = false;
             }
         }
 
@@ -81,5 +98,16 @@ namespace EveTrader.Core.ViewModel
 
         public abstract string Name { get; }
 
+
+        public bool Updating 
+
+        {
+            get { return updating; }
+            set
+            {
+                updating = value;
+                RaisePropertyChanged("Updating");
+            }
+        }
     }
 }

@@ -115,7 +115,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
             Reports = new SmartObservableCollection<IReportPage>(view.BeginInvoke);
 
-            Reports.AddRange(reports);
+            Reports.AddRange(reports.OrderBy(r => r.Index));
 
             foreach (var r in Reports)
             {
@@ -137,7 +137,8 @@ namespace EveTrader.Core.Visual.ViewModel
         }
         private void ThreadedRefresh()
         {
-            RaiseChildRefresh();
+            lock(iUpdaterLock)
+                RaiseChildRefresh();
 
             //lock (iUpdaterLock)
             //{
@@ -269,14 +270,16 @@ namespace EveTrader.Core.Visual.ViewModel
             }
         }
 
-        public event EventHandler<EntitiesUpdatedEventArgs> ChildRefresh;
+        public event EventHandler<EntitiesUpdatedEventArgs<long>> ChildRefresh;
 
         private void RaiseChildRefresh()
         {
             var handler = ChildRefresh;
 
             if (handler != null)
-                handler(this, new EntitiesUpdatedEventArgs(Entities.Where(s => s.IsSelected).Select(s => s.Item).ToList()));
+            {
+                 handler(this, new EntitiesUpdatedEventArgs<long>(Entities.Where(s => s.IsSelected).Select(s => s.Item.ID)));
+            }
         }
 
 

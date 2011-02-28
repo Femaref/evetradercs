@@ -15,6 +15,6 @@ namespace EveTrader.Core.ViewModel
         object View { get; }
         string Name { get; }
         int Index { get; }
-        void Refresh(object sender, EntitiesUpdatedEventArgs e);
+        void Refresh(object sender, EntitiesUpdatedEventArgs<long> e);
     }
 }

@@ -23,5 +23,6 @@ namespace EveTrader.Core.Model
         bool ReportApplyEndFilter { get; set; }
         string PriceSource { get; set; }
         string PriceMethod { get; set; }
+        bool AutomaticPriceUpdate { get; set; }
     }
 }

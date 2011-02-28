@@ -8,6 +8,7 @@ using System.Reflection;
 using EveTrader.Core.Model.Central;
 using EveTrader.Core.Updater.Central;
 using System.Linq.Expressions;
+using EveTrader.Core.Model;
 
 namespace EveTrader.Core.Services
 {
@@ -15,12 +16,16 @@ namespace EveTrader.Core.Services
     {
         private readonly CentralModel model;
         private readonly ItemPriceUpdater updater;
+        private readonly ISettingsProvider settings;
 
         [ImportingConstructor]
-        public CentralPriceLookup([Import(RequiredCreationPolicy=CreationPolicy.NonShared)] CentralModel cm, ItemPriceUpdater ipu)
+        public CentralPriceLookup([Import(RequiredCreationPolicy=CreationPolicy.NonShared)] CentralModel cm, 
+            ItemPriceUpdater ipu, 
+            ISettingsProvider settings)
         {
             this.model = cm;
             this.updater = ipu;
+            this.settings = settings;
         }
 
         private decimal Lookup(Func<ItemPrices, decimal> selector, long typeID, long regionID)
@@ -29,7 +34,7 @@ namespace EveTrader.Core.Services
 
             try
             {
-                if (!model.ItemPrices.Any(where))
+                if (!model.ItemPrices.Any(where) && settings.AutomaticPriceUpdate)
                     updater.Update(typeID, regionID);
             }
             catch

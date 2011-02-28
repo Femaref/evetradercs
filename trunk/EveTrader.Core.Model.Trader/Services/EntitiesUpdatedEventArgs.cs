@@ -15,4 +15,14 @@ namespace EveTrader.Core.Services
             UpdatedEntities = updated;
         }
     }
+
+    public class EntitiesUpdatedEventArgs<T> : EventArgs
+    {
+        public IEnumerable<T> UpdatedEntities { get; set; }
+
+        public EntitiesUpdatedEventArgs(IEnumerable<T> updated)
+        {
+            UpdatedEntities = updated;
+        }
+    }
 }

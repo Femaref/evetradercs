@@ -3,11 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrl="clr-namespace:EveTrader.Wpf.Controls"
              mc:Ignorable="d"
              xmlns:visi="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
-        <visi:Chart>
+        <Grid Panel.ZIndex="2" Opacity="0.75" Background="White" Visibility="{Binding Path=Updating, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ctrl:ProgressIndicator Text="Updating Reports..." Height="300" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" IsRunning="{Binding Updating}" IsIndeterminate="True"/>
+        </Grid>
+        <visi:Chart Panel.ZIndex="1">
             <visi:Chart.Series>
                 <visi:DataSeries RenderAs="Bar" DataSource="{Binding Report}" LegendText="Profit" Color="Green">
                     <visi:DataSeries.DataMappings>
