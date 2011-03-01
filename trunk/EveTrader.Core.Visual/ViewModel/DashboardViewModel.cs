@@ -37,14 +37,13 @@ namespace EveTrader.Core.Visual.ViewModel
         private bool iUpdating;
         private bool iOverviewHidden;
         private IPriceSourceSelector iSource;
-        
+
 
         public ICommand FilterWeekCommand { get; private set; }
         public ICommand FilterTwoWeeksCommand { get; private set; }
         public ICommand FilterMonthCommand { get; private set; }
         public ICommand FilterAllTimeCommand { get; private set; }
         public ICommand OverviewHideCommand { get; private set; }
-        public ICommand HideSalesCommand { get; private set; }
 
         public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
         public SmartObservableCollection<KeyValuePair<PropertyInfo, IEnumerable<string>>> CurrentWallets { get; private set; }
@@ -108,7 +107,6 @@ namespace EveTrader.Core.Visual.ViewModel
                 RaisePropertyChanged("DetailsUpdating");
             }
         }
-
         public bool OverviewHidden
         {
             get { return iOverviewHidden; }
@@ -118,30 +116,15 @@ namespace EveTrader.Core.Visual.ViewModel
                 RaisePropertyChanged("OverviewHidden");
             }
         }
-        private bool salesEnabled;
-
-        public bool SalesEnabled
-        {
-            get { return salesEnabled; }
-            set
-            {
-                salesEnabled = value;
-                RaisePropertyChanged("SalesEnabled");
-            }
-        }
-
 
 
         [ImportingConstructor]
-        public DashboardViewModel(
-            IDashboardView view, 
-            [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm,  
-            IPriceSourceSelector ips)
+        public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IPriceSourceSelector ips)
             : base(view)
         {
             iModel = tm;
             DailyInfo = new SmartObservableCollection<DisplayDashboard>(view.BeginInvoke);
-            CurrentWallets = new SmartObservableCollection<KeyValuePair<PropertyInfo,IEnumerable<string>>>(view.BeginInvoke);
+            CurrentWallets = new SmartObservableCollection<KeyValuePair<PropertyInfo, IEnumerable<string>>>(view.BeginInvoke);
             Investment = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Sales = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
             Profit = new SmartObservableCollection<DisplayDetail>(view.BeginInvoke);
@@ -154,9 +137,9 @@ namespace EveTrader.Core.Visual.ViewModel
             FilterMonthCommand = new DelegateCommand(() => Filter(30));
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
             OverviewHideCommand = new DelegateCommand(() => OverviewHidden = !OverviewHidden);
-            HideSalesCommand = new DelegateCommand(() => SalesEnabled = !SalesEnabled);
-            RefreshWallets();
             Filter(7);
+
+            RefreshWallets();
         }
 
         private void Filter(int days)
@@ -193,7 +176,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 Working = true;
                 DailyInfo.Clear();
 
-               // iModel.Connection.Open();
+                // iModel.Connection.Open();
 
                 var investment = (from w in iModel.Transactions
                                   where w.Date > iDateBefore
@@ -206,7 +189,7 @@ namespace EveTrader.Core.Visual.ViewModel
 
                 List<DisplayDashboard> cache = new List<DisplayDashboard>();
 
-                IEnumerable<string> indexes = CurrentWallets.Single(x => x.Key == iSalesPropertyInfo).Value;
+                IEnumerable<string> indexes = CurrentWallets.Single(x => x.Key == typeof(DisplayDashboard).GetProperty("Sales")).Value;
                 foreach (var i in investment)
                 {
                     DisplayDashboard dd = new DisplayDashboard()
@@ -222,8 +205,8 @@ namespace EveTrader.Core.Visual.ViewModel
                     }
 
                     dd.Investment = i.Where(t => t.TransactionType == (long)TransactionType.Buy).Sum(t => t.Price * t.Quantity);
-                    dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price - 
-                        iSource.Current(gt.TypeID, OrderType.Buy, 10000002)
+                    dd.Profit = i.Where(t => t.TransactionType == (long)TransactionType.Sell).GroupBy(g => g.Date).Select(g => g.Sum(gt => Math.Round((gt.Price -
+                        iSource.Current(gt.TypeID, OrderType.Buy, 10000002)//iModel.Transactions.AverageBuyPrice(gt.TypeID)
                         ) * gt.Quantity, 2))).FirstOrDefault();
 
                     var entityGroup = (from g in i
@@ -241,7 +224,7 @@ namespace EveTrader.Core.Visual.ViewModel
                 }
                 DailyInfo.AddRange(cache);
 
-              //  iModel.Connection.Close();
+                //  iModel.Connection.Close();
 
                 RaisePropertyChanged("ProfitAverage");
                 Working = false;
@@ -266,38 +249,34 @@ namespace EveTrader.Core.Visual.ViewModel
 
                     if (e.BindingKey.Contains("Investment"))
                     {
-                        foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Buy).GroupBy(s => s.Wallet))
-                        {
-                            foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
-                            {
-                                Investment.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
-                            }
-                        }
+                        Investment.AddRange(GenerateDetail(TransactionType.Buy, e.Key, t => t.Quantity * t.Price));
                     }
                     if (e.BindingKey.Contains("Sales"))
                     {
-                        foreach (var grouping in iModel.Transactions.Where(s => s.Date == e.Key && s.TransactionType == (long)TransactionType.Sell).GroupBy(s => s.Wallet))
-                        {
-                            foreach (var subGroup in grouping.GroupBy(s => s.TypeName))
-                            {
-                                Sales.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", subGroup.Sum(t => t.Quantity), subGroup.Key), Value = subGroup.Sum(t => t.Quantity * t.Price) });
-                            }
-                        }
+                        Sales.AddRange(GenerateDetail(TransactionType.Sell, e.Key, t => t.Quantity * t.Price));
                     }
                     if (e.BindingKey.Contains("Profit"))
                     {
-                        foreach (var grouping in iModel.Transactions.Where(t => t.TransactionType == (long)TransactionType.Sell && t.Date == e.Key).GroupBy(t => t.TypeName))
-                        {
-                            var val = grouping.Sum(gt => Math.Round((gt.Price - iSource.Current(gt.TypeID, OrderType.Buy)) * gt.Quantity, 2));
-                            Profit.Add(new DisplayDetail() { TypeName = string.Format("{0}x {1}", grouping.Sum(t => t.Quantity), grouping.Key), Value = val });
-                        }
+                        Profit.AddRange(GenerateDetail(TransactionType.Sell, e.Key, gt => Math.Round((gt.Price - iSource.Current(gt.TypeID, OrderType.Buy)) * gt.Quantity, 2)));
                     }
                     this.DetailsUpdating = false;
                 }
             }
         }
 
-        
+
+        private IEnumerable<DisplayDetail> GenerateDetail(TransactionType tt, DateTime date, Func<Transactions, decimal> sumGenerator)
+        {
+            return this.iModel.Transactions.Where(t => t.Date == date && t.TransactionType == (long)tt)
+                                           .GroupBy(s => s.TypeName)
+                                           .Select(g => new DisplayDetail
+                                           {
+                                               TypeName = string.Format("{0}x {1}", g.Sum(t => t.Quantity), g.Key),
+                                               Value = g.Sum(sumGenerator)
+                                           }).OrderBy(g => g.Value).Select(x => x);
+        }
+
+
         private void view_DetailsRequested(object sender, DetailsRequestedEventArgs e)
         {
             Action updater = () =>
