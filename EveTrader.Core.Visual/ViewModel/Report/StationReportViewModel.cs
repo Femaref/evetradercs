@@ -14,8 +14,6 @@ namespace EveTrader.Core.ViewModel
 {
     public class StationReportViewModel : TransactionReportViewModelBase, IReportPage
     {
-
-
         [ImportingConstructor]
         public StationReportViewModel(
             [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm,
