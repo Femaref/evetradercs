@@ -28,7 +28,7 @@ namespace EveTrader.Wpf
         static App()
         {
 #if (DEBUG)
-            WafConfiguration.Debug = true;
+            System.Waf.WafConfiguration.Debug = true;
 #endif
         }
 
