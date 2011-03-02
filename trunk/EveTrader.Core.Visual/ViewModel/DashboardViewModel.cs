@@ -44,6 +44,7 @@ namespace EveTrader.Core.Visual.ViewModel
         public ICommand FilterMonthCommand { get; private set; }
         public ICommand FilterAllTimeCommand { get; private set; }
         public ICommand OverviewHideCommand { get; private set; }
+        public ICommand HideSalesCommand { get; private set; }
 
         public SmartObservableCollection<DisplayDashboard> DailyInfo { get; private set; }
         public SmartObservableCollection<KeyValuePair<PropertyInfo, IEnumerable<string>>> CurrentWallets { get; private set; }
@@ -116,7 +117,17 @@ namespace EveTrader.Core.Visual.ViewModel
                 RaisePropertyChanged("OverviewHidden");
             }
         }
+        private bool salesEnabled;
 
+        public bool SalesEnabled
+        {
+            get { return salesEnabled; }
+            set
+            {
+                salesEnabled = value;
+                RaisePropertyChanged("SalesEnabled");
+            }
+        }
 
         [ImportingConstructor]
         public DashboardViewModel(IDashboardView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, IPriceSourceSelector ips)
@@ -137,9 +148,9 @@ namespace EveTrader.Core.Visual.ViewModel
             FilterMonthCommand = new DelegateCommand(() => Filter(30));
             FilterAllTimeCommand = new DelegateCommand(() => Filter(-1));
             OverviewHideCommand = new DelegateCommand(() => OverviewHidden = !OverviewHidden);
-            Filter(7);
-
+            HideSalesCommand = new DelegateCommand(() => SalesEnabled = !SalesEnabled);
             RefreshWallets();
+            Filter(7);
         }
 
         private void Filter(int days)
