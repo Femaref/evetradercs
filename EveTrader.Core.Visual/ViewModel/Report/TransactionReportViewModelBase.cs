@@ -8,6 +8,7 @@ using EveTrader.Core.Model;
 using EveTrader.Core.Visual.ViewModel.Display;
 using EveTrader.Core.Collections.ObjectModel;
 using EveTrader.Core.Services;
+using System.Threading.Tasks;
 
 namespace EveTrader.Core.ViewModel
 {
@@ -30,7 +31,7 @@ namespace EveTrader.Core.ViewModel
             return Filter(trans, t => t.DateTime);
         }
 
-        protected override void InnerRefresh(IEnumerable<Entities> data)
+        protected override void InnerRefresh(Task task, IEnumerable<Entities> data)
         {
             lock (locker)
             {
@@ -39,14 +40,26 @@ namespace EveTrader.Core.ViewModel
 
                 foreach (Entities e in data)
                 {
+                    if (task.IsCanceled)
+                        break;
+
                     var filteredTransactions = e.Wallets
                                                 .SelectMany(w => w.Transactions)
                                                 .Where(wt => wt.TransactionType == (long)TransactionType.Sell)
                                                 .Where(Filter);
 
+                    if (task.IsCanceled)
+                        break;
+
                     var itemData = this.GroupedTransactions(filteredTransactions, this.Selector).ToList();
 
+                    if (task.IsCanceled)
+                        break;
+
                     currentItem.Add(itemData);
+
+                    if (task.IsCanceled)
+                        break;
 
 
                     /*            IEnumerable<ReportChartItem> reportData =
@@ -63,6 +76,9 @@ namespace EveTrader.Core.ViewModel
                         SalesTax = Math.Round(g.Sum(gi => gi.SalesTax * gi.Quantity / 1000000), 2)
                     };*/
                 }
+
+                if (task.IsCanceled)
+                    return;
 
                 Report.AddRange(this.Combine(currentItem).OrderBy(d => d.PureProfit));
             }

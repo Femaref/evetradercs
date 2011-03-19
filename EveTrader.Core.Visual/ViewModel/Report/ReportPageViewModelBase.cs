@@ -66,7 +66,7 @@ namespace EveTrader.Core.ViewModel
             t.Start();
         }
 
-        CancellationTokenSource cts = new CancellationTokenSource();
+        protected CancellationTokenSource cts = new CancellationTokenSource();
 
         private void ThreadedRefresh(IEnumerable<long> data)
         {
@@ -76,11 +76,10 @@ namespace EveTrader.Core.ViewModel
 
                 
                 cts = new CancellationTokenSource();
-                cts.Token.Register(() => Updating = false);
 
 
                 Task t = Task.Factory.StartNew(() => Updating = true)
-                    .ContinueWith(task => InnerRefresh(this.model.Entity.Where(e => data.Contains(e.ID))), cts.Token)
+                    .ContinueWith(task => InnerRefresh(task, this.model.Entity.Where(e => data.Contains(e.ID))), cts.Token)
                     .ContinueWith(task => Updating = false);
 
                 //Updating = true;
@@ -94,7 +93,7 @@ namespace EveTrader.Core.ViewModel
             return (!this.settings.ReportApplyStartFilter || selector(obj) >= this.settings.ReportStartDate) && (!this.settings.ReportApplyEndFilter || selector(obj) <= this.settings.ReportEndDate);
         }
 
-        protected abstract void InnerRefresh(IEnumerable<Entities> data);
+        protected abstract void InnerRefresh(Task task, IEnumerable<Entities> data);
 
         public abstract string Name { get; }
 

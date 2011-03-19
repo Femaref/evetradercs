@@ -38,5 +38,15 @@ namespace EveTrader.Core.ViewModel
         {
             return t.StationName;
         }
+
+        #region IReportPage Members
+
+
+        public void Cancel(object sender, EventArgs e)
+        {
+            cts.Cancel();
+        }
+
+        #endregion
     }
 }

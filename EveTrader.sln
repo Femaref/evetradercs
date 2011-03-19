@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03F8E121-DD20-425B-BFB2-1DAC7EE9E81C}"
 	ProjectSection(SolutionItems) = preProject
+		EveTrader.vsmdi = EveTrader.vsmdi
 		Local.testsettings = Local.testsettings
 		Performance1.psess = Performance1.psess
 		Performance2.psess = Performance2.psess
@@ -62,6 +63,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveTrader.Core.Model.Central.Dto", "EveTrader.Core.Model.Central.Dto\EveTrader.Core.Model.Central.Dto.csproj", "{E01D7113-1F96-400B-9DE5-D5EBE2851E64}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = EveTrader.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug (x64)|Any CPU = Debug (x64)|Any CPU
 		Debug (x64)|Mixed Platforms = Debug (x64)|Mixed Platforms
