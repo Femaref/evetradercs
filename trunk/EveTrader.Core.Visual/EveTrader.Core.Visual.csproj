@@ -85,7 +85,6 @@
     <Compile Include="ViewModel\IReportPage.cs" />
     <Compile Include="ViewModel\ISettingsPage.cs" />
     <Compile Include="ViewModel\ISettingsParent.cs" />
-    <Compile Include="ViewModel\Report\BuyerReportViewModel.cs" />
     <Compile Include="ViewModel\Report\ItemReportViewModel.cs" />
     <Compile Include="ViewModel\JournalViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

@@ -61,23 +61,14 @@ namespace EveTrader.Wpf
 
             if (!appData.Exists)
                 appData.Create();
-            
-
-            //TODO: MOVE TO CONNECTIONSTRING PROVIDER!
-            //if no database exists, create a fresh one
-            if (!databaseInfo.Exists || databaseInfo.Length == 0)
-                TraderModel.CreateDatabase(databaseInfo.FullName);
-
-            if (!metricsInfo.Exists || metricsInfo.Length == 0)
-                MetricModel.CreateDatabase(metricsInfo.FullName);
 
             //copy over static.db
             if (!staticDatabase.Exists)
                 File.Copy(staticDatabaseRessource.FullName, staticDatabase.FullName);
 
-
-
             base.OnStartup(e);
+
+
 
             Stopwatch sw = new Stopwatch();
             sw.Start();

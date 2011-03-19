@@ -102,6 +102,8 @@ namespace EveTrader.Core.Visual.ViewModel
         }
         public ICommand RefreshCommand { get; private set; }
 
+        private bool test = false;
+
         [ImportingConstructor]
         public ReportViewModel(IReportView view, [Import(RequiredCreationPolicy = CreationPolicy.NonShared)] TraderModel tm, ISettingsProvider settings, IPriceSourceSelector selector, [ImportMany] IEnumerable<IReportPage> reports)
             : base(view)
@@ -120,10 +122,22 @@ namespace EveTrader.Core.Visual.ViewModel
             foreach (var r in Reports)
             {
                 this.ChildRefresh += r.Refresh;
-                
+                this.ChildCancel += r.Cancel;                
             }
 
-            RefreshCommand = new DelegateCommand(() => Refresh());
+            RefreshCommand = new DelegateCommand(() => 
+                {
+                    if (!test)
+                    {
+                        test = true;
+                        Refresh();
+                    }
+                    else
+                    {
+                        test = false;
+                        RaiseChildCancel();
+                    }
+                });
 
             RefreshEntities();
             
@@ -271,6 +285,7 @@ namespace EveTrader.Core.Visual.ViewModel
         }
 
         public event EventHandler<EntitiesUpdatedEventArgs<long>> ChildRefresh;
+        public event EventHandler ChildCancel;
 
         private void RaiseChildRefresh()
         {
@@ -280,6 +295,12 @@ namespace EveTrader.Core.Visual.ViewModel
             {
                  handler(this, new EntitiesUpdatedEventArgs<long>(Entities.Where(s => s.IsSelected).Select(s => s.Item.ID)));
             }
+        }
+        private void RaiseChildCancel()
+        {
+            var handler = ChildCancel;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
 
 

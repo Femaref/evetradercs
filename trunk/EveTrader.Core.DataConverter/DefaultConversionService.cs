@@ -17,8 +17,6 @@ namespace EveTrader.Core.DataConverter.Services
 
         public DefaultConversionService()
         {
-            if(path.Exists && path.Length > 0)
-                xts = new XmlToSqlite(path.FullName);
         }
 
         public bool ConversionNecessary()
@@ -30,9 +28,15 @@ namespace EveTrader.Core.DataConverter.Services
         {
             try
             {
-                if (xts == null)
-                    throw new Exception("no file to convert");
+                if (!path.Exists || path.Length == 0)
+                    return false;
 
+                xts = new XmlToSqlite(path.FullName);
+
+                return xts.Convert();
+            }
+            finally
+            {
                 DirectoryInfo appData = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EveTrader"));
 
                 string fileTime = DateTime.Now.ToFileTime().ToString();
@@ -43,10 +47,6 @@ namespace EveTrader.Core.DataConverter.Services
 
                 File.Copy(path.FullName, Path.Combine(appData.FullName, backupPath, "settings.xml"));
 
-                return xts.Convert();
-            }
-            finally
-            {
                 path.Delete();
             }
         }
